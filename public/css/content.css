@@ -1,0 +1,439 @@
+/* custom-Search pasien*/
+.custom-search{
+  width: 60%;
+  text-overflow: ellipsis;
+}
+
+.custom-search .btn{
+  border-color: #0E8357;
+  color:#0E8357;
+}
+
+/* .custom-search .btn-outline-primary:active,
+.btn-outline-primary:focus,
+.btn-outline-primary:hover{
+  border-color: #0E8357;
+  background-color: #0E8357;
+  color:#ffffff;
+} */
+
+.btn-outline-success:hover {
+  color: #fff;
+}
+
+
+/* custom-Filter pasien*/
+/* .custom-filter{
+  width: 20%;
+  text-overflow: ellipsis;
+} */
+
+.custom-filter .dropdown-toggle{
+  text-align: end;
+}
+.custom-filter .dropdown-toggle:focus{
+  background-color: #ffffff;
+  color: #0E8357;
+  outline-color: #0E8357;
+}
+
+
+.custom-filter .dropdown-item{
+  overflow: hidden;
+}
+
+.custom-filter .dropdown-menu .dropdown-item:active{
+  background-color: #0E8357;
+  color:#ffffff;
+}
+/* .custom-filter .dropdown-menu .dropdown-item:hover{
+  background-color: #0E8357;
+  color:#ffffff;
+} */
+.custom-filter .dropdown-menu .dropdown-item:focus{
+  background-color: #0E8357;
+  color:#ffffff;
+}
+
+
+
+/* Card custom Pasien*/
+.row-custom{
+  align-items: center;
+}
+.card-custom{
+  background-color:#FFFFFF; 
+  height: 300px;
+}
+
+.card-custom h6{
+  font-family: "Raleway", sans-serif;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.card-custom .card-body p{
+  color:#212529;
+  font-size: 15px;
+  font-weight: 600;
+  display: -webkit-box;
+    -webkit-line-clamp: 2; /* Jumlah baris yang ingin ditampilkan */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  margin: 0px;
+}
+
+.card-custom hr{
+  margin: 0px;
+  padding-bottom: 5px;
+}
+
+.card-custom .card-header {
+  background-color: #0E8357;
+  text-align: center;
+  /* border: none; */
+}
+
+.card-custom .card-header .card-header-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0px;
+}
+
+.card-custom a{
+  color:#0E8357;
+  font-family: 'Nunito', sans-serif;
+  text-decoration: none;
+  font-size: 15px;
+  /* font-weight: 400; */
+}
+
+.card-custom a:hover{
+  text-decoration: underline;
+  color: #0E8357;
+}
+
+.card-custom img{
+  height: 55%;
+  /* background-color: #212529; */
+  width: auto;
+  object-fit: cover;
+  object-position: 0px 20%;
+  border-radius: 0;
+}
+
+.card-custom .card-footer {
+  padding: 8px auto;
+}
+.card-terapis {
+  height: 250px;
+}
+
+.card-terapis img{
+  height: 64%;
+}
+
+.card-terapis p {
+  margin: 0px;
+  text-align: center;
+}
+
+.card-terapis a {
+  font-family: "Raleway", sans-serif;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+
+.card-terapis a:hover {
+  background-color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.card-terapis .card-header-text:hover {
+  color: #0e8357;
+}
+
+
+
+/* Card custom Pasien baru*/
+
+.card-baru{
+  background-color:#FFFFFF; 
+  height: 290px;
+  /* width: 225px; */
+}
+
+.card-baru a{
+  font-family: "Raleway", sans-serif;
+  color: #ffffff;
+  /* font-weight: 600; */
+  padding: 10px 8px;
+  text-decoration: none;
+}
+
+.card-baru .card-header {
+  background-color: #0E8357;
+  text-align: center;
+  /* border: none; */
+}
+
+.card-baru .card-header .card-header-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+}
+
+.card-baru img{
+  height: 60%;
+  /* background-color: #212529; */
+  width: auto;
+  object-fit: cover;
+  object-position: 0px 20%;
+  border-radius: 0;
+}
+.card-baru p{
+  color:#212529;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+  /* margin: 1rem 0px 0px 20px; */
+}
+
+.card-baru .card-title{
+  color:#212529;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0px;
+}
+
+.card-baru a:hover{
+  background-color: #fff;
+  color: #0e8357;
+  cursor: pointer;
+}
+
+.card-baru a:active{
+  background-color: #fff;
+  color: #0e8357;
+  cursor: pointer;
+}
+
+.card-baru a:focus {
+  background-color: #fff;
+  color: #0e8357;
+  cursor: pointer;
+}
+
+/* card rekam medis terkini */
+.card-rm-kini{
+  background-color:#FFFFFF; 
+  height: 150px;
+  max-width: 250px;
+  /* box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); */
+}
+
+.card-rm-kini h6{
+  font-family: "Raleway", sans-serif;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.card-rm-kini p{
+  color:#212529;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.card-rm-kini hr{
+  margin: 0px;
+  padding-bottom: 5px;
+}
+
+.card-rm-kini .card-header{
+  background-color: #0E8357;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-rm-kini a{
+  color:#0E8357;
+  font-family: 'Nunito', sans-serif;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.card-rm-kini a:hover{
+  text-decoration: underline;
+}
+
+
+/* card rekam medis terdahulu */
+.card-rm-dulu{
+  background-color:#FFFFFF; 
+  height: 150px;
+  max-width: 250px;
+}
+
+.card-rm-dulu h6{
+  font-family: "Raleway", sans-serif;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.card-rm-dulu .card-header {
+  background-color: #0E8357;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-rm-dulu p{
+  color:#212529;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 20px 0px 0px 20px;
+}
+
+.card-rm-dulu .card-title{
+  color:#212529;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0px;
+}
+
+.card-rm-dulu h6:hover{
+  background-color: #fff;
+  color: #0e8357;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.card-rm-dulu h6:active{
+  background-color: #fff;
+  color: #0e8357;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.card-rm-dulu h6:focus {
+  background-color: #fff;
+  color: #0e8357;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* card rekam terapi terkini */
+.card-rt{
+  background-color:#FFFFFF; 
+  height: auto;
+  width: 300px;
+  /* box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); */
+}
+
+.card-rt h6{
+  font-family: "Raleway", sans-serif;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.card-rt p{
+  color:#212529;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0px;
+  text-align: justify;
+}
+
+.card-rt hr{
+  margin: 0px;
+  padding-bottom: 5px;
+}
+
+.card-rt .card-header{
+  background-color: #0E8357;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-rt a{
+  color:#0E8357;
+  font-family: 'Nunito', sans-serif;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.card-rt a:hover{
+  text-decoration: underline;
+}
+
+.tengah p{
+  text-align: center;
+}
+
+/* Custom data pasien */
+
+
+.custom-bio img {
+  height: 240px;
+  width: 190px;
+  object-fit: cover;
+}
+
+
+/* .custom-bio .btn {
+  width: auto;
+  background-color: #ffffff;
+  border-color: #0E8357;
+  color: #0E8357;
+}
+
+.custom-bio .btn:active {
+  background-color: #0E8357;
+  color: #ffffff;
+}
+
+.custom-bio .btn:hover {
+  background-color: #0E8357;
+  color: #ffffff;
+}
+
+.custom-bio .btn:focus {
+  background-color: #FFFFFF;
+  color: #0E8357;
+} */
+
+
+/* button tambah data */
+.custom-tambah{
+  width: 175px;
+}
+
+.custom-tambah .btn{
+  background-color: #0E8357;
+  outline-color: #0E8357;
+  color:#ffffff;
+}
+
+.custom-tambah .btn:active{
+  background-color: #0E8357;
+  color:#ffffff;
+}
+.custom-tambah .btn:hover{
+  background-color: #0E8357;
+  color:#ffffff;
+}
+.custom-tambah .btn:focus{
+  background-color: #FFFFFF;
+  color:#0E8357;
+}

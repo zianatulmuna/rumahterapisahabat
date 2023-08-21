@@ -1,0 +1,162 @@
+/* detail pasien-rekam medis */
+table th, table td,
+.table th, .table td {
+  /* padding: 5px 18px; */
+  vertical-align: middle!important;
+}
+
+.table-data-diri {
+  margin: 0px;
+}
+
+.table-data-diri th {
+  text-align: inherit;
+  text-align: -webkit-match-parent;
+}
+
+.table-data-diri td, .table-data-diri th {
+  padding: 0px !important;
+  vertical-align: top!important;
+}
+  
+.table-data-diri .form-label {
+  font-size: 12pt;
+}
+
+/* halaman histori rekam medis */
+.list-group-histori p {
+  margin: 0;
+}
+
+/* hide scrollbar di input number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.taginput input {
+  border: none;
+  outline: none;
+  min-width: none;
+}
+
+form label {
+  color: #000 !important;
+}
+form select:hover,
+form option:hover {
+  cursor: pointer;
+}
+
+.form-control,
+.form-select,
+textarea {
+  border-color: #c9dbce !important;
+}
+
+.is-invalid {
+  border-color: #dc3545 !important;
+}
+
+/* .btn-success,
+.btn-primary,
+.btn-warning,
+.btn-info {
+  color: #fff !important;
+}
+
+.btn-outline-success:hover,
+.btn-outline-primary:hover,
+.btn-outline-warning:hover,
+.btn-outline-info:hover,
+.btn-success:hover,
+.btn-primary:hover,
+.btn-warning:hover,
+.btn-info:hover {
+  color: #fff !important;
+} */
+/* .btn-outline-success,
+.btn-outline-primary,
+.btn-outline-warning,
+.btn-outline-info {
+  background-color: #fff !important;
+} */
+
+.badge:hover {
+  opacity: 80%;
+}
+
+.input-group-text {
+  border-color: #c9dbce;
+}
+
+.input-group-text-danger {
+  border-color: #dc3545;
+}
+
+.search-dinamis .dropdown-menu {
+  min-width: 380px;
+}
+
+.search-dinamis .select-options {
+  max-height: 140px;
+  overflow-y: auto;
+  padding: 4px 3px;
+}
+.search-dinamis .select-options li {
+  cursor: pointer;
+  padding: 6px 12px;
+}
+.search-dinamis .select-options::-webkit-scrollbar{
+  width: 7px;
+  padding-right: 9px;
+}
+.search-dinamis .select-options::-webkit-scrollbar-track{
+  background: #f1f1f1;
+  border-radius: 25px;
+}
+.search-dinamis .select-options::-webkit-scrollbar-thumb{
+  background: #ccc;
+  border-radius: 25px;
+}
+.search-dinamis .select-options::-webkit-scrollbar-thumb:hover{
+  background: #b3b3b3;
+}
+
+.table-admin tr td h5 {
+  font-size: 1.1rem;
+}
+
+.content-ready {
+  max-height: 420px; 
+  overflow-y: auto;
+}
+
+.content-ready::-webkit-scrollbar{
+  width: 7px;
+  padding-right: 9px;
+}
+.content-ready::-webkit-scrollbar-track{
+  background: #f1f1f1;
+  border-radius: 25px;
+}
+.content-ready::-webkit-scrollbar-thumb{
+  background: #ccc;
+  border-radius: 25px;
+}
+.content-ready::-webkit-scrollbar-thumb:hover{
+  background: #b3b3b3;
+}
+
+.table-top tbody tr td {
+  vertical-align: top !important;
+}
+
+
+
+.pilih-hari-input .form-control {
+  cursor: pointer; 
+  /* width: 50%; */
+  /* overflow: hidden; */
+}

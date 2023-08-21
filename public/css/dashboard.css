@@ -1,0 +1,249 @@
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  color: #212529;
+  /* color: #858796; */
+}
+
+h1, h2, h3, h4,
+.h1,.h2,.h3,.h4 {
+  font-family: 'Raleway', sans-serif;
+  color: #272c31;
+}
+
+.col-xl-2 {
+  width: 16%;
+}
+
+.col-xl-10 {
+  width: 84%;
+}
+
+.container-bg {
+  background-color: #f1f4fc;
+  /* background-color: #f8f9fc; */
+  min-height: 100vh;  
+  /* padding-right: 1.5rem;
+  padding-left: 1.5rem; */
+}
+
+.content-container {
+  padding: 30px 28px;
+}
+
+.main-bg {
+  border-radius: 10px;
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 10px 10px 10px 10px;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(58, 59, 69, 0.2) !important;
+  border: 1px solid #e3e6f0;
+}
+
+/* size MD */
+@media (max-width: 786px) {
+  .navbar-nav .logo {
+    position: relative;
+    height: 32px;
+    width: 32px;
+    margin-left: 5px;
+  }
+  .navbar-nav .avatar-img {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .mobile-toggler .logo {
+    position: relative;
+    height: 32px;
+    width: 32px;
+  }
+  .col-xl-10 {
+    width: 100%;
+  }
+  .custom-tambah{
+    margin-left: 70%;
+  }
+}
+
+
+/* Navbar */
+.navbar .mobile-toggler i {
+  font-size: 24px;
+  color: #6c757d;
+}
+
+.logo {
+  position: relative;
+  height: 32px;
+  width: 32px;
+}
+
+.avatar-img {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.navbar-custom {
+  height: 50px;
+}
+
+.toggle-profil {
+  cursor: pointer;
+}
+
+.dropdown-profil {
+  margin-top: 5px;
+  border: none;
+  padding: 0;
+  right: 0;
+}
+
+.dropdown-profil i {
+  color: #9eabb6;
+}
+
+.dropdown-profil a {
+  font-size: 14px;
+  font-weight: 400;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.dropdown-profil a:hover {
+  border-radius: 10%;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-custom {
+  padding-top: 65px;
+  background-color: #1cc88a;
+  background: linear-gradient(to bottom, #0e8357, #c6cf60);
+}
+
+.sidebar-custom a {
+  /* margin-left: -5px; */
+  font-family: "Nunito";
+  font-weight: 500;
+  padding: 10px 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 15px;
+  color: #fff;
+}
+
+.sidebar-custom a:visited {
+  color: #ffffff;
+}
+
+.sidebar-custom a:hover {
+  opacity: 80%;
+  background-color: #d2f4ea;
+  color: #0e8357;
+  border-radius: 6px;
+}
+
+.sidebar-custom .active {
+  color: #ffffff;
+  background-color: #fff;
+  background: linear-gradient(to right, #fbfdfc, #c3ebdf);
+  color: #0e8357;
+  border-radius: 6px;
+}
+
+.sidebar-custom .active:visited {
+  color: #0e8357;
+}
+
+.sidebar-custom .active:hover {
+  background-color: #fff;
+  color: #0e8357;
+  border-radius: 6px;
+}
+
+.sidebar-divider {
+  border-color: white;
+  opacity: 15%;
+}
+
+/* modal menu */
+.modal-navbar .modal-dialog{
+
+  margin: 0;
+  width: 100%;
+}
+
+@media(max-width: 450px){
+
+  .modal-navbar .modal-dialog{
+      width: 82%;
+  }
+}
+
+.modal-navbar .modal-content{
+
+  border-radius: 0;
+  overflow-y: scroll;
+  width: 100vw
+}
+
+.modal-navbar .modal-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 88%;
+  margin: 0 auto;
+  border-bottom: 3px solid #686b6d;
+  padding-bottom: 5px;
+  padding-top: 20px;
+}
+
+
+.modal-navbar .modal-body{
+
+  width: 90%;
+  margin: 0 auto;
+  flex: unset;
+}
+
+.modal-navbar .modal-body .modal-line{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px 5px 5px 5px;
+  /* margin-bottom: 20px; */
+  cursor: pointer;
+  transition: all .5s ease;
+}
+
+.modal-navbar .modal-body .modal-line:hover{
+  background-color: #d2f4ea;
+  color: #0E8357;
+}

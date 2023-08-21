@@ -1,0 +1,195 @@
+/* @media (min-width: 1200px) { 
+    .action-alert {
+        width: 36%;
+    }
+ } */
+
+ @media (max-width: 1700px) {
+    .custom-search{
+      width: 60%;
+    }
+    .filter-icon {
+      display: none;
+    }
+    .table-admin{
+      width: 80%;
+    }
+    .btn-cari {
+      display: block;
+    }
+
+    .custom-step i{
+      font-size: 40px;
+    }
+  }
+
+  /* xl */
+  @media (max-width: 1200px) {    
+    
+
+    
+  }
+
+  /* lg */
+  @media (max-width: 992px) {    
+
+    
+  }
+  
+ 
+  /* md */
+  @media (max-width: 768px) {
+    .card-baru h6{
+      font-size: 14px;
+    }
+    .card-baru .card-title{
+      font-size: 12px;
+    }
+    .custom-search{
+      width: 80%;
+    }
+    .card-custom .img {
+      height: 20%;
+    }
+    .filter-icon {
+      display: inline;
+    }
+    
+    .custom-bio .btn{
+      margin-top: 10px;
+    }
+    .table-admin{
+      width: 95%;
+    }
+    .content-container{
+      padding: 20px 5px;
+    }
+
+    .table-admin{
+      width: 80%;
+    }
+
+    .custom-step i{
+      font-size: 32px;
+    }
+    .custom-step h5{
+      font-size: 16px;
+    }
+
+    .navbar-text {
+      display: none;
+    }
+
+  }
+  @media (max-width: 576px) {
+    .custom-bio .btn{
+      margin: 10px 5px 0px 5px;
+    }
+    .navbar-nav .logo {
+        position: relative;
+        height: 32px;
+        width: 32px;
+        margin-left: 5px;
+      }
+      .navbar-nav .avatar-img {
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .mobile-toggler .logo {
+        position: relative;
+        height: 32px;
+        width: 32px;
+      }
+      .col-xl-10 {
+        width: 100%;
+      }
+      .table-admin{
+        width: 95%;
+      }
+
+      .btn-cari {
+        display: none;
+      }
+
+      .custom-search-input input {
+        border-radius: 0;
+      }
+
+      .card-terapis {
+        height: 220px;
+      }
+      .card-baru {
+        height: 220px;
+      }
+
+      .card-baru img {
+        height: 55%;
+      }
+      .card-custom img {
+        height: 45%;
+      }
+      .card-custom {
+        height: 260px;
+      }
+
+      .card-terapis img{
+        height: 64%;
+      }
+
+      .custom-step i{
+        font-size: 24px;
+      }
+      .custom-step h5{
+        font-size: 14px;
+      }
+
+      .img-preview {
+        max-height: 200px;
+        width: auto;
+      }
+
+      
+  }
+
+  @media (max-width: 450px) {   
+    .card-performa .flex-wrap {
+      flex-direction: column;
+      /* align-items: start; */
+    }
+    .card-performa .col {
+      padding: 30px;
+    }
+
+    .card-terapis {
+      height: 200px;
+    }
+  }
+
+  @media (min-width: 450px) {   
+    .card-performa .flex-wrap {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  @media (min-width: 576px) {   
+    .custom-search .rounded-end {
+      border-top-right-radius: 0!important;
+      border-bottom-right-radius: 0!important;
+    }
+    .card-custom .card-footer {
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    
+  }
+
+  @media (min-width: 1300px) {
+    .form-check-custom {
+      display: inline-block !important;
+      margin-right: 1.3rem;
+    }    
+  }
