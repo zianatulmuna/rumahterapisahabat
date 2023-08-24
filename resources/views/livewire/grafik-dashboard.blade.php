@@ -1,129 +1,82 @@
 <div>
-    <div class="main-bg px-3 py-4" id="grafik">
+    <div class="main-bg px-3 py-4 grafik-perkembangan" id="grafik">
         <div class="pb-2 mb-3 border-bottom">
             <h1 class="h4">Grafik Manajemen Klinik</h1>
         </div>
 
         <div class="nav nav-tabs d-flex justify-content-between px-0">
+            {{-- menu --}}
             <ul class="nav" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a href="" class="nav-link active" id="terapi-tab" data-tab="tab">Sesi Terapi</a>
+                    <button type="button" class="nav-link px-2 px-sm-3 {{ $grafik == 'Sesi Terapi' ? 'active' : '' }}" id="terapi-tab" data-tab="tab" wire:click="setMenu('Sesi Terapi')">Sesi Terapi</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a href="" class="nav-link" id="baru-tab" data-tab="tab">Pasien Baru</a>
+                    <button type="button" class="nav-link px-2 px-sm-3 {{ $grafik == 'Pasien Baru' ? 'active' : '' }}" id="baru-tab" data-tab="tab" wire:click="setMenu('Pasien Baru')">Pasien Baru</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a href="" class="nav-link" id="selesai-tab" data-tab="tab">Pasien Selesai</a>
+                    <button type="button" class="nav-link px-2 px-sm-3 {{ $grafik == 'Pasien Selesai' ? 'active' : '' }}" id="selesai-tab" data-tab="tab" wire:click="setMenu('Pasien Selesai')">Pasien Selesai</button>
                 </li>
             </ul>
-            <div class="dropdown mb-2 mb-md-0">
-                <button class="btn dropdown-toggle btn-outline-success" style="width: 100%; max-width: 300px" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @if(request('filter') === 'tahun-ini')
-                        Tahun Ini
-                    @elseif(request('filter') === 'semua-tahun')
-                        Semua tahun
-                    @elseif(request('filter') === 'minggu')
-                        Minggu Ini
-                    @else
-                        {{ request('filter') }}
-                    @endif
-                </button>
-                <div class="dropdown-menu dropdown-menu-right rounded-2 shadow" aria-labelledby="dropdownMenuButton">
-                    @php
-                        $filters = [
-                            'minggu' => 'Minggu ini',
-                            'tahun-ini' => 'Tahun ini',
-                            'semua-tahun' => 'Semua Tahun',
-                        ];
-                    @endphp
-
-                    @foreach ($filters as $filterValue => $filterText)
-                        <a 
-                            href="/admin/dashboard?{{ http_build_query(array_merge(request()->except('filter'), ['grafik' => request('grafik'), 'filter' => $filterValue])) }}" 
-                            class="dropdown-item {{ Request::query('filter') == $filterValue ? 'active' : '' }}">                                
-                            {{ $filterText }}
-                        </a>
-                    @endforeach
-                    <form action="/admin/dashboard" class="input-group p-2">
-                        @if(request('grafik'))
-                            <input type="hidden" name="grafik" value="{{ request('grafik') }}">
-                        @endif
-                        @if(request('terapis'))
-                            <input type="hidden" name="terapis" value="{{ request('terapis') }}">
-                        @endif
-                        @if(request('penyakit'))
-                            <input type="hidden" name="penyakit" value="{{ request('penyakit') }}">
-                        @endif
-                        <input type="search" class="form-control py-0" name="filter" id="tahunInput" min="2014" max="2023" placeholder="Tahun">
-                        <button type="submit" id="btnTahun" class="btn btn-outline-success">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </form>
-                </div> 
+            {{-- waktu --}}
+            <div class="d-none d-sm-block mb-2 mb-md-0">
+                @include('partials.filter-waktu')
             </div>
         </div>
 
         <div class="tab-content py-3 border border-top-0" id="myTabContent">
-            <div class="row p-3 mb-3">
-                <div class="col custom-search-grafik px-2 my-sm-2 my-md-0">                      
+            <div class="row row-cols-1 row-cols-sm-2 p-3 mb-3">
+                {{-- terapis --}}
+                <div class="col custom-search-grafik px-2 mb-2 my-sm-2 my-md-0">                      
                     <div class="dropdown w-100 search-dinamis dropdown-terapis">
-                        @if(request('grafik') == 'sesi-terapi')
-                            <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{-- @if($grafik == 'Sesi Terapi') --}}
+                            <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false" {{ $grafik != 'Sesi Terapi' ? 'disabled' : '' }}>
                                 <span>
-                                    {{ request('terapis') ? request('terapis') : 'Pilih Terapis' }}
+                                    @if($grafik == 'Sesi Terapi')
+                                        {{ $nama_terapis ? $nama_terapis : 'Pilih Terapis' }}
+                                    @endif
                                 </span>
                                 <i class="bi bi-chevron-down"></i>
                             </button>
                             <div class="dropdown-menu px-3 w-100 shadow">
                                 <div class="input-group py-2">
-                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                    <input type="text" class="form-control search-input" placeholder="Cari nama terapis">
+                                    <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
+                                    <input type="text" class="form-control border-start-0 search-input" placeholder="Cari nama terapis">
                                 </div>
                                 <ul class="select-options"></ul>
                             </div>
-                        @endif
+                        {{-- @endif --}}
                     </div>
                 </div>
-                <div class="col custom-search-grafik px-2 my-sm-2 my-md-0">                      
+                {{-- penyakit --}}
+                <div class="col custom-search-grafik px-2 mb-2 my-sm-2 my-md-0">                      
                     <div class="dropdown w-100 search-dinamis dropdown-penyakit">
                         <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span>
-                                {{ request('penyakit') ? request('penyakit') : 'Pilih Penyakit' }}
+                                {{ $nama_penyakit ? $nama_penyakit : 'Pilih Penyakit' }}
                             </span>
                             <i class="bi bi-chevron-down"></i>
                         </button>
                         <div class="dropdown-menu px-3 w-100 shadow">
                             <div class="input-group py-2">
-                                <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                <input type="text" class="form-control search-input" placeholder="Cari penyakit">
+                                <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control border-start-0 search-input" placeholder="Cari penyakit">
                             </div>
                             <ul class="select-options"></ul>
                         </div>
                     </div>
                 </div>
+                <div class="d-block d-sm-none px-2 w-100">
+                    @include('partials.filter-waktu')
+                </div>
             </div>
-            <div class="tab-pane fade show active" id="sesiTerapi" role="tabpanel" aria-labelledby="terapi-tab">
-                <canvas id="grafikChart"></canvas>
-            </div>
-            <div class="tab-pane fade" id="pasienBaru" role="tabpanel" aria-labelledby="baru-tab">
-                <canvas id="grafikChart"></canvas>
-            </div>
-            <div class="tab-pane fade" id="pasienSelesai" role="tabpanel" aria-labelledby="selesai-tab">
-                <canvas id="grafikChart"></canvas>
-            </div>
+
+            <canvas id="grafikChart"></canvas>
+
             <div class="text-center mt-3">
                 <span class="text-center">
-                    @if(request('filter') === 'tahun-ini')
-                        Data {{ request('grafik') }} tahun Ini
-                    @elseif(request('filter') === 'semua-tahun')
-                        Data {{ request('grafik') }} setiap tahun
-                    @elseif(request('filter') === 'minggu')
-                        Data {{ request('grafik') }} minggu ini
-                    @else
-                        Data {{ request('grafik') }} tahun {{ request('tahun') }}
-                    @endif
-                    {{ request('terapis') ? 'oleh terapis ' . request('terapis') : '' }}
-                    {{ request('penyakit') ? 'berdasarkan penyakit ' . request('penyakit') : '' }}
+                    Data {{ $grafik }} {{ $filter }} {{ $filter == 'tahun' ? $tahun : '' }}
+                    {{ $nama_terapis ? 'oleh terapis ' . $nama_terapis : '' }}
+                    {{ $nama_penyakit ? 'berdasarkan penyakit ' . $nama_penyakit : '' }}
                 </span>
             </div>
         </div>
@@ -132,63 +85,173 @@
 </div>
 
 @push('script')
+{{-- script terapis --}}
 <script>
-    const value=  @json(array_values($dataGrafik));
-    const label = @json(array_keys($dataGrafik));
-    const maxValue = @json($maxChart)
-    
-    new Chart("grafikChart", {
-    type: "line",
-    data: {
-        labels: label,
-        datasets: [{
-        fill: false,
-        lineTension: 0,
-        backgroundColor: "rgba(0,0,255,1.0)",
-        borderColor: "rgba(0,0,255,0.1)",
-        data: value
-        }]
-    },
-    options: {
-        legend: {display: false},
-        scales: {
-        yAxes: [{ticks: {min: 0, max:maxValue}}],
-        }
+    let dataTerapis = @json($terapis->toArray());
+
+    const dropTerapis = document.querySelector(".dropdown-terapis");
+    let selectBtnTerapis = dropTerapis.querySelector("button");
+    let searchInpTerapis = dropTerapis.querySelector(".search-input");
+    let optionsTerapis = dropTerapis.querySelector(".select-options");
+
+
+    function setTerapisToController(selectedLi) {
+        let id = selectedLi.getAttribute('data-id');
+        let nama = selectedLi.getAttribute('data-nama');
+        Livewire.emit('setTerapis', { id: id, nama: nama });
+    };
+        
+
+        
+    function addTerapis(selectedTerapis) {
+        optionsTerapis.innerHTML = "";
+        dataTerapis.forEach(terapis => {
+            let isSelected = terapis.nama == selectedTerapis ? "active" : "";
+            let li = `
+                        <li class="dropdown-item ps-1 ${isSelected}" 
+                            id="terapisOption"
+                            data-id="${terapis.id_terapis}" 
+                            data-nama="${terapis.nama}"
+                            onclick="setTerapisToController(this)">
+                            <p class="m-0 d-flex justify-content-between w-100" >
+                                <span class="col-8 text-start text-truncate">${terapis.nama}</span>
+                                <span class="small fst-italic">${terapis.tingkatan}</span>
+                            </p>
+                        </li>
+                    `;     
+            optionsTerapis.insertAdjacentHTML("beforeend", li);
+        });
     }
+
+    
+
+    searchInpTerapis.addEventListener("keyup", () => {
+        let arr = [];
+        let searchWord = searchInpTerapis.value.toLowerCase();
+        arr = dataTerapis.filter(terapis => {
+            let data = terapis.nama;
+            return data.toLowerCase().startsWith(searchWord);
+        }).map(terapis => {
+            let isSelected = terapis.nama == selectBtnTerapis.firstElementChild.innerText ? "active" : "";
+            return `
+                        <li class="dropdown-item ps-1 ${isSelected}" 
+                            data-id="${terapis.id_terapis}" 
+                            data-nama="${terapis.nama}" 
+                            onclick="updateNameTerapis(this)">
+                            <button type="button" class="nav-link text-decoration-none text-dark d-flex justify-content-between w-100" wire:click="setTerapis('${terapis.id_terapis}')">
+                                <span class="col-8 text-start text-truncate">${terapis.nama}</span>
+                                <span class="small fst-italic">${terapis.tingkatan}</span>
+                            </button>
+                        </li>
+                    `;  
+        }).join("");
+        optionsTerapis.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
     });
 
-    let dataTerapis = @json($terapis->toArray());
+    selectBtnTerapis.addEventListener("click", () => dropTerapis.classList.toggle("active"));
+
+</script>
+{{-- script penyakit --}}
+<script>    
     let dataPenyakit = @json($penyakit);
 
-    let grafikQuery = '{{ Request::query('grafik') }}';
-    let filterQuery = '{{ Request::query('filter') }}';
-    let terapisQuery = '{{ Request::query('terapis') }}';
-    let penyakitQuery = '{{ Request::query('penyakit') }}';
+    const dropPenyakit = document.querySelector(".dropdown-penyakit");
+    let selectBtnPenyakit = dropPenyakit.querySelector("button");
+    let searchInpPenyakit = dropPenyakit.querySelector(".search-input");
+    let optionsPenyakit = dropPenyakit.querySelector(".select-options");
 
-    let queryString = '';
-    queryString += grafikQuery ? `grafik=${grafikQuery}&` : '';
-    queryString += filterQuery ? `filter=${filterQuery}&` : '';
-    queryString += terapisQuery ? `terapis=${terapisQuery}&` : '';
-    queryString += penyakitQuery ? `penyakit=${penyakitQuery}&` : '';
+    function setPenyakitToController(selectedLi) {
+        let nama = selectedLi.getAttribute('data-nama');
+        Livewire.emit('setPenyakit', nama);
+    };
 
-    const grafikValue = '{{ request('grafik') }}';
-
-    const terapiTab = document.querySelector('#terapi-tab');
-    const baruTab = document.querySelector('#baru-tab');
-    const selesaiTab = document.querySelector('#selesai-tab');
-
-    terapiTab.classList.remove('active');
-    baruTab.classList.remove('active');
-    selesaiTab.classList.remove('active');
-
-    if (grafikValue === 'pasien-baru') {
-        baruTab.classList.add('active');
-    } else if (grafikValue === 'pasien-selesai') {
-        selesaiTab.classList.add('active');
-    } else if (grafikValue === 'sesi-terapi') {
-        terapiTab.classList.add('active');
+    function addPenyakit(selectedPenyakit) {
+        optionsPenyakit.innerHTML = "";
+        dataPenyakit.forEach(penyakit => {
+            let isSelected = penyakit == selectedPenyakit ? "active" : "";
+                let li = `
+                            <li class="dropdown-item ${isSelected}" 
+                                data-nama="${penyakit}" 
+                                onclick="setPenyakitToController(this)">
+                                ${penyakit}                            
+                            </li>
+                        `;
+                optionsPenyakit.insertAdjacentHTML("beforeend", li);
+        });
     }
-</script>    
-<script src="/js/select-terapis-grafik.js"></script>
-<script src="/js/select-penyakit.js"></script>
+
+    searchInpPenyakit.addEventListener("keyup", () => {
+        let arr = [];
+        let searchWord = searchInpPenyakit.value.toLowerCase();
+        arr = dataPenyakit.filter(penyakit => {
+            let data = penyakit;
+            return data.toLowerCase().startsWith(searchWord);
+        }).map(penyakit => {
+            let penyakitQuery = `penyakit=${penyakit}`;
+            let link = `/admin/dashboard?${queryString}${penyakitQuery}`;
+            let isSelected = penyakit == selectBtnPenyakit.firstElementChild.innerText ? "active" : "";
+            return `<a href="${link}" class="text-decoration-none text-dark">
+                        <li class="dropdown-item ${isSelected}" 
+                            data-nama="${penyakit}" 
+                            onclick="updateNamePenyakit(this)">
+                            ${penyakit}                            
+                        </li>
+                    </a>`;
+        }).join("");
+        optionsPenyakit.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
+    });
+
+    selectBtnPenyakit.addEventListener("click", () => dropPenyakit.classList.toggle("active"));
+
+</script>
+<script>
+    document.addEventListener('livewire:load', function () {
+
+        // script tahun
+        // const inputTahun = document.querySelector('#tahunInput');
+        // const btnTahun = document.querySelector('#tahunBtn');
+
+        // btnTahun.addEventListener('click', function(e) {
+        //     Livewire.emit('setTahun', inputTahun.value);
+        // });
+        
+        // script grafik
+        Livewire.on('chartUpdated', grafik => {
+            updateChart(grafik.dataGrafik, grafik.maxChart);    
+
+            addTerapis('');      
+            addPenyakit('');      
+        });
+
+        function updateChart(dataGrafik, max) {
+            const value = Object.values(dataGrafik);
+            const label = Object.keys(dataGrafik);
+            const maxValue = max;
+
+            const chart = new Chart("grafikChart", {
+                type: "line",
+                data: {
+                    labels: label,
+                    datasets: [{
+                        fill: false,
+                        lineTension: 0,
+                        backgroundColor: "rgba(0,0,255,1.0)",
+                        borderColor: "rgba(0,0,255,0.1)",
+                        data: value
+                    }]
+                },
+                options: {
+                    legend: {display: false},
+                    scales: {
+                        yAxes: [{ticks: {min: 0, max: maxValue}}],
+                    }
+                }
+            });
+        }
+
+        updateChart(@json($dataGrafik), @json($maxChart));
+        addTerapis();
+        addPenyakit();
+    });
+</script>
 @endpush

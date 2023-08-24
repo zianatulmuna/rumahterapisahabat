@@ -276,60 +276,7 @@
 
 
 /* card rekam medis terdahulu */
-.card-rm-dulu{
-  background-color:#FFFFFF; 
-  height: 150px;
-  max-width: 250px;
-}
 
-.card-rm-dulu h6{
-  font-family: "Raleway", sans-serif;
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.card-rm-dulu .card-header {
-  background-color: #0E8357;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.card-rm-dulu p{
-  color:#212529;
-  font-size: 14px;
-  font-weight: 400;
-  margin: 20px 0px 0px 20px;
-}
-
-.card-rm-dulu .card-title{
-  color:#212529;
-  font-size: 15px;
-  font-weight: 600;
-  text-align: center;
-  margin: 0px;
-}
-
-.card-rm-dulu h6:hover{
-  background-color: #fff;
-  color: #0e8357;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.card-rm-dulu h6:active{
-  background-color: #fff;
-  color: #0e8357;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.card-rm-dulu h6:focus {
-  background-color: #fff;
-  color: #0e8357;
-  border-radius: 10px;
-  cursor: pointer;
-}
 
 /* card rekam terapi terkini */
 .card-rt{
@@ -383,9 +330,12 @@
 
 /* Custom data pasien */
 
-
+.custom-bio {
+  margin-left: 0px;
+  margin-right: 0px;
+}
 .custom-bio img {
-  height: 240px;
+  height: 215px;
   width: 190px;
   object-fit: cover;
 }

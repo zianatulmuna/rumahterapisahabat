@@ -113,9 +113,9 @@
         display: none;
       }
 
-      .custom-search-input input {
+      /* .custom-search-input input {
         border-radius: 0;
-      }
+      } */
 
       .card-terapis {
         height: 220px;
@@ -150,6 +150,10 @@
         width: auto;
       }
 
+      .grafik-perkembangan .nav-tabs .nav-link {
+        font-size: 14px;
+      }
+
       
   }
 
@@ -165,6 +169,28 @@
     .card-terapis {
       height: 200px;
     }
+
+    .custom-step {
+      padding: 0px;
+      padding: 1rem 50px 0px 50px;
+    }
+
+    .custom-step .col {
+      padding: 0px;
+    }
+
+    .custom-step h5 {
+      display: none;
+    }
+
+    .step-title {
+      display: block;
+      /* padding-bottom: 10px; */
+    }
+
+    .step-title h5 {
+      font-weight: bold;
+    }
   }
 
   @media (min-width: 450px) {   
@@ -172,6 +198,19 @@
       flex-direction: row;
       align-items: center;
     }
+
+    .step-title {
+      display: none;
+    }
+    .step-title h5 {
+      font-size: 1.1rem;
+    }
+
+    .custom-step {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
   }
 
   @media (min-width: 576px) {   
@@ -185,6 +224,30 @@
     }
 
     
+    .table-data-diri thead tr th {
+      width: 80%;
+    }
+    
+    .table-data-diri thead tr th:first-child {
+      width: 20%;
+    }
+    
+    .table-info-rm tbody tr td, .table-info-rm thead tr th {
+      width: 81%;
+    }
+    
+    .table-info-rm tbody tr td:first-child, .table-info-rm thead tr th:first-child {
+      width: 19%;
+    }
+    .search-dinamis .select-options {
+      max-height: 150px;
+    }
+
+    .dropdown-filter-tahun .dropdown-toggle {
+      /* width: 100%;  */
+      max-width: 300px;
+      /* text-align: right; */
+    }
   }
 
   @media (min-width: 1300px) {

@@ -122,6 +122,7 @@ class FormEditTerapis extends Component
             'jenis_kelamin' => $this->jenis_kelamin,
             'agama' => $this->agama,
             'tingkatan' => $this->tingkatan,
+            'status' => $this->status,
             'username' => $this->username,
             'password' => $this->password,
         ); 
@@ -130,7 +131,8 @@ class FormEditTerapis extends Component
             if ($this->dbFoto) {
                 Storage::delete($this->dbFoto);
             }
-            $dataDiri['foto'] = $this->foto->store('terapis');
+            $ext = $this->foto->getClientOriginalExtension();
+            $dataDiri['foto'] = $this->foto->storeAs('terapis', $this->username . '.' . $ext);
         } 
         
         if ($this->pathFoto && $this->dbFoto == null && $this->foto == null) {

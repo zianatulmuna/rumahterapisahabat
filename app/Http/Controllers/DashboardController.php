@@ -16,38 +16,38 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $max = 0; 
-        $idTerapis = '';
+        // $max = 0; 
+        // $idTerapis = '';
 
-        if(request('terapis')) {            
-            $idTerapis = Terapis::where('nama', request('terapis'))->value('id_terapis');
-        }
+        // if(request('terapis')) {            
+        //     $idTerapis = Terapis::where('nama', request('terapis'))->value('id_terapis');
+        // }
 
-        if (!request('grafik') && !request('filter')) {
-            request()->merge(['filter' => 'tahun-ini', 'grafik' => 'sesi terapi']);
-            $dataGrafik = $this->grafikPerTahun(request('grafik'), Carbon::now()->year, $idTerapis, request('penyakit'));
-            $max = max($dataGrafik);
-        } elseif(request('filter') === 'tahun-ini'){
-            $dataGrafik = $this->grafikPerTahun(request('grafik'), Carbon::now()->year, $idTerapis, request('penyakit'));
-            $max = max($dataGrafik);
-        } elseif (request('filter') === 'semua-tahun') {
-            $dataGrafik = $this->grafikSemuaTahun(request('grafik'), $idTerapis, request('penyakit')); 
-            if(!empty($dataGrafik))  {
-                $max = max($dataGrafik);
-            } 
-        } elseif (request('filter') === 'minggu') {
-            $dataGrafik = $this->grafikMingguIni(request('grafik'), $idTerapis, request('penyakit'));
-            $max = max($dataGrafik);
-        } else {
-            $dataGrafik = $this->grafikPerTahun(request('grafik'), request('filter'), $idTerapis, request('penyakit'));
-            $max = max($dataGrafik);
-        }
+        // if (!request('grafik') && !request('filter')) {
+        //     request()->merge(['filter' => 'tahun-ini', 'grafik' => 'sesi terapi']);
+        //     $dataGrafik = $this->grafikPerTahun(request('grafik'), Carbon::now()->year, $idTerapis, request('penyakit'));
+        //     $max = max($dataGrafik);
+        // } elseif(request('filter') === 'tahun-ini'){
+        //     $dataGrafik = $this->grafikPerTahun(request('grafik'), Carbon::now()->year, $idTerapis, request('penyakit'));
+        //     $max = max($dataGrafik);
+        // } elseif (request('filter') === 'semua-tahun') {
+        //     $dataGrafik = $this->grafikSemuaTahun(request('grafik'), $idTerapis, request('penyakit')); 
+        //     if(!empty($dataGrafik))  {
+        //         $max = max($dataGrafik);
+        //     } 
+        // } elseif (request('filter') === 'minggu') {
+        //     $dataGrafik = $this->grafikMingguIni(request('grafik'), $idTerapis, request('penyakit'));
+        //     $max = max($dataGrafik);
+        // } else {
+        //     $dataGrafik = $this->grafikPerTahun(request('grafik'), request('filter'), $idTerapis, request('penyakit'));
+        //     $max = max($dataGrafik);
+        // }
 
-        if($max <= 10) {
-            $maxChart = 10;
-        } else {
-            $maxChart = ceil($max / 10) * 10;
-        }
+        // if($max <= 10) {
+        //     $maxChart = 10;
+        // } else {
+        //     $maxChart = ceil($max / 10) * 10;
+        // }
 
         $terapiBulanIni = $this->dataCardTerapi();
         $prapasienBulanIni = $this->dataCardPasienBaru();
@@ -56,20 +56,16 @@ class DashboardController extends Controller
 
         $tahunTersedia = $this->selectTahun();
 
-        $terapis = Terapis::orderBy('nama', 'ASC')->get();
+        // $terapis = Terapis::orderBy('nama', 'ASC')->get();
         // $terapisReady = $terapis->where('is_ready', 1)->count();
         // $terapisForReady = Terapis::orderBy('is_ready', 'DESC')->orderBy('nama', 'ASC')->get();
-        $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
+        // $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
 
         $today = Carbon::now()->formatLocalized('%A, %d %B %Y');
         $jadwal_terapi = Jadwal::paginate(10);
         return view('admin.dashboard', compact(
             'jadwal_terapi', 
             'today', 
-            'terapis', 
-            'penyakit', 
-            'dataGrafik', 
-            'maxChart', 
             'tahunTersedia', 
             'terapiBulanIni', 
             'prapasienBulanIni', 

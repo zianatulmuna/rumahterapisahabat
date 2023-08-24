@@ -1,27 +1,39 @@
 <div>
   <div class="main-bg">
     {{-- Step header --}}
-    <div class="row justify-content-between py-4 py-sm-5 custom-step">
+    <div class="row justify-content-between py-sm-5 custom-step">
       <div class="col text-center">
-        <i class="bi {{  $currentStep == 1 ? 'bi-1-circle-fill' : 'bi-1-circle'  }} text-success h1"></i>
+        <i class="bi {{  $currentStep == 1 ? 'bi-1-circle-fill' : ($currentStep >= 1 ? 'bi bi-check-circle-fill' : 'bi-1-circle')  }} text-success h1"></i>
         <h5 class="pt-2">Data Diri</h5>
       </div>
       <div class="col text-center">
-        <i class="bi {{  $currentStep == 2 ? 'bi-2-circle-fill' : 'bi-2-circle'  }} text-success h1"></i>
+        <i class="bi {{  $currentStep == 2 ? 'bi-2-circle-fill' : ($currentStep >= 2 ? 'bi bi-check-circle-fill' : 'bi-2-circle')  }} text-success h1"></i>
         <h5 class="pt-2">Data Penunjang</h5>
       </div>
       <div class="col text-center">
-        <i class="bi {{  $currentStep == 3 ? 'bi-3-circle-fill' : 'bi-3-circle'  }} text-success h1"></i>
+        <i class="bi {{  $currentStep == 3 ? 'bi-3-circle-fill' : ($currentStep >= 3 ? 'bi bi-check-circle-fill' : 'bi-3-circle')  }} text-success h1"></i>
         <h5 class="pt-2">Rencana Layanan</h5>
       </div>
       <div class="col text-center">
-        <i class="bi {{  $currentStep == 4 ? 'bi-4-circle-fill' : 'bi-4-circle'  }} text-success h1"></i>
+        <i class="bi {{  $currentStep == 4 ? 'bi-4-circle-fill' : ($currentStep >= 4 ? 'bi bi-check-circle-fill' : 'bi-4-circle')  }} text-success h1"></i>
         <h5 class="pt-2">Data Awal</h5>
       </div>
       <div class="col text-center">
         <i class="bi {{  $currentStep == 5 ? 'bi-5-circle-fill' : 'bi-5-circle'  }} text-success h1"></i>
         <h5 class="pt-2">Target Terapi</h5>
       </div>
+    </div>
+    <div class="text-center step-title mt-3 mb-4">
+      @php
+        $stepTitles = [
+          1 => 'Data Diri',
+          2 => 'Data Penunjang',
+          3 => 'Rencana Layanan',
+          4 => 'Data Awal',
+          5 => 'Target Terapi',
+        ];
+      @endphp
+      <h5 class="m-0">{{ $stepTitles[$currentStep] }}</h5>
     </div>
 
     {{-- form --}}
@@ -402,7 +414,7 @@
           </div>
         @endif
 
-        {{-- data awal --}}
+        {{-- data target --}}
         @if($currentStep == 5)
           <div class="" id="" role="tabpanel" aria-labelledby="nav-awal-tab" tabindex="0">
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
@@ -453,22 +465,16 @@
             <div></div>           
           @endif
 
-          {{-- @if($currentStep == 2 || $currentStep == 3 || $currentStep == 4)
-            <button class="btn btn-secondary" type="button" onclick="toTop()" wire:click="toPrev()">Sebelumnya</button>            
-          @endif --}}
           @if($currentStep >= 2 && $currentStep <= 5)
             <button class="btn btn-secondary" type="button" onclick="toTop()" wire:click="toPrev()">Sebelumnya</button>            
           @endif
-
-          {{-- @if($currentStep == 1 || $currentStep == 2 || $currentStep == 3)      
-            <button class="btn btn-primary px-md-4 py-md-2" type="button" onclick="toTop()" wire:click="toNext()">Lanjut</button>
-          @endif --}}
+          
           @if($currentStep >= 1 && $currentStep <= 4)     
-            <button class="btn btn-primary px-md-4 py-md-2" type="button" onclick="toTop()" wire:click="toNext()">Lanjut</button>
+            <button class="btn c-btn-success px-3 px-md-4 py-md-2" type="button" onclick="toTop()" wire:click="toNext()">Lanjut</button>
           @endif
 
           @if($currentStep == 5)
-            <button type="submit" class="btn c-btn-success px-md-4 py-md-2" onclick="toTop()">Kirim</button>
+            <button type="submit" class="btn btn-success px-3 px-md-4 py-md-2" onclick="toTop()">Kirim</button>
           @endif
         </div>
       </div>
@@ -479,6 +485,7 @@
 @push('script')
   <script>
     const target = document.querySelector(".main-bg");
+    
     function capEach(inputId) {
       var input = document.getElementById(inputId);
         let words = input.value.split(' ');

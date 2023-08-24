@@ -1,5 +1,5 @@
 <div>
-    <div class="main-bg px-3 py-4" id="grafik">
+    <div class="main-bg px-3 py-4 grafik-perkembangan" id="grafik">
         <div class="pb-2 mb-3 border-bottom">
             <h1 class="h4">Grafik Manajemen Klinik</h1>
         </div>
@@ -7,65 +7,23 @@
         <div class="nav nav-tabs d-flex justify-content-between px-0">
             <ul class="nav" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a href="/admin/dashboard?grafik=sesi terapi{{ Request::query('filter') != '' ? '&filter=' . request('filter') : '' }}{{ Request::query('penyakit') != '' ? '&penyakit=' . request('penyakit') : '' }}" class="nav-link active" id="terapi-tab" data-tab="tab">Sesi Terapi</a>
+                    <a href="/admin/dashboard?grafik=sesi terapi{{ Request::query('filter') != '' ? '&filter=' . request('filter') : '' }}{{ Request::query('penyakit') != '' ? '&penyakit=' . request('penyakit') : '' }}" class="nav-link px-2 px-sm-3 active" id="terapi-tab" data-tab="tab">Sesi Terapi</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a href="/admin/dashboard?grafik=pasien baru{{ Request::query('filter') != '' ? '&filter=' . request('filter') : '' }}{{ Request::query('penyakit') != '' ? '&penyakit=' . request('penyakit') : '' }}" class="nav-link" id="baru-tab" data-tab="tab">Pasien Baru</a>
+                    <a href="/admin/dashboard?grafik=pasien baru{{ Request::query('filter') != '' ? '&filter=' . request('filter') : '' }}{{ Request::query('penyakit') != '' ? '&penyakit=' . request('penyakit') : '' }}" class="nav-link px-2 px-sm-3" id="baru-tab" data-tab="tab">Pasien Baru</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a href="/admin/dashboard?grafik=pasien selesai{{ Request::query('filter') != '' ? '&filter=' . request('filter') : '' }}{{ Request::query('penyakit') != '' ? '&penyakit=' . request('penyakit') : '' }}" class="nav-link" id="selesai-tab" data-tab="tab">Pasien Selesai</a>
+                    <a href="/admin/dashboard?grafik=pasien selesai{{ Request::query('filter') != '' ? '&filter=' . request('filter') : '' }}{{ Request::query('penyakit') != '' ? '&penyakit=' . request('penyakit') : '' }}" class="nav-link px-2 px-sm-3" id="selesai-tab" data-tab="tab">Pasien Selesai</a>
                 </li>
             </ul>
-            <div class="dropdown mb-2 mb-md-0">
-                <button class="btn dropdown-toggle btn-outline-success" style="width: 100%; max-width: 300px" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @if(request('filter') === 'tahun-ini')
-                        Tahun Ini
-                    @elseif(request('filter') === 'semua-tahun')
-                        Semua tahun
-                    @elseif(request('filter') === 'minggu')
-                        Minggu Ini
-                    @else
-                        {{ request('filter') }}
-                    @endif
-                </button>
-                <div class="dropdown-menu dropdown-menu-right rounded-2 shadow" aria-labelledby="dropdownMenuButton">
-                    @php
-                        $filters = [
-                            'minggu' => 'Minggu ini',
-                            'tahun-ini' => 'Tahun ini',
-                            'semua-tahun' => 'Semua Tahun',
-                        ];
-                    @endphp
-
-                    @foreach ($filters as $filterValue => $filterText)
-                        <a 
-                            href="/admin/dashboard?{{ http_build_query(array_merge(request()->except('filter'), ['grafik' => request('grafik'), 'filter' => $filterValue])) }}" 
-                            class="dropdown-item {{ Request::query('filter') == $filterValue ? 'active' : '' }}">                                
-                            {{ $filterText }}
-                        </a>
-                    @endforeach
-                    <form action="/admin/dashboard" class="input-group p-2">
-                        @if(request('grafik'))
-                            <input type="hidden" name="grafik" value="{{ request('grafik') }}">
-                        @endif
-                        @if(request('terapis'))
-                            <input type="hidden" name="terapis" value="{{ request('terapis') }}">
-                        @endif
-                        @if(request('penyakit'))
-                            <input type="hidden" name="penyakit" value="{{ request('penyakit') }}">
-                        @endif
-                        <input type="search" class="form-control py-0" name="filter" id="tahunInput" min="2014" max="2023" placeholder="Tahun">
-                        <button type="submit" id="btnTahun" class="btn btn-outline-success">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </form>
-                </div> 
+            <div class="d-none d-sm-block mb-2 mb-md-0">
+                @include('partials.filter-waktu')
             </div>
         </div>
 
         <div class="tab-content py-3 border border-top-0" id="myTabContent">
-            <div class="row p-3 mb-3">
-                <div class="col custom-search-grafik px-2 my-sm-2 my-md-0">                      
+            <div class="row row-cols-1 row-cols-sm-2 p-3 mb-3">
+                <div class="col custom-search-grafik px-2 mb-2 my-sm-2 my-md-0">                      
                     <div class="dropdown w-100 search-dinamis dropdown-terapis">
                         @if(request('grafik') == 'sesi terapi')
                             <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -76,15 +34,15 @@
                             </button>
                             <div class="dropdown-menu px-3 w-100 shadow">
                                 <div class="input-group py-2">
-                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                    <input type="text" class="form-control search-input" placeholder="Cari nama terapis">
+                                    <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
+                                    <input type="text" class="form-control border-start-0 search-input" placeholder="Cari nama terapis">
                                 </div>
                                 <ul class="select-options"></ul>
                             </div>
                         @endif
                     </div>
                 </div>
-                <div class="col custom-search-grafik px-2 my-sm-2 my-md-0">                      
+                <div class="col custom-search-grafik px-2 mb-2 my-sm-2 my-md-0">                      
                     <div class="dropdown w-100 search-dinamis dropdown-penyakit">
                         <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span>
@@ -94,12 +52,15 @@
                         </button>
                         <div class="dropdown-menu px-3 w-100 shadow">
                             <div class="input-group py-2">
-                                <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                <input type="text" class="form-control search-input" placeholder="Cari penyakit">
+                                <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control border-start-0 search-input" placeholder="Cari penyakit">
                             </div>
                             <ul class="select-options"></ul>
                         </div>
                     </div>
+                </div>
+                <div class="d-block d-sm-none px-2 w-100">
+                    @include('partials.filter-waktu')
                 </div>
             </div>
             <div class="tab-pane fade show active" id="sesiTerapi" role="tabpanel" aria-labelledby="terapi-tab">

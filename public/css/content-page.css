@@ -1,0 +1,44 @@
+/* Halaman Histori [Rekam Medis, Rekam Terapi] - Card Rekam Terkini */
+.card-kini .card-header {
+    color: #fff;
+    background-color: #0E8357;
+    text-decoration: none;  
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+.card-kini a:hover {
+    background-color: #fff;
+    color: #0e8357;
+    margin: 0;
+} 
+
+.card-kini .card-header h6 {
+    margin: 0;
+    font-weight: 700;      
+    font-size: 12.5pt;
+    line-height: 1rem;
+}
+
+/* Halaman Histori [Rekam Medis, Rekam Terapi] - Card Rekam Terdahulu */
+.card-dulu .card-header {
+    background-color: #d6dfd8;
+    cursor: pointer;
+    text-decoration: none;    
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+.card-dulu .card-header h6 {
+    margin: 0;
+    font-weight: 700;    
+    font-size: 12.5pt;
+    line-height: 1rem;
+}
+
+.card-dulu a:hover {
+    background-color: #fff;
+    color: #0e8357;
+    /* border-radius: 10px; */
+    cursor: pointer;
+}

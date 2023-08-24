@@ -22,6 +22,15 @@ class RekamMedisController extends Controller
     public function histori(Pasien $pasien) 
     {
         $rmTerkini = $pasien->rekamMedis()->where('status_pasien', 'Rawat Jalan')->get();
+        // $f = $rmTerkini->first()->subRekamMedis;
+        // $mulai = date("Y-m-d");
+        // foreach ($f as $s) {
+        //     $m = $s->rekamTerapi()->orderBy('tanggal', 'ASC')->first();            
+        //     if($m->tanggal < $mulai) {
+        //         $mulai = ($m->tanggal);
+        //     }
+        //  }
+        // dd($mulai);
         $rmTerdahulu = $pasien->rekamMedis()->where('status_pasien', '!=', 'Rawat Jalan')->get();
 
         if(count($rmTerkini) > 0 || count($rmTerdahulu) > 0) {

@@ -7,21 +7,21 @@
    </div>
 
    <div class="d-flex justify-content-start">
-        <a href="{{ route('jadwal.create') }}" class="btn btn-primary">
+        <a href="{{ route('jadwal.create') }}" class="btn c-btn-primary">
             <i class="bi bi-plus-square pe-2"></i>
             Tambah
         </a>
     </div>
 
-    <div class="d-flex flex-grow-1 justify-content-between align-item-center flex-wrap flex-md-nowrap align-items-end mt-3 mb-4">
-        <div class="col-4">
+    <div class="d-flex flex-grow-1 justify-content-between flex-wrap flex-md-nowrap align-items-center align-items-sm-end my-4 mt-sm-3">
+        <div class="col-sm-4">
             {{ $today }}
         </div>
-        <div class="col-8">
+        <div class="col-sm-8">
             <div class="row justify-content-end">
                 <div class="col-sm-9 col-xl-5">
-                    <div class="form-control py-0 d-flex flex-row justify-content-between align-items-center flex-wrap taginput">
-                        <input type="text" class="flex-grow-1 py-2" id="startDate" placeholder="Pilih Hari" style="cursor: pointer; width: 100px">
+                    <div class="form-control px-1 px-sm-2 py-0 d-flex flex-row justify-content-between align-items-center flex-wrap taginput" style="min-width: 128px;">
+                        <input type="text" class="flex-grow-1 ps-2 py-2" id="startDate" placeholder="Pilih Hari" style="cursor: pointer; width: 100px">
                         <i class="bi bi-calendar2-event small icon-date pe-1"></i>
                     </div>
                 </div>
@@ -29,14 +29,19 @@
         </div>
     </div>
     <div class="overflow-auto">
-        <table class="table table-bordered align-middle">
+        <table class="table table-bordered align-middle overflow-auto" style="min-width: 450px;">
             <thead>
             <tr class="text-center">
-                <th scope="col" style="width: 50px;">No</th>
+                {{-- <th scope="col" style="width: 50px;">No</th>
                 <th scope="col" style="">Nama Pasien</th>
                 <th scope="col" style="width: 150px;">Rekam Medis</th>
                 <th scope="col" style="">Terapis</th>
-                <th scope="col" style="width: 150px;">Aksi</th>
+                <th scope="col" style="width: 150px;">Aksi</th> --}}
+                <th scope="col">No</th>
+                <th scope="col">Nama Pasien</th>
+                <th scope="col">Rekam Medis</th>
+                <th scope="col">Terapis</th>
+                <th scope="col" style="min-width: 90px;">Aksi</th>
                 
             </tr>
             </thead>
@@ -53,7 +58,7 @@
                                 <i class="bi bi-eye"></i>
                             </a>  
                         </td>
-                        <td>{{ $jadwal->terapis->nama }}</td>
+                        <td class="text-capitalize">{{ $jadwal->terapis->username }}</td>
                         <td class="text-center">
                             <a href="" class="c-badge c-badge-danger me-2" data-toggle="modal" data-target="#terapiDeleteModal">
                                 <i class="bi bi-trash"></i>                      
@@ -108,10 +113,12 @@
         inputDate.addEventListener("focus", function() {
             document.querySelector(".icon-date").style.display = "none";
             inputDate.type = 'date';
+            inputDate.classList.remove("ps-2");
         });
         inputDate.addEventListener("blur", function() {
             document.querySelector(".icon-date").style.display = "block";
             inputDate.type = 'text';
+            
         });
     </script>
 @endpush

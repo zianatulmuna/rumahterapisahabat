@@ -1,6 +1,6 @@
 {{-- Data Diri Pasien --}}
 <div class="row g-4 custom-bio">
-    <div class="col-lg-2">
+    <div class="col-lg-2 p-0 pe-sm-3">
       <div class="d-flex align-items-center justify-content-center">
        @if ($pasien->foto)
           <img src="{{ asset('storage/' . $pasien->foto) }}" class="img-thumbnail" alt="...">
@@ -34,7 +34,7 @@
              </tr>
              <tr>
                 <td>Email</td>
-                <td>{{ $pasien->email }}</td>
+                <td>{{ $pasien->email ? $pasien->email : '-' }}</td>
              </tr>
              <tr>
                 <td>Jenis Kelamin</td>
@@ -42,21 +42,21 @@
              </tr>
              <tr>
                 <td>Umur</td>
-                <td>{{ $umur }} tahun</td>
+                <td>{{ $umur != 0 ? $umur . ' tahun' : '-'  }}</td>
              </tr>
              <tr>
                 <td>Pekerjaan</td>
-                <td>{{ $pasien->pekerjaan }}</td>
+                <td>{{ $pasien->pekerjaan ? $pasien->pekerjaan : '-' }}</td>
              </tr>
              <tr>
                 <td>Alamat</td>
                 <td>{{ $pasien->alamat }}</td>
              </tr>
-             <tr class="fw-semibold">
+             {{-- <tr class="fw-semibold">
                 <td>ID Pasien</td>
                 <td>{{ $pasien->id_pasien }}</td>
-             </tr>
-             @if(Request::is('admin/pasien/' . $pasien->slug))
+             </tr> --}}
+             {{-- @if(Request::is('admin/pasien/' . $pasien->slug))
                @if($rmDetected == 1)
                   <tr class="fw-semibold">
                      <td>No. RM</td>
@@ -67,15 +67,53 @@
                      <td>{{ $rm->status_pasien }}</td>                  
                   </tr>
                @endif
-             @endif
+             @endif --}}
           </tbody>            
        </table>
+       {{-- <div class="bg-secondary-subtle my-2" style="height: 1px"></div> --}}
+       <table class="table table-borderless table-sm m-0 mt-1 table-data-diri table-info-rm">
+         <thead>
+            <tr>
+              <th></th>
+              <th></th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>ID Pasien</td>
+               <td><span class="bg-body-secondary px-2 rounded-4 border">{{ $pasien->id_pasien }}</span></td>
+            </tr>
+            @if(Request::is('admin/pasien/' . $pasien->slug . '/rekam-medis' . '/*'))
+               @if($rmDetected == 1)
+               <tr class="table-rm-p">
+                  <td>No. RM</td>
+                  <td class="px-2">{{ $rm->id_rekam_medis }}</td>                  
+               </tr>
+               <tr>
+                  <td>Status</td>
+                  <td class="px-2">{{ $rm->status_pasien }}</td>                  
+               </tr>
+               @endif
+            @endif
+         </tbody>
+       </table>
+       {{-- <div class="d-flex gap-2 my-2 mt-3 text-white">
+         <div class="c-bg-info py-1 px-3 rounded-5">
+            ID Pasien: {{ $pasien->id_pasien }}
+         </div>
+         <div class="c-bg-success py-1 px-3 rounded-5">
+            NO.RM: {{ $rm->id_rekam_medis }}
+         </div>
+         <div class="c-bg-success py-1 px-3 rounded-5">
+            Status: {{ $rm->status_pasien }}
+         </div>
+      </div> --}}
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-2 p-0">
        <div class="button-rm d-flex align-items-sm-center flex-lg-column justify-content-center ps-lg-4">
-         <a href="{{ route('sub.histori', $pasien->slug) }}" class="btn btn-success btn-sm mb-3">Histori Rekam Terapi</a>
-         <a href="{{ route('rm.histori', $pasien->slug) }}" class="btn btn-success btn-sm mb-3 mx-sm-3 mx-lg-0">Histori Rekam Medis</a>
-         <a href="{{ route('rm.print', [$pasien->slug, $rm->id_rekam_medis]) }}" class="btn btn-success btn-sm mb-3">Unduh Rekam Medis</a>
+          <a href="{{ route('rm.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0">Histori Rekam Medis</a>
+         <a href="{{ route('sub.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3">Histori Rekam Terapi</a>
+         <a href="" class="btn btn-outline-success btn-sm mb-3">Unduh Rekam Medis</a>
        </div>
     </div>
 </div>

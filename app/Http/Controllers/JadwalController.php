@@ -19,13 +19,10 @@ class JadwalController extends Controller
     public function index()
     {
         // $today = now()->format('Y-m-d');
-        
+        // $jadwal_terapi = Jadwal::paginate(10, ['*'], 'page', null, ['useRelativePagination' => true]);
+        $jadwal_terapi = Jadwal::paginate(10);
         $today = Carbon::now()->formatLocalized('%A, %d %B %Y');
-        return view('admin.jadwal.jadwal', [
-            'jadwal_terapi' => Jadwal::paginate(10, ['*'], 'page', null, ['useRelativePagination' => true]),
-            'today' => $today
-            // 'jadwal_terapi' => Jadwal::where('tanggal', $today)->get()
-        ]);
+        return view('admin.jadwal.jadwal', compact('jadwal_terapi', 'today'));
     }
 
     /**
@@ -36,7 +33,7 @@ class JadwalController extends Controller
     public function create()
     {
         $pasien = Pasien::orderBy('nama', 'ASC')->get();
-        $terapis = Terapis::orderBy('nama', 'ASC')->get(['id_terapis', 'nama', 'tingkatan']);
+        $terapis = Terapis::where('status', 'Aktif')->orderBy('nama', 'ASC')->get(['id_terapis', 'nama', 'tingkatan']);
 
         return view('admin.jadwal.tambah', compact('pasien', 'terapis'));
     }

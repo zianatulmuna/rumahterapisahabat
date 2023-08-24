@@ -7,9 +7,9 @@
    </div>
 
    <div class="main-bg">
-      <form method="post" action="{{ route('jadwal.store') }}" class="main-form mb-30 p-4" id="terapiForm">
+      <form method="post" action="{{ route('jadwal.store') }}" class="main-form mb-30 p-sm-4" id="terapiForm">
         @csrf
-        <div class="row p-3 gap-3">
+        <div class="row row-cols-1 row-cols-md-2 p-3 py-sm-2 g-0 g-md-4 g-lg-5">
             <div class="col"> 
                <div class="mb-3">
                   <label for="id_pasien" class="form-label fw-semibold @error('id_pasien') is-invalid @enderror">Pasien</label>
@@ -21,8 +21,8 @@
                      </button>
                      <div class="dropdown-menu px-3 w-100 shadow">
                         <div class="input-group py-2">
-                           <span class="input-group-text"><i class="bi bi-search"></i></span>
-                           <input type="text" class="form-control search-input" placeholder="Cari nama pasien">
+                           <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
+                           <input type="text" class="form-control border-start-0 search-input" placeholder="Cari nama pasien">
                         </div>
                         <ul class="select-options"></ul>
                      </div>
@@ -34,14 +34,14 @@
                <div class="mb-3">
                   <label for="no_telp" class="form-label fw-semibold @error('no_telp') is-invalid @enderror">Nomor Telepon</label>
                   <input type="text" class="form-control" value="{{ old('no_telp') }}" id="no_telp" name="no_telp" readonly>
-                  </div>
-                  <div class="mb-3">
-               <label for="jenis_kelamin" class="form-label fw-semibold @error('jenis_kelamin') is-invalid @enderror">Jenis Kelamin</label>
-               <input type="text" class="form-control" value="{{ old('jenis_kelamin') }}" id="jenis_kelamin" name="jenis_kelamin" readonly>
                </div>
                <div class="mb-3">
-               <label for="tanggal_lahir" class="form-label fw-semibold">Tanggal Lahir</label>
-               <input type="text" class="form-control" value="{{ old('tanggal_lahir') }}" id="tanggal_lahir" name="tanggal_lahir" readonly>
+                  <label for="jenis_kelamin" class="form-label fw-semibold @error('jenis_kelamin') is-invalid @enderror">Jenis Kelamin</label>
+                  <input type="text" class="form-control" value="{{ old('jenis_kelamin') }}" id="jenis_kelamin" name="jenis_kelamin" readonly>
+               </div>
+               <div class="mb-3">
+                  <label for="tanggal_lahir" class="form-label fw-semibold">Tanggal Lahir</label>
+                  <input type="text" class="form-control" value="{{ old('tanggal_lahir') }}" id="tanggal_lahir" name="tanggal_lahir" readonly>
                </div>
             </div>            
             <div class="col"> 
@@ -55,8 +55,8 @@
                      </button>
                      <div class="dropdown-menu px-3 w-100 shadow">
                         <div class="input-group py-2">
-                           <span class="input-group-text"><i class="bi bi-search"></i></span>
-                           <input type="text" class="form-control search-input" placeholder="Cari nama terapis">
+                           <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
+                           <input type="text" class="form-control border-start-0 search-input" placeholder="Cari nama terapis">
                         </div>
                         <ul class="select-options"></ul>
                      </div>

@@ -3,23 +3,18 @@ let selectBtnTerapis = dropTerapis.querySelector("button");
 let searchInpTerapis = dropTerapis.querySelector(".search-input");
 let optionsTerapis = dropTerapis.querySelector(".select-options");
 
-addTerapis();
-
 function addTerapis(selectedTerapis) {
     optionsTerapis.innerHTML = "";
     dataTerapis.forEach(terapis => {
-        let terapisQuery = `terapis=${terapis.nama}`;
-        let link = `/admin/dashboard?${queryString}${terapisQuery}`;
         let isSelected = terapis.nama == selectedTerapis ? "active" : "";
         let li = `
-                    <li class="dropdown-item ${isSelected}" 
+                    <li class="dropdown-item ps-1 ${isSelected}" 
                         data-id="${terapis.id_terapis}" 
-                        data-nama="${terapis.nama}" 
-                        onclick="updateNameTerapis(this)">
-                        <a href="${link}" class="text-decoration-none text-dark d-flex justify-content-between">
-                            <div class="col-8 text-truncate">${terapis.nama}</div>
-                            <div class="small fst-italic">${terapis.tingkatan}</div>
-                        </a>
+                        data-nama="${terapis.nama}">
+                        <button type="button" class="nav-link text-decoration-none text-dark d-flex justify-content-between w-100" wire:click="setTerapis('${terapis.id_terapis}')">
+                            <span class="col-8 text-start text-truncate">${terapis.nama}</span>
+                            <span class="small fst-italic">${terapis.tingkatan}</span>
+                        </button>
                     </li>
                 `;     
         optionsTerapis.insertAdjacentHTML("beforeend", li);
@@ -41,18 +36,18 @@ searchInpTerapis.addEventListener("keyup", () => {
         let data = terapis.nama;
         return data.toLowerCase().startsWith(searchWord);
     }).map(terapis => {
-        let terapisQuery = `terapis=${terapis.nama}`;
-        let link = `/admin/dashboard?${queryString}${terapisQuery}`;
         let isSelected = terapis.nama == selectBtnTerapis.firstElementChild.innerText ? "active" : "";
-        return `<li class="dropdown-item d-flex justify-content-between ${isSelected}" 
-                    data-id="${terapis.id_terapis}" 
-                    data-nama="${terapis.nama}" 
-                    onclick="updateNameTerapis(this)">
-                    <a href="${link}" class="text-decoration-none text-dark d-flex justify-content-between">
-                        <div class="col-8 text-truncate">${terapis.nama}</div>
-                        <div class="small fst-italic">${terapis.tingkatan}</div>
-                    </a>
-                </li>`;
+        return `
+                    <li class="dropdown-item ps-1 ${isSelected}" 
+                        data-id="${terapis.id_terapis}" 
+                        data-nama="${terapis.nama}" 
+                        onclick="updateNameTerapis(this)">
+                        <button type="button" class="nav-link text-decoration-none text-dark d-flex justify-content-between w-100" wire:click="setTerapis('${terapis.id_terapis}')">
+                            <span class="col-8 text-start text-truncate">${terapis.nama}</span>
+                            <span class="small fst-italic">${terapis.tingkatan}</span>
+                        </button>
+                    </li>
+                `;  
     }).join("");
     optionsTerapis.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
 });

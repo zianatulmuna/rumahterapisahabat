@@ -176,7 +176,7 @@ class FormCreatePasien extends Component
                 'jumlah_layanan' => 'max:50',
                 'status_pasien' => 'required',
                 'tanggal_selesai' => [
-                    Rule::requiredIf($this->status_pasien == 'Selesai')
+                    Rule::requiredIf($this->status_pasien == 'Selesai' || $this->status_pasien == 'Jeda')
                 ]
             ], $message);
         }elseif($this->currentStep == 4){
@@ -228,10 +228,9 @@ class FormCreatePasien extends Component
 
             if ($this->foto) {
                 $ext = $this->foto->getClientOriginalExtension();
-                // $dataDiri['foto'] = $this->foto->store('pasien');
-                $daf = $this->foto->storeAs('pasien', $this->slug . '.' . $ext);
+                $dataDiri['foto'] = $this->foto->storeAs('pasien', $this->slug . '.' . $ext);
             }
-            dd($daf);
+
             $dataDiri['id_pasien'] = $this->id_pasien;
             $dataDiri['status_pendaftaran'] = 'Pasien Lama';
             $dataDiri['slug'] = $this->slug;

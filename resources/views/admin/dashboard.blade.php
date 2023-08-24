@@ -1,14 +1,14 @@
 @extends('layouts.auth.main')
 
 @section('container')
-<div class="content-container">
+<div class="content-container mx-2">
     <div class="row mb-3">
       <h1 class="h2 px-0 pb-3 border-bottom text-secondary">Selamat Datang, {{ auth()->user()->nama }} !</h1>
     </div>
 
     {{-- card performa --}}
     <div class="row row-cols-2 flex-row row-cols-sm-2 row-cols-lg-4 card-performa">        
-        <div class="col ps-0 ps-lg-2 p-2">
+        <div class="col ps-0 p-2">
             <div class="card px-1 shadow-sm rounded-3 border border-light">
                 <div class="card-body p-2 p-sm-3">
                     <div class="d-flex flex-wrap justify-content-between">
@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <div class="col pe-0 pe-lg-2 p-2">
+        <div class="col pe-0 p-2">
             <div class="card px-1 shadow-sm rounded-3 border border-light">
                 <div class="card-body p-2 p-sm-3">
                     <div class="d-flex flex-wrap justify-content-between">
@@ -89,30 +89,32 @@
 
     <div class="row">
         {{-- grafik --}}
-        <div class="col-xl-8 p-0 pe-xl-4">
-            <x-grafik-dashboard :data-grafik="$dataGrafik" :terapis="$terapis" :penyakit="$penyakit" :maxChart="$maxChart"></x-grafik-dashboard>            
+        <div class="col-xl-8 p-0 pe-xl-4 mt-2 mt-lg-3">
+            {{-- @livewire('grafik-dashboard', ['dataGrafig' => $dataGrafik, 'terapis' => $terapis, 'penyakit' => $penyakit]) --}}
+            @livewire('grafik-dashboard')
+            {{-- <x-grafik-dashboard :data-grafik="$dataGrafik" :terapis="$terapis" :penyakit="$penyakit" :maxChart="$maxChart"></x-grafik-dashboard>             --}}
         </div>
         
         {{-- terapis ready --}}
-        <div class="col-xl-4 p-0">
+        <div class="col-xl-4 p-0 mt-3">
             @livewire('terapis-ready')
         </div>        
     </div>
 
-    <div class="row main-bg">
+    <div class="row main-bg mt-3 mt-lg-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h4">Jadwal Terapi</h1>
         </div>
 
-        <div class="d-flex flex-grow-1 justify-content-between align-item-center flex-wrap flex-md-nowrap align-items-end mt-2 mb-4">
-            <div class="col-4">
+        <div class="d-flex flex-grow-1 justify-content-between flex-wrap flex-md-nowrap align-items-center align-items-sm-end px-0 px-sm-2 mb-3">
+            <div class="col-sm-4">
                 {{ $today }}
             </div>
-            <div class="col-8">
+            <div class="col-sm-8">
                 <div class="row justify-content-end">
                     <div class="col-sm-9 col-xl-5">
-                        <div class="form-control py-0 d-flex flex-row justify-content-between align-items-center flex-wrap taginput">
-                            <input type="text" class="flex-grow-1 py-2" id="startDate" placeholder="Pilih Hari Lain" style="cursor: pointer; width: 100px">
+                        <div class="form-control px-1 px-sm-2 py-0 d-flex flex-row justify-content-between align-items-center flex-wrap taginput" style="min-width: 128px;">
+                            <input type="text" class="flex-grow-1 ps-2 py-2" id="startDate" placeholder="Pilih Hari" style="cursor: pointer; width: 100px">
                             <i class="bi bi-calendar2-event small icon-date pe-1"></i>
                         </div>
                     </div>
@@ -120,7 +122,7 @@
             </div>
         </div>
 
-        <div class="px-2 overflow-auto">
+        <div class="px-0 px-sm-2 overflow-auto">
             <table class="table table-bordered align-middle">
                 <thead>
                 <tr class="text-center">
@@ -149,7 +151,7 @@
                                     <i class="bi bi-eye"></i>
                                 </a>  
                             </td>
-                            <td>{{ $jadwal->terapis->nama }}</td>
+                            <td class="text-capitalize text-center">{{ $jadwal->terapis->username }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -166,6 +168,7 @@
     inputDate.addEventListener("focus", function() {
         document.querySelector(".icon-date").style.display = "none";
         inputDate.type = 'date';
+        inputDate.classList.remove("ps-2");
     });
     inputDate.addEventListener("blur", function() {
         document.querySelector(".icon-date").style.display = "block";
@@ -185,18 +188,5 @@
         }
     }    
     </script>
-@endpush
-
-@push('script')
-    @if(request('grafik'))
-    <script>
-        window.onload = function() {
-            document.querySelector("#grafik").scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-        };
-    </script>
-    @endif
     @livewireScripts
 @endpush

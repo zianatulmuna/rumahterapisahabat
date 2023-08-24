@@ -125,7 +125,8 @@ class FormEditProfil extends Component
             if ($this->dbFoto) {
                 Storage::delete($this->dbFoto);
             }
-            $dataDiri['foto'] = $this->foto->store('admin');
+            $ext = $this->foto->getClientOriginalExtension();
+            $dataDiri['foto'] = $this->foto->storeAs('admin', $this->username . '.' . $ext);
         } 
         
         if ($this->pathFoto && $this->dbFoto == null && $this->foto == null) {

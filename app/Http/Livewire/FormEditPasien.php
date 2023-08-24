@@ -23,8 +23,9 @@ class FormEditPasien extends Component
     public $tipe_pembayaran, $penanggungjawab, $biaya_pembayaran, $link_rm, $foto, $tanggal_pendaftaran; 
     public $tempat_layanan, $jadwal_layanan, $sistem_layanan, $jumlah_layanan, $status_pasien, $status_terapi, $ket_status, $tanggal_selesai;
     public $penyakit, $keluhan, $catatan_psikologis, $catatan_bioplasmatik, $catatan_rohani, $catatan_fisik, $data_deteksi;
+    public $kondisi_awal, $target_akhir, $link_perkembangan, $kesimpulan;
 
-    public $totalStep = 4, $currentStep = 1;
+    public $totalStep = 5, $currentStep = 1;
 
     public $pasien, $rm, $id_pasien, $id_rekam_medis, $slug, $dbNama, $dbFoto, $pathFoto;
 
@@ -52,7 +53,7 @@ class FormEditPasien extends Component
         if($rm) {
             $this->id_rekam_medis = $rm->id_rekam_medis;
             $this->keluhan = $rm->keluhan;
-            $this->link_rm = $rm->link_rm;
+            // $this->link_rm = $rm->link_rm;
             $this->tipe_pembayaran = $rm->tipe_pembayaran;
             $this->biaya_pembayaran = $rm->biaya_pembayaran;
             $this->penanggungjawab = $rm->penanggungjawab;
@@ -67,6 +68,10 @@ class FormEditPasien extends Component
             $this->catatan_bioplasmatik = $rm->catatan_bioplasmatik;
             $this->catatan_rohani = $rm->catatan_rohani;
             $this->data_deteksi = $rm->data_deteksi;
+            $this->kondisi_awal = $rm->kondisi_awal;
+            $this->target_akhir = $rm->target_akhir;
+            $this->kesimpulan = $rm->kesimpulan;
+            $this->link_perkembangan = $rm->link_perkembangan;
             $this->currentStep = 1;
 
             $this->dbPenyakit = explode(",", $rm->penyakit);
@@ -102,7 +107,7 @@ class FormEditPasien extends Component
         $this->resetErrorBag();
         $this->validateData();
         $this->currentStep++;
-        if($this->currentStep == 2) {
+        if($this->currentStep == 4) {
             $this->emit('runScriptPenyakit');
         }
         if($this->currentStep > $this->totalStep) {
@@ -218,6 +223,26 @@ class FormEditPasien extends Component
                 'pekerjaan' => 'max:30'
             ], $message);
         }elseif($this->currentStep == 2){
+            $this->validate([                
+                'biaya_pembayaran' => 'max:20',
+                'penanggungjawab' => 'max:50',
+                'foto' => 'nullable|file|image|max:1024',
+                'link_rm' => 'nullable|url|max:100',
+                'tanggal_pendaftaran' => 'required|date',                
+            ], $message);
+            
+        }elseif($this->currentStep == 3){
+            $this->validate([
+                'tempat_layanan' => 'max:50',
+                'jadwal_layanan' => 'max:50',
+                'sistem_layanan' => 'max:50',
+                'jumlah_layanan' => 'max:50',
+                'status_pasien' => 'required',
+                'tanggal_selesai' => [
+                    Rule::requiredIf($this->status_pasien == 'Selesai' || $this->status_pasien == 'Jeda')
+                ]
+            ], $message);
+        }elseif($this->currentStep == 4){
             if(empty($this->dataTag[0]['db']) && empty($this->dataTag[0]['current'])) {
                 if(count($this->tag) == 0) {
                     $tagPenyakit = 0;
@@ -226,36 +251,24 @@ class FormEditPasien extends Component
                 $tagPenyakit = 1;
             }
             $this->validate([
-                'keluhan' => 'required|max:100',
-                'foto' => 'nullable|file|image|max:1024',
-                'link_rm' => 'nullable|url|max:100',
-                'tanggal_pendaftaran' => 'required|date',
                 'penyakit' => [
                     'required_if:tagPenyakit,0',
                     Rule::requiredIf($tagPenyakit == 0),
                 ],
-            ], $message);      
-        }elseif($this->currentStep == 3){
-            $this->validate([
-                'biaya_pembayaran' => 'max:20',
-                'penanggungjawab' => 'max:50',
-                'tempat_layanan' => 'max:50',
-                'jadwal_layanan' => 'max:50',
-                'sistem_layanan' => 'max:50',
-                'jumlah_layanan' => 'max:50',
-                'status_pasien' => 'required',
-                'tanggal_selesai' => [
-                    Rule::requiredIf($this->status_pasien == 'Selesai')
-                ]
-            ], $message);
-        }else{
-            $this->validate([
+                'keluhan' => 'max:100',
                 'catatan_fisik' => 'max:50',
                 'catatan_psikologis' => 'max:50',
                 'catatan_bioplasmatik' => 'max:50',
                 'catatan_rohani' => 'max:50',
-                'data_deteksi' => 'max:50',
+                'data_deteksi' => 'max:50',                
             ], $message);    
+        }else{
+            $this->validate([
+                'link_perkembangan' => 'nullable|url|max:100',
+                'kondisi_awal' => 'max:100',
+                'target_akhir' => 'max:100',
+                'kesimpulan' => 'max:100',
+            ]);
         }
     }
     public function update(Request $request, Pasien $pasien) {
@@ -275,7 +288,7 @@ class FormEditPasien extends Component
         $dataRM = array(
             // 'penyakit' => $this->penyakit,
             'keluhan' => $this->keluhan,
-            'link_rm' => $this->link_rm,
+            // 'link_rm' => $this->link_rm,
             'tipe_pembayaran' => $this->tipe_pembayaran,
             'biaya_pembayaran' => $this->biaya_pembayaran,
             'penanggungjawab' => $this->penanggungjawab,
@@ -290,6 +303,10 @@ class FormEditPasien extends Component
             'catatan_bioplasmatik' => $this->catatan_bioplasmatik,
             'catatan_rohani' => $this->catatan_rohani,
             'data_deteksi' => $this->data_deteksi,
+            'kondisi_awal' => $this->kondisi_awal,
+            'target_akhir' => $this->target_akhir,
+            'kesimpulan' => $this->kesimpulan,
+            'link_perkembangan' => $this->link_perkembangan,
         );
 
         if($this->nama != $this->dbNama) {
@@ -301,7 +318,8 @@ class FormEditPasien extends Component
             if ($this->dbFoto) {
                 Storage::delete($this->dbFoto);
             }
-            $dataDiri['foto'] = $this->foto->store('pasien');
+            $ext = $this->foto->getClientOriginalExtension();
+            $dataDiri['foto'] = $this->foto->storeAs('pasien', $this->slug . '.' . $ext);
         } 
         
         if ($this->pathFoto && $this->dbFoto == null && $this->foto == null) {
@@ -394,7 +412,7 @@ class FormEditPasien extends Component
         $this->currentStep = 1;
         Storage::deleteDirectory('livewire-tmp');
 
-        return redirect('/admin/pasien/' . $path )->with('success', 'Pasien berhasil ditambahkan ke data Pasien Lama.');
+        // return redirect('/admin/pasien/' . $path )->with('success', 'Pasien berhasil ditambahkan ke data Pasien Lama.');
 
         if($rmCheck) {
             return redirect(route('pasien.rm', $path))

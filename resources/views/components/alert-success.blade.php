@@ -9,11 +9,11 @@
         </div>
         <button type="button" class="btn-close small" data-bs-dismiss="alert" aria-label="Close"></button>
     </div> --}}
-    <div class="col-lg-3 alert alert-info alert-dismissible shadow-lg text-wrap fade show action-alert hstack g-2 align-items-start" style="position: fixed; bottom: 10px; right: 20px;" role="alert">
-        <i class="bi bi-check-circle-fill fs-5 me-2"></i>
+    <div class="col-lg-3 alert alert-dismissible shadow-lg text-wrap fade show action-alert hstack g-2 align-items-start" style="position: fixed; bottom: 0px; right: 22px; background-color: #bcf1c7" role="alert">
+        <i class="bi bi-check-circle-fill header-color text-success fs-5 me-2"></i>
         <div class="ps-1">
-            <strong class="header-message">Success!</strong>
-            <p class="m-0 text-dark">{{ session('success') }}sukses berhasil ditaman</p>
+            <strong class="header-message text-success">Success!</strong>
+            <p class="m-0 text-dark">{{ session('success') }}</p>
         </div>
         <button type="button" class="btn-close small" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>

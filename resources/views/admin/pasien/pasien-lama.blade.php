@@ -14,9 +14,9 @@
       @if(request('status'))
         <input type="hidden" name="status" value="{{ request('status') }}">
       @endif
-      <div class="input-group shadow-sm custom-search-input">
-        <span class="input-group-text bg-white border-end-0 pe-1" id="addon-wrapping"><i class="bi bi-search"></i></span>
-        <input type="search" name="search" value="{{ request('search') }}" class="form-control py-2 border-start-0 rounded-end" placeholder="Cari Nama Pasien atau Penyakit" aria-label="Search" aria-describedby="search-addon" />
+      <div class="input-group rounded shadow-sm custom-search-input">
+        <span class="input-group-text border-success-subtle bg-white border-end-0 pe-1" id="addon-wrapping"><i class="bi bi-search"></i></span>
+        <input type="search" name="search" value="{{ request('search') }}" class="form-control py-2 border-success-subtle border-start-0 rounded-end" placeholder="Cari Nama Pasien atau Penyakit" aria-label="Search" aria-describedby="search-addon" />
         <button type="submit" class="btn btn-outline-success px-4 btn-cari">Cari</button>
       </div>        
     </form>
@@ -69,7 +69,7 @@
       <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-3 g-xl-4 g-xxl-3">
         @foreach ($pasien_lama as $pasien)
           <div class="col">
-            <div class="card text-center card-custom shadow-sm">
+            <div class="card border-0 text-center card-custom shadow-sm">
               <div class="card-header py-1 py-sm-2">
                 <h6 class="card-header-text">{{ $pasien->nama }}</h6>
               </div>

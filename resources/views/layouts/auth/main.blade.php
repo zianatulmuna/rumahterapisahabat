@@ -44,6 +44,7 @@
       <x-alert-success/>
     @endif
 
+    <!-- modal alert -->
     @yield('modal-alert')
 
     <!-- jquery -->
@@ -63,12 +64,5 @@
     <script src="https://kit.fontawesome.com/c40b365784.js" crossorigin="anonymous"></script> 
 
     @stack('script')
-    @unless(Request::is('admin/dashboard*'))
-      <script>
-        window.onload = function() {
-          window.scrollTo(0, 0);
-        }
-      </script>
-    @endunless
   </body>
 </html>

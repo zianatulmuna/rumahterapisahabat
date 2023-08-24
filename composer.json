@@ -9,6 +9,7 @@
         "cviebrock/eloquent-sluggable": "^10.0",
         "guzzlehttp/guzzle": "^7.2",
         "haruncpi/laravel-id-generator": "^1.1",
+        "itsgoingd/clockwork": "^5.1",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",

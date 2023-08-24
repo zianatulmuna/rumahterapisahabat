@@ -844,3 +844,53 @@ button.c-bg-dark:focus {
   .show > .btn-outline-dark.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(90, 92, 105, 0.5);
   }
+
+
+  /* text */
+  .c-text-primary {
+    color: #4e73df !important;
+  }
+  
+  a.c-text-primary:hover, a.c-text-primary:focus {
+    color: #224abe !important;
+  }
+  
+  .c-text-secondary {
+    color: #858796 !important;
+  }
+  
+  a.c-text-secondary:hover, a.c-text-secondary:focus {
+    color: #60616f !important;
+  }
+  
+  .c-text-success {
+    color: #1cc88a !important;
+  }
+  
+  a.c-text-success:hover, a.c-text-success:focus {
+    color: #13855c !important;
+  }
+  
+  .c-text-info {
+    color: #36b9cc !important;
+  }
+  
+  a.c-text-info:hover, a.c-text-info:focus {
+    color: #258391 !important;
+  }
+  
+  .c-text-warning {
+    color: #f6c23e !important;
+  }
+  
+  a.c-text-warning:hover, a.c-text-warning:focus {
+    color: #dda20a !important;
+  }
+  
+  .c-text-danger {
+    color: #e74a3b !important;
+  }
+  
+  a.c-text-danger:hover, a.c-text-danger:focus {
+    color: #be2617 !important;
+  }

@@ -17,7 +17,7 @@ class TerapisController extends Controller
      */
     public function index(Request $request)
     {
-        $terapis = Terapis::latest()->filter(request(['search', 'tingkatan']))->get();
+        $terapis = Terapis::latest()->filter(request(['search', 'tingkatan']))->paginate(20);
         $tingkatan = ['Utama', 'Madya', 'Muda', 'Pratama', 'Latihan'];
 
         return view('admin.terapis.terapis', compact('terapis', 'tingkatan'));

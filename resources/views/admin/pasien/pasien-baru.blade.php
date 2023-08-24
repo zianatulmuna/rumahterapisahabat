@@ -15,9 +15,9 @@
       @if(request('urut'))
         <input type="hidden" name="urut" value="{{ request('urut') }}">
       @endif
-      <div class="input-group shadow-sm custom-search-input">
-        <span class="input-group-text bg-white border-end-0 pe-1" id="addon-wrapping"><i class="bi bi-search"></i></span>
-        <input type="search" name="search" value="{{ request('search') }}" class="form-control py-2 border-start-0 rounded-end" placeholder="Cari Nama Pasien atau Penyakit" aria-label="Search" aria-describedby="search-addon" />
+      <div class="input-group rounded shadow-sm custom-search-input">
+        <span class="input-group-text border-success-subtle bg-white border-end-0 pe-1" id="addon-wrapping"><i class="bi bi-search"></i></span>
+        <input type="search" name="search" value="{{ request('search') }}" class="form-control py-2 border-success-subtle border-start-0 rounded-end" placeholder="Cari Nama Pasien atau Penyakit" aria-label="Search" aria-describedby="search-addon" />
         <button type="submit" class="btn btn-outline-success px-4 btn-cari">Cari</button>
       </div>        
     </form>
@@ -41,10 +41,10 @@
 
   <div class="pt-3 pb-2 mb-3">
     @if(count($pasien_baru) > 0)
-      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5 g-2 g-sm-3">          
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5 g-3 g-lg-4">          
         @foreach ($pasien_baru as $pasien)                  
           <div class="col">
-            <div class="card card-baru shadow-sm">
+            <div class="card card-baru border-0 shadow-sm">
               <a href="{{ route('pasien.edit', $pasien->slug) }}"class="card-header py-2">
                 <h6 class="card-header-text">{{ $pasien->nama }}</h6>
               </a>

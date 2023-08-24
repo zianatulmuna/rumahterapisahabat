@@ -1,22 +1,39 @@
 <div>
   <div class="main-bg">
-    <div class="row justify-content-between py-4 py-sm-5 custom-step">
+    {{-- Step header --}}
+    <div class="row justify-content-between py-sm-5 custom-step">
       <div class="col text-center">
-        <i class="bi {{  $currentStep == 1 ? 'bi-1-circle-fill' : 'bi-1-circle'  }} text-success h1"></i>
+        <i class="bi {{  $currentStep == 1 ? 'bi-1-circle-fill' : ($currentStep >= 1 ? 'bi bi-check-circle-fill' : 'bi-1-circle')  }} text-success h1"></i>
         <h5 class="pt-2">Data Diri</h5>
       </div>
       <div class="col text-center">
-        <i class="bi {{  $currentStep == 2 ? 'bi-2-circle-fill' : 'bi-2-circle'  }} text-success h1"></i>
+        <i class="bi {{  $currentStep == 2 ? 'bi-2-circle-fill' : ($currentStep >= 2 ? 'bi bi-check-circle-fill' : 'bi-2-circle')  }} text-success h1"></i>
         <h5 class="pt-2">Data Penunjang</h5>
       </div>
       <div class="col text-center">
-        <i class="bi {{  $currentStep == 3 ? 'bi-3-circle-fill' : 'bi-3-circle'  }} text-success h1"></i>
+        <i class="bi {{  $currentStep == 3 ? 'bi-3-circle-fill' : ($currentStep >= 3 ? 'bi bi-check-circle-fill' : 'bi-3-circle')  }} text-success h1"></i>
         <h5 class="pt-2">Rencana Layanan</h5>
       </div>
       <div class="col text-center">
-        <i class="bi {{  $currentStep == 4 ? 'bi-4-circle-fill' : 'bi-4-circle'  }} text-success h1"></i>
+        <i class="bi {{  $currentStep == 4 ? 'bi-4-circle-fill' : ($currentStep >= 4 ? 'bi bi-check-circle-fill' : 'bi-4-circle')  }} text-success h1"></i>
         <h5 class="pt-2">Data Awal</h5>
       </div>
+      <div class="col text-center">
+        <i class="bi {{  $currentStep == 5 ? 'bi-5-circle-fill' : 'bi-5-circle'  }} text-success h1"></i>
+        <h5 class="pt-2">Target Terapi</h5>
+      </div>
+    </div>
+    <div class="text-center step-title mt-3 mb-4">
+      @php
+        $stepTitles = [
+          1 => 'Data Diri',
+          2 => 'Data Penunjang',
+          3 => 'Rencana Layanan',
+          4 => 'Data Awal',
+          5 => 'Target Terapi',
+        ];
+      @endphp
+      <h5 class="m-0">{{ $stepTitles[$currentStep] }}</h5>
     </div>
 
     {{-- form --}}
@@ -176,14 +193,6 @@
                     </div>
                   @enderror
                 </div>
-
-                <div class="mb-3">
-                  <label for="link_rm" class="form-label fw-semibold">Link Rekam Medis</label>
-                  <input type="url" class="form-control @error('link_rm') is-invalid @enderror" id="link_rm" name="link_rm" value="{{ old('link_rm') }}" wire:model="link_rm">
-                  @error('link_rm')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>    
                 
                 <div class="mb-3">
                   <label for="tanggal_pendaftaran" class="form-label fw-semibold">Tanggal Pendaftaran</label>
@@ -361,7 +370,7 @@
                                     <div class="modal-header">
                                           <h5 class="modal-title d-flex align-items-center" id="exampleModalLabel">
                                             <i class="bi bi-trash text-danger pe-2 fs-4"></i>
-                                            <span>Yakin ingin menghapus rekam terapi?</span>
+                                            <span>Yakin ingin menghapus penyakit?</span>
                                           </h5>
                                           <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                     </div>
@@ -460,52 +469,73 @@
           </div>
         @endif
 
+        {{-- data target --}}
+        @if($currentStep == 5)
+          <div class="" id="" role="tabpanel" aria-labelledby="nav-awal-tab" tabindex="0">
+            <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
+              <div class="col">
+                <div class="mb-3">
+                  <label for="kondisi_awal" class="form-label fw-semibold">Kondisi Awal</label>
+                  <textarea class="form-control @error('kondisi_awal') is-invalid @enderror" id="kondisi_awal" name="kondisi_awal" rows="3" style="text-transform: full-width-kana;" oninput="capFirst('kondisi_awal')" wire:model="kondisi_awal"></textarea>
+                  @error('kondisi_awal')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="target_akhir" class="form-label fw-semibold">Target Akhir</label>
+                    <textarea class="form-control @error('target_akhir') is-invalid @enderror" id="target_akhir" name="target_akhir" rows="3" oninput="capFirst('target_akhir')" wire:model="target_akhir"></textarea>
+                    @error('target_akhir')
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
+                    @enderror
+                </div>                  
+              </div>    
+              <div class="col">
+                <div class="mb-3">
+                  <label for="link_perkembangan" class="form-label fw-semibold">Link Perkembangan Target</label>
+                  <input type="text" class="form-control @error('link_perkembangan') is-invalid @enderror" id="link_perkembangan" name="link_perkembangan" rows="3" oninput="capFirst('link_perkembangan')" wire:model="link_perkembangan">
+                  @error('link_perkembangan')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
+              </div>
+                <div class="mb-3">
+                  <label for="kondisi_awal" class="form-label fw-semibold">Kesimpulan Akhir</label>
+                  <textarea class="form-control @error('kondisi_awal') is-invalid @enderror" id="kondisi_awal" name="kondisi_awal" rows="5" style="text-transform: full-width-kana;" oninput="capFirst('kondisi_awal')" wire:model="kondisi_awal"></textarea>
+                  @error('kondisi_awal')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                </div>
+                                  
+              </div>                 
+            </div>
+          </div>
+        @endif
+
         {{-- button step --}}
         <div class="d-flex justify-content-between my-5 mx-3 mb-md-5 mx-md-5 form-navigation">
           @if($currentStep == 1)
             <div></div>           
           @endif
 
-          @if($currentStep == 2 || $currentStep == 3 || $currentStep == 4)
+          @if($currentStep >= 2 && $currentStep <= 5)
             <button class="btn btn-secondary" type="button" onclick="toTop()" wire:click="toPrev()">Sebelumnya</button>            
           @endif
-
-          @if($currentStep == 1 || $currentStep == 2 || $currentStep == 3)      
-            <button class="btn btn-primary px-md-4 py-md-2" type="button" onclick="toTop()" wire:click="toNext()">Lanjut</button>
+          
+          @if($currentStep >= 1 && $currentStep <= 4)     
+            <button class="btn c-btn-success px-3 px-md-4 py-md-2" type="button" onclick="toTop()" wire:click="toNext()">Lanjut</button>
           @endif
 
-          @if($currentStep == 4)
-            <button type="submit" class="btn c-btn-success px-md-4 py-md-2" onclick="toTop()">Kirim</button>
+          @if($currentStep == 5)
+            <button type="submit" class="btn btn-success px-3 px-md-4 py-md-2" onclick="toTop()">Kirim</button>
           @endif
         </div>
       </div>
     </form>
   </div>
 </div>
-
-@section('modal-alert')
-    <!-- Terapi Delete Modal-->
-   <div class="modal fade" id="terapiDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-   aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-         <div class="modal-content p-3">
-            <div class="modal-header">
-                  <h5 class="modal-title d-flex align-items-center" id="exampleModalLabel">
-                     <i class="bi bi-trash text-danger pe-2 fs-4"></i>
-                     <span>Yakin ingin menghapus rekam terapi?</span>
-                  </h5>
-                  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body py-4">Semua data terkait rekam terapi untuk penyakit ini akan dihapus <strong>permanen</strong>! Hal ini termasuk semua data terapi harian.
-            </div>
-            <div class="modal-footer">
-                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                  <button type="submit" class="btn c-btn-danger"><i class="bi bi-exclamation-triangle"></i> Hapus</button>
-            </div>
-         </div>
-      </div>
-   </div>
-@endsection
 
 @push('script')
   <script>

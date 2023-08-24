@@ -13,30 +13,29 @@ use Illuminate\Support\Facades\Request;
 
 class GrafikDashboard extends Component
 {
-    public $id_terapis, $nama_terapis, $nama_penyakit;
+    public $id_terapis, $penyakit;
     public $menu = 'Pasien Selesai';
     public $grafik = 'Sesi Terapi';
     public $filter = 'tahun ini';
 
-    public $tahun;
+    public $tahun, $filterTahun;
     public $dataGrafik;
     public $maxChart = 0;
 
-    protected $listeners = ['setTahun', 'setTerapis', 'setPenyakit'];
+    protected $listeners = ['setTahun'];
     
     public function mount(){
         $this->grafik;
         $this->filter;
-        $this->id_terapis;
-        $this->tahun;
-        $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year,'', '');
+        $this->tahun = Carbon::now()->year;
+        $this->dataGrafik = $this->grafikPerTahun($this->grafik, $this->tahun,'', '');
         $this->maxChart = ceil(max($this->dataGrafik) / 10) * 10;
     }
     public function render()
     {
         $terapis = Terapis::orderBy('nama', 'ASC')->get();
         $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
-        // dd($penyakit);
+
         return view('livewire.grafik-dashboard', compact(
             'terapis',
             'penyakit',
@@ -45,19 +44,14 @@ class GrafikDashboard extends Component
 
     public function setFilterAction($filter) {
         if($filter == 'minggu ini') {
-            $data = $this->grafikMingguIni($this->grafik, $this->id_terapis, $this->nama_penyakit);
+            $data = $this->grafikMingguIni($this->grafik, $this->id_terapis, $this->penyakit);
         } elseif($filter == 'tahun ini') {
-            $data = $this->grafikPerTahun($this->grafik, Carbon::now()->year, $this->id_terapis, $this->nama_penyakit);
-        } elseif($filter == 'semua tahun') {
-            $data = $this->grafikSemuaTahun($this->grafik, $this->id_terapis, $this->nama_penyakit);
+            $data = $this->grafikPerTahun($this->grafik, $this->tahun, $this->id_terapis, $this->penyakit);
         } else {
-            $data = $this->grafikPerTahun($this->grafik, $this->tahun, $this->id_terapis, $this->nama_penyakit);         
+            $data = $this->grafikSemuaTahun($this->grafik, $this->id_terapis, $this->penyakit);
         }
 
-        // if(!empty($data))  {
-        //     $max = max($data);
-        // } 
-        $max = (!empty($data)) ? $max = max($data) : 0;
+        $max = max($data);
         $newMax = ($max <= 10) ? 10 : ceil($max / 10) * 10;
         $this->maxChart = $newMax;
 
@@ -67,7 +61,6 @@ class GrafikDashboard extends Component
         ];
 
         $this->emit('chartUpdated', $grafik);
-        // $this->dispatchBrowserEvent('scriptLoaded');
     }
 
     public function setMenu($current) {
@@ -80,16 +73,7 @@ class GrafikDashboard extends Component
     }
     public function setTahun($tahun) {
         $this->tahun = $tahun;
-        $this->filter = 'tahun';
-        $this->setFilterAction($this->filter);
-    }
-    public function setTerapis($terapis) {
-        $this->id_terapis = $terapis['id'];
-        $this->nama_terapis = $terapis['nama'];
-        $this->setFilterAction($this->filter);
-    }
-    public function setPenyakit($nama) {
-        $this->nama_penyakit = $nama;
+        $this->filterTahun = $tahun;
         $this->setFilterAction($this->filter);
     }
 

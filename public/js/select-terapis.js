@@ -22,8 +22,8 @@ function addTerapis(selectedTerapis) {
                             data-id="${terapis.id_terapis}" 
                             data-nama="${terapis.nama}" 
                             onclick="updateNameTerapis(this)">
-                            <p class="m-0">${terapis.nama}</p>
-                            <p class="m-0 small fst-italic">${terapis.tingkatan}</p>
+                            <div class="col-8 text-truncate">${terapis.nama}</div>
+                            <div class="small fst-italic">${terapis.tingkatan}</div>
                         </li>`;
             optionsTerapis.insertAdjacentHTML("beforeend", li);
     });
@@ -49,8 +49,8 @@ searchInpTerapis.addEventListener("keyup", () => {
                     data-id="${terapis.id_terapis}" 
                     data-nama="${terapis.nama}" 
                     onclick="updateNameTerapis(this)">
-                    <p class="m-0">${terapis.nama}</p>
-                    <p class="m-0 small fst-italic">${terapis.tingkatan}</p>
+                    <div class="col-8 text-truncate">${terapis.nama}</div>
+                    <div class="small fst-italic">${terapis.tingkatan}</div>
                 </li>`;
     }).join("");
     optionsTerapis.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;

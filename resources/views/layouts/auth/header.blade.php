@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse nav justify-content-end" id="navbarsExample03">
       <ul class="navbar-nav mr-auto align-items-center">
         <li class="nav-item dropdown">
-          <a class="nav-link toggle-profil" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link toggle-profil px-0" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ auth()->user()->nama }} 
             @if (auth()->user()->foto)
                 <img src="{{ asset('storage/' . auth()->user()->foto) }}" class="avatar-img ml-2" alt="{{ auth()->user()->nama }}">
@@ -43,8 +43,6 @@
         </li>        
       </ul>
     </div>  
-    
-    
 </header>
 
 @section('modal-alert')
