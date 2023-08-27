@@ -4,7 +4,7 @@
             <h1 class="h4">Grafik Manajemen Klinik</h1>
         </div>
 
-        <div class="nav nav-tabs d-flex justify-content-between px-0">
+        <div class="nav nav-tabs px-0">
             {{-- menu --}}
             <ul class="nav" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -18,18 +18,18 @@
                 </li>
             </ul>
             {{-- waktu --}}
-            <div class="d-none d-sm-block mb-2 mb-md-0">
+            {{-- <div class="d-none d-sm-block mb-2 mb-md-0">
                 @include('partials.filter-waktu')
-            </div>
+            </div> --}}
         </div>
 
         <div class="tab-content py-3 border border-top-0" id="myTabContent">
-            <div class="row row-cols-1 row-cols-sm-2 p-3 mb-3">
+            <div class="row row-cols-1 row-cols-sm-3 p-3 mb-3">
                 {{-- terapis --}}
-                <div class="col custom-search-grafik px-2 mb-2 my-sm-2 my-md-0">                      
+                <div class="col col-sm-4 col-lg-5 px-1 mb-2 my-sm-2 my-md-0">                      
                     <div class="dropdown w-100 search-dinamis dropdown-terapis">
                         {{-- @if($grafik == 'Sesi Terapi') --}}
-                            <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false" {{ $grafik != 'Sesi Terapi' ? 'disabled' : '' }}>
+                            <button class="form-control d-flex justify-content-between align-items-center {{ $nama_terapis ? 'border-success text-success' : '' }} @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false" {{ $grafik != 'Sesi Terapi' ? 'disabled' : '' }}>
                                 <span>
                                     @if($grafik == 'Sesi Terapi')
                                         {{ $nama_terapis ? $nama_terapis : 'Pilih Terapis' }}
@@ -48,9 +48,9 @@
                     </div>
                 </div>
                 {{-- penyakit --}}
-                <div class="col custom-search-grafik px-2 mb-2 my-sm-2 my-md-0">                      
+                <div class="col col-sm-4 px-1 mb-2 my-sm-2 my-md-0">                      
                     <div class="dropdown w-100 search-dinamis dropdown-penyakit">
-                        <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="form-control d-flex justify-content-between align-items-center {{ $nama_penyakit ? 'border-success text-success' : '' }} @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span>
                                 {{ $nama_penyakit ? $nama_penyakit : 'Pilih Penyakit' }}
                             </span>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-block d-sm-none px-2 w-100">
+                <div class="col col-sm-4 col-lg-3 px-1 my-sm-2 my-md-0">
                     @include('partials.filter-waktu')
                 </div>
             </div>
@@ -94,15 +94,12 @@
     let searchInpTerapis = dropTerapis.querySelector(".search-input");
     let optionsTerapis = dropTerapis.querySelector(".select-options");
 
-
     function setTerapisToController(selectedLi) {
         let id = selectedLi.getAttribute('data-id');
         let nama = selectedLi.getAttribute('data-nama');
         Livewire.emit('setTerapis', { id: id, nama: nama });
     };
-        
 
-        
     function addTerapis(selectedTerapis) {
         optionsTerapis.innerHTML = "";
         dataTerapis.forEach(terapis => {
@@ -123,34 +120,32 @@
         });
     }
 
-    
-
     searchInpTerapis.addEventListener("keyup", () => {
         let arr = [];
-        let searchWord = searchInpTerapis.value.toLowerCase();
+        let searchWords = searchInpTerapis.value.toLowerCase().split(' ');
         arr = dataTerapis.filter(terapis => {
-            let data = terapis.nama;
-            return data.toLowerCase().startsWith(searchWord);
+            let data = terapis.nama.toLowerCase();
+            return searchWords.every(word => data.includes(word));
         }).map(terapis => {
             let isSelected = terapis.nama == selectBtnTerapis.firstElementChild.innerText ? "active" : "";
             return `
-                        <li class="dropdown-item ps-1 ${isSelected}" 
-                            data-id="${terapis.id_terapis}" 
-                            data-nama="${terapis.nama}" 
-                            onclick="updateNameTerapis(this)">
-                            <button type="button" class="nav-link text-decoration-none text-dark d-flex justify-content-between w-100" wire:click="setTerapis('${terapis.id_terapis}')">
-                                <span class="col-8 text-start text-truncate">${terapis.nama}</span>
-                                <span class="small fst-italic">${terapis.tingkatan}</span>
-                            </button>
-                        </li>
+                    <li class="dropdown-item ps-1 ${isSelected}" 
+                        data-id="${terapis.id_terapis}" 
+                        data-nama="${terapis.nama}" 
+                        onclick="updateNameTerapis(this)">
+                        <button type="button" class="nav-link text-decoration-none text-dark d-flex justify-content-between w-100" wire:click="setTerapis('${terapis.id_terapis}')">
+                            <span class="col-8 text-start text-truncate">${terapis.nama}</span>
+                            <span class="small fst-italic">${terapis.tingkatan}</span>
+                        </button>
+                    </li>
                     `;  
         }).join("");
         optionsTerapis.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
     });
 
     selectBtnTerapis.addEventListener("click", () => dropTerapis.classList.toggle("active"));
-
 </script>
+
 {{-- script penyakit --}}
 <script>    
     let dataPenyakit = @json($penyakit);
@@ -182,21 +177,18 @@
 
     searchInpPenyakit.addEventListener("keyup", () => {
         let arr = [];
-        let searchWord = searchInpPenyakit.value.toLowerCase();
+        let searchWords = searchInpPenyakit.value.toLowerCase().split(' ');
         arr = dataPenyakit.filter(penyakit => {
-            let data = penyakit;
-            return data.toLowerCase().startsWith(searchWord);
+            let data = penyakit.toLowerCase();
+            return searchWords.every(word => data.includes(word));
         }).map(penyakit => {
-            let penyakitQuery = `penyakit=${penyakit}`;
-            let link = `/admin/dashboard?${queryString}${penyakitQuery}`;
             let isSelected = penyakit == selectBtnPenyakit.firstElementChild.innerText ? "active" : "";
-            return `<a href="${link}" class="text-decoration-none text-dark">
-                        <li class="dropdown-item ${isSelected}" 
-                            data-nama="${penyakit}" 
-                            onclick="updateNamePenyakit(this)">
-                            ${penyakit}                            
-                        </li>
-                    </a>`;
+            return `<li class="dropdown-item ${isSelected}" 
+                        data-nama="${penyakit}" 
+                        onclick="setPenyakitToController(this)">
+                        ${penyakit}                            
+                    </li>
+                    `;
         }).join("");
         optionsPenyakit.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
     });
@@ -204,18 +196,9 @@
     selectBtnPenyakit.addEventListener("click", () => dropPenyakit.classList.toggle("active"));
 
 </script>
+
 <script>
     document.addEventListener('livewire:load', function () {
-
-        // script tahun
-        // const inputTahun = document.querySelector('#tahunInput');
-        // const btnTahun = document.querySelector('#tahunBtn');
-
-        // btnTahun.addEventListener('click', function(e) {
-        //     Livewire.emit('setTahun', inputTahun.value);
-        // });
-        
-        // script grafik
         Livewire.on('chartUpdated', grafik => {
             updateChart(grafik.dataGrafik, grafik.maxChart);    
 

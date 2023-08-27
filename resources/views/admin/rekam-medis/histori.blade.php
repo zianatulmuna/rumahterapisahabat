@@ -16,7 +16,7 @@
             @foreach($rm_terkini as $rm)   
                <div class="col mb-4">
                   <div class="card shadow-sm card-kini h-100">
-                     <a href="" class="card-header text-center"><h6>NO.RM  {{ $rm->id_rekam_medis }}</h6></a>
+                     <a href="{{ route('pasien.rm', $pasien->slug) }}" class="card-header text-center"><h6>NO.RM  {{ $rm->id_rekam_medis }}</h6></a>
                      <ul class="list-group list-group-flush text-left list-group-histori">
                         <li class="list-group-item">
                            <p class="small">Penyakit:</p>

@@ -47,10 +47,10 @@ function updateNamePasien(selectedLi) {
 
 searchInpPasien.addEventListener("keyup", () => {
     let arr = [];
-    let searchWord = searchInpPasien.value.toLowerCase();
+    let searchWords = searchInpPasien.value.toLowerCase().split(' ');
     arr = dataPasien.filter(pasien => {
-        let data = pasien.nama;
-        return data.toLowerCase().startsWith(searchWord);
+        let data = pasien.nama.toLowerCase();
+        return searchWords.every(word => data.includes(word));
     }).map(pasien => {
         let isSelected = pasien.nama == selectBtnPasien.firstElementChild.innerText ? "active" : "";
         return `<li class="dropdown-item${isSelected}" 

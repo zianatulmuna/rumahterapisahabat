@@ -11,8 +11,8 @@
         @csrf
         <div class="row row-cols-1 row-cols-md-2 p-3 py-sm-2 g-0 g-md-4 g-lg-5">
             <div class="col"> 
-               <div class="mb-3">
-                  <label for="id_pasien" class="form-label fw-semibold @error('id_pasien') is-invalid @enderror">Pasien</label>
+               <div class="mb-4">
+                  <label for="id_pasien" class="form-label fw-bold @error('id_pasien') is-invalid @enderror">Pasien</label>
                   <div class="dropdown search-dinamis dropdown-pasien">
                      <input type="hidden" name="id_pasien" value="{{ old('id_pasien') }}" id="id_pasien" class="form-control">
                      <button class="form-control d-flex justify-content-between align-items-center @error('id_pasien') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -31,22 +31,22 @@
                   <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                </div>
-               <div class="mb-3">
-                  <label for="no_telp" class="form-label fw-semibold @error('no_telp') is-invalid @enderror">Nomor Telepon</label>
+               <div class="mb-4">
+                  <label for="no_telp" class="form-label fw-bold @error('no_telp') is-invalid @enderror">Nomor Telepon</label>
                   <input type="text" class="form-control" value="{{ old('no_telp') }}" id="no_telp" name="no_telp" readonly>
                </div>
-               <div class="mb-3">
-                  <label for="jenis_kelamin" class="form-label fw-semibold @error('jenis_kelamin') is-invalid @enderror">Jenis Kelamin</label>
+               <div class="mb-4">
+                  <label for="jenis_kelamin" class="form-label fw-bold @error('jenis_kelamin') is-invalid @enderror">Jenis Kelamin</label>
                   <input type="text" class="form-control" value="{{ old('jenis_kelamin') }}" id="jenis_kelamin" name="jenis_kelamin" readonly>
                </div>
-               <div class="mb-3">
-                  <label for="tanggal_lahir" class="form-label fw-semibold">Tanggal Lahir</label>
+               <div class="mb-4">
+                  <label for="tanggal_lahir" class="form-label fw-bold">Tanggal Lahir</label>
                   <input type="text" class="form-control" value="{{ old('tanggal_lahir') }}" id="tanggal_lahir" name="tanggal_lahir" readonly>
                </div>
             </div>            
             <div class="col"> 
-               <div class="mb-3">
-                  <label for="id_terapis" class="form-label fw-semibold @error('id_terapis') is-invalid @enderror">Terapis</label>
+               <div class="mb-4">
+                  <label for="id_terapis" class="form-label fw-bold @error('id_terapis') is-invalid @enderror">Terapis</label>
                   <div class="dropdown search-dinamis dropdown-terapis">
                      <input type="hidden" name="id_terapis" value="{{ old('id_terapis') }}" id="id_terapis" class="form-control">
                      <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -65,16 +65,16 @@
                      <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                </div>
-               <div class="mb-3"> 
-                  <label for="tanggal" class="form-label fw-semibold">Tanggal Terapi</label>
+               <div class="mb-4"> 
+                  <label for="tanggal" class="form-label fw-bold">Tanggal Terapi</label>
                   <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ old('tanggal') }}">
                   <div class="form-text">Contoh: 9 Desember 2022 diisi 12/09/2022</div>
                   @error('tanggal')
                   <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                </div>
-               <div class="mb-3">
-                  <label for="waktu" class="form-label fw-semibold">Waktu Terapi</label>
+               <div class="mb-4">
+                  <label for="waktu" class="form-label fw-bold">Waktu Terapi</label>
                   <input type="time" class="form-control @error('waktu') is-invalid @enderror" id="waktu" name="waktu" value="{{ old('waktu') }}">
                   @error('waktu')
                      <div class="invalid-feedback">{{ $message }}</div>

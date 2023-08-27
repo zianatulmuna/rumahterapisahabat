@@ -16,8 +16,7 @@ class GrafikDashboard extends Component
     public $id_terapis, $nama_terapis, $nama_penyakit;
     public $menu = 'Pasien Selesai';
     public $grafik = 'Sesi Terapi';
-    public $filter = 'tahun ini';
-
+    public $filter = 'minggu ini';
     public $tahun;
     public $dataGrafik;
     public $maxChart = 0;
@@ -29,14 +28,15 @@ class GrafikDashboard extends Component
         $this->filter;
         $this->id_terapis;
         $this->tahun;
-        $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year,'', '');
+        // $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year,'', '');
+        $this->dataGrafik = $this->grafikMingguIni($this->grafik, '', '');
         $this->maxChart = ceil(max($this->dataGrafik) / 10) * 10;
     }
     public function render()
     {
         $terapis = Terapis::orderBy('nama', 'ASC')->get();
         $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
-        // dd($penyakit);
+
         return view('livewire.grafik-dashboard', compact(
             'terapis',
             'penyakit',
@@ -54,9 +54,6 @@ class GrafikDashboard extends Component
             $data = $this->grafikPerTahun($this->grafik, $this->tahun, $this->id_terapis, $this->nama_penyakit);         
         }
 
-        // if(!empty($data))  {
-        //     $max = max($data);
-        // } 
         $max = (!empty($data)) ? $max = max($data) : 0;
         $newMax = ($max <= 10) ? 10 : ceil($max / 10) * 10;
         $this->maxChart = $newMax;
@@ -67,7 +64,6 @@ class GrafikDashboard extends Component
         ];
 
         $this->emit('chartUpdated', $grafik);
-        // $this->dispatchBrowserEvent('scriptLoaded');
     }
 
     public function setMenu($current) {

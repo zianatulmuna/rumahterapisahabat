@@ -61,8 +61,21 @@ class DashboardController extends Controller
         // $terapisForReady = Terapis::orderBy('is_ready', 'DESC')->orderBy('nama', 'ASC')->get();
         // $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
 
-        $today = Carbon::now()->formatLocalized('%A, %d %B %Y');
-        $jadwal_terapi = Jadwal::paginate(10);
+        $today = Carbon::today()->formatLocalized('%A, %d %B %Y');
+        $jadwal_terapi = Jadwal::where('tanggal', Carbon::today()->format('Y-m-d'))->paginate(10);
+
+        if(request('tanggal')) {
+            $tanggal = request('tanggal');
+            $today = Carbon::createFromFormat('Y-m-d', $tanggal)->formatLocalized('%A, %d %B %Y');
+            $jadwal_terapi = Jadwal::where('tanggal', $tanggal)->paginate(10);
+        } elseif (request('mulai')) {
+            $awal = Carbon::createFromFormat('Y-m-d', request('mulai'))->formatLocalized('%d %B %Y');
+            $akhir = Carbon::createFromFormat('Y-m-d', request('akhir'))->formatLocalized('%d %B %Y');
+
+            $today = $awal . ' - ' . $akhir;
+            $jadwal_terapi = Jadwal::whereBetween('tanggal', [request('mulai'), request('akhir')])->paginate(10);
+        }
+
         return view('admin.dashboard', compact(
             'jadwal_terapi', 
             'today', 

@@ -44,14 +44,14 @@
 
         <div class="modal-body modal-custom">
           <div class="modal-line ">
-            <a >
+            <a href="{{ route('profil', auth()->user()->slug) }}" class="nav-link">
               <i class="bi bi-person-circle"></i>
               Profil
             </a>
           </div>
 
           <div class="modal-line">
-            <a >
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
               <i class="bi bi-box-arrow-right"></i>
               Keluar Akun
             </a>

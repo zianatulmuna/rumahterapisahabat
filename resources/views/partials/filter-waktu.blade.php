@@ -45,7 +45,7 @@
 </div> --}}
 
 <div class="dropdown dropdown-filter-tahun">
-    <button class="btn dropdown-toggle btn-outline-success mx-0 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">
+    <button class="btn dropdown-toggle btn-outline-success mx-0 d-flex justify-content-between align-items-center button-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
         <span class="text-capitalize">{{ $tahun ? $tahun : $filter }}</span>
     </button>
     <div class="dropdown-menu dropdown-menu-end rounded-2 shadow p-1" aria-labelledby="dropdownMenuButton">

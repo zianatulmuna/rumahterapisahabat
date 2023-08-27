@@ -9,56 +9,58 @@
    {{-- Data Diri Pasien --}}
    @include('partials.data-diri')
 
-   <div class="row g-6">
+   <div class="row row-cols-1 row-cols-lg-2 g-6">
         <div class="col">
-        <h4 class="mt-5 mb-3">Penyakit</h4>
+        <h4 class="mt-4 mt-lg-5 mb-3">Penyakit</h4>
         <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 60px">
                 <a href="#" class="link-secondary link-underline-light">{{ $sub->penyakit }}</a>
         </div>
         </div>
         <div class="col">
-        <h4 class="mt-5 mb-3">Keluhan</h4>
+        <h4 class="mt-4 mt-lg-5 mb-3">Keluhan</h4>
         <div class="bg-white px-3 py-2 border border-body-tertiary"  style="min-height: 60px">
             <p>{{ $sub->rekamMedis->keluhan }}</p>
         </div>
         </div>
     </div>
 
-    <h4 class="mt-5 mb-3" id="rekamTerapi">Histori Terapi</h4>
+    <h4 class="mt-4 mt-lg-5 mb-3" id="rekamTerapi">Histori Terapi</h4>
     @if(count($rekam_terapi) > 0)
-    <table class="table table-bordered">
-        <thead class="text-center">
-          <tr>
-            <th scope="col">No</th>
-            <th scope="col">Tanggal Terapi</th>
-            <th scope="col">Terapis</th>
-            <th scope="col">Pra Terapi</th>
-            <th scope="col">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>            
-            @php
-                $i = 1;
-            @endphp
-            @foreach ($rekam_terapi as $terapi)
+        <div class="overflow-auto">
+            <table class="table table-bordered text-center"  style="min-width: 420px;">
+                <thead class="text-center">
                 <tr>
-                    <th scope="row" style="text-align: center; width: 50px">{{ $i++ }}</th>
-                    <td style="width: 200px">{{ date('d/m/Y', strtotime($terapi->tanggal)) }}</td>
-                    <td>{{ $terapi->terapis->nama }}</td>
-                    <td></td>
-                    <td class="text-center" style="width: 130px">
-                        <a href="{{ route('terapi.detail', [$pasien->slug, $sub->id_sub, $terapi->tanggal]) }}" class="badge bg-warning">
-                            <i class="bi bi-eye"></i>
-                        </a>
-                        <a href="" class="badge bg-info">
-                            <i class="bi bi-download"></i>
-                        </a>
-                    </td>
-                </tr>                
-            @endforeach
-                
-        </tbody>
-      </table>
+                    <th scope="col">No</th>
+                    <th scope="col">Tanggal Terapi</th>
+                    <th scope="col">Terapis</th>
+                    <th scope="col">Pra Terapi</th>
+                    <th scope="col" style="min-width: 90px;">Aksi</th>
+                </tr>
+                </thead>
+                <tbody>            
+                    @php
+                        $i = 1;
+                    @endphp
+                    @foreach ($rekam_terapi as $terapi)
+                        <tr>
+                            <th scope="row" style="max-width: 50px">{{ $i++ }}</th>
+                            <td style="width: 200px">{{ date('d/m/Y', strtotime($terapi->tanggal)) }}</td>
+                            <td class="text-capitalize">{{ $terapi->terapis->username }}</td>
+                            <td>{{ $terapi->pra_terapi }}</td>
+                            <td style="width: 130px">
+                                <a href="" class="c-badge c-bg-info">
+                                    <i class="bi bi-download"></i>
+                                </a>
+                                <a href="{{ route('terapi.detail', [$pasien->slug, $sub->id_sub, $terapi->tanggal]) }}" class="c-badge c-bg-success ms-1">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                        </tr>                
+                    @endforeach
+                        
+                </tbody>
+            </table>
+        </div>
     @else
       <span class="fst-italic">Belum ada histori terapi.</span>
     @endif

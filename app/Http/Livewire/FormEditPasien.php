@@ -85,6 +85,8 @@ class FormEditPasien extends Component
     }
     public function render()
     {
+        $listPenyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
+
         return view('livewire.form-edit-pasien', [
             'jenisKelamin' => ['Perempuan','Laki-Laki'],
             'tipePembayaran' => [
@@ -100,7 +102,8 @@ class FormEditPasien extends Component
             'statusTerapi' => [
                 ['value' => 'Terapi Baru', 'name' => 'terapi_baru'], 
                 ['value' => 'Terapi Lanjutan', 'name' => 'terapi_lanjutan']
-            ]
+            ],
+            'listPenyakit' => $listPenyakit
         ]);
     }    
     public function toNext() {
@@ -141,12 +144,14 @@ class FormEditPasien extends Component
         $this->checkDuplicateTag($value);
 
         if (!$this->checkDuplikat) {
-            if (!empty($this->newTag)) {
+            if (!empty($value)) {
                 $this->tag[] = $value;
             }
+            // dd('masuk');
         } else {
             return redirect()->back()->with('duplicate', 'Nama penyakit sudah ada.');
-        }        
+        }   
+             
     }
 
     public function enterTagPenyakit()
@@ -243,12 +248,11 @@ class FormEditPasien extends Component
                 ]
             ], $message);
         }elseif($this->currentStep == 4){
+            $tagPenyakit = 1;
             if(empty($this->dataTag[0]['db']) && empty($this->dataTag[0]['current'])) {
                 if(count($this->tag) == 0) {
                     $tagPenyakit = 0;
                 }
-            } else {
-                $tagPenyakit = 1;
             }
             $this->validate([
                 'penyakit' => [

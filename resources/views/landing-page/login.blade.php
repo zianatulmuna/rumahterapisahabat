@@ -45,7 +45,7 @@
           
               <div class="checkbox mb-3">
               </div>
-              <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+              <button class="w-100 btn btn-lg btn-success" type="submit">Login</button>
             </form>
           </main>
     </div>

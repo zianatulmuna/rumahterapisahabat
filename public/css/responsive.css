@@ -153,7 +153,18 @@
       .grafik-perkembangan .nav-tabs .nav-link {
         font-size: 14px;
       }
-
+      .stack-input-icon input {
+        border-left: 0px!important;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+      }
+      .stack-input-icon .input-icon {
+        border-right: 0px!important;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
       
   }
 
@@ -172,14 +183,18 @@
 
     .custom-step {
       padding: 0px;
-      padding: 1rem 50px 0px 50px;
+     
+    }
+
+    .custom-step-pasien {
+       padding: 1rem 50px 0px 50px;
     }
 
     .custom-step .col {
       padding: 0px;
     }
 
-    .custom-step h5 {
+    .custom-step-pasien h5 {
       display: none;
     }
 
@@ -191,6 +206,11 @@
     .step-title h5 {
       font-weight: bold;
     }
+
+    .table-col-rm {
+      width: 80px;
+    }
+    
   }
 
   @media (min-width: 450px) {   
@@ -209,6 +229,10 @@
     .custom-step {
       padding-top: 1.5rem;
       padding-bottom: 1.5rem;
+    }
+
+    .dropdown-dinamis {
+      min-width: 340px;
     }
 
   }
@@ -248,11 +272,25 @@
       max-width: 300px;
       /* text-align: right; */
     }
+
+    .table-col-terapis {
+      min-width: 120px;
+    }
   }
 
+  @media (min-width: 992px) { 
+    
+    /* .table-col-rm {
+      width: 200px;
+    }
+    .table-col-aksi {
+      width: 180px;
+    } */
+
+  }
   @media (min-width: 1300px) {
     .form-check-custom {
       display: inline-block !important;
       margin-right: 1.3rem;
-    }    
+    }   
   }

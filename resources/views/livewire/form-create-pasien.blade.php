@@ -1,7 +1,7 @@
 <div>
   <div class="main-bg">
     {{-- Step header --}}
-    <div class="row justify-content-between py-sm-5 custom-step">
+    <div class="row justify-content-between py-sm-5 custom-step custom-step-pasien">
       <div class="col text-center">
         <i class="bi {{  $currentStep == 1 ? 'bi-1-circle-fill' : ($currentStep >= 1 ? 'bi bi-check-circle-fill' : 'bi-1-circle')  }} text-success h1"></i>
         <h5 class="pt-2">Data Diri</h5>
@@ -130,7 +130,7 @@
         {{-- data penunjang --}}
         @if($currentStep == 2)
           <div class="" id="nav-penunjang" aria-labelledby="nav-penunjang-tab" tabindex="0">
-            <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
+            <div class="row row-cols-1 row-cols-lg-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">
                 <div class="mb-4">
                   <label label class="form-label fw-semibold w-100">Metode Pembayaran</label>
@@ -328,7 +328,7 @@
           <div class="" id="nav-awal" role="tabpanel" aria-labelledby="nav-awal-tab" tabindex="0">
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">
-                <div class="mb-3">
+                <div class="mb-3 dropdown-penyakit">
                   <label for="penyakit" class="form-label fw-semibold">Nama Penyakit</label>
                   <div class="form-control d-flex flex-wrap gap-2 p-2 rounded taginput @error('penyakit') is-invalid @enderror">                    
                     @if(count($tag) > 0)
@@ -341,14 +341,15 @@
                     @endif   
                     <input 
                       type="text" 
-                      class="flex-grow-1 @error('penyakit') is-invalid @enderror data-rm" 
+                      class="flex-grow-1 @error('penyakit') is-invalid @enderror data-rm search-input" 
                       id="tagPenyakit" 
                       name="tagPenyakit" 
                       placeholder="Tambah.." 
                       oninput="capEach('tagPenyakit')"
-                      wire:model.debounce.500ms="newTag"
-                      wire:keydown.enter="enterTagPenyakit"
                       >                                 
+                  </div>
+                  <div class="dropdown-menu dropdown-dinamis ps-2 px-sm-3 shadow">   
+                    <ul class="select-options"></ul>
                   </div>
                   <div class="form-text">Tekan koma "," atau Enter untuk menambah penyakit.</div>
                   @error('penyakit')
@@ -483,67 +484,98 @@
 </div>
 
 @push('script')
-  <script>
-    const target = document.querySelector(".main-bg");
-    
-    function capEach(inputId) {
-      var input = document.getElementById(inputId);
-        let words = input.value.split(' ');
-
-        for (let i = 0; i < words.length; i++) {
-            if (words[i].length > 0) {
-                words[i] = words[i][0].toUpperCase() + words[i].substring(1);
-            }
-        }
-
-        input.value = words.join(' ');
-    } 
-
-    function capFirst(inputId) {
-      var input = document.getElementById(inputId);
-      var word = input.value;
+<script>
+  const target = document.querySelector(".main-bg");
   
-      if (word.length > 0) {
-        var capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1);
-        input.value = capitalizedWord;
+  function capEach(inputId) {
+    var input = document.getElementById(inputId);
+      let words = input.value.split(' ');
+
+      for (let i = 0; i < words.length; i++) {
+          if (words[i].length > 0) {
+              words[i] = words[i][0].toUpperCase() + words[i].substring(1);
+          }
       }
-    } 
 
-    function toTop() {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
+      input.value = words.join(' ');
+  } 
+
+  function capFirst(inputId) {
+    var input = document.getElementById(inputId);
+    var word = input.value;
+
+    if (word.length > 0) {
+      var capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1);
+      input.value = capitalizedWord;
     }
-    
-    // document.querySelector("#btnNext").addEventListener("click", function() {
-    //   document.querySelector(".main-bg").scrollIntoView({
-    //     behavior: "smooth",
-    //     block: "start"
-    //   });
-    // })
+  } 
 
-    document.addEventListener('livewire:load', function () {
-      
-      Livewire.on('runScriptPenyakit', function () {
-          const inputField = document.getElementById('tagPenyakit');
-
-          function addTagToController(newTag) {
-            Livewire.emit('addTagPenyakit', newTag);
-          };
-
-          inputField.addEventListener('keyup', function(event) {
-            if (event.key === ",") {
-              const value = inputField.value;
-              const trimmedValue = value.slice(0, -1);
-
-              addTagToController(trimmedValue);
-
-              inputField.value = "";
-            }
-          });
-      });  
-      
+  function toTop() {
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
     });
-  </script>
+  }
+
+  function addTagToController(newTag) {
+    Livewire.emit('addTagPenyakit', newTag);
+    document.querySelector(".search-input").value = "";
+  };
+
+  document.addEventListener('livewire:load', function () {
+    
+    Livewire.on('runScriptPenyakit', function () {
+      let dataPenyakit = @json($listPenyakit);
+
+      const dropPenyakit = document.querySelector(".dropdown-penyakit");
+      let searchInpPenyakit = dropPenyakit.querySelector(".search-input");
+      let optionsPenyakit = dropPenyakit.querySelector(".select-options");
+      let dropdown = dropPenyakit.querySelector(".dropdown-dinamis");
+
+      searchInpPenyakit.addEventListener('keyup', function(event) {
+        const value = searchInpPenyakit.value;
+
+        if (event.key === "Enter" || (event.key === "," && value.endsWith(","))) {
+            const trimmedValue = value.replace(/,$/, '');
+            addTagToController(trimmedValue);
+
+            searchInpPenyakit.value = "";
+        }
+      });
+
+      searchInpPenyakit.addEventListener("keyup", () => {
+        dropdown.style.display = 'block';
+        let arr = [];
+        let searchWords = searchInpPenyakit.value.toLowerCase().split(' ');
+        arr = dataPenyakit.filter(penyakit => {
+            let data = penyakit.toLowerCase();
+            return searchWords.every(word => data.includes(word));
+        }).map(penyakit => {
+            return `<button type="button" class="dropdown-item" 
+                        data-nama="${penyakit}"
+                        onclick="addTagToController('${penyakit}')">
+                        ${penyakit}                            
+                    </button>
+                    `;
+        }).join("");
+
+        if(arr) {
+          optionsPenyakit.innerHTML = arr;
+        } else {
+          dropdown.style.display = 'none';
+        }
+      });
+
+      searchInpPenyakit.addEventListener("focus", function() {
+        dropdown.style.display = 'block';
+      });
+
+      document.addEventListener('click', function(event) {
+        if (!searchInpPenyakit.contains(event.target)) {
+          dropdown.style.display = 'none';
+        }
+      });
+    });  
+  });
+</script>
 @endpush

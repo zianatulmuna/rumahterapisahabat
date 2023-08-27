@@ -1,5 +1,6 @@
 .c-badge {
   display: inline-block;
+  color: #fff;
   padding: 0.5em 0.65em;
   font-size: 75%;
   font-weight: 700;
@@ -14,6 +15,7 @@
 @media (prefers-reduced-motion: reduce) {
   .c-badge {
     transition: none;
+    color: #fff;
   }
 }
 

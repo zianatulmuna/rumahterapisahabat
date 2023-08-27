@@ -68,8 +68,8 @@ class RekamTerapiController extends Controller
     {
         return view('admin.rekam-terapi.tambah', [
             'pasien' => $pasien,
-            'terapis' => Terapis::orderBy('nama', 'ASC')->get(),
-            'sub' => $subRM
+            // 'terapis' => Terapis::orderBy('nama', 'ASC')->get(),
+            'id_sub' => $subRM->id_sub
         ]);
     }
     

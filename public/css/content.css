@@ -126,6 +126,8 @@
 .card-custom .card-footer {
   padding: 8px auto;
 }
+
+
 .card-terapis {
   height: 250px;
 }
@@ -145,15 +147,15 @@
   font-weight: 600;
 }
 
-
 .card-terapis a:hover {
   background-color: #fff;
   cursor: pointer;
   text-decoration: none;
+  color: #0e8357;
 }
 
-.card-terapis .card-header-text:hover {
-  color: #0e8357;
+.card-terapis a h6:hover {
+  color: #0E8357;
 }
 
 

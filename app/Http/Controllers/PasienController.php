@@ -30,7 +30,7 @@ class PasienController extends Controller
 
         $pasien_lama = Pasien::filter($search, $sortBy, $status)
                                 ->where('status_pendaftaran', 'Pasien Lama')
-                                ->paginate(20);
+                                ->paginate(24);
 
         return view('admin.pasien.pasien-lama', compact('pasien_lama'));
     }

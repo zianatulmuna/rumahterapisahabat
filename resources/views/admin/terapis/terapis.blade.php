@@ -48,8 +48,8 @@
         @foreach ($terapis as $t)
           <div class="col">
             <div class="card card-custom border-0 card-terapis shadow-sm">
-              <a href="{{ route('terapis.detail', $t->username) }}" class="card-header py-2">
-                <h6 class="card-header-text">{{ $t->nama }}</h6>
+              <a href="{{ route('terapis.detail', $t->username) }}" class="card-header p-0">
+                <h6 class="card-header-text  py-2">{{ $t->nama }}</h6>
               </a>
               @if ($t->foto)
                 <img src="{{ asset('storage/' . $t->foto) }}" class="card-img-top" alt="{{ $t->nama }}">
@@ -68,7 +68,7 @@
         @endforeach
       </div>
     @else
-     <span class="fst-italic">Data tidak ditemukan."</span>
+     <span class="fst-italic">Data tidak ditemukan.</span>
     @endif
   </div>
 

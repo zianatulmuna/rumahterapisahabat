@@ -1,6 +1,6 @@
 {{-- Data Diri Pasien --}}
 <div class="row g-4 custom-bio">
-    <div class="col-lg-2 p-0 pe-sm-3">
+   <div class="col-lg-2 p-0 pe-sm-3">
       <div class="d-flex align-items-center justify-content-center">
        @if ($pasien->foto)
           <img src="{{ asset('storage/' . $pasien->foto) }}" class="img-thumbnail" alt="...">
@@ -112,7 +112,7 @@
     <div class="col-lg-2 p-0">
        <div class="button-rm d-flex align-items-sm-center flex-lg-column justify-content-center ps-lg-4">
           <a href="{{ route('rm.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0">Histori Rekam Medis</a>
-         <a href="{{ route('sub.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3">Histori Rekam Terapi</a>
+         <a href="{{ route('sub.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0">Histori Rekam Terapi</a>
          <a href="" class="btn btn-outline-success btn-sm mb-3">Unduh Rekam Medis</a>
        </div>
     </div>

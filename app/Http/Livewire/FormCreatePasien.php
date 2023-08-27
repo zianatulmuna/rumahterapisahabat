@@ -33,7 +33,7 @@ class FormCreatePasien extends Component
     protected $listeners = ['addTagPenyakit'];
 
     public function mount($pasien){
-        $this->currentStep = 1;
+        $this->currentStep;
         $this->tag;
 
         if($pasien) {
@@ -57,14 +57,16 @@ class FormCreatePasien extends Component
         }     
     }
 
-    public function mounted()
-    {
-        if ($this->getErrorBag()->any()) {
-            $this->emit('scrollToTop');
-        }
-    }
+    // public function mounted()
+    // {
+    //     if ($this->getErrorBag()->any()) {
+    //         $this->emit('scrollToTop');
+    //     }
+    // }
     public function render()
     {
+        $listPenyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
+
         return view('livewire.form-create-pasien', [
             'jenisKelamin' => ['Perempuan','Laki-Laki'],
             'tipePembayaran' => [
@@ -81,6 +83,7 @@ class FormCreatePasien extends Component
                 ['value' => 'Terapi Baru', 'name' => 'terapi_baru'], 
                 ['value' => 'Terapi Lanjutan', 'name' => 'terapi_lanjutan']
             ],
+            'listPenyakit' => $listPenyakit
             
         ]);
     }
@@ -116,13 +119,13 @@ class FormCreatePasien extends Component
         $this->tag[] = $value;
     }
 
-    public function enterTagPenyakit()
-    {
-        if (!empty($this->newTag)) {
-            $this->tag[] = $this->newTag;
-            $this->newTag = '';
-        }
-    }
+    // public function enterTagPenyakit()
+    // {
+    //     if (!empty($this->newTag)) {
+    //         $this->tag[] = $this->newTag;
+    //         $this->newTag = '';
+    //     }
+    // }
 
     public function deleteTagPenyakit($value)
     {
@@ -296,7 +299,7 @@ class FormCreatePasien extends Component
 
         if(empty($this->pasien)) {
             return redirect(route('pasien.create'))
-                            ->with('success', 'Pasien berhasil ditambahkan')   
+                            ->with('success', 'Pasien berhasil ditambahkan. ')   
                             ->with('createPasien', $this->slug);   
         } else {
             return redirect()->route('rm.histori', $this->slug)->with('success', 'Rekam Medis berhasil ditambahkan.');       
