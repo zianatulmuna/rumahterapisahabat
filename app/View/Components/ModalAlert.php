@@ -6,7 +6,7 @@ use Illuminate\View\Component;
 
 class ModalAlert extends Component
 {
-    public $id, $title, $body, $icon;
+    public $id, $title, $body, $icon, $html;
 
     public function __construct($id, $title, $body, $icon )
     {
@@ -14,6 +14,7 @@ class ModalAlert extends Component
         $this->title = $title;
         $this->body = $body;
         $this->icon = $icon;
+        // $this->html = $html;
     }
 
     public function render()

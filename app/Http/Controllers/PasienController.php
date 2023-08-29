@@ -60,7 +60,7 @@ class PasienController extends Controller
      */
     public function create()
     {
-        return view('admin.pasien.create', [
+        return view('admin.pasien.tambah', [
             'pasien' => ''
         ]);
     }

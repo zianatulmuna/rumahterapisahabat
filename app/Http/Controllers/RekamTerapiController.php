@@ -27,7 +27,7 @@ class RekamTerapiController extends Controller
         // $combined = $rekamTerapi->zip($terapis);
         $rekam = $subRM->rekamTerapi()->orderBy('tanggal', 'ASC')->get();
 
-        return view('admin.rekam-terapi.rekam', [
+        return view('admin.rekam-terapi.rekam-terapi', [
             'rekam_terapi' => $rekam,
             'sub' => $subRM,
             // 'rekam_terapi' => $subRM->rekamTerapi,

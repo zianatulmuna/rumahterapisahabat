@@ -13,7 +13,6 @@ body {
     "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";
   color: #212529;
-  /* color: #858796; */
 }
 
 h1, h2, h3, h4,
@@ -22,20 +21,9 @@ h1, h2, h3, h4,
   color: #272c31;
 }
 
-.col-xl-2 {
-  width: 16%;
-}
-
-.col-xl-10 {
-  width: 84%;
-}
-
 .container-bg {
   background-color: #f1f4fc;
-  /* background-color: #f8f9fc; */
   min-height: 100vh;  
-  /* padding-right: 1.5rem;
-  padding-left: 1.5rem; */
 }
 
 .content-container {
@@ -44,7 +32,6 @@ h1, h2, h3, h4,
 
 .main-bg {
   border-radius: 10px;
-  /* margin-top: 20px; */
   background-color: #fff;
   padding: 10px 10px 10px 10px;
   box-shadow: 0 0.125rem 0.25rem 0 rgba(58, 59, 69, 0.2) !important;
@@ -148,7 +135,6 @@ h1, h2, h3, h4,
 }
 
 .sidebar-custom a {
-  /* margin-left: -5px; */
   font-family: "Nunito";
   font-weight: 500;
   padding: 10px 16px;
@@ -192,41 +178,34 @@ h1, h2, h3, h4,
   opacity: 15%;
 }
 
+
 /* modal menu */
+
 .modal-navbar .modal-dialog{
-
   margin: 0;
-  width: 100%;
-}
-
-@media(max-width: 450px){
-
-  .modal-navbar .modal-dialog{
-      width: 82%;
-  }
 }
 
 .modal-navbar .modal-content{
-
   border-radius: 0;
-  overflow-y: scroll;
-  width: 100vw
+  /* overflow-y: scroll; */
+  height: 100vmax;
 }
 
 .modal-navbar .modal-header{
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
   width: 88%;
   margin: 0 auto;
-  border-bottom: 3px solid #686b6d;
   padding-bottom: 5px;
   padding-top: 20px;
 }
 
+.modal-navbar .modal-header i{
+  font-size: 24px;
+}
+
 
 .modal-navbar .modal-body{
-
   width: 90%;
   margin: 0 auto;
   flex: unset;
@@ -237,13 +216,15 @@ h1, h2, h3, h4,
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 5px 5px 5px 5px;
+  padding: 10px 5px 10px 5px;
   /* margin-bottom: 20px; */
   cursor: pointer;
   transition: all .5s ease;
 }
 
-.modal-navbar .modal-body .modal-line:hover{
-  background-color: #d2f4ea;
-  color: #0E8357;
+.modal-navbar .modal-body .modal-line i{
+  margin-right: 15px;
 }
+
+
+

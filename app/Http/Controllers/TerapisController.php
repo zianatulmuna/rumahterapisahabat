@@ -30,7 +30,7 @@ class TerapisController extends Controller
      */
     public function create()
     {
-        return view('admin.terapis.create');
+        return view('admin.terapis.tambah');
     }
 
     /**

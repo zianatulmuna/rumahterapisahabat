@@ -1,6 +1,6 @@
 <header class="navbar navbar-expand-sm navbar-light bg-light shadow px-4 sticky-top navbar-custom">
     <!-- Button trigger modal -->
-    <div class="mobile-toggler d-md-none">
+    <div class="mobile-toggler d-lg-none me-3">
       <a href="#" data-bs-toggle="modal" data-bs-target="#navbModal">
         <i class="bi bi-list"></i>
       </a>
@@ -48,7 +48,7 @@
 @section('modal-alert')
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
+aria-expanded="false">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">

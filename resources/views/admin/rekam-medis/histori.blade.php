@@ -16,7 +16,8 @@
             @foreach($rm_terkini as $rm)   
                <div class="col mb-4">
                   <div class="card shadow-sm card-kini h-100">
-                     <a href="{{ route('pasien.rm', $pasien->slug) }}" class="card-header text-center"><h6>NO.RM  {{ $rm->id_rekam_medis }}</h6></a>
+                     
+                     <a href="{{ count($rm_terkini) == 1 ? route('pasien.rm', $pasien->slug) : route('rm.detail', [$pasien->slug, $rm->id_rekam_medis])}}" class="card-header text-center"><h6>NO.RM  {{ $rm->id_rekam_medis }}</h6></a>
                      <ul class="list-group list-group-flush text-left list-group-histori">
                         <li class="list-group-item">
                            <p class="small">Penyakit:</p>
@@ -45,7 +46,9 @@
                         </li>
                      </ul>
                      <div class="card-body row">
-                        @if(count($rm->subRekamMedis) == 1)
+                        @if(count($rm->subRekamMedis) == 0)
+                           <div class="fst-italic">Data rekam terapi telah dihapus. Tambahkan penyakit pada Rekam Medis <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.</div>
+                        @elseif(count($rm->subRekamMedis) == 1)
                            <a href="{{ route('terapi.rekam', [$pasien->slug, $rm->subRekamMedis[0]->id_sub]) }}" class="link-success text-decoration-none">
                               Rekam Terapi 
                               <i class="bi bi-arrow-right"></i>

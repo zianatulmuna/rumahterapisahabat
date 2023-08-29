@@ -3,7 +3,7 @@
 @section('container')
 <div class="content-container custom-terapi-harian">
    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
-      <h1 class="h2">Rekam Terapi</h1>
+      <h1 class="h2">Rekam Terapi Harian</h1>
    </div>
 
     {{-- Data Diri Pasien --}}

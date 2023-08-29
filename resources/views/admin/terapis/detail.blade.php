@@ -7,30 +7,36 @@
    </div>
 
    {{-- Data Diri terapis --}}
-   <div class="row g-4">
-      <div class="col-md-2" style="max-height: 214px; overflow: hidden;">
-         @if ($terapis->foto)
-            <img src="{{ asset('storage/' . $terapis->foto) }}" class="img-thumbnail" alt="...">
-         @else
-            @if($terapis->jenis_kelamin === 'Laki-Laki')
-               <img src="/img/avatar-l.png" class="img-thumbnail" alt="...">
-            @else
-               <img src="/img/avatar-p.png" class="img-thumbnail" alt="...">
-            @endif
-         @endif
-      </div>
+   <div class="row g-4 custom-bio">
+      <div class="col-lg-2 p-0 pe-sm-3">
+         <div class="d-flex align-items-center justify-content-center">
+          @if ($terapis->foto)
+             <img src="{{ asset('storage/' . $terapis->foto) }}" class="img-thumbnail" alt="...">
+          @else
+             @if($terapis->jenis_kelamin === 'Laki-Laki')
+                <img src="/img/avatar-l.png" class="img-thumbnail" alt="...">
+             @else
+                <img src="/img/avatar-p.png" class="img-thumbnail" alt="...">
+             @endif
+          @endif
+         </div>
+       </div>
       <div class="col-md-7 bg-white px-3 py-2 border border-body-tertiary text-black">
          <table class="table table-borderless table-sm bg-white table-data-diri">
             <thead>
                <tr>
-                 <th style="width: 20%"></th>
-                 <th style="width: 80%"></th>
+                 <th></th>
+                 <th></th>
                </tr>
             </thead>
             <tbody>
                <tr>
                   <td>Nama</td>
                   <td>{{ $terapis->nama }}</td>
+               </tr>
+               <tr>
+                  <td>Username</td>
+                  <td>{{ $terapis->username }}</td>
                </tr>
                <tr>
                   <td>No. Telp</td>
@@ -63,7 +69,7 @@
          </table>
       </div>
       <div class="col-md-3 text-center ">
-         <h5>Tingkatan Terapi</h5>
+         <h5>Tingkatan Terapis</h5>
          <div class="d-flex justify-content-center align-center">
             <h5 class="alert alert-light rounded-0 border border-dark-subtle shadow-sm p-3 py-4">
                <i class="bi bi-award-fill text-primary"></i> Terapis {{ $terapis->tingkatan }}   
@@ -109,8 +115,8 @@
          <i class="bi bi-trash"></i>
          Hapus
       </a>
-      <a href="{{ route('terapis.edit', $terapis->username) }}" class="btn c-btn-warning px-4">
-         <i class="bi bi-pencil-square"></i>
+      <a href="{{ route('terapis.edit', $terapis->username) }}" class="btn c-btn-warning px-3">
+         <i class="bi bi-pencil-square pe-1"></i>
          Edit
      </a>
    </div>

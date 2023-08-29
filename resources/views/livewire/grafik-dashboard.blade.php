@@ -28,40 +28,44 @@
                 {{-- terapis --}}
                 <div class="col col-sm-4 col-lg-5 px-1 mb-2 my-sm-2 my-md-0">                      
                     <div class="dropdown w-100 search-dinamis dropdown-terapis">
-                        {{-- @if($grafik == 'Sesi Terapi') --}}
                             <button class="form-control d-flex justify-content-between align-items-center {{ $nama_terapis ? 'border-success text-success' : '' }} @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false" {{ $grafik != 'Sesi Terapi' ? 'disabled' : '' }}>
-                                <span>
+                                <span class="text-truncate" id="namaTerapis">
                                     @if($grafik == 'Sesi Terapi')
                                         {{ $nama_terapis ? $nama_terapis : 'Pilih Terapis' }}
                                     @endif
                                 </span>
                                 <i class="bi bi-chevron-down"></i>
                             </button>
-                            <div class="dropdown-menu px-3 w-100 shadow">
-                                <div class="input-group py-2">
+                            <div class="dropdown-menu px-3 w-100 bg-body-tertiary shadow">
+                                <div class="input-group pt-2 pb-0">
                                     <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
                                     <input type="text" class="form-control border-start-0 search-input" placeholder="Cari nama terapis">
                                 </div>
-                                <ul class="select-options"></ul>
+                                <div class="text-end pb-1">
+                                    <a class="text-reset" style="cursor: pointer;" data-nama="" onclick="setTerapisToController(this)">Reset</a>
+                                </div>
+                                <ul class="select-options bg-white rounded"></ul>
                             </div>
-                        {{-- @endif --}}
                     </div>
                 </div>
                 {{-- penyakit --}}
                 <div class="col col-sm-4 px-1 mb-2 my-sm-2 my-md-0">                      
                     <div class="dropdown w-100 search-dinamis dropdown-penyakit">
                         <button class="form-control d-flex justify-content-between align-items-center {{ $nama_penyakit ? 'border-success text-success' : '' }} @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span>
+                            <span class="text-truncate" id="namaPenyakit">
                                 {{ $nama_penyakit ? $nama_penyakit : 'Pilih Penyakit' }}
                             </span>
                             <i class="bi bi-chevron-down"></i>
                         </button>
-                        <div class="dropdown-menu px-3 w-100 shadow">
-                            <div class="input-group py-2">
+                        <div class="dropdown-menu px-3 w-100 bg-body-tertiary shadow">
+                            <div class="input-group pt-2 pb-0">
                                 <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
                                 <input type="text" class="form-control border-start-0 search-input" placeholder="Cari penyakit">
                             </div>
-                            <ul class="select-options"></ul>
+                            <div class="text-end pb-1">
+                                <a class="text-reset" style="cursor: pointer;" data-nama="" onclick="setPenyakitToController(this)">Reset</a>
+                            </div>
+                            <ul class="select-options bg-white rounded"></ul>
                         </div>
                     </div>
                 </div>
@@ -74,9 +78,8 @@
 
             <div class="text-center mt-3">
                 <span class="text-center">
-                    Data {{ $grafik }} {{ $filter }} {{ $filter == 'tahun' ? $tahun : '' }}
+                    Data {{ $grafik }}{{ $nama_penyakit ? ' penyakit ' . $nama_penyakit : '' }} {{ $filter }} {{ $filter == 'tahun' ? $tahun : '' }}
                     {{ $nama_terapis ? 'oleh terapis ' . $nama_terapis : '' }}
-                    {{ $nama_penyakit ? 'berdasarkan penyakit ' . $nama_penyakit : '' }}
                 </span>
             </div>
         </div>
@@ -100,12 +103,12 @@
         Livewire.emit('setTerapis', { id: id, nama: nama });
     };
 
-    function addTerapis(selectedTerapis) {
+    function addTerapis() {
         optionsTerapis.innerHTML = "";
         dataTerapis.forEach(terapis => {
-            let isSelected = terapis.nama == selectedTerapis ? "active" : "";
+            let isSelected = terapis.nama == document.querySelector("#namaTerapis").innerText ? "active" : "";
             let li = `
-                        <li class="dropdown-item ps-1 ${isSelected}" 
+                        <li class="dropdown-item ${isSelected}" 
                             id="terapisOption"
                             data-id="${terapis.id_terapis}" 
                             data-nama="${terapis.nama}"
@@ -127,20 +130,21 @@
             let data = terapis.nama.toLowerCase();
             return searchWords.every(word => data.includes(word));
         }).map(terapis => {
-            let isSelected = terapis.nama == selectBtnTerapis.firstElementChild.innerText ? "active" : "";
+            let isSelected = terapis.nama == document.querySelector("#namaTerapis").innerText ? "active" : "";
             return `
-                    <li class="dropdown-item ps-1 ${isSelected}" 
-                        data-id="${terapis.id_terapis}" 
-                        data-nama="${terapis.nama}" 
-                        onclick="updateNameTerapis(this)">
-                        <button type="button" class="nav-link text-decoration-none text-dark d-flex justify-content-between w-100" wire:click="setTerapis('${terapis.id_terapis}')">
-                            <span class="col-8 text-start text-truncate">${terapis.nama}</span>
-                            <span class="small fst-italic">${terapis.tingkatan}</span>
-                        </button>
-                    </li>
+                        <li class="dropdown-item ${isSelected}" 
+                            id="terapisOption"
+                            data-id="${terapis.id_terapis}" 
+                            data-nama="${terapis.nama}"
+                            onclick="setTerapisToController(this)">
+                            <p class="m-0 d-flex justify-content-between w-100" >
+                                <span class="col-8 text-start text-truncate">${terapis.nama}</span>
+                                <span class="small fst-italic">${terapis.tingkatan}</span>
+                            </p>
+                        </li>
                     `;  
         }).join("");
-        optionsTerapis.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
+        optionsTerapis.innerHTML = arr ? arr : `<p class="p-2 m-0">Oops! Data tidak ditemukan</p>`;
     });
 
     selectBtnTerapis.addEventListener("click", () => dropTerapis.classList.toggle("active"));
@@ -160,10 +164,10 @@
         Livewire.emit('setPenyakit', nama);
     };
 
-    function addPenyakit(selectedPenyakit) {
+    function addPenyakit() {
         optionsPenyakit.innerHTML = "";
         dataPenyakit.forEach(penyakit => {
-            let isSelected = penyakit == selectedPenyakit ? "active" : "";
+            let isSelected = penyakit == document.querySelector("#namaPenyakit").innerText ? "active" : "";
                 let li = `
                             <li class="dropdown-item ${isSelected}" 
                                 data-nama="${penyakit}" 
@@ -182,7 +186,7 @@
             let data = penyakit.toLowerCase();
             return searchWords.every(word => data.includes(word));
         }).map(penyakit => {
-            let isSelected = penyakit == selectBtnPenyakit.firstElementChild.innerText ? "active" : "";
+            let isSelected = penyakit == document.querySelector("#namaPenyakit").innerText ? "active" : "";
             return `<li class="dropdown-item ${isSelected}" 
                         data-nama="${penyakit}" 
                         onclick="setPenyakitToController(this)">
@@ -190,7 +194,7 @@
                     </li>
                     `;
         }).join("");
-        optionsPenyakit.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
+        optionsPenyakit.innerHTML = arr ? arr : `<p class="p-2 m-0">Oops! Data tidak ditemukan</p>`;
     });
 
     selectBtnPenyakit.addEventListener("click", () => dropPenyakit.classList.toggle("active"));
@@ -202,8 +206,8 @@
         Livewire.on('chartUpdated', grafik => {
             updateChart(grafik.dataGrafik, grafik.maxChart);    
 
-            addTerapis('');      
-            addPenyakit('');      
+            addTerapis();      
+            addPenyakit();      
         });
 
         function updateChart(dataGrafik, max) {

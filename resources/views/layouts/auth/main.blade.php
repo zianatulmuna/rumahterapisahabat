@@ -34,7 +34,7 @@
         @include('layouts.auth.modal-navbar') 
         @include('layouts.auth.sidebar') 
     
-        <main class="ms-md-auto col-xl-10 py-1 container-bg">
+        <main class="ms-lg-auto col-lg-10 py-1 container-bg">
           @yield('container')          
         </main>
       </div>

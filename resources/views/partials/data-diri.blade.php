@@ -17,8 +17,6 @@
        <table class="table table-borderless table-sm bg-white table-data-diri">
           <thead>
              <tr>
-               {{-- <th style="width: 20%"></th>
-               <th style="width: 80%"></th> --}}
                <th></th>
                <th></th>
              </tr>
@@ -52,25 +50,8 @@
                 <td>Alamat</td>
                 <td>{{ $pasien->alamat }}</td>
              </tr>
-             {{-- <tr class="fw-semibold">
-                <td>ID Pasien</td>
-                <td>{{ $pasien->id_pasien }}</td>
-             </tr> --}}
-             {{-- @if(Request::is('admin/pasien/' . $pasien->slug))
-               @if($rmDetected == 1)
-                  <tr class="fw-semibold">
-                     <td>No. RM</td>
-                     <td>{{ $rm->id_rekam_medis }}</td>                  
-                  </tr>
-                  <tr>
-                     <td>Status</td>
-                     <td>{{ $rm->status_pasien }}</td>                  
-                  </tr>
-               @endif
-             @endif --}}
           </tbody>            
        </table>
-       {{-- <div class="bg-secondary-subtle my-2" style="height: 1px"></div> --}}
        <table class="table table-borderless table-sm m-0 mt-1 table-data-diri table-info-rm">
          <thead>
             <tr>
@@ -97,17 +78,6 @@
             @endif
          </tbody>
        </table>
-       {{-- <div class="d-flex gap-2 my-2 mt-3 text-white">
-         <div class="c-bg-info py-1 px-3 rounded-5">
-            ID Pasien: {{ $pasien->id_pasien }}
-         </div>
-         <div class="c-bg-success py-1 px-3 rounded-5">
-            NO.RM: {{ $rm->id_rekam_medis }}
-         </div>
-         <div class="c-bg-success py-1 px-3 rounded-5">
-            Status: {{ $rm->status_pasien }}
-         </div>
-      </div> --}}
     </div>
     <div class="col-lg-2 p-0">
        <div class="button-rm d-flex align-items-sm-center flex-lg-column justify-content-center ps-lg-4">

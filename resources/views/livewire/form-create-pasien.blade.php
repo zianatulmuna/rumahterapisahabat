@@ -45,22 +45,22 @@
           <div class="" id="nav-diri" aria-labelledby="nav-diri-tab" tabindex="0">
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">                
-                <div class="mb-3">
-                  <label for="nama" class="form-label fw-semibold">Nama Lengkap</label>
-                  <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama') }}" oninput="capEach('nama')" @if($id_pasien) disabled @endif wire:model="nama">
+                <div class="mb-4">
+                  <label for="nama" class="form-label fw-bold">Nama Lengkap</label>
+                  <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama') }}" oninput="capEach('nama')" @if($id_pasien) disabled @endif required wire:model="nama">
                   @error('nama')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                  <label for="no_telp" class="form-label fw-semibold">Nomor Telepon</label>
-                  <input type="tel" class="form-control @error('no_telp') is-invalid @enderror" id="no_telp" name="no_telp" value="{{ old('no_telp') }}" @if($id_pasien) disabled @endif wire:model="no_telp">
+                <div class="mb-4">
+                  <label for="no_telp" class="form-label fw-bold">Nomor Telepon</label>
+                  <input type="tel" class="form-control @error('no_telp') is-invalid @enderror" id="no_telp" name="no_telp" value="{{ old('no_telp') }}" @if($id_pasien) disabled @endif required wire:model="no_telp">
                   @error('no_telp')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                  <label class="form-label fw-semibold">Jenis Kelamin</label>
+                <div class="mb-4">
+                  <label class="form-label fw-bold">Jenis Kelamin</label>
                   <select class="form-select @error('jenis_kelamin') is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin" @if($id_pasien) disabled @endif @if($id_pasien) disabled @endif wire:model="jenis_kelamin" required aria-label=".form-select-sm example">
                     <option value="">Pilih Jenis Kelamin</option>
                     @foreach($jenisKelamin as $gender)
@@ -75,8 +75,8 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                  <label for="tanggal_lahir" class="form-label fw-semibold">Tanggal Lahir [Bulan/Tanggal/Tahun]</label>
+                <div class="mb-4">
+                  <label for="tanggal_lahir" class="form-label fw-bold">Tanggal Lahir [Bulan/Tanggal/Tahun]</label>
                     <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" name="tanggal_lahir" 
                       value="{{ old('tanggal_lahir') }}" @if($id_pasien) disabled @endif wire:model="tanggal_lahir">
                     <div class="form-text">Contoh: 9 Desember 1995 diisi 12/09/1995</div>
@@ -89,15 +89,15 @@
               </div>
                     
               <div class="col">
-                <div class="mb-3">
-                  <label for="email" class="form-label fw-semibold">Email</label>
+                <div class="mb-4">
+                  <label for="email" class="form-label fw-bold">Email</label>
                   <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" @if($id_pasien) disabled @endif wire:model="email">
                   @error('email')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="pekerjaan" class="form-label fw-semibold">Pekerjaan</label>
+                <div class="mb-4">
+                    <label for="pekerjaan" class="form-label fw-bold">Pekerjaan</label>
                     <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror" id="pekerjaan" name="pekerjaan" value="{{ old('pekerjaan') }}" oninput="capEach('pekerjaan')" @if($id_pasien) disabled @endif wire:model="pekerjaan">
                     @error('pekerjaan')
                     <div class="invalid-feedback">
@@ -105,8 +105,8 @@
                     </div>
                     @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="agama" class="form-label fw-semibold">Agama</label>
+                <div class="mb-4">
+                    <label for="agama" class="form-label fw-bold">Agama</label>
                     <input type="text" class="form-control @error('agama') is-invalid @enderror" id="agama" name="agama" value="{{ old('agama') }}" oninput="capEach('agama')" @if($id_pasien) disabled @endif wire:model="agama">
                     @error('agama')
                     <div class="invalid-feedback">
@@ -114,8 +114,8 @@
                     </div>
                     @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="alamat" class="form-label fw-semibold">Alamat</label>
+                <div class="mb-4">
+                    <label for="alamat" class="form-label fw-bold">Alamat</label>
                     <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat') }}" oninput="capFirst('alamat')" @if($id_pasien) disabled @endif wire:model="alamat">
                     @error('alamat')
                     <div class="invalid-feedback">
@@ -133,7 +133,7 @@
             <div class="row row-cols-1 row-cols-lg-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">
                 <div class="mb-4">
-                  <label label class="form-label fw-semibold w-100">Metode Pembayaran</label>
+                  <label label class="form-label fw-bold w-100">Metode Pembayaran</label>
                   @foreach($tipePembayaran as $tipe)
                     @if (old('tipe_pembayaran') == $tipe['value'])
                       <div class="form-check form-check-custom">                        
@@ -148,8 +148,8 @@
                     @endif
                   @endforeach
                 </div>
-                <div class="mb-3">
-                  <label for="penanggungjawab" class="form-label fw-semibold">Nama Penanggungjawab</label>
+                <div class="mb-4">
+                  <label for="penanggungjawab" class="form-label fw-bold">Nama Penanggungjawab</label>
                   <input type="text" class="form-control @error('penanggungjawab') is-invalid @enderror" id="penanggungjawab" name="penanggungjawab" value="{{ old('penanggungjawab') }}" oninput="capEach('penanggungjawab')" wire:model="penanggungjawab">
                   @error('penanggungjawab')
                     <div class="invalid-feedback">
@@ -157,8 +157,8 @@
                     </div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                  <label for="biaya_pembayaran" class="form-label fw-semibold">Biaya Pembayaran</label>
+                <div class="mb-4">
+                  <label for="biaya_pembayaran" class="form-label fw-bold">Biaya Pembayaran</label>
                   <input type="number" class="form-control @error('biaya_pembayaran') is-invalid @enderror" id="biaya_pembayaran" name="biaya_pembayaran" value="{{ old('biaya_pembayaran') }}" wire:model="biaya_pembayaran">
                   <div id="biayaHelp" class="form-text">Contoh: untuk Rp.1.000.000 diisi 1000000</div>
                   @error('biaya_pembayaran')
@@ -170,8 +170,8 @@
               </div>
                     
               <div class="col">
-                <div class="mb-3">
-                  <label for="foto" class="form-label fw-semibold">Foto</label>
+                <div class="mb-4">
+                  <label for="foto" class="form-label fw-bold">Foto</label>
                   <input class="form-control @error('foto') is-invalid @enderror" type="file" id="foto" name="foto" value="{{ old('foto') }}" wire:model="foto" @if($id_pasien) disabled @endif>
                   @if ($foto)
                   <div class="row my-3 justify-content-sm-start fotoPreview">
@@ -186,15 +186,8 @@
                     </div>
                   @enderror
                 </div>    
-                {{-- <div class="mb-3">
-                  <label for="link_rm" class="form-label fw-semibold">Link Rekam Medis</label>
-                  <input type="url" class="form-control @error('link_rm') is-invalid @enderror" id="link_rm" name="link_rm" value="{{ old('link_rm') }}" wire:model="link_rm">
-                  @error('link_rm')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>  --}}
-                <div class="mb-3">
-                  <label for="tanggal_pendaftaran" class="form-label fw-semibold">Tanggal Pendaftaran [Bulan/Tanggal/Tahun]</label>
+                <div class="mb-4">
+                  <label for="tanggal_pendaftaran" class="form-label fw-bold">Tanggal Pendaftaran [Bulan/Tanggal/Tahun]</label>
                     <input type="date" class="form-control @error('tanggal_pendaftaran') is-invalid @enderror" id="tanggal_pendaftaran" name="tanggal_pendaftaran" 
                       value="{{ old('tanggal_pendaftaran') }}" wire:model="tanggal_pendaftaran" @if($id_pasien) disabled @endif>
                     <div class="form-text">Contoh: 9 Desember 2023 diisi 12/09/2023</div>
@@ -214,17 +207,54 @@
           <div class="tabe-pane show active" id="nav-layanan" role="tabpanel" aria-labelledby="nav-layanan-tab" tabindex="0">
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">
-                <div class="mb-3">
-                  <label for="tempat_layanan" class="form-label fw-semibold">Tempat Layanan</label>
-                  <input type="text" class="form-control @error('tempat_layanan') is-invalid @enderror" id="tempat_layanan" name="tempat_layanan" value="{{ old('tempat_layanan') }}" oninput="capFirst('tempat_layanan')" wire:model="tempat_layanan">
+                <div class="mb-4">
+                  <label for="tempat_layanan" class="form-label fw-bold">Tempat Layanan</label>
+                  <button type="button" class="form-control text-start @error('tempat_layanan') is-invalid @enderror" id="alamatBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    {{ $tempat_layanan ? $tempat_layanan : 'Masukkan Alamat' }}
+                  </button>
                   @error('tempat_layanan')
                     <div class="invalid-feedback">
                       {{ $message }}
                     </div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                  <label for="jadwal_layanan" class="form-label fw-semibold">Jadwal Layanan</label>
+                {{-- modal alamat --}}
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Alamat Tempat Layanan</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <input type="hidden" class="form-control" id="k_bsni" name="k_bsni" value="{{ old('k_bsni') }}" wire:model="k_bsni">
+                        <div class="mb-4">
+                          <label class="form-label fw-bold">Provinsi</label>
+                          <select class="form-select" style="max-height: 200px; overflow-y: auto;" id="provinsi" name="provinsi">
+                            <option value="">Pilih Provinsi</option>
+                          </select>
+                        </div>
+                        <div class="mb-4">
+                          <label class="form-label fw-bold">Kota/Kabupaten</label>
+                          <select class="form-select" style="max-height: 200px; overflow-y: auto;" id="kabupaten" name="kabupaten" required>
+                            <option value="">Pilih Kota/Kabupaten</option>
+                          </select>
+                        </div>
+                        <div class="mb-4">
+                          <label for="detail_alamat" class="form-label fw-bold">Detail Alamat</label>
+                          <input type="text" class="form-control" id="detail_alamat" name="detail_alamat" value="{{ old('detail_alamat') }}" oninput="capFirst('detail_alamat')">
+                        </div>                        
+                      </div>
+                      <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" id="tutupBtn" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-success" id="simpanAlamat">Simpan</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="mb-4">
+                  <label for="jadwal_layanan" class="form-label fw-bold">Jadwal Layanan</label>
                   <input type="text" class="form-control @error('jadwal_layanan') is-invalid @enderror" id="jadwal_layanan" name="jadwal_layanan" value="{{ old('jadwal_layanan') }}" oninput="capFirst('jadwal_layanan')" wire:model="jadwal_layanan">
                   @error('jadwal_layanan')
                     <div class="invalid-feedback">
@@ -233,8 +263,8 @@
                   @enderror
                 </div>
 
-                <div class="mb-3">
-                  <label for="sistem_layanan" class="form-label fw-semibold">Sistem Layanan</label>
+                <div class="mb-4">
+                  <label for="sistem_layanan" class="form-label fw-bold">Sistem Layanan</label>
                   <input type="text" class="form-control @error('sistem_layanan') is-invalid @enderror" id="sistem_layanan" name="sistem_layanan" value="{{ old('sistem_layanan') }}" wire:model="sistem_layanan">
                   @error('sistem_layanan')
                     <div class="invalid-feedback">
@@ -242,8 +272,8 @@
                     </div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                  <label for="jumlah_layanan" class="form-label fw-semibold">Jumlah Layanan</label>
+                <div class="mb-4">
+                  <label for="jumlah_layanan" class="form-label fw-bold">Jumlah Layanan</label>
                   <input type="number" class="form-control @error('jumlah_layanan') is-invalid @enderror" id="jumlah_layanan" name="jumlah_layanan" value="{{ old('jumlah_layanan') }}" oninput="capFirst('jumlah_layanan')" wire:model="jumlah_layanan">
                   @error('jumlah_layanan')
                     <div class="invalid-feedback">
@@ -256,7 +286,7 @@
               
               <div class="col">
                 <div class="mb-4">
-                  <label class="form-label fw-semibold w-100">Status Terapi</label>
+                  <label class="form-label fw-bold w-100">Status Terapi</label>
                   <div class="form-check p-0">
                     @foreach($statusTerapi as $status)
                       @if(old('status_terapi') == $status['value'])
@@ -274,8 +304,8 @@
                   </div>
                 </div>
 
-                <div class="mb-3">
-                  <label for="ket_status" class="form-label fw-semibold">Keterangan Status Terapi</label>
+                <div class="mb-4">
+                  <label for="ket_status" class="form-label fw-bold">Keterangan Status Terapi</label>
                   <input type="text" class="form-control @error('ket_status') is-invalid @enderror" id="ket_status" name="ket_status" value="{{ old('ket_status') }}" wire:model="ket_status">
                   @error('ket_status')
                     <div class="invalid-feedback">
@@ -285,7 +315,7 @@
                 </div>
                 
                 <div class="mb-4">
-                  <label class="form-label fw-semibold w-100">Status Pasien</label>
+                  <label class="form-label fw-bold w-100">Status Pasien</label>
                   <div class="form-check p-0">
                     @foreach($statusPasien as $statusp)
                       @if(old('status_pasien') == $statusp['value'])
@@ -307,8 +337,8 @@
                     @enderror
                   </div>
                 </div>
-                <div class="mb-3">
-                  <label for="tanggal_selesai" class="form-label fw-semibold">Tanggal Selesai [Bulan/Tanggal/Tahun]</label>
+                <div class="mb-4">
+                  <label for="tanggal_selesai" class="form-label fw-bold">Tanggal Selesai [Bulan/Tanggal/Tahun]</label>
                     <input type="date" class="form-control @error('tanggal_selesai') is-invalid @enderror" id="tanggal_selesai" name="tanggal_selesai" 
                       value="{{ old('tanggal_selesai') }}">
                     <div class="form-text">Diisi hanya saat status Rekam Medis Selesai</div>
@@ -329,7 +359,7 @@
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">
                 <div class="mb-3 dropdown-penyakit">
-                  <label for="penyakit" class="form-label fw-semibold">Nama Penyakit</label>
+                  <label for="penyakit" class="form-label fw-bold">Nama Penyakit</label>
                   <div class="form-control d-flex flex-wrap gap-2 p-2 rounded taginput @error('penyakit') is-invalid @enderror">                    
                     @if(count($tag) > 0)
                       @foreach ($tag as $i)
@@ -338,33 +368,34 @@
                           <button type="button" class="btn m-0 p-0 text-secondary" wire:click="deleteTagPenyakit('{{ $i }}')"><i class="bi bi-x-circle-fill"></i></button>
                         </div>
                       @endforeach   
-                    @endif   
+                    @endif 
                     <input 
                       type="text" 
-                      class="flex-grow-1 @error('penyakit') is-invalid @enderror data-rm search-input" 
+                      class="flex-grow-1 search-input" 
                       id="tagPenyakit" 
                       name="tagPenyakit" 
                       placeholder="Tambah.." 
                       oninput="capEach('tagPenyakit')"
-                      >                                 
+                      autocomplete="off">                                 
                   </div>
-                  <div class="dropdown-menu dropdown-dinamis ps-2 px-sm-3 shadow">   
-                    <ul class="select-options"></ul>
+                  <div class="dropdown-menu dropdown-dinamis p-3 pt-2 bg-body-tertiary shadow">  
+                    <p class="small mb-1">Pilih Penyakit:</p> 
+                    <ul class="select-options bg-white mb-0 rounded"></ul>
                   </div>
                   <div class="form-text">Tekan koma "," atau Enter untuk menambah penyakit.</div>
                   @error('penyakit')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                  <label for="keluhan" class="form-label fw-semibold">Keluhan</label>
+                <div class="mb-4">
+                  <label for="keluhan" class="form-label fw-bold">Keluhan</label>
                   <textarea class="form-control @error('keluhan') is-invalid @enderror" id="keluhan" name="keluhan" rows="3" style="text-transform: full-width-kana;" oninput="capFirst('keluhan')" wire:model="keluhan"></textarea>
                   @error('keluhan')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="data_deteksi" class="form-label fw-semibold">Data Deteksi</label>
+                <div class="mb-4">
+                    <label for="data_deteksi" class="form-label fw-bold">Data Deteksi</label>
                     <textarea class="form-control @error('data_deteksi') is-invalid @enderror" id="data_deteksi" name="data_deteksi" rows="3" oninput="capFirst('data_deteksi')" wire:model="data_deteksi"></textarea>
                     @error('data_deteksi')
                       <div class="invalid-feedback">
@@ -374,8 +405,8 @@
                   </div>                  
               </div> 
               <div class="col">
-                <div class="mb-3">
-                  <label for="catatan_fisik" class="form-label fw-semibold">Catatan Fisik</label>
+                <div class="mb-4">
+                  <label for="catatan_fisik" class="form-label fw-bold">Catatan Fisik</label>
                   <input type="text" class="form-control @error('catatan_fisik') is-invalid @enderror" id="catatan_fisik" name="catatan_fisik" value="{{ old('catatan_fisik') }}" oninput="capFirst('catatan_fisik')" wire:model="catatan_fisik">
                   @error('catatan_fisik')
                     <div class="invalid-feedback">
@@ -383,8 +414,8 @@
                     </div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                  <label for="catatan_bioplasmatik" class="form-label fw-semibold">Catatan Bioplasmatik</label>
+                <div class="mb-4">
+                  <label for="catatan_bioplasmatik" class="form-label fw-bold">Catatan Bioplasmatik</label>
                   <input type="text" class="form-control @error('catatan_bioplasmatik') is-invalid @enderror" id="catatan_bioplasmatik" name="catatan_bioplasmatik" value="{{ old('catatan_bioplasmatik') }}" oninput="capFirst('catatan_bioplasmatik')" wire:model="catatan_bioplasmatik">
                   @error('catatan_bioplasmatik')
                     <div class="invalid-feedback">
@@ -392,8 +423,8 @@
                     </div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="catatan_psikologis" class="form-label fw-semibold">Catatan Psikologis</label>
+                <div class="mb-4">
+                    <label for="catatan_psikologis" class="form-label fw-bold">Catatan Psikologis</label>
                     <input type="text" class="form-control @error('catatan_psikologis') is-invalid @enderror" id="catatan_psikologis" name="catatan_psikologis" value="{{ old('catatan_psikologis') }}" oninput="capFirst('catatan_psikologis')" wire:model="catatan_psikologis">
                     @error('catatan_psikologis')
                       <div class="invalid-feedback">
@@ -401,8 +432,8 @@
                       </div>
                     @enderror
                 </div>
-                <div class="mb-3">
-                  <label for="catatan_rohani" class="form-label fw-semibold">Catatan Rohani</label>
+                <div class="mb-4">
+                  <label for="catatan_rohani" class="form-label fw-bold">Catatan Rohani</label>
                   <input type="text" class="form-control @error('catatan_rohani') is-invalid @enderror" id="catatan_rohani" name="catatan_rohani" value="{{ old('catatan_rohani') }}" oninput="capFirst('catatan_rohani')" wire:model="catatan_rohani">
                   @error('catatan_rohani')
                     <div class="invalid-feedback">
@@ -420,15 +451,15 @@
           <div class="" id="" role="tabpanel" aria-labelledby="nav-awal-tab" tabindex="0">
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">
-                <div class="mb-3">
-                  <label for="kondisi_awal" class="form-label fw-semibold">Kondisi Awal</label>
+                <div class="mb-4">
+                  <label for="kondisi_awal" class="form-label fw-bold">Kondisi Awal</label>
                   <textarea class="form-control @error('kondisi_awal') is-invalid @enderror" id="kondisi_awal" name="kondisi_awal" rows="3" style="text-transform: full-width-kana;" oninput="capFirst('kondisi_awal')" wire:model="kondisi_awal"></textarea>
                   @error('kondisi_awal')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="target_akhir" class="form-label fw-semibold">Target Akhir</label>
+                <div class="mb-4">
+                    <label for="target_akhir" class="form-label fw-bold">Target Akhir</label>
                     <textarea class="form-control @error('target_akhir') is-invalid @enderror" id="target_akhir" name="target_akhir" rows="3" oninput="capFirst('target_akhir')" wire:model="target_akhir"></textarea>
                     @error('target_akhir')
                       <div class="invalid-feedback">
@@ -438,8 +469,8 @@
                 </div>                  
               </div>    
               <div class="col">
-                <div class="mb-3">
-                  <label for="link_perkembangan" class="form-label fw-semibold">Link Perkembangan Target</label>
+                <div class="mb-4">
+                  <label for="link_perkembangan" class="form-label fw-bold">Link Perkembangan Target</label>
                   <input type="text" class="form-control @error('link_perkembangan') is-invalid @enderror" id="link_perkembangan" name="link_perkembangan" rows="3" oninput="capFirst('link_perkembangan')" wire:model="link_perkembangan">
                   @error('link_perkembangan')
                     <div class="invalid-feedback">
@@ -447,10 +478,10 @@
                     </div>
                   @enderror
               </div>
-                <div class="mb-3">
-                  <label for="kondisi_awal" class="form-label fw-semibold">Kesimpulan Akhir</label>
-                  <textarea class="form-control @error('kondisi_awal') is-invalid @enderror" id="kondisi_awal" name="kondisi_awal" rows="5" style="text-transform: full-width-kana;" oninput="capFirst('kondisi_awal')" wire:model="kondisi_awal"></textarea>
-                  @error('kondisi_awal')
+                <div class="mb-4">
+                  <label for="kesimpulan" class="form-label fw-bold">Kesimpulan Akhir</label>
+                  <textarea class="form-control @error('kesimpulan') is-invalid @enderror" id="kesimpulan" name="kesimpulan" rows="5" style="text-transform: full-width-kana;" oninput="capFirst('kesimpulan')" wire:model="kesimpulan"></textarea>
+                  @error('kesimpulan')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
@@ -517,9 +548,13 @@
     });
   }
 
-  function addTagToController(newTag) {
+  function addPenyakitToController(newTag) {
     Livewire.emit('addTagPenyakit', newTag);
     document.querySelector(".search-input").value = "";
+  };
+
+  function setAlamatToController(tempat, kode, provId, provinsi, kabupaten) {
+    Livewire.emit('setAlamatKode', { tempat: tempat, kode: kode, provId: provId, provinsi: provinsi, kabupaten: kabupaten });
   };
 
   document.addEventListener('livewire:load', function () {
@@ -532,28 +567,33 @@
       let optionsPenyakit = dropPenyakit.querySelector(".select-options");
       let dropdown = dropPenyakit.querySelector(".dropdown-dinamis");
 
+      function addPenyakit() {
+        optionsPenyakit.innerHTML = "";
+        dataPenyakit.forEach(penyakit => {
+              let li = `
+                        <li class="dropdown-item" 
+                            data-nama="${penyakit}" 
+                            onclick="addPenyakitToController('${penyakit}')">
+                            ${penyakit}                            
+                        </li>
+                      `;
+              optionsPenyakit.insertAdjacentHTML("beforeend", li);
+        });
+      }
+
       searchInpPenyakit.addEventListener('keyup', function(event) {
         const value = searchInpPenyakit.value;
-
-        if (event.key === "Enter" || (event.key === "," && value.endsWith(","))) {
-            const trimmedValue = value.replace(/,$/, '');
-            addTagToController(trimmedValue);
-
-            searchInpPenyakit.value = "";
-        }
-      });
-
-      searchInpPenyakit.addEventListener("keyup", () => {
         dropdown.style.display = 'block';
+
         let arr = [];
         let searchWords = searchInpPenyakit.value.toLowerCase().split(' ');
         arr = dataPenyakit.filter(penyakit => {
             let data = penyakit.toLowerCase();
             return searchWords.every(word => data.includes(word));
         }).map(penyakit => {
-            return `<button type="button" class="dropdown-item" 
+            return `<button type="button" class="dropdown-item px-2" 
                         data-nama="${penyakit}"
-                        onclick="addTagToController('${penyakit}')">
+                        onclick="addPenyakitToController('${penyakit}')">
                         ${penyakit}                            
                     </button>
                     `;
@@ -564,9 +604,17 @@
         } else {
           dropdown.style.display = 'none';
         }
+
+        if (event.key === "Enter" || (event.key === "," && value.endsWith(","))) {
+            const trimmedValue = value.replace(/,$/, '');
+            addPenyakitToController(trimmedValue);
+
+            searchInpPenyakit.value = "";
+        }
       });
 
       searchInpPenyakit.addEventListener("focus", function() {
+        addPenyakit();
         dropdown.style.display = 'block';
       });
 
@@ -575,7 +623,100 @@
           dropdown.style.display = 'none';
         }
       });
-    });  
+    }); 
+    
+    Livewire.on('runScriptAlamat', kab_prov => {
+      const provinsiSelect = document.querySelector("#provinsi");
+      const kabupatenSelect = document.querySelector("#kabupaten");
+      const detailSelect = document.querySelector("#detail_alamat");
+      const saveAlamat = document.querySelector("#simpanAlamat");
+      const k_bsni = document.querySelector("#k_bsni");
+      const alamatButton = document.querySelector("#alamatBtn");
+      const closeButton = document.querySelector("#tutupBtn");
+
+      function populateKabupaten(provinsiId) {
+        kabupatenSelect.innerHTML = '';
+        kabupatenSelect.innerHTML = `<option value="">Pilih Kabupaten</option>`;
+
+        fetch('/database/kabupaten.json')
+          .then(response => response.json())
+          .then(data => {
+              const kabupatenData = data.filter(kabupaten => kabupaten.provinsi_id === provinsiId);
+              kabupatenData.forEach(kabupaten => {
+                kabupatenSelect.innerHTML += `
+                  <option value="${kabupaten.kabupaten_kota}" data-kode="${kabupaten.k_bsni}" ${kabupaten.kabupaten_kota === kab_prov.kabupaten ? 'selected' : ''}>${kabupaten.kabupaten_kota}</option>
+                  `;
+              });
+          })
+          .catch(error => {
+              console.error('Error fetching JSON data:', error);
+          });
+      }
+
+      function populateProvinsi() {
+
+        fetch('/database/provinsi.json')
+          .then(response => response.json())
+          .then(data => {
+              data.forEach(provinsi => {
+                provinsiSelect.innerHTML += `
+                  <option value="${provinsi.provinsi}" data-id="${provinsi.id}" ${provinsi.provinsi === kab_prov.provinsi ? 'selected' : ''}>${provinsi.provinsi}</option>
+                  `;
+              });
+          })
+          .catch(error => {
+              console.error('Error fetching JSON data:', error);
+          });
+      }
+
+      alamatButton.addEventListener('click', function() {
+        populateProvinsi();
+        if(kab_prov.kabupaten != null) {
+          populateKabupaten(kab_prov.provId);
+        }
+      });
+
+      provinsiSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const selectedProvinsiId = selectedOption.getAttribute("data-id");
+        provinsiSelect.setAttribute("data-id", selectedProvinsiId);
+
+        populateKabupaten(parseInt(selectedProvinsiId));
+      });
+
+      kabupatenSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const selected = selectedOption.value;
+        k_bsni.value = selected;
+      });
+
+      saveAlamat.addEventListener('click', function() {
+        provinsiSelect.classList.remove("is-invalid");
+        kabupatenSelect.classList.remove("is-invalid");
+
+        if(provinsiSelect.value == "") {
+          provinsiSelect.classList.add("is-invalid");
+        }
+
+        else if(kabupatenSelect.value == "") {
+          kabupatenSelect.classList.add("is-invalid");
+        } else {
+          const alamat = kabupatenSelect.value + ', ' + provinsiSelect.value;
+          const kode = kabupatenSelect.options[kabupatenSelect.selectedIndex].getAttribute("data-kode");
+          const provId = parseInt(provinsiSelect.getAttribute("data-id"));
+
+          if(detailSelect.value != "") {
+            const alamat = detailSelect.value + ', ' + kabupatenSelect.value + ', ' + provinsiSelect.value; 
+          } 
+  
+          alamatButton.textContent = alamat; 
+          
+          setAlamatToController(alamat, kode, provId, provinsiSelect.value, kabupatenSelect.value);
+          closeButton.click();
+        }
+
+      });
+    });
   });
 </script>
 @endpush

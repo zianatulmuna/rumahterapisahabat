@@ -1,4 +1,4 @@
-<nav id="sidebarMenu" class="col-xl-2 d-md-block sidebar collapse sidebar-custom">
+<nav id="sidebarMenu" class="col-lg-2 d-lg-block sidebar collapse sidebar-custom">
   <div class="position-sticky">
     <ul class="nav flex-column mx-1">
       <li class="nav-item">
@@ -18,7 +18,6 @@
       <li class="nav-item">
         <a href="{{ route('pasien.lama') }}" class="nav-link hstack {{ Request::is('*/pasien/*') ? 'active' : ''}}">
           <i class="bi bi-person-fill-check me-2"></i>
-          {{-- <i class="bi bi-person-check-fill"></i> --}}
           Pasien Lama
         </a>
       </li>

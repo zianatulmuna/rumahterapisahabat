@@ -76,7 +76,7 @@ class DashboardController extends Controller
             $jadwal_terapi = Jadwal::whereBetween('tanggal', [request('mulai'), request('akhir')])->paginate(10);
         }
 
-        return view('admin.dashboard', compact(
+        return view('admin.beranda', compact(
             'jadwal_terapi', 
             'today', 
             'tahunTersedia', 

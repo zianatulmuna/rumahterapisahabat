@@ -2,7 +2,7 @@
 
 @section('container')
 <div class="content-container">
-   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
       <h1 class="h2">Histori Rekam Terapi</h1>
    </div>
 
@@ -29,7 +29,7 @@
                                     <div class="d-flex justify-content-end">   
                                        <div class="" style="min-width: 114px">
                                           <p class="small">Total Terapi:</p>
-                                          <p class="align-center"><i class="bi bi-heart-pulse-fill c-text-danger pe-2"></i>{{ $sub->total_terapi }}/{{ $rm->jumlah_layanan }}</p>
+                                          <p class="align-center"><i class="bi bi-heart-pulse-fill text-success pe-2"></i>{{ $sub->total_terapi }}/{{ $rm->jumlah_layanan }}</p>
                                        </div>
                                     </div> 
                                  </div>                      
@@ -40,26 +40,26 @@
                                        @php
                                           if(count($sub->rekamTerapi) > 0) {
                                              $m = $sub->rekamTerapi()->orderBy('tanggal', 'ASC')->first();
-                                             $mulai = $m->tanggal;
+                                             $mulai = date('d-m-Y', strtotime($m->tanggal));
                                           } else {
                                              $mulai = '-';
                                           }
                                        @endphp
                                        <p class="small">Tanggal Mulai:</p>
-                                       <p><i class="bi bi-calendar-plus pe-1 text-light-emphasis"></i> {{ date('d-m-Y', strtotime($mulai)) }}</p>
+                                       <p><i class="bi bi-calendar-plus pe-1 text-light-emphasis"></i> {{ $mulai }}</p>
                                     </div>
                                     <div class="d-flex justify-content-end">   
-                                       <div class="">
+                                       <div class="" style="min-width: 114px">
                                           @php
                                              if(count($sub->rekamTerapi) > 0) {
                                                 $m = $sub->rekamTerapi()->orderBy('tanggal', 'DESC')->first();
-                                                $akhir = $m->tanggal;
+                                                $akhir = date('d-m-Y', strtotime($m->tanggal));
                                              } else {
                                                 $akhir = '-';
                                              }
                                           @endphp
                                           <p class="small">Tanggal Terkini:</p>                  
-                                          <p><i class="bi bi-calendar-check pe-1 text-light-emphasis"></i> {{ date('d-m-Y', strtotime($akhir)) }}</p>
+                                          <p><i class="bi bi-calendar-check pe-1 text-light-emphasis"></i> {{ $akhir }}</p>
                                        </div>
                                     </div> 
                                  </div>                      
@@ -80,7 +80,6 @@
                      <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.</p>
                   </div>
                </div>
-                  {{-- <span class="fst-italic ">Data rekam terapi telah dihapus. Tambahkan penyakit di rekam medis <a href="">disini</a></span> --}}
                @endif
             @endforeach
          </div>
@@ -103,7 +102,7 @@
                                  <div class="d-flex justify-content-end">   
                                     <div class="" style="min-width: 114px">
                                        <p class="small">Total Terapi:</p>
-                                       <p class="align-center"><i class="bi bi-heart-pulse-fill c-text-danger pe-2"></i>{{ $sub->total_terapi }}/{{ $rm->jumlah_layanan }}</p>
+                                       <p class="align-center"><i class="bi bi-heart-pulse-fill text-success pe-2"></i>{{ $sub->total_terapi }}/{{ $rm->jumlah_layanan }}</p>
                                     </div>
                                  </div> 
                               </div>                      

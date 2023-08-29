@@ -19,7 +19,7 @@ class GrafikDashboard extends Component
     public $filter = 'minggu ini';
     public $tahun;
     public $dataGrafik;
-    public $maxChart = 0;
+    public $maxChart = 10;
 
     protected $listeners = ['setTahun', 'setTerapis', 'setPenyakit'];
     
@@ -30,7 +30,11 @@ class GrafikDashboard extends Component
         $this->tahun;
         // $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year,'', '');
         $this->dataGrafik = $this->grafikMingguIni($this->grafik, '', '');
-        $this->maxChart = ceil(max($this->dataGrafik) / 10) * 10;
+        // $this->maxChart = ceil(max($this->dataGrafik) / 10) * 10;
+        $max = (!empty($this->dataGrafik)) ? $max = max($this->dataGrafik) : 0;
+        $newMax = ($max <= 10) ? 10 : ceil($max / 10) * 10;
+        $this->maxChart = $newMax;
+        
     }
     public function render()
     {
@@ -68,6 +72,10 @@ class GrafikDashboard extends Component
 
     public function setMenu($current) {
         $this->grafik = $current;
+        if($this->grafik != 'sesi terapi') {
+            $this->id_terapis = '';
+            $this->nama_terapis = '';
+        }
         $this->setFilterAction($this->filter);
     }
     public function setFilter($current) {

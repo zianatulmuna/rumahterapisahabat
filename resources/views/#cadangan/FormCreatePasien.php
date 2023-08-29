@@ -21,9 +21,6 @@ class FormCreatePasien extends Component
     public $nama, $no_telp, $jenis_kelamin, $email, $tanggal_lahir, $pekerjaan, $agama, $alamat;
     public $tipe_pembayaran, $penanggungjawab, $biaya_pembayaran, $link_rm, $foto, $tanggal_pendaftaran; 
     public $tempat_layanan, $jadwal_layanan, $sistem_layanan, $jumlah_layanan, $status_pasien, $status_terapi, $ket_status, $tanggal_selesai;
-
-    public $k_bsni, $provId, $provinsi, $kabupaten;
-
     public $penyakit, $keluhan, $catatan_psikologis, $catatan_bioplasmatik, $catatan_rohani, $catatan_fisik, $data_deteksi;
     public $kondisi_awal, $target_akhir, $link_perkembangan, $kesimpulan;
 
@@ -33,15 +30,11 @@ class FormCreatePasien extends Component
 
     public $tag = [], $newTag;
 
-    protected $listeners = ['addTagPenyakit', 'setAlamatKode'];
+    protected $listeners = ['addTagPenyakit'];
 
     public function mount($pasien){
         $this->currentStep;
         $this->tag;
-        $this->tempat_layanan;
-        // $this->provId;
-        // $this->provinsi;
-        // $this->kabupaten;
 
         if($pasien) {
             $this->pasien = $pasien;
@@ -64,6 +57,12 @@ class FormCreatePasien extends Component
         }     
     }
 
+    // public function mounted()
+    // {
+    //     if ($this->getErrorBag()->any()) {
+    //         $this->emit('scrollToTop');
+    //     }
+    // }
     public function render()
     {
         $listPenyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
@@ -94,9 +93,6 @@ class FormCreatePasien extends Component
         
         $this->validateData();
         $this->currentStep++;
-        if($this->currentStep == 3) {
-            $this->runEmitAlamat();
-        }
         if($this->currentStep == 4) {
             $this->emit('runScriptPenyakit');
         }
@@ -107,9 +103,9 @@ class FormCreatePasien extends Component
     public function toPrev() {
         $this->resetErrorBag();
         $this->currentStep--;
-        if($this->currentStep == 3) {
-            $this->runEmitAlamat();
-        }
+        // if($this->id_pasien != '' && $this->currentStep == 1) {
+        //     $this->emit('runDisabledPasien');
+        // }
         if($this->currentStep < 1) {
             $this->currentStep = 1;
         }
@@ -123,31 +119,20 @@ class FormCreatePasien extends Component
         $this->tag[] = $value;
     }
 
+    // public function enterTagPenyakit()
+    // {
+    //     if (!empty($this->newTag)) {
+    //         $this->tag[] = $this->newTag;
+    //         $this->newTag = '';
+    //     }
+    // }
+
     public function deleteTagPenyakit($value)
     {
         $index = array_search($value, $this->tag);
         if ($index !== false) {
             unset($this->tag[$index]);
         }
-    }
-
-    public function runEmitAlamat() {
-        $kab_prov = [
-            'provId' => $this->provId,
-            'provinsi' => $this->provinsi,
-            'kabupaten' => $this->kabupaten,
-        ];
-        $this->emit('runScriptAlamat', $kab_prov);
-    }
-
-    public function setAlamatKode($data) {
-        $this->tempat_layanan = $data['tempat'];
-        $this->k_bsni = $data['kode'];
-        $this->provId = $data['provId'];
-        $this->provinsi = $data['provinsi'];
-        $this->kabupaten = $data['kabupaten'];
-        
-        $this->runEmitAlamat();
     }
 
     public function validateData(){
@@ -188,10 +173,7 @@ class FormCreatePasien extends Component
             
         }elseif($this->currentStep == 3){
             $this->validate([
-                'tempat_layanan' => [
-                    'max:50',
-                    Rule::requiredIf($this->tempat_layanan == "")
-                ],
+                'tempat_layanan' => 'max:50',
                 'jadwal_layanan' => 'max:50',
                 'sistem_layanan' => 'max:50',
                 'jumlah_layanan' => 'max:50',
@@ -224,13 +206,13 @@ class FormCreatePasien extends Component
     }
 
     public function create(Request $request) {
-        
+
         $this->validateData();
 
         $dateY = substr(Carbon::parse($this->tanggal_pendaftaran)->format('Y'), 2);
         $dateM = Carbon::parse($this->tanggal_pendaftaran)->format('m');
         $waktuDaftar = Carbon::now()->format('H:i:s');
-
+        
         if(empty($this->id_pasien)) {
             $dataDiri = array(
                 'nama' => $this->nama,
@@ -283,8 +265,7 @@ class FormCreatePasien extends Component
             'link_perkembangan' => $this->link_perkembangan,
         );              
 
-        $idRM = IdGenerator::generate(['table' => 'rekam_medis', 'field' => 'id_rekam_medis', 'length' => 10, 'prefix' => $this->k_bsni . $dateY.$dateM, 'reset_on_prefix_change' => true]);
-
+        $idRM = IdGenerator::generate(['table' => 'rekam_medis', 'field' => 'id_rekam_medis', 'length' => 7, 'prefix' => $dateY.$dateM, 'reset_on_prefix_change' => true]);
         $penyakit = implode(',', $this->tag);
         $dataRM['id_rekam_medis'] = $idRM;
         $dataRM['id_pasien'] = $this->id_pasien;
@@ -300,7 +281,7 @@ class FormCreatePasien extends Component
                 $idSub = IdGenerator::generate([
                     'table' => 'sub_rekam_medis', 
                     'field' => 'id_sub',
-                    'length' => 12, 
+                    'length' => 10, 
                     'prefix' => $idRM . 'S',
                     'reset_on_prefix_change' => true
                 ]);

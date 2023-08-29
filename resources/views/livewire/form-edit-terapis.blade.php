@@ -86,17 +86,6 @@
                   <div class="mb-4">
                     <label for="foto" class="form-label fw-bold">Foto</label>
                     <input class="form-control @error('foto') is-invalid @enderror" type="file" id="foto" name="foto" value="{{ old('foto') }}" wire:model="foto">
-                    {{-- <div class="row my-3 justify-content-sm-start">
-                      @if ($foto)
-                        <p class="col-sm-auto">Preview :</p>
-                        <img src="{{ $foto->temporaryUrl() }}" class="img-fluid pt-2 col-sm-5">
-                        <button type="button" class="btn-close small" aria-label="Close" onclick="deleteFoto()" wire:click="deleteFoto"></button>
-                      @elseif($dbFoto)
-                        <p class="col-sm-auto">Preview :</p>
-                        <img src="{{ asset('storage/' . $dbFoto) }}" class="img-fluid pt-2 col-sm-5">
-                        <button type="button" class="btn-close small" aria-label="Close" onclick="deleteFoto()" wire:click="deleteFoto"></button>
-                      @endif
-                    </div> --}}
                     <div class="row my-3 justify-content-sm-start">
                       @if ($foto)
                         <p class="col-sm-auto m-0">Preview :</p>
@@ -135,8 +124,8 @@
                   <div class="mb-4">
                     <label for="password" class="form-label fw-bold">Password</label>
                     <div class="input-group">
-                      <input type="password" class="form-control border-end-0 @error('password') is-invalid @enderror" id="password" name="password" rows="4" style="text-transform: full-width-kana;" oninput="capFirst('password')" wire:model="password">
-                      <button type="button" class="input-group-text border-start-0 bg-white @error('password') is-invalid @enderror" id="mybutton" onclick="passwordAction()"><i class="bi bi-eye-fill text-secondary"></i></button>
+                      <input type="password" class="form-control border-end-0 @error('password') is-invalid @enderror" id="password" name="password" rows="4" style="text-transform: full-width-kana;" placeholder="Masukkan password baru" wire:model="password">
+                      <button type="button" class="input-group-text border-start-0 bg-white @error('password') is-invalid @enderror" id="pswButton"><i class="bi bi-eye-fill text-secondary"></i></button>
                     </div>
                     <div class="form-text">Minimal 3 karakter.</div>
                     @error('password')
@@ -201,17 +190,25 @@
   
 @push('script')
   <script>
+    const target = document.querySelector(".main-bg");
+
+    function toTop() {
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
     function capEach(inputId) {
       var input = document.getElementById(inputId);
-        let words = input.value.split(' ');
+      let words = input.value.split(' ');
 
-        for (let i = 0; i < words.length; i++) {
-            if (words[i].length > 0) {
-                words[i] = words[i][0].toUpperCase() + words[i].substring(1);
-            }
+      for (let i = 0; i < words.length; i++) {
+        if (words[i].length > 0) {
+          words[i] = words[i][0].toUpperCase() + words[i].substring(1);
         }
-
-        input.value = words.join(' ');
+      }
+      input.value = words.join(' ');
     } 
 
     function capFirst(inputId) {
@@ -224,29 +221,23 @@
       }
     } 
 
-    function passwordAction() {
-  
-      // membuat variabel berisi tipe input dari id='pass', id='pass' adalah form input password 
-      var x = document.getElementById('password').type;
+    document.addEventListener('livewire:load', function () {
+    
+      Livewire.on('runScript', function () {
+        const btn = document.querySelector('#pswButton');
+        let input = document.getElementById('password');
 
-      //membuat if kondisi, jika tipe x adalah password maka jalankan perintah di bawahnya
-      if (x == 'password') {
-
-          //ubah form input password menjadi text
-          document.getElementById('password').type = 'text';
-          
-          //ubah icon mata terbuka menjadi tertutup
-          document.getElementById('mybutton').innerHTML = `<i class="bi bi-eye-slash-fill text-secondary"></i>`;
-      }
-      else {
-
-          //ubah form input password menjadi text
-          document.getElementById('password').type = 'password';
-
-          //ubah icon mata terbuka menjadi tertutup
-          document.getElementById('mybutton').innerHTML = `<i class="bi bi-eye-fill text-secondary"></i>`;
-      }
-  }
-  
+        btn.addEventListener('click', function () {
+          let x = document.getElementById('password').type;
+          if (x == 'password') {
+              input.type = 'text';
+              btn.innerHTML = `<i class="bi bi-eye-slash-fill text-secondary"></i>`;
+          } else {
+              input.type = 'password';
+              btn.innerHTML = `<i class="bi bi-eye-fill text-secondary"></i>`;
+          }
+        });
+      });
+    });
   </script>
 @endpush

@@ -41,7 +41,7 @@
       @csrf
       <div class="tab-content m-0" id="nav-tabContent">
         {{-- data diri --}}
-        @if($currentStep == 4)
+        @if($currentStep == 1)
           <div class="" id="nav-diri" aria-labelledby="nav-diri-tab" tabindex="0">
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">                
@@ -186,13 +186,6 @@
                     </div>
                   @enderror
                 </div>    
-                {{-- <div class="mb-4">
-                  <label for="link_rm" class="form-label fw-bold">Link Rekam Medis</label>
-                  <input type="url" class="form-control @error('link_rm') is-invalid @enderror" id="link_rm" name="link_rm" value="{{ old('link_rm') }}" wire:model="link_rm">
-                  @error('link_rm')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>  --}}
                 <div class="mb-4">
                   <label for="tanggal_pendaftaran" class="form-label fw-bold">Tanggal Pendaftaran [Bulan/Tanggal/Tahun]</label>
                     <input type="date" class="form-control @error('tanggal_pendaftaran') is-invalid @enderror" id="tanggal_pendaftaran" name="tanggal_pendaftaran" 
@@ -324,11 +317,11 @@
         @endif
 
         {{-- data awal --}}
-        @if($currentStep == 1)
+        @if($currentStep == 4)
           <div class="" id="nav-awal" role="tabpanel" aria-labelledby="nav-awal-tab" tabindex="0">
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">
-                <div class="mb-4">
+                <div class="mb-3 dropdown-penyakit">
                   <label for="penyakit" class="form-label fw-bold">Nama Penyakit</label>
                   <div class="form-control d-flex flex-wrap gap-2 p-2 rounded taginput @error('penyakit') is-invalid @enderror">                    
                     @if(count($tag) > 0)
@@ -341,14 +334,15 @@
                     @endif   
                     <input 
                       type="text" 
-                      class="flex-grow-1 @error('penyakit') is-invalid @enderror data-rm" 
+                      class="flex-grow-1 @error('penyakit') is-invalid @enderror data-rm search-input" 
                       id="tagPenyakit" 
                       name="tagPenyakit" 
                       placeholder="Tambah.." 
                       oninput="capEach('tagPenyakit')"
-                      wire:model.debounce.500ms="newTag"
-                      wire:keydown.enter="enterTagPenyakit"
-                      >                                 
+                      autocomplete="off">                                 
+                  </div>
+                  <div class="dropdown-menu dropdown-dinamis ps-2 shadow">   
+                    <ul class="select-options"></ul>
                   </div>
                   <div class="form-text">Tekan koma "," atau Enter untuk menambah penyakit.</div>
                   @error('penyakit')
@@ -447,9 +441,9 @@
                   @enderror
               </div>
                 <div class="mb-4">
-                  <label for="kondisi_awal" class="form-label fw-bold">Kesimpulan Akhir</label>
-                  <textarea class="form-control @error('kondisi_awal') is-invalid @enderror" id="kondisi_awal" name="kondisi_awal" rows="5" style="text-transform: full-width-kana;" oninput="capFirst('kondisi_awal')" wire:model="kondisi_awal"></textarea>
-                  @error('kondisi_awal')
+                  <label for="kesimpulan" class="form-label fw-bold">Kesimpulan Akhir</label>
+                  <textarea class="form-control @error('kesimpulan') is-invalid @enderror" id="kesimpulan" name="kesimpulan" rows="5" style="text-transform: full-width-kana;" oninput="capFirst('kesimpulan')" wire:model="kesimpulan"></textarea>
+                  @error('kesimpulan')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
@@ -483,60 +477,114 @@
 </div>
 
 @push('script')
-  <script>
-    const target = document.querySelector(".main-bg");
-    
-    function capEach(inputId) {
-      var input = document.getElementById(inputId);
-        let words = input.value.split(' ');
-
-        for (let i = 0; i < words.length; i++) {
-            if (words[i].length > 0) {
-                words[i] = words[i][0].toUpperCase() + words[i].substring(1);
-            }
-        }
-
-        input.value = words.join(' ');
-    } 
-
-    function capFirst(inputId) {
-      var input = document.getElementById(inputId);
-      var word = input.value;
+<script>
+  const target = document.querySelector(".main-bg");
   
-      if (word.length > 0) {
-        var capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1);
-        input.value = capitalizedWord;
+  function capEach(inputId) {
+    var input = document.getElementById(inputId);
+      let words = input.value.split(' ');
+
+      for (let i = 0; i < words.length; i++) {
+          if (words[i].length > 0) {
+              words[i] = words[i][0].toUpperCase() + words[i].substring(1);
+          }
       }
-    } 
 
-    function toTop() {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
+      input.value = words.join(' ');
+  } 
+
+  function capFirst(inputId) {
+    var input = document.getElementById(inputId);
+    var word = input.value;
+
+    if (word.length > 0) {
+      var capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1);
+      input.value = capitalizedWord;
     }
+  } 
 
-    document.addEventListener('livewire:load', function () {
-      
-      Livewire.on('runScriptPenyakit', function () {
-          const inputField = document.getElementById('tagPenyakit');
-
-          function addTagToController(newTag) {
-            Livewire.emit('addTagPenyakit', newTag);
-          };
-
-          inputField.addEventListener('keyup', function(event) {
-            if (event.key === ",") {
-              const value = inputField.value;
-              const trimmedValue = value.slice(0, -1);
-
-              addTagToController(trimmedValue);
-
-              inputField.value = "";
-            }
-          });
-      });  
-      
+  function toTop() {
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
     });
-  </script>
+  }
+
+  function addTagToController(newTag) {
+    Livewire.emit('addTagPenyakit', newTag);
+    document.querySelector(".search-input").value = "";
+  };
+
+  document.addEventListener('livewire:load', function () {
+    
+    Livewire.on('runScriptPenyakit', function () {
+      let dataPenyakit = @json($listPenyakit);
+
+      const dropPenyakit = document.querySelector(".dropdown-penyakit");
+      let searchInpPenyakit = dropPenyakit.querySelector(".search-input");
+      let optionsPenyakit = dropPenyakit.querySelector(".select-options");
+      let dropdown = dropPenyakit.querySelector(".dropdown-dinamis");
+
+      searchInpPenyakit.addEventListener('keyup', function(event) {
+        const value = searchInpPenyakit.value;
+
+        if (event.key === "Enter" || (event.key === "," && value.endsWith(","))) {
+            const trimmedValue = value.replace(/,$/, '');
+            addTagToController(trimmedValue);
+
+            searchInpPenyakit.value = "";
+        }
+      });
+
+      function addPenyakit() {
+        optionsPenyakit.innerHTML = "";
+        dataPenyakit.forEach(penyakit => {
+            let isSelected = penyakit == document.querySelector("#namaPenyakit").innerText ? "active" : "";
+                let li = `
+                            <li class="dropdown-item ${isSelected}" 
+                                data-nama="${penyakit}" 
+                                onclick="setPenyakitToController(this)">
+                                ${penyakit}                            
+                            </li>
+                        `;
+                optionsPenyakit.insertAdjacentHTML("beforeend", li);
+        });
+      }
+
+      searchInpPenyakit.addEventListener("keyup", () => {
+        dropdown.style.display = 'block';
+        let arr = [];
+        let searchWords = searchInpPenyakit.value.toLowerCase().split(' ');
+        arr = dataPenyakit.filter(penyakit => {
+            let data = penyakit.toLowerCase();
+            return searchWords.every(word => data.includes(word));
+        }).map(penyakit => {
+            return `<button type="button" class="dropdown-item" 
+                        data-nama="${penyakit}"
+                        onclick="addTagToController('${penyakit}')">
+                        ${penyakit}                            
+                    </button>
+                    `;
+        }).join("");
+
+        if(arr) {
+          optionsPenyakit.innerHTML = arr;
+        } else {
+          dropdown.style.display = 'none';
+        }
+      });
+
+      searchInpPenyakit.addEventListener("focus", function() {
+        dropdown.style.display = 'block';
+        addPenyakit();
+      });
+
+      document.addEventListener('click', function(event) {
+        if (!searchInpPenyakit.contains(event.target)) {
+          dropdown.style.display = 'none';
+        }
+      });
+    });  
+  });
+</script>
 @endpush

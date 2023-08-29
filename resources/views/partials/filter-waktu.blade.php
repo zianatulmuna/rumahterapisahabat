@@ -48,10 +48,10 @@
     <button class="btn dropdown-toggle btn-outline-success mx-0 d-flex justify-content-between align-items-center button-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
         <span class="text-capitalize">{{ $tahun ? $tahun : $filter }}</span>
     </button>
-    <div class="dropdown-menu dropdown-menu-end rounded-2 shadow p-1" aria-labelledby="dropdownMenuButton">
-        <button type="button" class="dropdown-item" wire:click="setFilter('minggu ini')">Minggu Ini</button>
-        <button type="button" class="dropdown-item" wire:click="setFilter('tahun ini')">Tahun Ini</button>
-        <button type="button" class="dropdown-item" wire:click="setFilter('semua tahun')">Semua Tahun</button>
+    <div class="dropdown-menu dropdown-menu-end rounded-2 shadow px-1 py-2" aria-labelledby="dropdownMenuButton">
+        <button type="button" class="dropdown-item {{ $filter == 'minggu ini' ? 'active' : '' }}" wire:click="setFilter('minggu ini')">Minggu Ini</button>
+        <button type="button" class="dropdown-item {{ $filter == 'tahun ini' ? 'active' : '' }}" wire:click="setFilter('tahun ini')">Tahun Ini</button>
+        <button type="button" class="dropdown-item {{ $filter == 'semua tahun' ? 'active' : '' }}" wire:click="setFilter('semua tahun')">Semua Tahun</button>
         <div class="input-group p-2">
             <input type="search" class="form-control py-0" name="tahunForm" id="tahunInput" min="2014" max="2023" placeholder="Tahun">
             <button type="button" id="tahunBtn" class="btn btn-outline-success">

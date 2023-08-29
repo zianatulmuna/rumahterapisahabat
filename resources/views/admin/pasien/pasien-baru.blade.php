@@ -22,9 +22,9 @@
       </div>        
     </form>
     <div class="dropdown custom-filter">
-      <button class="btn btn-outline-success py-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button class="btn btn-outline-success hstack py-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="bi bi-funnel pe-1"></i>
-        <p class="d-none d-md-inline">
+        <p class="d-none mb-0 mx-auto d-md-inline">
           @if(request('urut'))
             Pasien {{ request('urut') }}
           @else
@@ -33,8 +33,9 @@
         </p>
       </button>
       <div class="dropdown-menu dropdown-menu-right mt-1 shadow w-100" aria-labelledby="dropdownMenuButton">
-        <a href="/admin/pasien-baru?{{ Request::query('search') ? 'search=' . request('search') . '&' : '' }}urut=Terbaru" class="dropdown-item {{ Request::query('urut') == 'Terbaru' ? 'active' : '' }}">Terbaru</a>
-        <a href="/admin/pasien-baru?{{ Request::query('search') ? 'search=' . request('search') . '&' : '' }}urut=Terlama" class="dropdown-item {{ Request::query('urut') == 'Terlama' ? 'active' : '' }}">Terlama</a>
+        <li><h6 class="dropdown-header">Urutkan berdasarkan</h6></li>
+        <li><a href="/admin/pasien-baru?{{ Request::query('search') ? 'search=' . request('search') . '&' : '' }}urut=Terbaru" class="dropdown-item {{ Request::query('urut') == 'Terbaru' ? 'active' : '' }}"><i class="bi bi-sort-numeric-down-alt pe-1"></i> Terbaru</a></li>
+        <li><a href="/admin/pasien-baru?{{ Request::query('search') ? 'search=' . request('search') . '&' : '' }}urut=Terlama" class="dropdown-item {{ Request::query('urut') == 'Terlama' ? 'active' : '' }}"><i class="bi bi-sort-numeric-down pe-1"></i> Terlama</a></li>
       </div>
     </div>
   </div>

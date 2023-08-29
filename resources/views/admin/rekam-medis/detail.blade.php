@@ -142,59 +142,36 @@
 </div>
 @endsection
 
-@section('modal-alert')   
-   <!-- Pasien Delete Modal-->
-   <div class="modal fade" id="pasienDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-   aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-         <div class="modal-content p-3">
-            <div class="modal-header">
-                  <h5 class="modal-title d-flex align-items-center" id="exampleModalLabel">
-                     <i class="bi bi-trash text-danger pe-2 fs-4"></i>
-                     <span>Yakin ingin menghapus Pasien?</span>
-                  </h5>
-                  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body py-4">Semua data terkait pasien ini akan dihapus <strong>permanen</strong>! 
-               <br>Hal ini termasuk semua data rekam medis, terapi, jadwal, dll.</div>
-            <div class="modal-footer">
-                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                  <form action="{{ route('pasien.delete', $pasien->slug) }}" method="post">
-                     @method('delete')
-                     @csrf
-                     <button type="submit" class="btn btn-danger"><i class="bi bi-exclamation-triangle"></i> Hapus</button>
-                  </form>
-            </div>
-         </div>
-      </div>
-   </div>
+@section('modal-alert')  
+   <!-- Pasien Delete Modal--> 
+   <x-modal-alert 
+      id="pasienDeleteModal"
+      title="Yakin ingin hapus Pasien?"
+      :body="'<span>Semua data terkait pasien ini akan dihapus <strong>permanen</strong>! 
+         <br>Hal ini termasuk semua data rekam medis, terapi, jadwal, dll.</span>'"
+      icon="bi bi-exclamation-circle text-danger"
+      >
+      <form action="{{ route('pasien.delete', $pasien->slug) }}" method="post">
+         @method('delete')
+         @csrf
+         <button type="submit" class="btn btn-danger"><i class="bi bi-exclamation-triangle"></i> Hapus</button>
+      </form>
+   </x-modal-alert>
 
    @if($rmDetected == 1)
       <!-- RM Delete Modal-->
-      <div class="modal fade" id="rmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content p-3">
-               <div class="modal-header">
-                  <h5 class="modal-title d-flex align-items-center" id="exampleModalLabel">
-                     <i class="bi bi-trash text-danger pe-2 fs-4"></i>
-                     <span>Yakin ingin menghapus Rekam Medis?</span>
-                  </h5>
-                  <h5 class="modal-title" id="exampleModalLabel"></h5>
-                  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body py-4">Semua data terkait rekam medis ini akan dihapus <strong>permanen</strong>! 
-                  <br>Hal ini termasuk semua data terapi, jadwal, dll.</div>
-               <div class="modal-footer">
-                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                     <form action="{{ route('rm.delete', [$pasien->slug, $rm->id_rekam_medis]) }}" method="post">
-                        @method('delete')
-                        @csrf
-                        <button type="submit" class="btn btn-danger"><i class="bi bi-exclamation-triangle"></i> Hapus</button>
-                     </form>
-               </div>
-            </div>
-         </div>
-      </div>
+      <x-modal-alert 
+         id="rmDeleteModal"
+         title="Yakin ingin hapus Rekam Medis?"
+         :body="'<span>Semua data terkait rekam medis ini akan dihapus <strong>permanen</strong>! 
+            <br>Hal ini termasuk semua data terapi, jadwal, dll.</span>'"
+         icon="bi bi-exclamation-circle text-danger"
+         >
+         <form action="{{ route('rm.delete', [$pasien->slug, $rm->id_rekam_medis]) }}" method="post">
+            @method('delete')
+            @csrf
+            <button type="submit" class="btn btn-danger"><i class="bi bi-exclamation-triangle"></i> Hapus</button>
+         </form>
+      </x-modal-alert>
    @endif
 @endsection

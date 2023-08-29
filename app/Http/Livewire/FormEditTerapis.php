@@ -19,7 +19,7 @@ class FormEditTerapis extends Component
     public $nama, $no_telp, $jenis_kelamin, $tanggal_lahir, $agama, $alamat, $foto, $tingkatan, $status;
     public $username, $password;
 
-    public $terapis, $id_terapis, $dbUsername, $dbFoto, $pathFoto;
+    public $terapis, $id_terapis, $dbUsername, $dbPassword, $dbFoto, $pathFoto;
 
     public $totalStep = 2, $currentStep = 1;
 
@@ -29,7 +29,7 @@ class FormEditTerapis extends Component
         $this->nama = $terapis->nama;
         $this->username = $terapis->username;
         $this->dbUsername = $terapis->username;
-        $this->password = $terapis->password;
+        $this->dbPassword = $terapis->password;
         $this->tingkatan = $terapis->tingkatan;
         $this->status = $terapis->status;
         $this->no_telp = $terapis->no_telp;
@@ -55,6 +55,9 @@ class FormEditTerapis extends Component
         
         $this->validateData();
         $this->currentStep++;
+        if($this->currentStep == 2) {
+            $this->emit('runScript');
+        }
         if($this->currentStep > $this->totalStep) {
             $this->currentStep = $this->totalStep;
         }
@@ -102,7 +105,7 @@ class FormEditTerapis extends Component
                                 'min:3', 
                                 'max:30', 
                                 Rule::unique('terapis')->ignore($this->id_terapis, 'id_terapis')],
-                'password' => 'required|min:3|max:60',
+                'password' => 'nullable|min:3|max:10',
                 'tingkatan' => 'required',
                 'status' => 'required'
             ], $message);
@@ -139,6 +142,8 @@ class FormEditTerapis extends Component
             $dataDiri['foto'] = '';
             Storage::delete($this->pathFoto);
         }
+
+        $dataDiri['password'] = $this->password ? $this->password : $this->dbPassword;
 
         Terapis::where('id_terapis', $this->id_terapis)->update($dataDiri);
 
