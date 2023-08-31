@@ -18,7 +18,7 @@
    @if($rmDetected == 1)          
       {{-- Data Layanan --}}
       <h4 class="mt-4 mt-lg-5 mb-3">Rencana Layanan Terapi</h4>
-      <div class="row row-cols-1 row-cols-lg-2 g-6">
+      <div class="row row-cols-1 row-cols-lg-2">
          <div class="col">
             <table class="table table-bordered table-sm table-top m-0 bg-white">
                <tr>
@@ -65,7 +65,7 @@
          </div>      
       </div>
       
-      <div class="row row-cols-1 row-cols-lg-2 g-6">
+      <div class="row row-cols-1 row-cols-lg-2">
          <div class="col">
             <h4 class="mt-4 mt-lg-5 mb-3">Penyakit</h4>
             <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 60px">
@@ -85,7 +85,7 @@
          </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-lg-2 g-6">
+      <div class="row row-cols-1 row-cols-lg-2">
          <div class="col">
             <h4 class="mt-4 mt-lg-5 mb-3">Data Deteksi</h4>
             <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 140px">
@@ -114,6 +114,29 @@
             </table>
          </div>
       </div>
+
+      <div class="row row-cols-1 row-cols-lg-2">
+         <div class="col">
+            <h4 class="mt-4 mt-lg-5 mb-3">Target Terapi</h4>
+            <table class="table table-bordered border-body-tertiary table-sm table-top bg-white">
+               <tr>
+                  <td class="px-2 col-5 col-sm-4">Kondisi Awal</td>
+                  <td class="px-2">{{ $rm->kondisi_awal }}</td>
+               </tr>
+               <tr>
+                  <td class="px-2">Target Akhir</td>
+                  <td class="px-2">{{ $rm->target_akhir }}</td>
+               </tr>
+            </table>
+         </div>
+         <div class="col">
+            <h4 class="mt-4 mt-lg-5 mb-3">Kesimpulan</h4>
+            <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 65px">
+               <p>{{ $rm->kesimpulan }}</p>
+            </div>
+         </div>
+         
+      </div>
    @elseif($rmDetected == 0) 
       <div class="alert alert-warning my-5 p-0 p-2 px-3 col-lg-5">
          <i class="bi bi-exclamation-circle"></i>
@@ -137,7 +160,7 @@
          </div>
       </div>
    @else
-      <a href="{{ route('pasien.delete', $pasien->slug) }}" class="btn btn-warning py-1 px-2 py-sm-2 px-sm-3" data-toggle="modal" data-target="#pasienDeleteModal"><i class="bi bi-exclamation-triangle-fill"></i> Hapus Pasien</a>
+      <a href="" class="btn btn-outline-danger py-1 px-2 py-sm-2 px-sm-3" data-toggle="modal" data-target="#pasienDeleteModal"><i class="bi bi-exclamation-triangle"></i> Hapus Pasien</a>
    @endif
 </div>
 @endsection

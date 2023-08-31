@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
-class FormCreateTerapis extends Component
+class TerapisCreateForm extends Component
 {
     use WithFileUploads;
 
@@ -26,7 +26,7 @@ class FormCreateTerapis extends Component
     }
     public function render()
     {
-        return view('livewire.form-create-terapis', [
+        return view('livewire.terapis-create-form', [
             'jenisKelamin' => ['Perempuan','Laki-Laki'],
             'statusTerapis' => ['Aktif','Non Aktif'],
             'tingkatanTerapis' => ['Utama', 'Madya', 'Muda', 'Pratama', 'Latihan']

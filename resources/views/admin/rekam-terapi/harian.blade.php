@@ -150,7 +150,7 @@
             <i class="bi bi-trash"></i>
             Hapus
         </a>
-        <a href="{{ route('terapi.edit', [$pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->tanggal]) }}" class="btn c-btn-warning px-3 px-sm-4">
+        <a href="{{ route('terapi.edit', [$pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn c-btn-warning px-3 px-sm-4">
             <i class="bi bi-pencil-square"></i>
             Edit
         </a>

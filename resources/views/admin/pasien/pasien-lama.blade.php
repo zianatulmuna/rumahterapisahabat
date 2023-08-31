@@ -21,9 +21,9 @@
       </div>        
     </form>
     <div class="dropdown custom-filter">
-      <button class="btn btn-outline-success py-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button class="btn btn-outline-success hstack py-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="bi bi-funnel pe-1"></i>
-        <p class="d-none d-md-inline">
+        <p class="d-none mb-0 me-auto d-md-inline">
         @if(request('status'))
           Pasien {{ request('status') }}
         @elseif(request('urut'))
@@ -34,6 +34,7 @@
         </p>
       </button>
       <div class="dropdown-menu dropdown-menu-right mt-1 shadow w-100" aria-labelledurut="dropdownMenuButton">
+        <h6 class="dropdown-header pb-0">Berdasarkan status</h6>
         <a 
           href="/admin/pasien/lama?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}{{ Request::query('urut') ? 'urut=' . request('urut') : '' }}" 
           class="dropdown-item {{ Request::query('status') ? '' : 'active' }}">
@@ -50,15 +51,16 @@
           Selesai
         </a>
         <div class="dropdown-divider"></div>
+        <h6 class="dropdown-header pb-0">Urutkan berdasarkan</h6>
         <a 
           href="/admin/pasien/lama?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}{{ Request::query('status') ? 'status=' . request('status') . '&' : '' }}urut=Terbaru" 
           class="dropdown-item {{ Request::query('urut') == 'Terbaru' ? 'active' : '' }}">
-          Terbaru
+          <i class="bi bi-sort-numeric-down-alt pe-1"></i> Terbaru
         </a>
         <a 
           href="/admin/pasien/lama?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}{{ Request::query('status') ? 'status=' . request('status') . '&' : '' }}urut=Terlama" 
           class="dropdown-item {{ Request::query('urut') == 'Terlama' ? 'active' : '' }}">
-          Terlama
+          <i class="bi bi-sort-numeric-down pe-1"></i> Terlama
         </a>
       </div>
     </div>

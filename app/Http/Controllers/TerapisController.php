@@ -54,8 +54,10 @@ class TerapisController extends Controller
     {
         $histori_terapi = RekamTerapi::where('id_terapis', $terapis->id_terapis)->orderBy('tanggal', 'DESC')->paginate(10);
         $tanggal_lahir = Carbon::parse($terapis->tanggal_lahir)->formatLocalized('%d %B %Y');
+        
+        $total_terapi = RekamTerapi::totalTerapi($terapis->id_terapis);
 
-        return view('admin.terapis.detail', compact('terapis', 'histori_terapi', 'tanggal_lahir'));
+        return view('admin.terapis.detail', compact('terapis', 'histori_terapi', 'tanggal_lahir', 'total_terapi'));
     }
 
     /**

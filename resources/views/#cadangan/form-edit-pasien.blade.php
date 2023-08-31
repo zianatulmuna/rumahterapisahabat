@@ -41,7 +41,7 @@
       @csrf
       <div class="tab-content m-0" id="nav-tabContent">
         {{-- data diri --}}
-        @if($currentStep == 3)
+        @if($currentStep == 1)
           <div class="" id="nav-diri" aria-labelledby="nav-diri-tab" tabindex="0">
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">                
@@ -76,7 +76,7 @@
                   @enderror
                 </div>
                 <div class="mb-4">
-                  <label for="tanggal_lahir" class="form-label fw-bold">Tanggal Lahir [Bulan/Tanggal/Tahun]</label>
+                  <label for="tanggal_lahir" class="form-label fw-bold">Tanggal Lahir <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small></label>
                     <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" name="tanggal_lahir" 
                       value="{{ old('tanggal_lahir') }}" wire:model="tanggal_lahir">
                     <div class="form-text">Contoh: 9 Desember 1995 diisi 12/09/1995</div>
@@ -86,6 +86,7 @@
                             </div>
                         @enderror
                 </div>
+                
               </div>
                     
               <div class="col">
@@ -115,20 +116,21 @@
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <label for="alamat" class="form-label fw-bold">Alamat</label>
-                    <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat') }}" oninput="capFirst('alamat')" wire:model="alamat">
-                    @error('alamat')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
+                  <label for="alamat" class="form-label fw-bold">Alamat</label>
+                  <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat') }}" oninput="capFirst('alamat')" wire:model="alamat">
+                  @error('alamat')
+                  <div class="invalid-feedback">
+                      {{ $message }}
+                  </div>
+                  @enderror
+              </div>
+                
               </div>
             </div>
           </div>
         @endif
         {{-- data penunjang --}}
-        @if($currentStep == 2)
+        @if($currentStep == 4)
           <div class="" id="nav-penunjang" aria-labelledby="nav-penunjang-tab" tabindex="0">
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">
@@ -170,24 +172,21 @@
               </div>
                     
               <div class="col">
-                 
                 <div class="mb-4">
-                  <label for="foto" class="form-label fw-bold">Foto</label>
-                  <input class="form-control @error('foto') is-invalid @enderror" type="file" id="foto" name="foto" value="{{ old('foto') }}" wire:model="foto">
-                  
-                  <div class="row my-3 justify-content-sm-start">
-                    @if ($foto)
-                      <p class="col-sm-auto m-0">Preview :</p>
-                      <img src="{{ $foto->temporaryUrl() }}" class="img-fluid pt-2 col-sm-5 img-preview">
-                      <button type="button" class="btn-close small" aria-label="Close" wire:click="deleteFoto"></button>
-                    @elseif($dbFoto)
-                      <p class="col-sm-auto m-0">Preview :</p>
-                      <img src="{{ asset('storage/' . $dbFoto) }}" class="img-fluid pt-2 col-sm-5 img-preview">
-                      <button type="button" class="btn-close small" aria-label="Close" wire:click="deleteFoto"></button>
-                    @endif
-                  </div>
-
-                  @error('foto')
+                  <label for="tanggal_pendaftaran" class="form-label fw-bold">Tanggal Pendaftaran Pasien <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small></label>
+                    <input type="date" class="form-control @error('tanggal_pendaftaran') is-invalid @enderror" id="tanggal_pendaftaran" name="tanggal_pendaftaran" 
+                      value="{{ old('tanggal_pendaftaran') }}" wire:model="tanggal_pendaftaran">
+                      @error('tanggal_pendaftaran')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                      @enderror
+                </div>
+                <div class="mb-4">
+                  <label for="tanggal_rm" class="form-label fw-bold">Tanggal Pendaftaran Rekam Medis <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small></label>
+                  <input type="date" class="form-control @error('tanggal_ditambahkan') is-invalid @enderror" id="tanggal_ditambahkan" name="tanggal_ditambahkan" 
+                    value="{{ old('tanggal_ditambahkan') }}" wire:model="tanggal_ditambahkan">
+                  @error('tanggal_ditambahkan')
                     <div class="invalid-feedback">
                       {{ $message }}
                     </div>
@@ -195,15 +194,28 @@
                 </div>
                 
                 <div class="mb-4">
-                  <label for="tanggal_pendaftaran" class="form-label fw-bold">Tanggal Pendaftaran</label>
-                    <input type="date" class="form-control @error('tanggal_pendaftaran') is-invalid @enderror" id="tanggal_pendaftaran" name="tanggal_pendaftaran" 
-                      value="{{ old('tanggal_pendaftaran') }}" wire:model="tanggal_pendaftaran">
-                    <div class="form-text">Contoh: 9 Desember 2023 diisi 12/09/2023</div>
-                      @error('tanggal_pendaftaran')
-                        <div class="invalid-feedback">
-                          {{ $message }}
-                        </div>
-                      @enderror
+                  <label for="foto" class="form-label fw-bold">Foto</label>
+                  <input class="form-control @error('foto') is-invalid @enderror" type="file" id="foto" name="foto" value="{{ old('foto') }}" wire:model="foto">
+                  
+                  @if ($foto)
+                    <div class="row my-3 justify-content-sm-start">
+                      <p class="col-sm-auto m-0">Preview :</p>
+                      <img src="{{ $foto->temporaryUrl() }}" class="img-fluid pt-2 col-sm-3 img-preview">
+                      <button type="button" class="btn-close small" aria-label="Close" wire:click="deleteFoto"></button>
+                    </div>
+                  @elseif($dbFoto)
+                    <div class="row my-3 justify-content-sm-start">
+                      <p class="col-sm-auto m-0">Preview :</p>
+                      <img src="{{ asset('storage/' . $dbFoto) }}" class="img-fluid pt-2 col-sm-3 img-preview">
+                      <button type="button" class="btn-close small" aria-label="Close" wire:click="deleteFoto"></button>
+                    </div>
+                  @endif
+
+                  @error('foto')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
                       
               </div>              
@@ -211,24 +223,24 @@
           </div>
         @endif
         {{-- data layanan --}}
-        @if($currentStep == 1)
+        @if($currentStep == 3)
           {{-- rencana layanan --}}
           <div class="tabe-pane show active" id="nav-layanan" role="tabpanel" aria-labelledby="nav-layanan-tab" tabindex="0">
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">
                 <div class="mb-4">
                   <label for="tempat_layanan" class="form-label fw-bold">Tempat Layanan</label>
-                  <input type="text" class="form-control @error('tempat_layanan') is-invalid @enderror" id="tempat_layanan" name="tempat_layanan" value="{{ old('tempat_layanan') }}" oninput="capFirst('tempat_layanan')" wire:model="tempat_layanan">
+                  <button type="button" class="form-control text-start @error('tempat_layanan') is-invalid @enderror" id="alamatBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    {{ $tempat_layanan ? $tempat_layanan : 'Masukkan Alamat' }}
+                  </button>
                   @error('tempat_layanan')
                     <div class="invalid-feedback">
                       {{ $message }}
                     </div>
                   @enderror
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                  Launch static backdrop modal
-                </button>
-                <div class="modal d-block" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                {{-- modal alamat --}}
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -236,57 +248,32 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        <input type="text" class="form-control" id="k_bsni" name="k_bsni" value="{{ old('k_bsni') }}" wire:model="k_bsni">
+                        <input type="hidden" class="form-control" id="k_bsni" name="k_bsni" value="{{ old('k_bsni') }}" wire:model="k_bsni">
                         <div class="mb-4">
                           <label class="form-label fw-bold">Provinsi</label>
-                          <select class="form-select @error('provinsi') is-invalid @enderror" style="max-height: 200px; overflow-y: auto;" id="provinsi" name="provinsi" wire:model="provinsi" required aria-label=".form-select-sm example">
+                          <select class="form-select" style="max-height: 200px; overflow-y: auto;" id="provinsi" name="provinsi">
                             <option value="">Pilih Provinsi</option>
-                            @foreach($jenisKelamin as $gender)
-                              @if (old('provinsi') == $gender)
-                                <option value="{{ $gender }}" selected>{{ $gender }}</option>
-                              @else
-                                <option value="{{ $gender }}">{{ $gender }}</option>
-                              @endif
-                            @endforeach
                           </select>
-                          @error('provinsi')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                          @enderror
                         </div>
                         <div class="mb-4">
-                          <label class="form-label fw-bold">Kabupaten</label>
-                          <select class="form-select @error('kabupaten') is-invalid @enderror" style="max-height: 200px; overflow-y: auto;" id="kabupaten" name="kabupaten" wire:model="kabupaten" required aria-label=".form-select-sm example">
-                            <option value="">Pilih Kabupaten</option>
-                            @foreach($jenisKelamin as $gender)
-                              @if (old('kabupaten') == $gender)
-                                <option value="{{ $gender }}" selected>{{ $gender }}</option>
-                              @else
-                                <option value="{{ $gender }}">{{ $gender }}</option>
-                              @endif
-                            @endforeach
+                          <label class="form-label fw-bold">Kota/Kabupaten</label>
+                          <select class="form-select" style="max-height: 200px; overflow-y: auto;" id="kabupaten" name="kabupaten" required>
+                            <option value="">Pilih Kota/Kabupaten</option>
                           </select>
-                          @error('kabupaten')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                          @enderror
                         </div>
                         <div class="mb-4">
-                          <label for="alamat" class="form-label fw-bold">Detail Alamat</label>
-                          <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat') }}" oninput="capFirst('alamat')" wire:model="alamat">
-                          @error('alamat')
-                            <div class="invalid-feedback">
-                              {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                        
+                          <label for="detail_alamat" class="form-label fw-bold">Detail Alamat</label>
+                          <input type="text" class="form-control" id="detail_alamat" name="detail_alamat" value="{{ old('detail_alamat') }}" oninput="capFirst('detail_alamat')">
+                        </div>                        
                       </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Understood</button>
+                      <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" id="tutupBtn" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-success" id="simpanAlamat">Simpan</button>
                       </div>
                     </div>
                   </div>
                 </div>
+                
                 <div class="mb-4">
                   <label for="sistem_layanan" class="form-label fw-bold">Sistem Layanan</label>
                   <input type="text" class="form-control @error('sistem_layanan') is-invalid @enderror" id="sistem_layanan" name="sistem_layanan" value="{{ old('sistem_layanan') }}" wire:model="sistem_layanan">
@@ -387,7 +374,7 @@
         @endif
 
         {{-- data awal --}}
-        @if($currentStep == 4)
+        @if($currentStep == 2)
           <div class="" id="nav-awal" role="tabpanel" aria-labelledby="nav-awal-tab" tabindex="0">
             <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
               <div class="col">
@@ -435,6 +422,9 @@
                       </x-modal-alert>
                     @endforeach   
                   @endif   
+                  <div class="d-flex">
+                    
+                  </div>
                   <div class="form-control d-flex flex-wrap gap-2 p-2 rounded taginput @error('penyakit') is-invalid @enderror">                    
                     @if(count($tag) > 0)
                       @foreach ($tag as $i)
@@ -567,7 +557,7 @@
         @endif
 
         {{-- button step --}}
-        <div class="d-flex justify-content-between my-5 mx-3 mb-md-5 mx-md-5 form-navigation">
+        <div class="d-flex justify-content-between my-4 mx-3 mb-md-5 mx-md-5 form-navigation">
           @if($currentStep == 1)
             <div></div>           
           @endif
@@ -668,6 +658,11 @@
       document.querySelector(".search-input").value = "";
     };
 
+    function setAlamatToController(tempat, kode, provId, provinsi, kabupaten) {
+      Livewire.emit('setAlamatKode', { tempat: tempat, kode: kode, provId: provId, provinsi: provinsi, kabupaten: kabupaten });
+    };
+
+
     document.addEventListener('livewire:load', function () {
     
       Livewire.on('runScriptPenyakit', function () {
@@ -735,46 +730,117 @@
           }
         });
       });  
-    });
 
-    const provinsiSelect = document.querySelector("#provinsi");
+      Livewire.on('runScriptAlamat', kab_prov => {
+        const provinsiSelect = document.querySelector("#provinsi");
+        const kabupatenSelect = document.querySelector("#kabupaten");
+        const detailSelect = document.querySelector("#detail_alamat");
+        const saveAlamat = document.querySelector("#simpanAlamat");
+        const k_bsni = document.querySelector("#k_bsni");
+        const alamatButton = document.querySelector("#alamatBtn");
+        const closeButton = document.querySelector("#tutupBtn");
 
-    function populateKabupaten(provinsiId) {
-      kabupatenSelect.innerHTML = '';
+        // $dataProvinsi = {'/database/kabupaten.json'};
 
-      fetch('/database/kabupaten.json')
-        .then(response => response.json())
-        .then(data => {
-            const kabupatenData = data[provinsiId];
-            kabupatenData.forEach(kabupaten => {
-                const option = document.createElement('option');
-                option.value = kabupaten.id;
-                option.textContent = kabupaten.nama;
-                kabupatenSelect.appendChild(option);
+        function populateKabupaten(provinsiId) {
+          kabupatenSelect.innerHTML = '';
+          kabupatenSelect.innerHTML = `<option value="">Pilih Kabupaten</option>`;
+
+          fetch('/database/kota-kabupaten.json')
+            .then(response => response.json())
+            .then(data => {
+                const kabupatenData = data.filter(kabupaten => kabupaten.provinsi_id === provinsiId);
+                kabupatenData.forEach(kabupaten => {
+                  kabupatenSelect.innerHTML += `
+                    <option value="${kabupaten.kabupaten_kota}" data-kode="${kabupaten.k_bsni}" ${kabupaten.kabupaten_kota === kab_prov.kabupaten ? 'selected' : ''}>${kabupaten.kabupaten_kota}</option>
+                    `;
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching JSON data:', error);
             });
-        })
-        .catch(error => {
-            console.error('Error fetching JSON data:', error);
-        });
-    }
+        }
 
-    fetch('/database/provinsi.json')
-      .then(response => response.json())
-      .then(data => {
-          data.forEach(provinsi => {
-              const option = document.createElement('option');
-              option.value = provinsi.id;
-              option.textContent = provinsi.provinsi;
-              provinsiSelect.appendChild(option);
-          });
-      })
-      .catch(error => {
-          console.error('Error fetching JSON data:', error);
-      });
+        function populateProvinsi() {
+
+          fetch('/database/provinsi.json')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(provinsi => {
+                  if(provinsi.provinsi === kab_prov.provinsi) {
+                    provinsiSelect.innerHTML += `
+                      <option value="${provinsi.provinsi}" data-id="${provinsi.id}" selected>${provinsi.provinsi}</option>
+                      `;
+                      provinsiSelect.setAttribute("data-id", provinsi.id);
+                  } else {
+                    provinsiSelect.innerHTML += `
+                      <option value="${provinsi.provinsi}" data-id="${provinsi.id}">${provinsi.provinsi}</option>
+                      `;
+                  }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching JSON data:', error);
+            });
+        }
+
+        alamatButton.addEventListener('click', function() {
+
+          populateProvinsi();
+
+          setTimeout(function() {
+            if(kab_prov.provId != null) {
+              populateKabupaten(kab_prov.provId);
+            } else {
+              const provId = parseInt(provinsiSelect.getAttribute("data-id"));
+              populateKabupaten(provId);
+            }
+          }, 1000);
+          
+        });
+
+        provinsiSelect.addEventListener('change', function() {
+          const selectedOption = this.options[this.selectedIndex];
+          const selectedProvinsiId = selectedOption.getAttribute("data-id");
+          provinsiSelect.setAttribute("data-id", selectedProvinsiId);
+
+          populateKabupaten(parseInt(selectedProvinsiId));
+        });
+
+        kabupatenSelect.addEventListener('change', function() {
+          const selectedOption = this.options[this.selectedIndex];
+          const selected = selectedOption.value;
+          k_bsni.value = selected;
+        });
+
+        saveAlamat.addEventListener('click', function() {
+          provinsiSelect.classList.remove("is-invalid");
+          kabupatenSelect.classList.remove("is-invalid");
+
+          if(provinsiSelect.value == "") {
+            provinsiSelect.classList.add("is-invalid");
+          }
+
+          else if(kabupatenSelect.value == "") {
+            kabupatenSelect.classList.add("is-invalid");
+          } else {
+            const alamat = kabupatenSelect.value + ', ' + provinsiSelect.value;
+            const kode = kabupatenSelect.options[kabupatenSelect.selectedIndex].getAttribute("data-kode");
+            const provId = parseInt(provinsiSelect.getAttribute("data-id"));
+
+            if(detailSelect.value != "") {
+              const alamat = detailSelect.value + ', ' + kabupatenSelect.value + ', ' + provinsiSelect.value; 
+            } 
     
-    provinsiSelect.addEventListener('change', function() {
-      const selectedProvinsiId = this.value;
-      populateKabupaten(selectedProvinsiId);
+            alamatButton.textContent = alamat; 
+            
+            setAlamatToController(alamat, kode, provId, provinsiSelect.value, kabupatenSelect.value);
+            closeButton.click();
+          }
+
+        });
+      });
+
     });
 
   </script>

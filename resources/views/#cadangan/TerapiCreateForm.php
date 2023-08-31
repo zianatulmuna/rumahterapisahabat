@@ -17,16 +17,13 @@ class TerapiCreateForm extends Component
 
     public $totalStep = 2, $currentStep = 1;
 
-    public $tagTerapis = [];
-
-    protected $listeners = ['setTerapis', 'addTagTerapis'];
+    protected $listeners = ['setTerapis'];
 
     public function mount($pasien, $id_sub) {
         $this->id_sub = $id_sub;
         $this->pasien = $pasien;
         $this->currentStep;
         $this->nama_terapis;
-        $this->tagTerapis;
     }
     public function render()
     {
@@ -57,26 +54,6 @@ class TerapiCreateForm extends Component
         // dd($this->nama_terapis);
     }
 
-    public function addTagTerapis($value)
-    {
-    //     $this->tagTerapis['id'] = $value['id'];
-    //     $this->tagTerapis['nama'] = $value['nama'];
-
-        $this->tagTerapis[] = ['id' => $value['id'], 'nama' => $value['nama']];
-    }
-
-    public function deleteTagTerapis($value)
-    {
-        $index = array_search($value, array_column($this->tagTerapis, 'id'));
-
-        if ($index !== false) {
-            array_splice($this->tagTerapis, $index, 1);
-        } else {
-            return redirect()->back()->with('duplicate', 'Gagal hapus.');
-        }
-        
-    }
-
     public function validateData(){
         $message = [
             'required' => 'Kolom :attribute harus diisi.',
@@ -89,10 +66,7 @@ class TerapiCreateForm extends Component
         if($this->currentStep == 1){
             $id = $this->id_sub;
             $this->validate([
-                // 'id_terapis' => 'required',
-                'id_terapis' => [
-                    Rule::requiredIf(count($this->tagTerapis) == 0),
-                ],
+                'id_terapis' => 'required',
                 'pra_terapi' => 'max:100',
                 'post_terapi' => 'max:100',
                 'tanggal' => [
@@ -117,7 +91,7 @@ class TerapiCreateForm extends Component
         $this->validateData();
 
         $dataTerapi = array(
-            // 'id_terapis' => $this->id_terapis,
+            'id_terapis' => $this->id_terapis,
             'id_sub' => $this->id_sub,
             'tanggal' => $this->tanggal,
             'waktu' => $this->waktu,
@@ -129,23 +103,20 @@ class TerapiCreateForm extends Component
             'post_terapi' => $this->post_terapi
         ); 
 
-        for ($i = 0; $i < count($this->tagTerapis); $i++) { 
-            $dateY = substr(Carbon::parse($request->tanggal)->format('Y'), 2);
-            $dateM = Carbon::parse($request->tanggal)->format('m');
-    
-            $id = IdGenerator::generate([
-                'table' => 'rekam_terapi', 
-                'field' => 'id_terapi', 
-                'length' => 8, 
-                'prefix' => 'T'.$dateY.$dateM,
-                'reset_on_prefix_change' => true
-            ]);
-    
-            $dataTerapi['id_terapi'] = $id;
-            $dataTerapi['id_terapis'] = $this->tagTerapis[$i]['id'];
-    
-            RekamTerapi::create($dataTerapi);
-        }
+        $dateY = substr(Carbon::parse($request->tanggal)->format('Y'), 2);
+        $dateM = Carbon::parse($request->tanggal)->format('m');
+
+        $id = IdGenerator::generate([
+            'table' => 'rekam_terapi', 
+            'field' => 'id_terapi', 
+            'length' => 8, 
+            'prefix' => 'T'.$dateY.$dateM,
+            'reset_on_prefix_change' => true
+        ]);
+
+        $dataTerapi['id_terapi'] = $id;
+
+        RekamTerapi::create($dataTerapi);
 
         return redirect(route('terapi.rekam', [$this->pasien, $this->id_sub]))
                             ->with('success', 'Terapi Harian berhasil ditambahkan.')

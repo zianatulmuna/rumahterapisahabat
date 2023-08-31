@@ -62,7 +62,7 @@
                   <td>Total Terapi</td>
                   <td class="d-flex align-items-center">
                      <i class="bi bi-heart-pulse-fill text-success pe-1"></i>
-                     <span>{{ $terapis->total_terapi }}</span>
+                     <span>{{ $total_terapi }}</span>
                   </td>
                </tr>
             </tbody>            
@@ -99,7 +99,7 @@
                      <td class="text-center">{{ date('d/m/Y', strtotime($terapi->tanggal)) }}</td>
                      <td>{{ $terapi->subRekamMedis->rekamMedis->pasien->nama }}</td>
                      <td class="text-center">
-                        <a href="{{ route('terapi.detail', [$terapi->subRekamMedis->rekamMedis->pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->tanggal]) }}" class="btn btn-sm rounded-2 c-btn-success">
+                        <a href="{{ route('terapi.detail', [$terapi->subRekamMedis->rekamMedis->pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn btn-sm rounded-2 c-btn-success">
                            <i class="bi bi-eye"></i>               
                         </a>      
                      </td>
@@ -107,10 +107,14 @@
             @endforeach
          </tbody>
       </table>
+      <div class="mt-3">
+         {{ $histori_terapi->links() }}
+      </div>
    @else
       <span class="fst-italic">Belum ada histori terapi.</span>
    @endif
-   <div class="d-flex justify-content-between my-5 g-4">
+   
+   <div class="d-flex justify-content-end py-5 gap-3">
       <a type="button" class="btn c-btn-danger" data-toggle="modal" data-target="#terapisDeleteModal">
          <i class="bi bi-trash"></i>
          Hapus

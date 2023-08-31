@@ -10,8 +10,8 @@
    @include('partials.data-diri')
 
    @if($rmDetected == 1)  
+      <h4 class="mt-5 mb-3">Rekam Medis Terkini</h4>
       @if(count($rm_terkini) > 0)   
-         <h4 class="mt-5 mb-3">Rekam Medis Terkini</h4>
          <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 row-cols-xxl-4">
             @foreach($rm_terkini as $rm)   
                <div class="col mb-4">
@@ -65,6 +65,11 @@
                   </div>
                </div>
             @endforeach
+         </div>
+      @else
+         <div class="alert alert-warning d-inline-flex p-0 p-2 px-3 mb-4">
+            <i class="bi bi-exclamation-circle pe-2 fw-semibold"></i>
+            Pasien ini tidak memiliki histori rekam medis aktif.
          </div>
       @endif
       @if(count($rm_terdahulu) > 0)
@@ -132,8 +137,8 @@
          </div>
       @endif
    @else
-      <div class="alert alert-danger mt-5 p-0 p-2 px-3 col-lg-5">
-         <i class="bi bi-exclamation-circle pe-1 fw-semibold"></i>
+      <div class="alert alert-danger d-inline-flex mt-5 p-0 p-2 px-3">
+         <i class="bi bi-exclamation-circle pe-2 fw-semibold"></i>
          Pasien ini tidak memiliki histori rekam medis.
       </div>
    @endif

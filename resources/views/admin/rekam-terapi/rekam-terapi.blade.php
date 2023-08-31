@@ -51,7 +51,7 @@
                                 <a href="" class="c-badge c-bg-info">
                                     <i class="bi bi-download"></i>
                                 </a>
-                                <a href="{{ route('terapi.detail', [$pasien->slug, $sub->id_sub, $terapi->tanggal]) }}" class="c-badge c-bg-success ms-1">
+                                <a href="{{ route('terapi.detail', [$pasien->slug, $sub->id_sub, $terapi->id_terapi]) }}" class="c-badge c-bg-success ms-1">
                                     <i class="bi bi-eye"></i>
                                 </a>
                             </td>
@@ -79,30 +79,18 @@
 
 @section('modal-alert')
     <!-- Terapi Delete Modal-->
-   <div class="modal fade" id="terapiDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-   aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-         <div class="modal-content p-3">
-            <div class="modal-header">
-                  <h5 class="modal-title d-flex align-items-center" id="exampleModalLabel">
-                     <i class="bi bi-trash text-danger pe-2 fs-4"></i>
-                     <span>Yakin ingin menghapus rekam terapi?</span>
-                  </h5>
-                  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body py-4">Semua data terkait rekam terapi untuk penyakit ini akan dihapus <strong>permanen</strong>! Hal ini termasuk semua data terapi harian.
-            </div>
-            <div class="modal-footer">
-                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                  <form action="{{ route('sub.delete', [$pasien->slug, $sub->id_sub]) }}" method="post">
-                     @method('delete')
-                     @csrf
-                     <button type="submit" class="btn btn-danger"><i class="bi bi-exclamation-triangle"></i> Hapus</button>
-                  </form>
-            </div>
-         </div>
-      </div>
-   </div>
+    <x-modal-alert 
+         id="terapiDeleteModal"
+         title="Yakin ingin menghapus rekam terapi?"
+         :body="'<span>Semua data terkait rekam terapi untuk penyakit ini akan dihapus <strong>permanen</strong>! Hal ini termasuk semua data terapi harian.</span>'"
+         icon="bi bi-exclamation-circle text-danger"
+         >
+         <form action="{{ route('sub.delete', [$pasien->slug, $sub->id_sub]) }}" method="post">
+            @method('delete')
+            @csrf
+            <button type="submit" class="btn btn-danger"><i class="bi bi-exclamation-triangle"></i> Hapus</button>
+         </form>
+      </x-modal-alert>
 @endsection
 
 @push('script')

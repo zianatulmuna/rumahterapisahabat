@@ -64,17 +64,19 @@
                <td>ID Pasien</td>
                <td><span class="bg-body-secondary px-2 rounded-4 border">{{ $pasien->id_pasien }}</span></td>
             </tr>
-            @if(Request::is('admin/pasien/' . $pasien->slug . '/rekam-medis' . '/*'))
-               @if($rmDetected == 1)
-               <tr class="table-rm-p">
-                  <td>No. RM</td>
-                  <td class="px-2">{{ $rm->id_rekam_medis }}</td>                  
-               </tr>
-               <tr>
-                  <td>Status</td>
-                  <td class="px-2">{{ $rm->status_pasien }}</td>                  
-               </tr>
-               @endif
+            @if(Request::is('admin/pasien/' . $pasien->slug . '*') )
+               @unless (Request::is('admin/pasien/*/rekam-medis') || Request::is('admin/pasien/*/rekam-terapi'))
+                  @if($rmDetected == 1)
+                  <tr class="table-rm-p">
+                     <td>No. RM</td>
+                     <td class="px-2">{{ $rm->id_rekam_medis }}</td>                  
+                  </tr>
+                  <tr>
+                     <td>Status</td>
+                     <td class="px-2">{{ $rm->status_pasien }}</td>                  
+                  </tr>
+                  @endif                   
+               @endunless
             @endif
          </tbody>
        </table>

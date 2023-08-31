@@ -6,7 +6,7 @@
       <h1 h1 class="h2">Tambah Terapis</h1>
   </div>
 
-  @livewire('form-create-terapis')
+  @livewire('terapis-create-form')
 </div>
 @endsection
 

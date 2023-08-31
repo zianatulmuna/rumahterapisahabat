@@ -20,38 +20,30 @@
           @if($currentStep == 1)
             <div class="row row-cols-1 row-cols-lg-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
                 <div class="col">
-                  <div class="mb-3 dropdown-terapis">
-                    <label for="id_terapis" class="form-label fw-bold">Nama Terapis <span class="text-danger">*</span></label>
-                    <div class="form-control d-flex flex-wrap gap-2 p-2 rounded taginput @error('id_terapis') is-invalid @enderror">                    
-                      @if(count($tagTerapis) > 0)
-                        @foreach ($tagTerapis as $i)
-                          <div class="py-1 px-2 bg-body-tertiary border border-body-secondary rounded-3 tag-item">
-                            <span class="fw-semibold">{{ $i['nama'] }}</span>
-                            <button type="button" class="btn m-0 p-0 ps-2 text-body-tertiary" wire:click="deleteTagTerapis('{{ $i['id'] }}')"><i class="bi bi-x-circle"></i></button>
-                          </div>
-                        @endforeach   
-                      @endif 
-                      <input 
-                        type="text" 
-                        class="flex-grow-1 search-input" 
-                        id="tagTerapis" 
-                        name="tagTerapis" 
-                        placeholder="Tambah.." 
-                        oninput="capEach('tagTerapis')"
-                        autocomplete="off">                                 
+                    <div class="mb-4">
+                      <div class="d-flex justify-content-between">
+                        <label for="id_terapis" class="form-label fw-bold @error('id_terapis') is-invalid @enderror">Terapis</label>
+                       
+                      </div>
+                        <div class="dropdown search-dinamis dropdown-terapis">
+                        {{-- <input type="hidden" name="id_terapis" value="{{ old('id_terapis') }}" id="id_terapis" class="form-control" wire:model="id_terapis"> --}}
+                        <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span>{{ $nama_terapis ? $nama_terapis : 'Pilih Terapis' }}</span>
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu px-3 w-100 shadow">
+                            <div class="input-group py-2">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control search-input" placeholder="Cari nama terapis">
+                            </div>
+                            <ul class="select-options"></ul>
+                        </div>
+                        </div>
+                        <button class="btn btn-sm p-1 py-0 c-btn-primary mt-2" id="tambahTerapis"><i class="bi bi-plus-lg"></i> Tambah Terapis</button>
+                        @error('id_terapis')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <div class="dropdown-menu dropdown-dinamis p-3 pt-2 bg-body-tertiary shadow">  
-                      <p class="small mb-1">Pilih Terapis:</p> 
-                      <ul class="select-options bg-white mb-0 rounded"></ul>
-                    </div>
-                    <div class="text-end d-sm-none">
-                      <button type="button" class="btn btn-success btn-sm mt-2" id="hiddenTambahBtn">Tambah</button>
-                    </div>
-                    <div class="form-text d-none d-sm-block">Tekan koma "," atau Enter untuk menambah terapis.</div>
-                    @error('id_terapis')
-                      <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                  </div>
                     <div class="mb-4"> 
                         <label for="tanggal" class="form-label fw-bold">Tanggal Terapi [Bulan/Tanggal/Tahun]</label>
                         <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" wire:model="tanggal">
@@ -143,14 +135,7 @@
   @push('script')
     <script>
       const target = document.querySelector(".main-bg");
-
-      let dataTerapis = @json($terapis->toArray());
-
-      const dropTerapis = document.querySelector(".dropdown-terapis");
-      let searchInpTerapis = dropTerapis.querySelector(".search-input");
-      let optionsTerapis = dropTerapis.querySelector(".select-options");
-      let dropdown = dropTerapis.querySelector(".dropdown-dinamis");      
-      let tambahBtn = dropTerapis.querySelector("#hiddenTambahBtn");
+      const terapisBtn = document.querySelector("$tambahTerapis");
 
       function toTop() {
         target.scrollIntoView({
@@ -194,68 +179,77 @@
         }
       }
 
-      function addTerapisToController(id, nama) {
-        Livewire.emit('addTagTerapis', { id: id, nama: nama });
-        document.querySelector(".search-input").value = "";
-      };
-
-      function addTerapis() {
-        optionsTerapis.innerHTML = "";
-        dataTerapis.forEach(terapis => {
-              let li = `
-                        <li class="dropdown-item" 
-                            data-nama="${terapis.nama}" 
-                            onclick="addTerapisToController('${terapis.id_terapis}','${terapis.nama}')">
-                            ${terapis.nama}                            
-                        </li>
-                      `;
-              optionsTerapis.insertAdjacentHTML("beforeend", li);
-        });
-      }
-
-      searchInpTerapis.addEventListener('keyup', function(event) {
-        const value = searchInpTerapis.value;
-        dropdown.style.display = 'block';
-
-        let arr = [];
-        let searchWords = searchInpTerapis.value.toLowerCase().split(' ');
-        arr = dataTerapis.filter(terapis => {
-            let data = terapis.nama.toLowerCase();
-            return searchWords.every(word => data.includes(word));
-        }).map(terapis => {
-            return `<li class="dropdown-item" 
-                        data-nama="${terapis.nama}" 
-                        onclick="addTerapisToController('${terapis.id_terapis}','${terapis.nama}')">
-                        ${terapis.nama}                            
-                    </li>
-                    `;
-        }).join("");
-
-        optionsTerapis.innerHTML = arr ? arr : `<p class="p-2 m-0">Oops! Data tidak ditemukan</p>`;
-        
-
-        if (event.key === "Enter" || (event.key === "," && value.endsWith(","))) {
-            searchInpTerapis.value = "";
-        }
-      });
-
-      tambahBtn.addEventListener("click", function() {
-        addTagToController(searchInpTerapis.value);
-        searchInpTerapis.value = "";
-      });
-
-      searchInpTerapis.addEventListener("focus", function() {
-        addTerapis();
-        dropdown.style.display = 'block';
-      });
-
-      document.addEventListener('click', function(event) {
-        if (!searchInpTerapis.contains(event.target)) {
-          dropdown.style.display = 'none';
-        }
-      });
-
-
       
+      
+    </script>
+    
+    <script>
+        function setTerapisToController(selectedLi) {
+            let id = selectedLi.getAttribute('data-id');
+            let nama = selectedLi.getAttribute('data-nama');
+            Livewire.emit('setTerapis', { id: id, nama: nama });
+        };
+
+        let dataTerapis = @json($terapis->toArray());
+
+        const dropTerapis = document.querySelector(".dropdown-terapis");
+        let selectBtnTerapis = dropTerapis.querySelector("button");
+        let searchInpTerapis = dropTerapis.querySelector(".search-input");
+        let optionsTerapis = dropTerapis.querySelector(".select-options");
+
+
+        
+            
+        function addTerapis(selectedTerapis) {
+            optionsTerapis.innerHTML = "";
+            dataTerapis.forEach(terapis => {
+                let isSelected = terapis.nama == selectedTerapis ? "active" : "";
+                let li = `
+                            <li class="dropdown-item ps-1 ${isSelected}" 
+                                id="terapisOption"
+                                data-id="${terapis.id_terapis}" 
+                                data-nama="${terapis.nama}"
+                                onclick="setTerapisToController(this)">
+                                <p class="m-0 d-flex justify-content-between w-100" >
+                                    <span class="col-8 text-start text-truncate">${terapis.nama}</span>
+                                    <span class="small fst-italic">${terapis.tingkatan}</span>
+                                </p>
+                            </li>
+                        `;     
+                optionsTerapis.insertAdjacentHTML("beforeend", li);
+            });
+        }
+
+        addTerapis();
+
+        searchInpTerapis.addEventListener("keyup", () => {
+            let arr = [];
+            let searchWord = searchInpTerapis.value.toLowerCase();
+            arr = dataTerapis.filter(terapis => {
+                let data = terapis.nama;
+                return data.toLowerCase().startsWith(searchWord);
+            }).map(terapis => {
+                let isSelected = terapis.nama == selectBtnTerapis.firstElementChild.innerText ? "active" : "";
+                return `
+                            <li class="dropdown-item ps-1 ${isSelected}" 
+                                id="terapisOption"
+                                data-id="${terapis.id_terapis}" 
+                                data-nama="${terapis.nama}"
+                                onclick="setTerapisToController(this)">
+                                <p class="m-0 d-flex justify-content-between w-100" >
+                                    <span class="col-8 text-start text-truncate">${terapis.nama}</span>
+                                    <span class="small fst-italic">${terapis.tingkatan}</span>
+                                </p>
+                            </li>
+                        `; 
+            }).join("");
+            optionsTerapis.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
+        });
+
+        selectBtnTerapis.addEventListener("click", () => dropTerapis.classList.toggle("active"));
+
+        document.addEventListener('livewire:load', function () {
+            addTerapis();
+        });
     </script>
   @endpush

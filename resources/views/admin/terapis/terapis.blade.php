@@ -22,9 +22,9 @@
       </div>        
       </form>
     <div class="dropdown custom-filter">
-      <button class="btn btn-outline-success py-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <p class="d-none d-md-inline">
-          <i class="bi bi-funnel"></i>
+      <button class="btn btn-outline-success hstack py-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <p class="d-none mb-0 me-auto d-md-inline">
+          <i class="bi bi-funnel pe-2"></i>
           @if(request('tingkatan'))
             Terapis {{ request('tingkatan') }}
           @else
@@ -33,10 +33,10 @@
         </p>
         <i class="bi bi-funnel filter-icon"></i>
       </button>
-      <div class="dropdown-menu dropdown-menu-right mt-1 shadow-lg border-0" aria-labelledby="dropdownMenuButton">
+      <div class="dropdown-menu dropdown-menu-right mt-1 shadow-lg border-0 w-100" aria-labelledby="dropdownMenuButton">
         <a href="/admin/terapis" class="dropdown-item {{ Request::query('tingkatan') ? '' : 'active' }}">Semua</a>
         @foreach($tingkatan as $tingkat)
-            <a href="/admin/terapis?{{ Request::query('search') != '' ? 'search=' . request('search') . '' : '' }}tingkatan={{ $tingkat }}" class="dropdown-item {{ Request::query('tingkatan') == $tingkat ? 'active' : '' }}">{{ $tingkat }}</a>
+            <a href="/admin/terapis?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}tingkatan={{ $tingkat }}" class="dropdown-item {{ Request::query('tingkatan') == $tingkat ? 'active' : '' }}">{{ $tingkat }}</a>
         @endforeach
       </div>
     </div>

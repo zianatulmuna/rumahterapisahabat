@@ -15,15 +15,21 @@ class RekamTerapi extends Model
     protected $primaryKey = 'id_terapi';
     public $incrementing = false;
 
+    public $with = ['terapis'];
+
     // public function pasien()
     // {
     //     return $this->belongsTo(Pasien::class, 'id_pasien');
     // }
-
-    public function getRouteKeyName(): string
+    public function scopeTotalTerapi($query, $id_terapis)
     {
-        return 'tanggal';
+        return $query->where('id_terapis', $id_terapis)->count();
     }
+
+    // public function getRouteKeyName(): string
+    // {
+    //     return 'tanggal';
+    // }
 
     public function subRekamMedis()
     {

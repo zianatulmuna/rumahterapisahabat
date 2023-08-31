@@ -20,12 +20,12 @@
                        <span>Pilih Pasien</span>
                        <i class="bi bi-chevron-down"></i>
                      </button>
-                     <div class="dropdown-menu px-3 w-100 shadow">
+                     <div class="dropdown-menu px-3 w-100 bg-body-tertiary shadow">
                         <div class="input-group py-2">
                            <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
                            <input type="text" class="form-control border-start-0 search-input" placeholder="Cari nama pasien">
                         </div>
-                        <ul class="select-options"></ul>
+                        <ul class="select-options bg-white rounded"></ul>
                      </div>
                   </div>
                   @error('id_pasien')
@@ -54,12 +54,12 @@
                        <span>Pilih Terapis</span>
                        <i class="bi bi-chevron-down"></i>
                      </button>
-                     <div class="dropdown-menu px-3 w-100 shadow">
+                     <div class="dropdown-menu px-3 w-100 bg-body-tertiary shadow">
                         <div class="input-group py-2">
                            <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
                            <input type="text" class="form-control border-start-0 search-input" placeholder="Cari nama terapis">
                         </div>
-                        <ul class="select-options"></ul>
+                        <ul class="select-options bg-white rounded"></ul>
                      </div>
                   </div>
                   @error('id_terapis')

@@ -36,9 +36,10 @@ class Pasien extends Model
         
         $query->when($search ?? false, function ($query, $search) {
             return $query->where('nama', 'like', '%' . $search . '%')
-                         ->orWhere('tanggal_pendaftaran', 'like', '%' . $search . '%');
-        })->orWhereHas('rekamMedis', function ($query) use ($search) {
-            $query->where('penyakit', 'like', '%' . $search . '%');
+                         ->orWhere('tanggal_pendaftaran', 'like', '%' . $search . '%')
+                         ->orWhereHas('rekamMedis', function ($query) use ($search) {
+                            $query->where('penyakit', 'like', '%' . $search . '%');
+                        });
         });
 
         $query->when($sortBy ?? false, function ($query, $sortBy) {

@@ -26,7 +26,7 @@
       </div>
     </div>
 
-   @livewire('form-edit-pasien', ['pasien' => $pasien, 'rm' => $rm])
+   @livewire('pasien-edit-form', ['pasien' => $pasien, 'rm' => $rm])
 </div>
 @endsection
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Admin;
 use Carbon\Carbon;
 use App\Models\Terapis;
 use Livewire\Component;
@@ -13,38 +12,41 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
-class FormEditProfil extends Component
+class TerapisEditForm extends Component
 {
     use WithFileUploads;
 
     public $nama, $no_telp, $jenis_kelamin, $tanggal_lahir, $agama, $alamat, $foto, $tingkatan, $status;
     public $username, $password;
 
-    public $user, $id_user, $dbUsername, $dbFoto, $pathFoto;
+    public $terapis, $id_terapis, $dbUsername, $dbPassword, $dbFoto, $pathFoto;
 
     public $totalStep = 2, $currentStep = 1;
 
-    public function mount($user){
+    public function mount($terapis){
         $this->currentStep = 1;
-        $this->id_user = $user->id_admin;
-        $this->nama = $user->nama;
-        $this->username = $user->username;
-        $this->dbUsername = $user->username;
-        $this->password = $user->password;
-        // $this->tingkatan = $user->tingkatan;
-        // $this->status = $user->status;
-        $this->no_telp = $user->no_telp;
-        $this->jenis_kelamin = $user->jenis_kelamin;
-        $this->tanggal_lahir = $user->tanggal_lahir;
-        $this->agama = $user->agama;
-        $this->alamat = $user->alamat;
-        $this->dbFoto = $user->foto;
-        $this->pathFoto = $user->foto;
+        $this->id_terapis = $terapis->id_terapis;
+        $this->nama = $terapis->nama;
+        $this->username = $terapis->username;
+        $this->dbUsername = $terapis->username;
+        $this->dbPassword = $terapis->password;
+        $this->tingkatan = $terapis->tingkatan;
+        $this->status = $terapis->status;
+        $this->no_telp = $terapis->no_telp;
+        $this->jenis_kelamin = $terapis->jenis_kelamin;
+        $this->tanggal_lahir = $terapis->tanggal_lahir;
+        $this->agama = $terapis->agama;
+        $this->alamat = $terapis->alamat;
+        $this->dbFoto = $terapis->foto;
+        $this->pathFoto = $terapis->foto;
     }
+
     public function render()
     {
-        return view('livewire.form-edit-profil',[
-            'jenisKelamin' => ['Perempuan','Laki-Laki']
+        return view('livewire.terapis-edit-form', [
+            'jenisKelamin' => ['Perempuan','Laki-Laki'],
+            'statusTerapis' => ['Aktif','Non Aktif'],
+            'tingkatanTerapis' => ['Utama', 'Madya', 'Muda', 'Pratama', 'Latihan']
         ]);
     }
 
@@ -53,6 +55,9 @@ class FormEditProfil extends Component
         
         $this->validateData();
         $this->currentStep++;
+        if($this->currentStep == 2) {
+            $this->emit('runScript');
+        }
         if($this->currentStep > $this->totalStep) {
             $this->currentStep = $this->totalStep;
         }
@@ -68,6 +73,7 @@ class FormEditProfil extends Component
         $this->foto = null;        
         $this->dbFoto = null;
     }
+
 
     public function validateData(){
         $message = [
@@ -98,9 +104,10 @@ class FormEditProfil extends Component
                 'username' => ['required', 
                                 'min:3', 
                                 'max:30', 
-                                'unique:terapis',
-                                Rule::unique('admin')->ignore($this->id_user, 'id_admin')],
-                'password' => 'required|min:3|max:60'
+                                Rule::unique('terapis')->ignore($this->id_terapis, 'id_terapis')],
+                'password' => 'nullable|min:3|max:10',
+                'tingkatan' => 'required',
+                'status' => 'required'
             ], $message);
 
         }
@@ -117,6 +124,8 @@ class FormEditProfil extends Component
             'tanggal_lahir' => $this->tanggal_lahir,
             'jenis_kelamin' => $this->jenis_kelamin,
             'agama' => $this->agama,
+            'tingkatan' => $this->tingkatan,
+            'status' => $this->status,
             'username' => $this->username,
             'password' => $this->password,
         ); 
@@ -126,7 +135,7 @@ class FormEditProfil extends Component
                 Storage::delete($this->dbFoto);
             }
             $ext = $this->foto->getClientOriginalExtension();
-            $dataDiri['foto'] = $this->foto->storeAs('admin', $this->username . '.' . $ext);
+            $dataDiri['foto'] = $this->foto->storeAs('terapis', $this->username . '.' . $ext);
         } 
         
         if ($this->pathFoto && $this->dbFoto == null && $this->foto == null) {
@@ -134,13 +143,15 @@ class FormEditProfil extends Component
             Storage::delete($this->pathFoto);
         }
 
-        Admin::where('id_admin', $this->id_user)->update($dataDiri);
+        $dataDiri['password'] = $this->password ? $this->password : $this->dbPassword;
+
+        Terapis::where('id_terapis', $this->id_terapis)->update($dataDiri);
 
         $this->currentStep = 1;
         Storage::deleteDirectory('livewire-tmp');
 
-        return redirect(route('profil', $this->username))
-                            ->with('success', 'Profil berhasil diupdate')   
+        return redirect(route('terapis.detail', $this->username))
+                            ->with('success', 'Data Terapis berhasil diupdate')   
                             ->with('update', true);   
     }
 }

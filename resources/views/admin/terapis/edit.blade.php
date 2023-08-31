@@ -6,7 +6,7 @@
       <h1 h1 class="h2">Edit Terapis</h1>
   </div>
 
-  @livewire('form-edit-terapis', ['terapis' => $terapis])
+  @livewire('terapis-edit-form', ['terapis' => $terapis])
 </div>
 @endsection
 

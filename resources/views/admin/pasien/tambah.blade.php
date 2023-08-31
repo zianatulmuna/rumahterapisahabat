@@ -10,7 +10,7 @@
     @endif
   </div>
 
-  @livewire('form-create-pasien', ['pasien' => $pasien])
+  @livewire('pasien-create-form', ['pasien' => $pasien])
 </div>
 @endsection
 

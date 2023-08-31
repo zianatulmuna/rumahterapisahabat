@@ -9,11 +9,12 @@
 }
 
 /* pagination */
-.page-item a{
+.page-item a, .page-item .page-link{
     color: #198754 !important;
 }
   
-.pagination .active span {
+.pagination .active .page-link {
     background-color: #198754 !important;
     border-color: #198754 !important;
+    color: #fff !important;
 }

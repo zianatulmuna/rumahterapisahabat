@@ -10,8 +10,8 @@
    @include('partials.data-diri')
    
    @if($rmDetected == 1)
+      <h4 class="mt-5 mb-3">Rekam Terapi Terkini</h4>
       @if(count($rm_terkini) > 0) 
-         <h4 class="mt-5 mb-3">Rekam Terapi Terkini</h4>
          <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 row-cols-xxl-4">
             @foreach($rm_terkini as $rm)
                @if(count($rm->subRekamMedis) > 0)
@@ -83,6 +83,11 @@
                @endif
             @endforeach
          </div>
+      @else
+         <div class="alert alert-warning d-inline-flex p-0 p-2 px-3 mb-4">
+            <i class="bi bi-exclamation-circle pe-2 fw-semibold"></i>
+            Pasien ini tidak memiliki histori rekam medis aktif.
+         </div>
       @endif
       @if(count($rm_terdahulu) > 0)
          <h4 class="mt-4 mb-3">Rekam Terapi Terdahulu</h4>
@@ -113,26 +118,26 @@
                                     @php
                                        if(count($sub->rekamTerapi) > 0) {
                                           $m = $sub->rekamTerapi()->orderBy('tanggal', 'ASC')->first();
-                                          $mulai = $m->tanggal;
+                                          $mulai = date('d-m-Y', strtotime($m->tanggal));
                                        } else {
                                           $mulai = '-';
                                        }
                                     @endphp
                                     <p class="small">Tanggal Mulai:</p>
-                                    <p><i class="bi bi-calendar-plus pe-1 text-light-emphasis"></i> {{ date('d-m-Y', strtotime($mulai)) }}</p>
+                                    <p><i class="bi bi-calendar-plus pe-1 text-light-emphasis"></i> {{ $mulai }}</p>
                                  </div>
                                  <div class="d-flex justify-content-end">   
                                     <div class="">
                                        @php
                                           if(count($sub->rekamTerapi) > 0) {
                                              $m = $sub->rekamTerapi()->orderBy('tanggal', 'DESC')->first();
-                                             $akhir = $m->tanggal;
+                                             $akhir = date('d-m-Y', strtotime($m->tanggal));
                                           } else {
                                              $akhir = '-';
                                           }
                                        @endphp
                                        <p class="small">Tanggal Selesai:</p>                  
-                                       <p><i class="bi bi-calendar-check pe-1 text-light-emphasis"></i> {{ date('d-m-Y', strtotime($akhir)) }}</p>
+                                       <p><i class="bi bi-calendar-check pe-1 text-light-emphasis"></i> {{ $akhir }}</p>
                                     </div>
                                  </div> 
                               </div>                      
@@ -149,10 +154,10 @@
          </div>
       @endif
    @else
-      <div class="alert alert-danger mt-5 p-0 p-2 px-3 col-xl-7">
+      <div class="alert alert-danger d-inline-flex mt-5 p-0 p-2 px-3">
          <i class="bi bi-exclamation-circle pe-1 fw-semibold"></i>
          Pasien ini tidak memiliki histori rekam terapi.
-         <a href="{{ route('rm.create', $pasien->slug) }}" class="alert-link">Tambah Rekam Medis</a>
+         <a href="{{ route('rm.create', $pasien->slug) }}" class="alert-link ps-2">Tambah Rekam Medis</a>
       </div>
    @endif
 </div>

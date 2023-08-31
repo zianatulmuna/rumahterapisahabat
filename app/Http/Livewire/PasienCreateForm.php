@@ -14,13 +14,16 @@ use Illuminate\Support\Facades\Storage;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
-class FormCreatePasien extends Component
+class PasienCreateForm extends Component
 {
     use WithFileUploads;
 
     public $nama, $no_telp, $jenis_kelamin, $email, $tanggal_lahir, $pekerjaan, $agama, $alamat;
-    public $tipe_pembayaran, $penanggungjawab, $biaya_pembayaran, $link_rm, $foto, $tanggal_pendaftaran; 
+    public $tipe_pembayaran, $penanggungjawab, $biaya_pembayaran, $link_rm, $foto, $tanggal_pendaftaran, $tanggal_ditambahkan; 
     public $tempat_layanan, $jadwal_layanan, $sistem_layanan, $jumlah_layanan, $status_pasien, $status_terapi, $ket_status, $tanggal_selesai;
+
+    public $k_bsni, $provId, $jalan, $provinsi, $kabupaten;
+
     public $penyakit, $keluhan, $catatan_psikologis, $catatan_bioplasmatik, $catatan_rohani, $catatan_fisik, $data_deteksi;
     public $kondisi_awal, $target_akhir, $link_perkembangan, $kesimpulan;
 
@@ -30,11 +33,12 @@ class FormCreatePasien extends Component
 
     public $tag = [], $newTag;
 
-    protected $listeners = ['addTagPenyakit'];
+    protected $listeners = ['addTagPenyakit', 'setAlamatKode'];
 
     public function mount($pasien){
         $this->currentStep;
         $this->tag;
+        $this->tempat_layanan;
 
         if($pasien) {
             $this->pasien = $pasien;
@@ -52,22 +56,17 @@ class FormCreatePasien extends Component
             $this->dbFoto = $pasien->foto;
             $this->pathFoto = $pasien->foto;
             $this->slug = $pasien->slug;                        
+            // $this->tanggal_ditambahkan = $pasien->tanggal_pendaftaran;                        
         }   else {
             $this->id_pasien = '';
         }     
     }
 
-    // public function mounted()
-    // {
-    //     if ($this->getErrorBag()->any()) {
-    //         $this->emit('scrollToTop');
-    //     }
-    // }
     public function render()
     {
         $listPenyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
 
-        return view('livewire.form-create-pasien', [
+        return view('livewire.pasien-create-form', [
             'jenisKelamin' => ['Perempuan','Laki-Laki'],
             'tipePembayaran' => [
                 ['value' => 'Profesional', 'id' => 'profesional'], 
@@ -93,6 +92,9 @@ class FormCreatePasien extends Component
         
         $this->validateData();
         $this->currentStep++;
+        if($this->currentStep == 3) {
+            $this->runEmitAlamat();
+        }
         if($this->currentStep == 4) {
             $this->emit('runScriptPenyakit');
         }
@@ -103,9 +105,9 @@ class FormCreatePasien extends Component
     public function toPrev() {
         $this->resetErrorBag();
         $this->currentStep--;
-        // if($this->id_pasien != '' && $this->currentStep == 1) {
-        //     $this->emit('runDisabledPasien');
-        // }
+        if($this->currentStep == 3) {
+            $this->runEmitAlamat();
+        }
         if($this->currentStep < 1) {
             $this->currentStep = 1;
         }
@@ -119,20 +121,33 @@ class FormCreatePasien extends Component
         $this->tag[] = $value;
     }
 
-    // public function enterTagPenyakit()
-    // {
-    //     if (!empty($this->newTag)) {
-    //         $this->tag[] = $this->newTag;
-    //         $this->newTag = '';
-    //     }
-    // }
-
     public function deleteTagPenyakit($value)
     {
         $index = array_search($value, $this->tag);
         if ($index !== false) {
             unset($this->tag[$index]);
         }
+    }
+
+    public function runEmitAlamat() {
+        $kab_prov = [
+            'provId' => $this->provId,
+            'jalan' => $this->jalan,
+            'provinsi' => $this->provinsi,
+            'kabupaten' => $this->kabupaten,
+        ];
+        $this->emit('runScriptAlamat', $kab_prov);
+    }
+
+    public function setAlamatKode($data) {
+        $this->tempat_layanan = $data['tempat'];
+        $this->k_bsni = $data['kode'];
+        $this->provId = $data['provId'];
+        $this->jalan = $data['jalan'];
+        $this->provinsi = $data['provinsi'];
+        $this->kabupaten = $data['kabupaten'];
+        
+        $this->runEmitAlamat();
     }
 
     public function validateData(){
@@ -153,7 +168,7 @@ class FormCreatePasien extends Component
             if(empty($this->id_pasien)) {
                 $this->validate([
                     'nama' => 'required|max:50',
-                    'email' => 'required|max:35',
+                    'email' => 'nullable|max:35',
                     'alamat' => 'max:100',
                     'no_telp' => 'required|min_digits:10',
                     'tanggal_lahir' => 'nullable|date',
@@ -168,16 +183,23 @@ class FormCreatePasien extends Component
                 'penanggungjawab' => 'max:50',
                 'foto' => 'nullable|file|image|max:1024',
                 'link_rm' => 'nullable|url|max:100',
-                'tanggal_pendaftaran' => 'required|date',                
+                'tanggal_pendaftaran' => 'required|date', 
+                'tanggal_ditambahkan' => [
+                    Rule::requiredIf(!empty($this->id_pasien))
+                ],                
             ], $message);
             
         }elseif($this->currentStep == 3){
             $this->validate([
-                'tempat_layanan' => 'max:50',
+                'tempat_layanan' => [
+                    'max:50',
+                    Rule::requiredIf($this->tempat_layanan == "")
+                ],
                 'jadwal_layanan' => 'max:50',
                 'sistem_layanan' => 'max:50',
                 'jumlah_layanan' => 'max:50',
                 'status_pasien' => 'required',
+                'status_terapi' => 'required',
                 'tanggal_selesai' => [
                     Rule::requiredIf($this->status_pasien == 'Selesai' || $this->status_pasien == 'Jeda')
                 ]
@@ -206,13 +228,13 @@ class FormCreatePasien extends Component
     }
 
     public function create(Request $request) {
-
+        
         $this->validateData();
 
         $dateY = substr(Carbon::parse($this->tanggal_pendaftaran)->format('Y'), 2);
         $dateM = Carbon::parse($this->tanggal_pendaftaran)->format('m');
         $waktuDaftar = Carbon::now()->format('H:i:s');
-        
+
         if(empty($this->id_pasien)) {
             $dataDiri = array(
                 'nama' => $this->nama,
@@ -225,7 +247,7 @@ class FormCreatePasien extends Component
                 'pekerjaan' => $this->pekerjaan
             );    
 
-            $this->id_pasien = IdGenerator::generate(['table' => 'pasien', 'field' => 'id_pasien', 'length' => 7, 'prefix' => 'P'.$dateY, 'reset_on_prefix_change' => true]);
+            $this->id_pasien = IdGenerator::generate(['table' => 'pasien', 'field' => 'id_pasien', 'length' => 8, 'prefix' => 'P'.$dateY, 'reset_on_prefix_change' => true]);
          
             $this->slug = SlugService::createSlug(Pasien::class, 'slug', $this->nama);
 
@@ -238,8 +260,10 @@ class FormCreatePasien extends Component
             $dataDiri['status_pendaftaran'] = 'Pasien Lama';
             $dataDiri['slug'] = $this->slug;
             $dataDiri['tanggal_pendaftaran'] = $this->tanggal_pendaftaran . ' ' . $waktuDaftar;
+            $this->tanggal_ditambahkan = $this->tanggal_pendaftaran . ' ' . $waktuDaftar;
 
             Pasien::create($dataDiri);
+
         }
 
         $dataRM = array(
@@ -263,9 +287,11 @@ class FormCreatePasien extends Component
             'target_akhir' => $this->target_akhir,
             'kesimpulan' => $this->kesimpulan,
             'link_perkembangan' => $this->link_perkembangan,
+            'tanggal_ditambahkan' => $this->tanggal_ditambahkan,
         );              
 
-        $idRM = IdGenerator::generate(['table' => 'rekam_medis', 'field' => 'id_rekam_medis', 'length' => 7, 'prefix' => $dateY.$dateM, 'reset_on_prefix_change' => true]);
+        $idRM = IdGenerator::generate(['table' => 'rekam_medis', 'field' => 'id_rekam_medis', 'length' => 10, 'prefix' => $this->k_bsni . $dateY.$dateM, 'reset_on_prefix_change' => true]);
+
         $penyakit = implode(',', $this->tag);
         $dataRM['id_rekam_medis'] = $idRM;
         $dataRM['id_pasien'] = $this->id_pasien;
@@ -282,7 +308,7 @@ class FormCreatePasien extends Component
                     'table' => 'sub_rekam_medis', 
                     'field' => 'id_sub',
                     'length' => 10, 
-                    'prefix' => $idRM . 'S',
+                    'prefix' => 'SP' . $dateY.$dateM,
                     'reset_on_prefix_change' => true
                 ]);
 

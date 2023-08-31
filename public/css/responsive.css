@@ -135,7 +135,7 @@
       }
 
       .img-preview {
-        max-height: 200px;
+        max-height: 160px;
         width: auto;
       }
 
@@ -270,7 +270,7 @@
   /* min md */
   @media (min-width: 768px) { 
     .custom-filter button {
-      width: 175px;
+      width: 205px;
     }
   }
   /* min lg */
