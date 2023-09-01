@@ -33,7 +33,7 @@ class JadwalController extends Controller
             $jadwal_terapi = Jadwal::whereBetween('tanggal', [request('mulai'), request('akhir')])->paginate(10);
         }
 
-        return view('admin.jadwal.jadwal', compact('jadwal_terapi', 'today'));
+        return view('jadwal.jadwal', compact('jadwal_terapi', 'today'));
     }
 
     /**
@@ -46,7 +46,7 @@ class JadwalController extends Controller
         $pasien = Pasien::orderBy('nama', 'ASC')->get();
         $terapis = Terapis::where('status', 'Aktif')->orderBy('nama', 'ASC')->get(['id_terapis', 'nama', 'tingkatan']);
 
-        return view('admin.jadwal.tambah', compact('pasien', 'terapis'));
+        return view('jadwal.tambah', compact('pasien', 'terapis'));
     }
 
     /**
@@ -104,7 +104,7 @@ class JadwalController extends Controller
      */
     public function edit(Pasien $pasien, Terapis $terapis, Jadwal $tanggal)
     {
-        return view('admin.jadwal.edit', [
+        return view('jadwal.edit', [
             'pasien' => Pasien::orderBy('nama', 'ASC')->get(),
             'terapis' => Terapis::orderBy('nama', 'ASC')->get(),
             'old_pasien' => $pasien,

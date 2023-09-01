@@ -426,9 +426,9 @@
                     <div class="form-control d-flex flex-wrap gap-2 p-2 rounded taginput @error('penyakit') is-invalid @enderror">                    
                       @if(count($tag) > 0)
                         @foreach ($tag as $i)
-                          <div class="px-2 bg-body-secondary border border-body-secondary rounded-3 tag-item">
-                            {{ $i }}
-                            <button type="button" class="btn m-0 p-0 text-secondary" wire:click="deleteTagBaru('{{ $i }}')"><i class="bi bi-x-circle-fill"></i></button>
+                          <div class="py-1 px-2 bg-body-secondary border border-body-secondary rounded-3 tag-item">
+                            <span>{{ $i }}</span>
+                            <button type="button" class="btn m-0 p-0 ps-2 text-body-tertiary" wire:click="deleteTagBaru('{{ $i }}')"><i class="bi bi-x-circle-fill"></i></button>
                           </div>
                         @endforeach   
                       @endif 

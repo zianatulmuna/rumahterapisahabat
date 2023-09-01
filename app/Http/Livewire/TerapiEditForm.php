@@ -8,29 +8,40 @@ use Livewire\Component;
 use App\Models\RekamTerapi;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
 
-class TerapiCreateForm extends Component
+class TerapiEditForm extends Component
 {
     public $pasien, $id_terapis, $nama_terapis, $keluhan, $deteksi, $tindakan, $saran, $pra_terapi, $post_terapi, $waktu, $tanggal;
-    public $id_sub;
+    public $id_terapi, $id_sub;
 
     public $totalStep = 2, $currentStep = 1;
 
     protected $listeners = ['setTerapis'];
 
-    public function mount($pasien, $id_sub) {
-        $this->id_sub = $id_sub;
-        $this->pasien = $pasien;
+    public function mount($pasien, $terapi) {
+        $this->id_terapi = $terapi->id_terapi;
+        $this->id_sub = $terapi->id_sub;
+        $this->id_terapis = $terapi->id_terapis;
+        $this->nama_terapis = $terapi->terapis->nama;
+        $this->keluhan = $terapi->keluhan;
+        $this->deteksi = $terapi->deteksi;
+        $this->tindakan = $terapi->tindakan;
+        $this->saran = $terapi->saran;
+        $this->pra_terapi = $terapi->pra_terapi;
+        $this->post_terapi = $terapi->post_terapi;
+        $this->tanggal = $terapi->tanggal;
+        $this->waktu = $terapi->waktu;
         $this->currentStep;
-        $this->nama_terapis;
+        $this->pasien = $pasien;
     }
     public function render()
     {
         $terapis = Terapis::orderBy('nama', 'ASC')->get();
 
-        return view('livewire.terapi-create-form', compact('terapis'));
+        return view('livewire.terapi-edit-form', compact('terapis'));
     }
+
+    
 
     public function toNext() {
         $this->resetErrorBag();
@@ -43,6 +54,7 @@ class TerapiCreateForm extends Component
     public function toPrev() {
         $this->resetErrorBag();
         $this->currentStep--;
+        $this->emit('runScriptTerapis');
         if($this->currentStep < 1) {
             $this->currentStep = 1;
         }
@@ -60,11 +72,12 @@ class TerapiCreateForm extends Component
             'id_terapis.required' => 'Kolom terapis harus diisi.',
             'max' => 'Kolom :attribute harus diisi maksimal :max karakter.',
             'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
-            'tanggal.unique' => 'Tanggal sudah ada'
+            'tanggal.unique' => 'Tanggal sudah ada.'
         ];
 
         if($this->currentStep == 1){
-            $id = $this->id_sub;
+            $id_sub = $this->id_sub;
+            $id_terapis = $this->id_terapis;
             $this->validate([
                 'id_terapis' => 'required',
                 'pra_terapi' => 'max:100',
@@ -72,8 +85,8 @@ class TerapiCreateForm extends Component
                 'tanggal' => [
                     'required',
                     'date',
-                    Rule::unique('rekam_terapi', 'tanggal')->where(function ($query) use ($id) {
-                        return $query->where('id_sub', $id);
+                    Rule::unique('rekam_terapi', 'tanggal')->where(function ($query) use ($id_sub, $id_terapis) {
+                        return $query->where('id_sub', $id_sub)->where('id_terapis', $id_terapis);
                     }),
                 ]
             ], $message);
@@ -87,7 +100,7 @@ class TerapiCreateForm extends Component
         }
     }
 
-    public function create(Request $request) {
+    public function update(Request $request) {
         $this->validateData();
 
         $dataTerapi = array(
@@ -103,23 +116,10 @@ class TerapiCreateForm extends Component
             'post_terapi' => $this->post_terapi
         ); 
 
-        $dateY = substr(Carbon::parse($request->tanggal)->format('Y'), 2);
-        $dateM = Carbon::parse($request->tanggal)->format('m');
-
-        $id = IdGenerator::generate([
-            'table' => 'rekam_terapi', 
-            'field' => 'id_terapi', 
-            'length' => 8, 
-            'prefix' => 'T'.$dateY.$dateM,
-            'reset_on_prefix_change' => true
-        ]);
-
-        $dataTerapi['id_terapi'] = $id;
-
-        RekamTerapi::create($dataTerapi);
+        RekamTerapi::where('id_terapi', $this->id_terapi)->update($dataTerapi);
 
         return redirect(route('terapi.rekam', [$this->pasien, $this->id_sub]))
-                            ->with('success', 'Terapi Harian berhasil ditambahkan.')
-                            ->with('create', true);
+                            ->with('success', 'Terapi Harian berhasil diedit.')
+                            ->with('update', true);
     }
 }

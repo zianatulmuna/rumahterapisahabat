@@ -161,27 +161,16 @@
 
 @section('modal-alert')
     <!-- Terapi Delete Modal-->
-   <div class="modal fade" id="terapiDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-   aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-         <div class="modal-content p-3">
-            <div class="modal-header">
-                  <h5 class="modal-title d-flex align-items-center" id="exampleModalLabel">
-                     <i class="bi bi-trash text-danger pe-2 fs-4"></i>
-                     <span>Yakin ingin menghapus data terapi?</span>
-                  </h5>
-                  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body py-4">Data terapi pada tanggal ini akan dihapus <strong>permanen</strong>!</div>
-            <div class="modal-footer">
-                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                  <form action="{{ route('terapi.delete', [$pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->tanggal]) }}" method="post">
-                     @method('delete')
-                     @csrf
-                     <button type="submit" class="btn btn-danger"><i class="bi bi-exclamation-triangle"></i> Hapus</button>
-                  </form>
-            </div>
-         </div>
-      </div>
-   </div>
+    <x-modal-alert 
+      id="terapiDeleteModal"
+      title="Yakin ingin menghapus data terapi?"
+      :body="'<span>Data terapi pada tanggal ini akan dihapus <strong>permanen</strong>!</span>'"
+      icon="bi bi-exclamation-circle text-danger"
+      >
+      <form action="{{ route('terapi.delete', [$pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" method="post">
+         @method('delete')
+         @csrf
+         <button type="submit" class="btn btn-danger"><i class="bi bi-exclamation-triangle"></i> Hapus</button>
+      </form>
+   </x-modal-alert>
 @endsection

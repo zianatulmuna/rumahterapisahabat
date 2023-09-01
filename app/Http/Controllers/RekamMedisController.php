@@ -16,7 +16,7 @@ class RekamMedisController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        return view('dashboard');
     }
 
     public function histori(Pasien $pasien) 
@@ -29,7 +29,7 @@ class RekamMedisController extends Controller
             $rmDetected = 1;
         }
 
-        return view('admin.rekam-medis.histori', [
+        return view('rekam-medis.histori', [
             'rmDetected' => $rmDetected,
             'rm_terkini' => $rmTerkini,
             'rm_terdahulu' => $rmTerdahulu,
@@ -46,7 +46,7 @@ class RekamMedisController extends Controller
      */
     public function create(Pasien $pasien)
     {
-        return view('admin.pasien.tambah', [
+        return view('pasien.tambah', [
             'pasien' => $pasien
         ]);
     }
@@ -72,7 +72,7 @@ class RekamMedisController extends Controller
     {
         // $arrayPenyakit = collect(explode(",", $rekamMedis->penyakit));
 
-        return view('admin.rekam-medis.detail', [
+        return view('rekam-medis.detail', [
             'rmDetected' => 1,
             'rm' => $rekamMedis,
             'pasien' => $pasien,
@@ -89,7 +89,7 @@ class RekamMedisController extends Controller
      */
     public function edit(Pasien $pasien, RekamMedis $rekamMedis)
     {
-        return view('admin.pasien.edit', [
+        return view('pasien.edit', [
             'rm' => $rekamMedis,
             'pasien' => $pasien
         ]);

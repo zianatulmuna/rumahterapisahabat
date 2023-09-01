@@ -37,12 +37,7 @@
                         <div class="d-flex gap-2 w-100">
                             <label class="form-label flex-fill small m-0">Pilih Tgl Mulai:</label>
                             <label class="form-label flex-fill small m-0">Pilih Tgl Akhir:</label>
-                        </div>
-                        {{-- <div class="d-none d-sm-flex gap-2 w-100">
-                            <input type="date" value="{{ request('mulai') }}" id="startDate" class="form-control" placeholder="Pilih Hari">
-                            <input type="date" value="{{ request('akhir') }}" id="endDate" class="form-control" placeholder="Pilih Hari">
-                        </div> --}}
-                        
+                        </div>                        
                         <div class="d-flex gap-2">
                             <div class="hstack stack-input-icon w-100 overflow-hidden">
                                 <div class="d-block d-sm-none form-control input-icon pe-1" style="width: auto;">
@@ -112,8 +107,7 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-center my-4 p">
-    {{-- {{ $jadwal_terapi->links() }} --}}
+<div class="d-flex justify-content-center mb-4">
     {{ $jadwal_terapi->appends(request()->query())->links() }}
 </div>
 @endsection

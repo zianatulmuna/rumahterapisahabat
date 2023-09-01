@@ -398,7 +398,9 @@ class PasienEditForm extends Component
 
         if($this->rm) {   
             $idRM = $this->id_rekam_medis;
-            $this->k_bsni = $this->provId ? $this->k_bsni : substr($this->id_rekam_medis, 0, 3);
+            // $this->k_bsni = $this->provId ? $this->k_bsni : substr($this->id_rekam_medis, 0, 3);
+            
+            $this->k_bsni = substr($this->id_rekam_medis, 0, 3);
             
             $date = substr($this->id_rekam_medis, 3, 4);
             $isTanggalRMChanged = $isPenyakitChanged = false;

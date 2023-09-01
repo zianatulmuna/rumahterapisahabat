@@ -27,7 +27,7 @@ class RekamTerapiController extends Controller
         // $combined = $rekamTerapi->zip($terapis);
         $rekam = $subRM->rekamTerapi()->orderBy('tanggal', 'ASC')->get();
 
-        return view('admin.rekam-terapi.rekam-terapi', [
+        return view('rekam-terapi.rekam-terapi', [
             'rekam_terapi' => $rekam,
             'sub' => $subRM,
             'rmDetected' => 1,
@@ -51,7 +51,7 @@ class RekamTerapiController extends Controller
 
         // dd($rmTerdahulu);
 
-        return view('admin.rekam-terapi.histori', [
+        return view('rekam-terapi.histori', [
             'rmDetected' => $rmDetected,
             'rm' => $rmTerkini->first(),
             'rm_terkini' => $rmTerkini,
@@ -70,7 +70,7 @@ class RekamTerapiController extends Controller
      */
     public function create(Pasien $pasien, SubRekamMedis $subRM)
     {
-        return view('admin.rekam-terapi.tambah', [
+        return view('rekam-terapi.tambah', [
             'pasien' => $pasien,
             // 'terapis' => Terapis::orderBy('nama', 'ASC')->get(),
             'id_sub' => $subRM->id_sub
@@ -82,7 +82,7 @@ class RekamTerapiController extends Controller
         $rekamTerapi = $subRM->rekamTerapi()->orderBy('tanggal', 'ASC')->get();
         $index = $rekamTerapi->search($terapi) + 1;
         // dd($index);
-        return view('admin.rekam-terapi.harian', [
+        return view('rekam-terapi.harian', [
             'rmDetected' => 1,
             'terapi' => $terapi,
             'index' => $index,
@@ -94,53 +94,10 @@ class RekamTerapiController extends Controller
 
     public function edit(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi)
     {
-        return view('admin.rekam-terapi.edit', [
+        return view('rekam-terapi.edit', [
             'terapi' => $terapi,
             'pasien' => $pasien,
-            'terapis' => Terapis::orderBy('nama', 'ASC')->get(),
-            'sub' => $subRM
         ]);
-    }
-    public function update(Request $request, $pasien, $subRM, RekamTerapi $terapi)
-    {
-        $tanggalTerapi = $terapi->tanggal;
-        $message = [
-            'required' => 'Kolom :attribute harus diisi.',
-            'max' => 'Kolom :attribute harus diisi maksimal :max karakter.',
-            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
-            'tanggal.unique' => 'Tanggal sudah ada'
-        ];
-
-        $dataTerapi = $request->validate([
-            'id_terapis' => 'required',
-            'keluhan' => 'required|max:100',
-            'deteksi' => 'required|max:100',
-            'tindakan' => 'required|max:100',
-            'saran' => 'max:100',
-            'tanggal' => [
-                'required',
-                'date',
-                Rule::unique('rekam_terapi', 'tanggal')->where(function ($query) use ($subRM, $tanggalTerapi) {
-                    return $query->where('id_sub', $subRM)->where('tanggal', '!=', $tanggalTerapi);
-                }),
-            ]
-        ], $message);
-
-        RekamTerapi::where('tanggal', $tanggalTerapi)->update($dataTerapi);
-
-        // if($terapi->id_terapis !== $request->id_terapis) {
-        //     $totalTerapiTerapisBaru = RekamTerapi::totalTerapi($request->id_terapis);
-        //     $totalTerapiTerapisLama = RekamTerapi::totalTerapi($terapi->id_terapis);
-
-        //     Terapis::where('id_terapis', $request->id_terapis)
-        //             ->update(['total_terapi' => $totalTerapiTerapisBaru]);
-        //     Terapis::where('id_terapis', $terapi->id_terapis)
-        //             ->update(['total_terapi' => $totalTerapiTerapisLama]);
-        // }
-
-        return redirect(route('terapi.rekam', [$pasien, $subRM]))
-                            ->with('success', 'Terapi Harian berhasil diupdate.')
-                            ->with('update', true);
     }
 
     /**
@@ -153,10 +110,7 @@ class RekamTerapiController extends Controller
     {
         RekamTerapi::destroy($terapi->id_terapi);
 
-        // $totalTerapiTerapis = RekamTerapi::totalTerapi($terapi->id_terapis);
-        // Terapis::where('id_terapis', $terapi->id_terapis)->update(['total_terapi' => $totalTerapiTerapis]);
-
-        return redirect(route('terapi.rekam', [$pasien->slug, $subRM->id_sub, $terapi->tanggal]))
+        return redirect(route('terapi.rekam', [$pasien->slug, $subRM->id_sub, $terapi->id_terapi]))
                             ->with('success', 'Terapi Harian berhasil dihapus.')
                             ->with('delete', true);
     }

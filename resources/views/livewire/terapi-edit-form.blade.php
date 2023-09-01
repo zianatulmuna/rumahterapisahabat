@@ -13,7 +13,7 @@
       </div>
   
       {{-- form --}}
-      <form wire:submit.prevent='create' class="main-form" id="createForm" enctype="multipart/form-data">
+      <form wire:submit.prevent='update' class="main-form" id="updateForm" enctype="multipart/form-data">
         @csrf
         <div class="mt-4 mt-sm-5" id="nav-tabContent">
           {{-- data diri --}}
@@ -164,80 +164,80 @@
 
     {{-- script terapis --}}
     <script>
-      function setTerapisToController(selectedLi) {
-            let id = selectedLi.getAttribute('data-id');
-            let nama = selectedLi.getAttribute('data-nama');
-            Livewire.emit('setTerapis', { id: id, nama: nama });
-        };
-
-      function setScript() {
-        let dataTerapis = @json($terapis->toArray());
-
-        const dropTerapis = document.querySelector(".dropdown-terapis");
-        let selectBtnTerapis = dropTerapis.querySelector("button");
-        let selectedTerapis = dropTerapis.querySelector("#selectedTerapis");
-        let searchInpTerapis = dropTerapis.querySelector(".search-input");
-        let optionsTerapis = dropTerapis.querySelector(".select-options");
-
-        function addTerapis() {
-          optionsTerapis.innerHTML = "";
-          dataTerapis.forEach(terapis => {
-            let isSelected = (terapis.nama == selectedTerapis.innerText) ? " active" : "";
-            console.log(terapis.nama + " " + selectedTerapis.innerText)
-            let li = `
-                      <li class="dropdown-item ps-2${isSelected}" 
-                          id="terapisOption"
-                          data-id="${terapis.id_terapis}" 
-                          data-nama="${terapis.nama}"
-                          onclick="setTerapisToController(this)">
-                          <p class="m-0 d-flex justify-content-between w-100" >
-                              <span class="col-8 text-start text-truncate">${terapis.nama}</span>
-                              <span class="small fst-italic">${terapis.tingkatan}</span>
-                          </p>
-                      </li>
-                    `;     
-            optionsTerapis.insertAdjacentHTML("beforeend", li);
+        function setTerapisToController(selectedLi) {
+              let id = selectedLi.getAttribute('data-id');
+              let nama = selectedLi.getAttribute('data-nama');
+              Livewire.emit('setTerapis', { id: id, nama: nama });
+          };
+  
+        function setScript() {
+          let dataTerapis = @json($terapis->toArray());
+  
+          const dropTerapis = document.querySelector(".dropdown-terapis");
+          let selectBtnTerapis = dropTerapis.querySelector("button");
+          let selectedTerapis = dropTerapis.querySelector("#selectedTerapis");
+          let searchInpTerapis = dropTerapis.querySelector(".search-input");
+          let optionsTerapis = dropTerapis.querySelector(".select-options");
+  
+          function addTerapis() {
+            optionsTerapis.innerHTML = "";
+            dataTerapis.forEach(terapis => {
+              let isSelected = (terapis.nama == selectedTerapis.innerText) ? " active" : "";
+              console.log(terapis.nama + " " + selectedTerapis.innerText)
+              let li = `
+                        <li class="dropdown-item ps-2${isSelected}" 
+                            id="terapisOption"
+                            data-id="${terapis.id_terapis}" 
+                            data-nama="${terapis.nama}"
+                            onclick="setTerapisToController(this)">
+                            <p class="m-0 d-flex justify-content-between w-100" >
+                                <span class="col-8 text-start text-truncate">${terapis.nama}</span>
+                                <span class="small fst-italic">${terapis.tingkatan}</span>
+                            </p>
+                        </li>
+                      `;     
+              optionsTerapis.insertAdjacentHTML("beforeend", li);
+            });
+          }
+  
+          searchInpTerapis.addEventListener("keyup", () => {
+            let arr = [];
+            let searchWord = searchInpTerapis.value.toLowerCase();
+            arr = dataTerapis.filter(terapis => {
+              let data = terapis.nama;
+              return data.toLowerCase().startsWith(searchWord);
+            }).map(terapis => {
+              let isSelected = (terapis.nama == selectedTerapis.innerText) ? " active" : "";
+                return `
+                        <li class="dropdown-item ps-2${isSelected}" 
+                            id="terapisOption"
+                            data-id="${terapis.id_terapis}" 
+                            data-nama="${terapis.nama}"
+                            onclick="setTerapisToController(this)">
+                            <p class="m-0 d-flex justify-content-between w-100" >
+                                <span class="col-8 text-start text-truncate">${terapis.nama}</span>
+                                <span class="small fst-italic">${terapis.tingkatan}</span>
+                            </p>
+                        </li>
+                        `; 
+            }).join("");
+            optionsTerapis.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
           });
+  
+          selectBtnTerapis.addEventListener("click", () => {
+            dropTerapis.classList.toggle("active");
+            addTerapis();
+          });
+  
         }
-
-        searchInpTerapis.addEventListener("keyup", () => {
-          let arr = [];
-          let searchWord = searchInpTerapis.value.toLowerCase();
-          arr = dataTerapis.filter(terapis => {
-            let data = terapis.nama;
-            return data.toLowerCase().startsWith(searchWord);
-          }).map(terapis => {
-            let isSelected = (terapis.nama == selectedTerapis.innerText) ? " active" : "";
-              return `
-                      <li class="dropdown-item ps-2${isSelected}" 
-                          id="terapisOption"
-                          data-id="${terapis.id_terapis}" 
-                          data-nama="${terapis.nama}"
-                          onclick="setTerapisToController(this)">
-                          <p class="m-0 d-flex justify-content-between w-100" >
-                              <span class="col-8 text-start text-truncate">${terapis.nama}</span>
-                              <span class="small fst-italic">${terapis.tingkatan}</span>
-                          </p>
-                      </li>
-                      `; 
-          }).join("");
-          optionsTerapis.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
-        });
-
-        selectBtnTerapis.addEventListener("click", () => {
-          dropTerapis.classList.toggle("active");
-          addTerapis();
-        });
-
-      }
-
-      document.addEventListener('livewire:load', function () {
-        setScript();
-
-        Livewire.on('runScriptTerapis', function () {
+  
+        document.addEventListener('livewire:load', function () {
           setScript();
+  
+          Livewire.on('runScriptTerapis', function () {
+            setScript();
+          });
         });
-      });
-
-    </script>
+  
+      </script>
   @endpush

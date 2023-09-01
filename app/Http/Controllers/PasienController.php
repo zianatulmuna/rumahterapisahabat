@@ -32,7 +32,7 @@ class PasienController extends Controller
                                 ->where('status_pendaftaran', 'Pasien Lama')
                                 ->paginate(24);
 
-        return view('admin.pasien.pasien-lama', compact('pasien_lama'));
+        return view('pasien.pasien-lama', compact('pasien_lama'));
     }
 
     public function getPrapasien(Request $request)
@@ -50,7 +50,7 @@ class PasienController extends Controller
                                 ->where('status_pendaftaran', 'Prapasien')
                                 ->paginate(20);
 
-        return view('admin.pasien.pasien-baru', compact('pasien_baru'));
+        return view('pasien.pasien-baru', compact('pasien_baru'));
     }
 
     /**
@@ -60,7 +60,7 @@ class PasienController extends Controller
      */
     public function create()
     {
-        return view('admin.pasien.tambah', [
+        return view('pasien.tambah', [
             'pasien' => ''
         ]);
     }
@@ -113,7 +113,7 @@ class PasienController extends Controller
             $rmDetected = 2;
         }
         
-        return view('admin.rekam-medis.detail', [
+        return view('rekam-medis.detail', [
             'pasien' => $pasien,
             'rmDetected' => $rmDetected,
             'rm' =>$rekamMedis->first(),
@@ -129,7 +129,7 @@ class PasienController extends Controller
      */
     public function edit(Pasien $pasien)
     {
-        return view('admin.pasien.edit', [
+        return view('pasien.edit', [
             'pasien' => $pasien,
             'rm'=> ''
         ]);

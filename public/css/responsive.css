@@ -154,6 +154,12 @@
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
       }
+      .small-col-aksi {
+        width: 70px;
+      }
+      .small-col-number {
+        width: 50px;
+      }
       
   }
 
@@ -199,7 +205,6 @@
     .table-col-rm {
       width: 80px;
     }
-    
   }
 
   @media (min-width: 450px) {   
@@ -264,6 +269,14 @@
 
     .table-col-terapis {
       min-width: 120px;
+    }
+    
+
+    /* .small-col-aksi {
+      width: 150px;
+    } */
+    .small-col-number {
+      width: 70px;
     }
   }
 

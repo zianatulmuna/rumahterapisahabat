@@ -49,7 +49,7 @@ class JadwalDashboard extends Component
             $query->where('tanggal', Carbon::today()->format('Y-m-d'));
         }
 
-        $jadwal_terapi =  $query->paginate(10);
+        $jadwal_terapi = $query->paginate(10);
 
 
         return view('livewire.jadwal-dashboard', compact(
