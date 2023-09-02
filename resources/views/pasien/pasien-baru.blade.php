@@ -11,7 +11,7 @@
   </div>
 
   <div class="d-flex flex-nowrap justify-content-between align-item-center flex-wrap flex-md-nowrap my-4 gap-3">
-    <form action="/admin/pasien-baru" class="custom-search">
+    <form action="/pasien-baru" class="custom-search">
       @if(request('urut'))
         <input type="hidden" name="urut" value="{{ request('urut') }}">
       @endif
@@ -34,8 +34,8 @@
       </button>
       <div class="dropdown-menu dropdown-menu-right mt-1 shadow w-100" aria-labelledby="dropdownMenuButton">
         <li><h6 class="dropdown-header pb-0">Urutkan berdasarkan</h6></li>
-        <li><a href="/admin/pasien-baru?{{ Request::query('search') ? 'search=' . request('search') . '&' : '' }}urut=Terbaru" class="dropdown-item {{ Request::query('urut') == 'Terbaru' ? 'active' : '' }}"><i class="bi bi-sort-numeric-down-alt pe-1"></i> Terbaru</a></li>
-        <li><a href="/admin/pasien-baru?{{ Request::query('search') ? 'search=' . request('search') . '&' : '' }}urut=Terlama" class="dropdown-item {{ Request::query('urut') == 'Terlama' ? 'active' : '' }}"><i class="bi bi-sort-numeric-down pe-1"></i> Terlama</a></li>
+        <li><a href="?{{ Request::query('search') ? 'search=' . request('search') . '&' : '' }}urut=Terbaru" class="dropdown-item {{ Request::query('urut') == 'Terbaru' ? 'active' : '' }}"><i class="bi bi-sort-numeric-down-alt pe-1"></i> Terbaru</a></li>
+        <li><a href="?{{ Request::query('search') ? 'search=' . request('search') . '&' : '' }}urut=Terlama" class="dropdown-item {{ Request::query('urut') == 'Terlama' ? 'active' : '' }}"><i class="bi bi-sort-numeric-down pe-1"></i> Terlama</a></li>
       </div>
     </div>
   </div>
@@ -74,6 +74,6 @@
 </div>
 
 <div class="d-flex justify-content-center mt-5">
-   {{ $pasien_baru->links() }}
+   {{ $pasien_baru->appends(request()->query())->links() }}
 </div>
 @endsection

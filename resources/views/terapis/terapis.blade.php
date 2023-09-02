@@ -11,7 +11,7 @@
   </div>
 
   <div class="d-flex justify-content-between my-4 gap-3">
-    <form action="/admin/terapis" class="custom-search shadow-sm rounded">
+    <form action="/terapis" class="custom-search shadow-sm rounded">
       @if(request('tingkatan'))
         <input type="hidden" name="tingkatan" value="{{ request('tingkatan') }}">
       @endif
@@ -34,9 +34,9 @@
         <i class="bi bi-funnel filter-icon"></i>
       </button>
       <div class="dropdown-menu dropdown-menu-right mt-1 shadow-lg border-0 w-100" aria-labelledby="dropdownMenuButton">
-        <a href="/admin/terapis" class="dropdown-item {{ Request::query('tingkatan') ? '' : 'active' }}">Semua</a>
+        <a href="/terapis" class="dropdown-item {{ Request::query('tingkatan') ? '' : 'active' }}">Semua</a>
         @foreach($tingkatan as $tingkat)
-            <a href="/admin/terapis?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}tingkatan={{ $tingkat }}" class="dropdown-item {{ Request::query('tingkatan') == $tingkat ? 'active' : '' }}">{{ $tingkat }}</a>
+            <a href="/terapis?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}tingkatan={{ $tingkat }}" class="dropdown-item {{ Request::query('tingkatan') == $tingkat ? 'active' : '' }}">{{ $tingkat }}</a>
         @endforeach
       </div>
     </div>

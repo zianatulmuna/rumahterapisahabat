@@ -7,7 +7,7 @@
   </div>
 
   <div class="d-flex flex-nowrap justify-content-between align-item-center flex-wrap flex-md-nowrap my-4 gap-3">
-    <form action="/admin/pasien/lama" class="custom-search">
+    <form action="/pasien/lama" class="custom-search">
       @if(request('urut'))
         <input type="hidden" name="urut" value="{{ request('urut') }}">
       @endif
@@ -36,29 +36,29 @@
       <div class="dropdown-menu dropdown-menu-right mt-1 shadow w-100" aria-labelledurut="dropdownMenuButton">
         <h6 class="dropdown-header pb-0">Berdasarkan status</h6>
         <a 
-          href="/admin/pasien/lama?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}{{ Request::query('urut') ? 'urut=' . request('urut') : '' }}" 
+          href="?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}{{ Request::query('urut') ? 'urut=' . request('urut') : '' }}" 
           class="dropdown-item {{ Request::query('status') ? '' : 'active' }}">
           Semua
         </a>
         <a 
-          href="/admin/pasien/lama?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}status=Rawat Jalan{{ Request::query('urut') ? '&urut=' . request('urut') : '' }}"
+          href="?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}status=Rawat Jalan{{ Request::query('urut') ? '&urut=' . request('urut') : '' }}"
           class="dropdown-item {{ Request::query('status') == 'Rawat Jalan' ? 'active' : '' }}">
           Rawat Jalan
         </a>
         <a 
-          href="/admin/pasien/lama?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}status=Selesai{{ Request::query('urut') ? '&urut=' . request('urut') : '' }}" 
+          href="?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}status=Selesai{{ Request::query('urut') ? '&urut=' . request('urut') : '' }}" 
           class="dropdown-item {{ Request::query('status') == 'Selesai' ? 'active' : '' }}">
           Selesai
         </a>
         <div class="dropdown-divider"></div>
         <h6 class="dropdown-header pb-0">Urutkan berdasarkan</h6>
         <a 
-          href="/admin/pasien/lama?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}{{ Request::query('status') ? 'status=' . request('status') . '&' : '' }}urut=Terbaru" 
+          href="?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}{{ Request::query('status') ? 'status=' . request('status') . '&' : '' }}urut=Terbaru" 
           class="dropdown-item {{ Request::query('urut') == 'Terbaru' ? 'active' : '' }}">
           <i class="bi bi-sort-numeric-down-alt pe-1"></i> Terbaru
         </a>
         <a 
-          href="/admin/pasien/lama?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}{{ Request::query('status') ? 'status=' . request('status') . '&' : '' }}urut=Terlama" 
+          href="?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}{{ Request::query('status') ? 'status=' . request('status') . '&' : '' }}urut=Terlama" 
           class="dropdown-item {{ Request::query('urut') == 'Terlama' ? 'active' : '' }}">
           <i class="bi bi-sort-numeric-down pe-1"></i> Terlama
         </a>
@@ -119,6 +119,6 @@
 </div>
 
 <div class="d-flex justify-content-center my-4 p">
-   {{ $pasien_lama->links() }}
+   {{ $pasien_lama->appends(request()->query())->links() }}
 </div>
 @endsection

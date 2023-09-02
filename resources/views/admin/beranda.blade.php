@@ -90,14 +90,11 @@
     <div class="row">
         {{-- grafik --}}
         <div class="col-xl-8 p-0 pe-xl-4 mt-2 mt-lg-3">
-            {{-- @livewire('grafik-dashboard', ['dataGrafig' => $dataGrafik, 'terapis' => $terapis, 'penyakit' => $penyakit]) --}}
             @livewire('grafik-dashboard')
-            {{-- <x-grafik-dashboard :data-grafik="$dataGrafik" :terapis="$terapis" :penyakit="$penyakit" :maxChart="$maxChart"></x-grafik-dashboard>             --}}
         </div>
         
         {{-- terapis ready --}}
-        <div class="col-xl-4 p-0 mt-3">
-            
+        <div class="col-xl-4 p-0 mt-3">            
             @livewire('terapis-ready')
         </div>        
     </div>
@@ -106,52 +103,12 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h4">Jadwal Terapi</h1>
         </div>
-
+        {{-- jadwal --}}
         @livewire('jadwal-dashboard')
-
-        
     </div>
 </div>
 @endsection
 
 @push('script')
-<script>
-    // const inputDate = document.querySelector("#startDate");
-
-    // inputDate.addEventListener("focus", function() {
-    //     document.querySelector(".icon-date").style.display = "none";
-    //     inputDate.type = 'date';
-    //     inputDate.classList.remove("ps-2");
-    // });
-    // inputDate.addEventListener("blur", function() {
-    //     document.querySelector(".icon-date").style.display = "block";
-    //     inputDate.type = 'text';
-    // });
-
-    function handleSwitchChange(checkbox) {
-        const total = document.querySelector('#totalReady');
-        if (checkbox.checked) {
-            fetch('/admin/dashboard/setReady?username=' + checkbox.value + '&status=1')
-            .then(response => response.json())
-            .then(data => total.innerText = data.total + ' Terapis')
-        } else {
-            fetch('/admin/dashboard/setReady?username=' + checkbox.value + '&status=0')
-            .then(response => response.json())
-            .then(data => total.innerText = data.total + ' Terapis')
-        }
-    }    
-</script>
-
-{{-- @if(request('tanggal') || request('mulai'))
-    <script>
-        window.onload = function() {
-            // document.querySelector("#jadwal").scrollIntoView({
-            //     behavior: "smooth",
-            //     block: "start"
-            // });
-            window.location.hash = 'jadwal';
-        };
-    </script>
-@endif --}}
 @livewireScripts
 @endpush

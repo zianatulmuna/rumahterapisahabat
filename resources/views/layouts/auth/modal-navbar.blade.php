@@ -8,39 +8,42 @@
         </div>
         <div class="modal-body">            
             <div class="modal-line">
-              <a href="/admin/dashboard" class="nav-link hstack {{ Request::is('admin/dashboard') ? 'fw-bold' : ''}}" aria-current="page">
+              <a href="/beranda" class="nav-link hstack {{ Request::is('beranda') ? 'fw-bold' : ''}}" aria-current="page">
                 <i class="bi bi-house-door-fill"></i>
                 Beranda
               </a>
             </div>
-
+            @unless ($userTerapis)
             <div class="modal-line">
-              <a href="{{ route('pasien.baru') }}" class="nav-link hstack {{ Request::is('admin/pasien-baru*') ? 'fw-bold' : ''}}">
+              <a href="{{ route('pasien.baru') }}" class="nav-link hstack {{ Request::is('pasien-baru*') ? 'fw-bold' : ''}}">
                 <i class="bi bi-person-plus-fill"></i>
                 Pasien Baru
               </a>
-            </div>
+            </div>                
+            @endunless
 
             <div class="modal-line">
-              <a href="{{ route('pasien.lama') }}" class="nav-link hstack {{ Request::is('admin/pasien/*') ? 'fw-bold' : ''}}">
+              <a href="{{ route('pasien.lama') }}" class="nav-link hstack {{ Request::is('pasien/*') ? 'fw-bold' : ''}}">
                 <i class="bi bi-person-fill-check"></i>
-                Pasien Lama
+                {{ $userTerapis ? "Pasien" : "Pasien Lama" }}
               </a>
             </div>
 
             <div class="modal-line">
-              <a href="{{ route('jadwal') }}" class="nav-link hstack {{ Request::is('admin/jadwal*') ? 'fw-bold' : ''}}">
+              <a href="{{ route('jadwal') }}" class="nav-link hstack {{ Request::is('jadwal*') ? 'fw-bold' : ''}}">
                 <i class="bi bi-calendar-plus-fill"></i>
-                Jadwal
+                {{ $userTerapis ? "Terapi" : "Jadwal" }}
               </a>
           </div>
 
+          @unless ($userTerapis)
             <div class="modal-line">
-              <a href="{{ route('terapis') }}" class="nav-link hstack {{ Request::is('admin/terapis*') ? 'fw-bold' : ''}}">
+              <a href="{{ route('terapis') }}" class="nav-link hstack {{ Request::is('terapis*') ? 'fw-bold' : ''}}">
                 <i class="fa-solid fa-user-nurse"></i>
                 Terapis
               </a>
             </div>
+            @endunless
         </div>
 
         <div class="modal-body modal-custom">

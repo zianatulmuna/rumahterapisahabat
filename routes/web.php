@@ -29,18 +29,14 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::middleware('auth:admin')->prefix('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
-    Route::get('/dashboard/setReady', [DashboardController::class, 'setReady']);
+Route::middleware('auth:admin,terapis')->group(function () {
+    Route::get('/beranda', [DashboardController::class, 'index'])->name('beranda');
+    
     Route::get('/profil', [ProfilController::class, 'index'])->name('profil');
     Route::get('/profil/edit', [ProfilController::class, 'edit'])->name('profil.edit');
     
 
-    Route::prefix('pasien-baru')->group(function () {
-        Route::get('', [PasienController::class, 'getPrapasien'])->name('pasien.baru');
-        Route::get('/create', [PasienController::class, 'create'])->name('pasien.create');
-        Route::get('/{pasien}/edit', [PasienController::class, 'edit'])->name('pasien.edit');
-    });
+    
 
     Route::get('/pasien/lama', [PasienController::class, 'index'])->name('pasien.lama');
 
@@ -90,6 +86,16 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
 
 });
 
-Route::middleware('auth:terapis')->prefix('terapis')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/beranda/setReady', [DashboardController::class, 'setReady']);
+
+    Route::prefix('pasien-baru')->group(function () {
+        Route::get('', [PasienController::class, 'getPrapasien'])->name('pasien.baru');
+        Route::get('/create', [PasienController::class, 'create'])->name('pasien.create');
+        Route::get('/{pasien}/edit', [PasienController::class, 'edit'])->name('pasien.edit');
+    });
+});
+
+Route::middleware('auth:terapis')->group(function () {
+    
 });

@@ -3,7 +3,7 @@
 @section('container')
 <div class="content-container">
     <div class="align-items-center pt-3 pb-2 mb-4 border-bottom">
-        <h2>Data Admin</h2>
+        <h2>Data User</h2>
     </div>
 
     <div class="d-flex align-items-center justify-content-center">

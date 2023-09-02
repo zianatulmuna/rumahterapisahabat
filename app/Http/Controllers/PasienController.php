@@ -30,7 +30,7 @@ class PasienController extends Controller
 
         $pasien_lama = Pasien::filter($search, $sortBy, $status)
                                 ->where('status_pendaftaran', 'Pasien Lama')
-                                ->paginate(24);
+                                ->paginate(16);
 
         return view('pasien.pasien-lama', compact('pasien_lama'));
     }
@@ -65,36 +65,7 @@ class PasienController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $dataDiri = $request->validate([            
-            'nama' => 'max:50',
-            'email' => 'max:35',
-            'alamat' => 'required|max:100',
-            'no_telp' => 'numeric',
-            'tanggal_lahir' => 'required',
-            'agama' => 'required',
-            'pekerjaan' => 'required'
-        ]);
-        
-        $dateY = substr(Carbon::parse($request->date)->format('Y'), 2);
-        $idPasien = IdGenerator::generate(['table' => 'pasien', 'field' => 'id_pasien', 'length' => 7, 'prefix' => 'P'.$dateY]);
-        
-        $dataDiri['id_pasien'] = $idPasien;
-        $dataDiri['status_pendaftaran'] = 'Pasien Lama';
-        $dataDiri['slug'] = SlugService::createSlug(Pasien::class, 'slug', $request->nama);
-
-        Pasien::create($dataDiri);
-
-        return redirect('/admin/pasien-baru')->with('success', '');        
-    }
-
+    
     /**
      * Display the specified resource.
      *

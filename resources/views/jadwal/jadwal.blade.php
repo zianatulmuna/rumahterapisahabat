@@ -149,7 +149,7 @@
         const dateBtn = document.querySelector('#dateBtn');
 
         tunggal.addEventListener('change', function(){
-            window.location.href = '/admin/jadwal?tanggal=' + tunggal.value;
+            window.location.href = '?tanggal=' + tunggal.value;
         })
 
         dateBtn.addEventListener('click', function(){
@@ -160,7 +160,7 @@
                 end.classList.add('is-invalid');
             } else {
                 end.classList.remove('is-invalid');
-                window.location.href = '/admin/jadwal?mulai=' + start.value + '&akhir=' + end.value;
+                window.location.href = '?mulai=' + start.value + '&akhir=' + end.value;
             }
         })
     </script>

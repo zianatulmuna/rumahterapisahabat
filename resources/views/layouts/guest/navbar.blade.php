@@ -31,11 +31,8 @@
                   </a>
                 @endif
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    @if(Auth::guard('admin')->user())
-                        <li><a class="dropdown-item" href="/admin/dashboard"><i class="bi bi-layout-text-sidebar-reverse"></i> My Dashboard</a></li>
-                    @else
-                        <li><a class="dropdown-item" href="/terapis/dashboard"><i class="bi bi-layout-text-sidebar-reverse"></i> My Dashboard</a></li>
-                    @endif
+                    <li><a class="dropdown-item" href="/beranda"><i class="bi bi-layout-text-sidebar-reverse"></i> My Dashboard</a></li>
+
                   <li><hr class="dropdown-divider"></li>
                   <li>
                     <form action="/logout" method="post">

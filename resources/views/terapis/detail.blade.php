@@ -204,7 +204,7 @@
         const id = @json($terapis->username);
 
         tunggal.addEventListener('change', function(){
-            window.location.href = '/admin/terapis/' + id + '?tanggal=' + tunggal.value;
+            window.location.href = '?tanggal=' + tunggal.value;
         })
 
         dateBtn.addEventListener('click', function(){

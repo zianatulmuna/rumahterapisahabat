@@ -17,10 +17,6 @@
                     <button type="button" class="nav-link px-2 px-sm-3 {{ $grafik == 'Pasien Selesai' ? 'active' : '' }}" id="selesai-tab" data-tab="tab" wire:click="setMenu('Pasien Selesai')">Pasien Selesai</button>
                 </li>
             </ul>
-            {{-- waktu --}}
-            {{-- <div class="d-none d-sm-block mb-2 mb-md-0">
-                @include('partials.filter-waktu')
-            </div> --}}
         </div>
 
         <div class="tab-content py-3 border border-top-0" id="myTabContent">
@@ -28,7 +24,7 @@
                 {{-- terapis --}}
                 <div class="col col-sm-4 col-lg-5 px-1 mb-2 my-sm-2 my-md-0">                      
                     <div class="dropdown w-100 search-dinamis dropdown-terapis">
-                            <button class="form-control d-flex justify-content-between align-items-center {{ $nama_terapis ? 'border-success text-success' : '' }} @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false" {{ $grafik != 'Sesi Terapi' ? 'disabled' : '' }}>
+                            <button class="form-control d-flex justify-content-between align-items-center {{ $nama_terapis ? 'border-success text-success' : '' }} @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" {{ $grafik != 'Sesi Terapi' ? 'disabled' : '' }}>
                                 <span class="text-truncate" id="namaTerapis">
                                     @if($grafik == 'Sesi Terapi')
                                         {{ $nama_terapis ? $nama_terapis : 'Pilih Terapis' }}
@@ -36,15 +32,17 @@
                                 </span>
                                 <i class="bi bi-chevron-down"></i>
                             </button>
-                            <div class="dropdown-menu px-3 w-100 bg-body-tertiary shadow">
-                                <div class="input-group pt-2 pb-0">
+                            <div class="dropdown-menu py-1 px-2 w-100 bg-body-tertiary shadow">
+                                <div class="input-group py-2">
                                     <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
                                     <input type="text" class="form-control border-start-0 search-input" placeholder="Cari nama terapis">
                                 </div>
-                                <div class="text-end pb-1">
-                                    <a class="text-reset" style="cursor: pointer;" data-nama="" onclick="setTerapisToController(this)">Reset</a>
+                                <ul class="select-options bg-white rounded m-0"></ul>
+                                <div class="text-center text-secondary small py-2">
+                                    <a class="text-reset text-decoration-none" style="cursor: pointer;" data-nama="" onclick="setTerapisToController(this)">
+                                        <i class="bi bi-trash3"></i> Hapus Pilihan
+                                    </a>
                                 </div>
-                                <ul class="select-options bg-white rounded"></ul>
                             </div>
                     </div>
                 </div>
@@ -57,15 +55,15 @@
                             </span>
                             <i class="bi bi-chevron-down"></i>
                         </button>
-                        <div class="dropdown-menu px-3 w-100 bg-body-tertiary shadow">
-                            <div class="input-group pt-2 pb-0">
+                        <div class="dropdown-menu px-2 py-1 w-100 bg-body-tertiary shadow">
+                            <div class="input-group py-2">
                                 <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
                                 <input type="text" class="form-control border-start-0 search-input" placeholder="Cari penyakit">
                             </div>
-                            <div class="text-end pb-1">
-                                <a class="text-reset" style="cursor: pointer;" data-nama="" onclick="setPenyakitToController(this)">Reset</a>
+                            <ul class="select-options bg-white rounded m-0"></ul>
+                            <div class="text-center text-secondary small py-2">
+                                <a class="text-reset text-decoration-none" style="cursor: pointer;" data-nama="" onclick="setPenyakitToController(this)"><i class="bi bi-trash3"></i> Hapus Pilihan</a>
                             </div>
-                            <ul class="select-options bg-white rounded"></ul>
                         </div>
                     </div>
                 </div>

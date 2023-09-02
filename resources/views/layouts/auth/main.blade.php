@@ -8,7 +8,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="/assets/icon_klinik.png">
-    <title>Dashboard Admin</title>
+
+    @if($userAdmin)
+      <title>Admin - Rumah Terapi Sahabat</title>
+    @elseif($userTerapis)
+      <title>Terapis - Rumah Terapi Sahabat</title>
+    @endif
 
     <!-- Custom fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">

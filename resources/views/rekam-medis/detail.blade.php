@@ -3,11 +3,11 @@
 @section('container')
 <div class="content-container">
    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
-      @if(Request::is('admin/pasien/' . $pasien->slug . '/rekam-medis*'))
+      @if(Request::is('pasien/' . $pasien->slug . '/rekam-medis*'))
          <h1 class="h2">Histori Rekam Medis</h1>
-      @elseif(Request::is('admin/pasien/'. $pasien->slug))
+      @elseif(Request::is('pasien/'. $pasien->slug))
          <h1 class="h2">Data Pasien</h1>
-      @elseif(Request::is('admin/pasien/' . $pasien->slug . '/rekam*'))
+      @elseif(Request::is('pasien/' . $pasien->slug . '/rekam*'))
          <h1 class="h2">Histori Rekam Terapi</h1>
       @endif
    </div>

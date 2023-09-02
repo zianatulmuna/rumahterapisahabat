@@ -22,14 +22,11 @@ class LoginController extends Controller
             'password' => 'required|min:3'
         ]);
 
-        if (Auth::guard('admin')->attempt($credentials)) {
+        if (Auth::guard('admin')->attempt($credentials) || Auth::guard('terapis')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('admin/dashboard');
+            return redirect()->intended('beranda');
         }
-        elseif (Auth::guard('terapis')->attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('terapis/dashboard');
-        }
+        
         
 
         return back()->with('loginError', 'Login Failed!');
@@ -43,6 +40,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }
