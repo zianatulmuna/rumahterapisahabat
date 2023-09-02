@@ -22,3 +22,20 @@
 .dropdown .active {
     background-color: #239962;
 }
+
+.toggle-success {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+.toggle-success .form-check-input {
+    width: 28px;
+    
+    text-align: center;
+}
+
+.toggle-success .form-check-input:checked { 
+    background-color: #0E8357; 
+    border-color: #0E8357; 
+  }

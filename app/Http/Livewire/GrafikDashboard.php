@@ -9,7 +9,7 @@ use Livewire\Component;
 use App\Models\RekamMedis;
 use App\Models\RekamTerapi;
 use App\Models\SubRekamMedis;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GrafikDashboard extends Component
 {
@@ -28,23 +28,38 @@ class GrafikDashboard extends Component
         $this->filter;
         $this->id_terapis;
         $this->tahun;
-        // $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year,'', '');
-        $this->dataGrafik = $this->grafikMingguIni($this->grafik, '', '');
-        // $this->maxChart = ceil(max($this->dataGrafik) / 10) * 10;
+
+        if(Auth::guard('terapis')->user()) {
+            $userTerapis = Auth::guard('terapis')->user();
+            $this->id_terapis = $userTerapis->id_terapis;
+            $this->nama_terapis = $userTerapis->nama;   
+
+            $this->dataGrafik = $this->grafikMingguIni($this->grafik, $this->id_terapis, '');
+        } else {            
+            $this->dataGrafik = $this->grafikMingguIni($this->grafik, '', '');
+        }
+
         $max = (!empty($this->dataGrafik)) ? $max = max($this->dataGrafik) : 0;
         $newMax = ($max <= 10) ? 10 : ceil($max / 10) * 10;
         $this->maxChart = $newMax;
         
     }
+    
     public function render()
     {
-        $terapis = Terapis::orderBy('nama', 'ASC')->get();
-        $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
-
-        return view('livewire.grafik-dashboard', compact(
-            'terapis',
-            'penyakit',
-        ));
+        if(Auth::guard('terapis')->user()) {
+            $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
+    
+            return view('livewire.grafik-terapis', compact('penyakit'));
+        } else {
+            $terapis = Terapis::orderBy('nama', 'ASC')->get();
+            $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
+    
+            return view('livewire.grafik-dashboard', compact(
+                'terapis',
+                'penyakit',
+            ));
+        }
     }
 
     public function setFilterAction($filter) {
@@ -127,10 +142,13 @@ class GrafikDashboard extends Component
                                     })
                                     ->selectRaw('tanggal, COUNT(*) as total');
             } else {
+                $cek = "";
                 if(!empty($terapis)) {
+                    $cek = $cek . "terapis";
                     $model = RekamTerapi::where('id_terapis', $terapis)
                                         ->selectRaw('tanggal, COUNT(*) as total');
                 } elseif(!empty($penyakit)) {
+                    $cek = $cek . "penyakit";
                     $model = RekamTerapi::whereHas('subRekamMedis', function ($query) use ($penyakit) {
                                             $query->where('penyakit', 'like', '%' . $penyakit . '%');
                                         })
@@ -175,8 +193,7 @@ class GrafikDashboard extends Component
             $totalPerHari[$namaHariData] = $totalHariData;
         }
 
-        return $totalPerHari;
-        
+        return $totalPerHari;        
     }
 
     public function grafikPerTahun($menu, $tahun, $terapis, $penyakit)

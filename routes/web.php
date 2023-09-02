@@ -87,7 +87,7 @@ Route::middleware('auth:admin,terapis')->group(function () {
 });
 
 Route::middleware('auth:admin')->group(function () {
-    Route::get('/beranda/setReady', [DashboardController::class, 'setReady']);
+    
 
     Route::prefix('pasien-baru')->group(function () {
         Route::get('', [PasienController::class, 'getPrapasien'])->name('pasien.baru');
@@ -97,5 +97,5 @@ Route::middleware('auth:admin')->group(function () {
 });
 
 Route::middleware('auth:terapis')->group(function () {
-    
+    Route::get('/setTerapisReady', [TerapisController::class, 'setReady']);
 });

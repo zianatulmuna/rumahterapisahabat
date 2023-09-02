@@ -21,7 +21,7 @@
                         @endif
                     @endif
                     <span class="me-auto text-truncate text-black">{{ $t->nama }}</span>
-                    <div class="form-check form-switch">
+                    <div class="form-check form-switch toggle-success">
                         @if($t->is_ready)
                         <input class="form-check-input" type="checkbox" value="{{ $t->username }}" role="switch" id="flexSwitchCheckDefault" checked  wire:click="toggleSwitch('{{ $t->id_terapis }}', '{{ $t->is_ready }}')">
                         @else
@@ -52,7 +52,7 @@
                 </div>
                 @endif
             @endforeach
-
+            </div>
         @endif
     </div>
 </div>

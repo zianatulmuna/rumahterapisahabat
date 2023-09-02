@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Livewire\TerapisReady;
 use Carbon\Carbon;
 use App\Models\Terapis;
 use App\Models\RekamTerapi;
@@ -141,5 +142,14 @@ class TerapisController extends Controller
         return redirect(route('terapis'))
                             ->with('success', 'Data Terapis berhasil dihapus')   
                             ->with('delete', true); 
+    }
+
+    public function setReady(Request $request)
+    {
+        Terapis::where('username', $request->username)->update([
+            'is_ready' => $request->status,
+        ]);
+
+        // TerapisReady::dispatch('toggleSwitch', [$request->username, $request->status]);
     }
 }

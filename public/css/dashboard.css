@@ -115,6 +115,20 @@ h1, h2, h3, h4,
   border-radius: 10%;
 }
 
+.custom-toggle .form-check-input {
+  width: 30px;
+  height: 16px;
+}
+
+.custom-toggle .form-check-label {
+  font-size: 16px;
+}
+
+.custom-toggle .form-check-input:checked { 
+  background-color: #0E8357; 
+  border-color: #0E8357; 
+}
+
 /*
  * Sidebar
  */

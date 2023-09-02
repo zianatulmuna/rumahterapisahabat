@@ -19,7 +19,7 @@
             <div class="row">                
               <div class="col">
                 <div class="form-switch custom-toggle">
-                  <input class="form-check-input" type="checkbox" id="customSwitch">
+                  <input class="form-check-input" type="checkbox" value="{{ $userTerapis->username }}" id="customSwitch" @if($userTerapis->is_ready) checked @endif onchange="handleSwitchChange(this)">
                   <label class="form-check-label ps-2" for="customSwitch">Hadir</label>
                 </div>
               </div>
@@ -59,28 +59,44 @@
 </header>
 
 @section('modal-alert')
-<!-- Logout Modal-->
-<div class="modal fade" style="background-color: rgba(0, 0, 0, 0.5)" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-expanded="false">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content mx-3">
-      <div class="modal-header justify-content-center border-0 bg-danger">
-        <h1 class="fw-bold text-white">
-          <i class="bi bi-exclamation-circle" style="font-size: 40px;"></i>
-        </h1>
-      </div>
-      <div class="modal-body text-center py-4">
-        <h5 class="fw-bold">Yakin ingin keluar?</h5>
-        Tekan "Logout" jika ingin mengakhiri session.
-      </div>
-      <div class="modal-footer justify-content-between mx-3">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <form action="/logout" method="post">
-          @csrf
-          <button type="submit" class="btn btn-danger">Logout</button>
-        </form>
+  <!-- Logout Modal-->
+  <div class="modal fade" style="background-color: rgba(0, 0, 0, 0.5)" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-expanded="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content mx-3">
+        <div class="modal-header justify-content-center border-0 bg-danger">
+          <h1 class="fw-bold text-white">
+            <i class="bi bi-exclamation-circle" style="font-size: 40px;"></i>
+          </h1>
+        </div>
+        <div class="modal-body text-center py-4">
+          <h5 class="fw-bold">Yakin ingin keluar?</h5>
+          Tekan "Logout" jika ingin mengakhiri session.
+        </div>
+        <div class="modal-footer justify-content-between mx-3">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <form action="/logout" method="post">
+            @csrf
+            <button type="submit" class="btn btn-danger">Logout</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
 @endsection
+
+@push('script')
+    <script>
+      function handleSwitchChange(checkbox) {
+        if (checkbox.checked) {
+            fetch('/setTerapisReady?username=' + checkbox.value + '&status=1')
+        } else {
+            fetch('/setTerapisReady?username=' + checkbox.value + '&status=0')
+        }
+      }
+
+    //   document.addEventListener('change', function(e){
+    //     e.preventDefault();
+    // })
+    </script>
+@endpush

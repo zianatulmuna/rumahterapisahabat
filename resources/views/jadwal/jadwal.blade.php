@@ -163,5 +163,9 @@
                 window.location.href = '?mulai=' + start.value + '&akhir=' + end.value;
             }
         })
+
+          document.addEventListener('change', function(e){
+        e.preventDefault();
+    })
     </script>
 @endpush

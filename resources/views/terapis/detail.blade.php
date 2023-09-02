@@ -91,8 +91,8 @@
               </button>
               <ul class="dropdown-menu w-100 shadow-lg">
                   <li><h6 class="dropdown-header">Berdasarkan Periode</h6></li>
-                  <li><a href="?filter=bulan-ini" class="dropdown-item">Bulan Ini</a></li>
-                  <li><a href="?filter=tahun-ini" class="dropdown-item">Tahun Ini</a></li>
+                  <li><a href="?filter=bulan-ini" class="dropdown-item {{ request('bulan-ini') ? 'active' : '' }}">Bulan Ini</a></li>
+                  <li><a href="?filter=tahun-ini" class="dropdown-item {{ request('tahun-ini') ? 'active' : '' }}">Tahun Ini</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><h6 class="dropdown-header">Berdasarkan Tanggal</h6></li>
                   <li class="px-3 pb-2 hstack stack-input-icon">
@@ -131,12 +131,14 @@
       </div>
   </div>
    @if(count($histori_terapi) > 0)
-      <table class="table table-bordered">
+   <div class="overflow-auto">
+      <table class="table table-bordered" style="min-width: 420px;">
          <thead>
          <tr class="text-center">
             <th scope="col">No</th>
             <th scope="col">Tanggal</th>
             <th scope="col">Nama Pasien</th>
+            <th scope="col">Penyakit</th>
             <th scope="col">Aksi</th>          
          </tr>
          </thead>
@@ -149,6 +151,7 @@
                      <th scope="row" class="text-center small-col-number">{{ $startIndex++ }}</th>
                      <td class="text-center">{{ date('d/m/Y', strtotime($terapi->tanggal)) }}</td>
                      <td class="px-sm-3">{{ $terapi->subRekamMedis->rekamMedis->pasien->nama }}</td>
+                     <td class="px-sm-3">{{ $terapi->subRekamMedis->penyakit}}</td>
                      <td class="text-center small-col-aksi">
                         <a href="{{ route('terapi.detail', [$terapi->subRekamMedis->rekamMedis->pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn btn-sm rounded-2 c-btn-success">
                            <i class="bi bi-eye"></i>               
@@ -158,9 +161,10 @@
             @endforeach
          </tbody>
       </table>
-      <div class="mt-3 mb-5">
-         {{ $histori_terapi->appends(request()->query())->links() }}
-      </div>
+   </div>
+   <div class="mt-3 mb-5">
+      {{ $histori_terapi->appends(request()->query())->links() }}
+   </div>
    @endif
    
    <div class="d-flex justify-content-end mb-4 gap-3">
