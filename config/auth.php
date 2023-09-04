@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'therapists',
         ],
+        'kepala_terapis' => [
+            'driver' => 'session',
+            'provider' => 'head_therapist',
+        ],
     ],
 
     /*
@@ -79,6 +83,10 @@ return [
         'therapists' => [
             'driver' => 'eloquent',
             'model' => App\Models\Terapis::class,
+        ],
+        'head_therapist' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\KepalaTerapis::class,
         ],
 
         // 'users' => [

@@ -31,28 +31,28 @@
                         <div class="input-group py-2">
                           <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
                           <input type="text" class="form-control border-start-0 search-input" placeholder="Cari nama terapis">
-                       </div>
+                      </div>
                         <ul class="select-options bg-white rounded"></ul>
                     </div>
                     </div>
                     @error('id_terapis')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
-                    <div class="mb-4"> 
-                        <label for="tanggal" class="form-label fw-bold">Tanggal Terapi <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" wire:model="tanggal">
-                        @error('tanggal')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-4">
-                        <label for="waktu" class="form-label fw-bold">Waktu Terapi</label>
-                        <input type="time" class="form-control @error('waktu') is-invalid @enderror" id="waktu" name="waktu" value="{{ old('waktu') }}" wire:model="waktu">
-                        @error('waktu')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                  </div>
+                  <div class="mb-4"> 
+                      <label for="tanggal" class="form-label fw-bold">Tanggal Terapi <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
+                      <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" wire:model="tanggal">
+                      @error('tanggal')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                  </div>
+                  <div class="mb-4">
+                      <label for="waktu" class="form-label fw-bold">Waktu Terapi</label>
+                      <input type="time" class="form-control @error('waktu') is-invalid @enderror" id="waktu" name="waktu" value="{{ old('waktu') }}" wire:model="waktu">
+                      @error('waktu')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                  </div>
                 </div>
                 <div class="col">
                     <div class="mb-4"> 
@@ -161,7 +161,6 @@
         }
       } 
     </script>
-
     {{-- script terapis --}}
     <script>
       function setTerapisToController(selectedLi) {
@@ -171,7 +170,7 @@
         };
 
       function setScript() {
-        let dataTerapis = @json($terapis->toArray());
+        let dataTerapis = @json($list_terapis->toArray());
 
         const dropTerapis = document.querySelector(".dropdown-terapis");
         let selectBtnTerapis = dropTerapis.querySelector("button");

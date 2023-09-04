@@ -38,4 +38,9 @@
 .toggle-success .form-check-input:checked { 
     background-color: #0E8357; 
     border-color: #0E8357; 
-  }
+}
+
+.bg-nonaktif {
+    background-color: #d5e6d8;
+    color: #000;
+}

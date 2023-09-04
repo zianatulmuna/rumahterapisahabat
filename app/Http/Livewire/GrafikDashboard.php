@@ -19,6 +19,8 @@ class GrafikDashboard extends Component
     public $filter = 'minggu ini';
     public $tahun;
     public $dataGrafik;
+
+    public $userTerapis;
     public $maxChart = 10;
 
     protected $listeners = ['setTahun', 'setTerapis', 'setPenyakit'];
@@ -29,10 +31,11 @@ class GrafikDashboard extends Component
         $this->id_terapis;
         $this->tahun;
 
-        if(Auth::guard('terapis')->user()) {
-            $userTerapis = Auth::guard('terapis')->user();
-            $this->id_terapis = $userTerapis->id_terapis;
-            $this->nama_terapis = $userTerapis->nama;   
+        $this->userTerapis = Auth::guard('terapis')->user();
+
+        if($this->userTerapis) {
+            $this->id_terapis = $this->userTerapis->id_terapis;
+            $this->nama_terapis = $this->userTerapis->nama;   
 
             $this->dataGrafik = $this->grafikMingguIni($this->grafik, $this->id_terapis, '');
         } else {            
@@ -47,7 +50,7 @@ class GrafikDashboard extends Component
     
     public function render()
     {
-        if(Auth::guard('terapis')->user()) {
+        if($this->userTerapis) {
             $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
     
             return view('livewire.grafik-terapis', compact('penyakit'));

@@ -25,6 +25,10 @@ class RekamTerapi extends Model
     {
         return $query->where('id_terapis', $id_terapis)->count();
     }
+    public function scopeTotalTerapiSub($query, $id_sub)
+    {
+        return $query->where('id_sub', $id_sub)->count();
+    }
 
     // public function getRouteKeyName(): string
     // {

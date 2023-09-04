@@ -61,20 +61,12 @@ class RekamTerapiController extends Controller
         ]);
     }
 
-    
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Pasien $pasien, SubRekamMedis $subRM)
     {
-        return view('rekam-terapi.tambah', [
-            'pasien' => $pasien,
-            // 'terapis' => Terapis::orderBy('nama', 'ASC')->get(),
-            'id_sub' => $subRM->id_sub
-        ]);
+        $jadwal = '';
+        $id_sub = $subRM->id_sub;
+        $aksiDari = 'pasien';
+        return view('rekam-terapi.tambah', compact('pasien', 'id_sub', 'jadwal', 'aksiDari'));
     }
 
     public function show(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi) 
@@ -100,15 +92,12 @@ class RekamTerapiController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\RekamTerapi  $rekam_terapi
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi)
     {
         RekamTerapi::destroy($terapi->id_terapi);
+
+        $totalTerapiSub = RekamTerapi::totalTerapiSub($subRM->id_sub);
+        SubRekamMedis::where('id_sub', $subRM->id_sub)->update(['total_terapi' => $totalTerapiSub]);
 
         return redirect(route('terapi.rekam', [$pasien->slug, $subRM->id_sub, $terapi->id_terapi]))
                             ->with('success', 'Terapi Harian berhasil dihapus.')
@@ -133,5 +122,21 @@ class RekamTerapiController extends Controller
         return redirect(route('sub.histori', [$pasien->slug, $subRM->id_sub]))
                             ->with('success', 'Terapi Harian berhasil dihapus.')
                             ->with('delete', true);
+    }
+
+    public function tagPenyakit(Request $request) 
+    {
+        $search = $request->input('search');
+
+        if(request('urut') === 'Terlama') {
+            $sortBy = 'ASC';
+        } else {
+            $sortBy = 'DESC';
+        }
+
+        $sub_penyakit = SubRekamMedis::filter($search, $sortBy)
+                                ->paginate(16);
+
+        return view('rekam-terapi.tagging', compact('sub_penyakit'));
     }
 }

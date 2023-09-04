@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Jadwal;
+use App\Models\SubRekamMedis;
 use Carbon\Carbon;
 use App\Models\Terapis;
 use Livewire\Component;
@@ -13,23 +15,36 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 class TerapiCreateForm extends Component
 {
     public $pasien, $id_terapis, $nama_terapis, $keluhan, $deteksi, $tindakan, $saran, $pra_terapi, $post_terapi, $waktu, $tanggal;
-    public $id_sub;
+    public $id_sub, $aksiDari;
+
+    public $selectedTerapis, $id_jadwal;
 
     public $totalStep = 2, $currentStep = 1;
 
     protected $listeners = ['setTerapis'];
 
-    public function mount($pasien, $id_sub) {
+    public function mount($pasien, $id_sub, $jadwal, $aksiDari) {
         $this->id_sub = $id_sub;
         $this->pasien = $pasien;
+        $this->aksiDari = $aksiDari;
         $this->currentStep;
         $this->nama_terapis;
+
+        if($this->aksiDari === 'jadwal') {            
+            $this->id_jadwal = $jadwal->id_jadwal;
+            $this->id_terapis = $jadwal->id_terapis;
+            $this->tanggal = $jadwal->tanggal;
+            $this->waktu = $jadwal->waktu;
+        }
     }
     public function render()
     {
-        $terapis = Terapis::orderBy('nama', 'ASC')->get();
-
-        return view('livewire.terapi-create-form', compact('terapis'));
+        if($this->aksiDari === 'pasien') {
+            $list_terapis = Terapis::orderBy('nama', 'ASC')->get();
+            return view('livewire.terapi-create-form', compact('list_terapis'));
+        } elseif ($this->aksiDari === 'jadwal') {
+            return view('livewire.terapi-fill-form');
+        }
     }
 
     public function toNext() {
@@ -52,7 +67,6 @@ class TerapiCreateForm extends Component
     public function setTerapis($terapis) {
         $this->id_terapis = $terapis['id'];
         $this->nama_terapis = $terapis['nama'];
-        // dd($this->nama_terapis);
     }
 
     public function validateData(){
@@ -68,7 +82,9 @@ class TerapiCreateForm extends Component
             $id_sub = $this->id_sub;
             $id_terapis = $this->id_terapis;
             $this->validate([
-                'id_terapis' => 'required',
+                'id_terapis' => [
+                    Rule::requiredIf(empty($this->id_terapis)),
+                ],
                 'pra_terapi' => 'max:100',
                 'post_terapi' => 'max:100',
                 'tanggal' => [
@@ -118,10 +134,24 @@ class TerapiCreateForm extends Component
 
         $dataTerapi['id_terapi'] = $id;
 
-        RekamTerapi::create($dataTerapi);
+        $isTerapiSuccess = RekamTerapi::create($dataTerapi);
 
-        return redirect(route('terapi.rekam', [$this->pasien, $this->id_sub]))
-                            ->with('success', 'Terapi Harian berhasil ditambahkan.')
-                            ->with('create', true);
+        if($isTerapiSuccess) {
+            $totalTerapiSub = RekamTerapi::totalTerapiSub($this->id_sub);
+            SubRekamMedis::where('id_sub', $this->id_sub)->update(['total_terapi' => $totalTerapiSub]);
+            if($this->aksiDari === 'pasien') {
+                return redirect(route('terapi.rekam', [$this->pasien, $this->id_sub]))
+                                ->with('success', 'Terapi Harian berhasil ditambahkan.')
+                                ->with('create', true);
+            } elseif ($this->aksiDari === 'jadwal') {
+                Jadwal::where('id_jadwal', $this->id_jadwal)->update(['status' => 'Terlaksana']);
+                return redirect(route('jadwal'))
+                                ->with('success', 'Data terapi berhasil ditambahkan.')
+                                ->with('create', true);
+                
+            }
+        }    
+
+        
     }
 }

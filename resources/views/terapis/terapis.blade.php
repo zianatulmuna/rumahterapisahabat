@@ -6,9 +6,11 @@
     <h1 class="h2">Terapis</h1>
   </div>
 
+  @if($userAdmin)
   <div class="pb-3 d-flex justify-content-start">
     <a href="{{ route('terapis.create') }}" class="btn c-btn-primary"><i class="bi bi-person-add"></i> Tambah Terapis</a>
   </div>
+  @endif
 
   <div class="d-flex justify-content-between my-4 gap-3">
     <form action="/terapis" class="custom-search shadow-sm rounded">

@@ -16,7 +16,7 @@
       @endif
       <div class="input-group rounded shadow-sm custom-search-input">
         <span class="input-group-text border-success-subtle bg-white border-end-0 pe-1" id="addon-wrapping"><i class="bi bi-search"></i></span>
-        <input type="search" name="search" value="{{ request('search') }}" class="form-control py-2 border-success-subtle border-start-0 rounded-end" placeholder="Cari Nama Pasien atau Penyakit" aria-label="Search" aria-describedby="search-addon" />
+        <input type="search" name="search" value="{{ request('search') }}" class="form-control py-2 border-success-subtle border-start-0 rounded-end" placeholder="Cari Nama Pasien/Penyakit/No.RM" aria-label="Search" aria-describedby="search-addon" />
         <button type="submit" class="btn btn-outline-success px-4 btn-cari">Cari</button>
       </div>        
     </form>
@@ -34,7 +34,7 @@
         </p>
       </button>
       <div class="dropdown-menu dropdown-menu-right mt-1 shadow w-100" aria-labelledurut="dropdownMenuButton">
-        <h6 class="dropdown-header pb-0">Berdasarkan status</h6>
+        <h6 class="dropdown-header">Berdasarkan status</h6>
         <a 
           href="?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}{{ Request::query('urut') ? 'urut=' . request('urut') : '' }}" 
           class="dropdown-item {{ Request::query('status') ? '' : 'active' }}">
@@ -51,7 +51,7 @@
           Selesai
         </a>
         <div class="dropdown-divider"></div>
-        <h6 class="dropdown-header pb-0">Urutkan berdasarkan</h6>
+        <h6 class="dropdown-header">Urutkan berdasarkan</h6>
         <a 
           href="?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}{{ Request::query('status') ? 'status=' . request('status') . '&' : '' }}urut=Terbaru" 
           class="dropdown-item {{ Request::query('urut') == 'Terbaru' ? 'active' : '' }}">
@@ -87,12 +87,14 @@
               <div class="card-body py-1 px-2 align-middle">
                 <p>
                   @foreach($pasien->rekamMedis as $rm)
-                    @php
-                        $arrayPenyakit = explode(",", $rm->penyakit);
-                    @endphp
-                    @foreach($arrayPenyakit as $p)
-                      <a href="#" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@elseif(!$loop->parent->last),@endif
-                    @endforeach
+                    {{-- @if($rm->penyakit != null) --}}
+                      @php
+                          $arrayPenyakit = explode(",", $rm->penyakit);
+                      @endphp
+                      @foreach($arrayPenyakit as $p)
+                        <a href="/rekam-terapi/tag?search={{ $p }}" target="_blank" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@elseif(!$loop->parent->last),@endif
+                      @endforeach
+                    {{-- @endif --}}
                   @endforeach
                 </p>
               </div>
@@ -109,6 +111,9 @@
           </div>
         @endforeach
       </div>
+      <div class="d-flex justify-content-center mt-5">
+        {{ $pasien_lama->appends(request()->query())->links() }}
+     </div>
     @else
      <span class="fst-italic py-4">Data tidak ditemukan.</span>
     @endif
@@ -118,7 +123,5 @@
 
 </div>
 
-<div class="d-flex justify-content-center my-4 p">
-   {{ $pasien_lama->appends(request()->query())->links() }}
-</div>
+
 @endsection

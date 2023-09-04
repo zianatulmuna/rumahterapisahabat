@@ -2,24 +2,15 @@
 
 @section('container')
 <div class="content-container">
-   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
+   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 border-bottom">
       <h1 class="h2">Jadwal Terapi</h1>
    </div>
 
-   @if($userAdmin)
-   <div class="d-flex justify-content-start mb-4">
-        <a href="{{ route('jadwal.create') }}" class="btn c-btn-primary">
-            <i class="bi bi-plus-square pe-2"></i>
-            Tambah
-        </a>
-    </div>
-    @endif
-
-    <div class="d-flex justify-content-between align-items-sm-end flex-column-reverse flex-sm-row my-sm-3">
-        <div class="text-center mb-2 my-sm-0">
+    <div class="d-flex justify-content-between align-items-sm-end flex-column-reverse flex-sm-row mb-sm-3">
+        <div class="text-center mb-2 mt-4 my-sm-0">
             {{ $today }}
         </div>
-        <div class="col-12 col-sm-7 col-md-6 col-lg-5 col-xl-4">
+        <div class="col-12 col-sm-7 col-md-6 col-lg-5 col-xl-4 mt-4">
             <div class="btn-group w-100">
                 <button type="button" class="form-control d-flex justify-content-between align-items-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                     <span>Pilih Tanggal</span>
@@ -62,6 +53,7 @@
             </div>
         </div>
     </div>
+
     <div class="overflow-auto">
         @if(count($jadwal_terapi) > 0)
             <table class="table table-bordered align-middle overflow-auto" style="min-width: 450px;">
@@ -70,10 +62,9 @@
                     <th scope="col">No</th>
                     <th scope="col">Nama Pasien</th>
                     <th scope="col" class="table-col-rm">Rekam Medis</th>
-                    <th scope="col" class="table-col-terapis">Terapis</th>
-                    @if($userAdmin)
+                    <th scope="col" class="table-col-terapis">Penyakit</th>
+                    <th scope="col" class="table-col-terapis">Rekam Terapi</th>
                     <th scope="col" class="table-col-aksi">Aksi</th>
-                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -89,17 +80,23 @@
                                     <i class="bi bi-eye"></i>
                                 </a>  
                             </td>
-                            <td class="text-capitalize text-center">{{ $jadwal->id_terapis ? $jadwal->terapis->username : '' }}</td>
-                            @if($userAdmin)
+                            <td class="text-capitalize text-center">{{ $jadwal->id_sub ? $jadwal->subRekamMedis->penyakit : '-' }}</td>
                             <td class="text-center">
-                                <a href="{{ route('jadwal.delete', $jadwal->id_jadwal) }}" class="c-badge c-badge-danger me-2" data-bs-toggle="modal" data-bs-target="#jadwalDeleteModal">
-                                    <i class="bi bi-trash"></i>                      
-                                </a>
-                                <a href="{{ route('jadwal.edit', [$jadwal->pasien->slug, $jadwal->id_jadwal]) }}" class="c-badge c-badge-warning">
-                                    <i class="bi bi-pencil-square"></i>                  
-                                </a>      
+                                @if($jadwal->status === "Tertunda")
+                                    <a href="{{ route('jadwal.isi', [$jadwal->pasien->slug, $jadwal->id_jadwal]) }}" class="btn btn-sm c-btn-primary px-3 rounded-3">
+                                        <h6 class="m-0">Isi</h6>
+                                    </a>  
+                                @else
+                                    <a href="{{ route('terapi.rekam', [$jadwal->pasien->slug, $jadwal->id_sub ]) }}" class="btn btn-sm btn-light border-secondary-subtle px-3 rounded-3">Lihat</a>
+                                @endif
                             </td>
-                            @endif
+                            <td class="text-center">
+                                @if($jadwal->status === "Tertunda")
+                                    <a href="{{ route('jadwal.lepas', [$jadwal->pasien->slug, $jadwal->id_jadwal]) }}" class="btn btn-sm c-btn-danger px-2 rounded-3">Lepas</a>
+                                @else
+                                    <a href="" class="btn btn-sm c-btn-danger px-2 rounded-3 disabled" tabindex="-1" role="button" aria-disabled="true">Lepas</a>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -116,24 +113,6 @@
 <div class="d-flex justify-content-center mb-4">
     {{ $jadwal_terapi->appends(request()->query())->links() }}
 </div>
-@endsection
-
-@section('modal-alert')
-    @if(count($jadwal_terapi) > 0)
-    <!-- Terapi Delete Modal-->
-    <x-modal-alert 
-      id="jadwalDeleteModal"
-      title="Yakin ingin menghapus jadwal?"
-      :body="'<span>Jadwal akan dihapus <strong>permanen</strong>!</span>'"
-      icon="bi bi-exclamation-circle text-danger"
-      >
-      <form action="{{ route('jadwal.delete', $jadwal->id_jadwal) }}" method="post">
-        @method('delete')
-        @csrf
-        <button type="submit" class="btn btn-danger"><i class="bi bi-exclamation-triangle"></i> Hapus</button>
-     </form>
-    </x-modal-alert>
-   @endif
 @endsection
 
 @push('script')

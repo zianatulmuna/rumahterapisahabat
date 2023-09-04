@@ -19,6 +19,17 @@ class SubRekamMedis extends Model
     protected $primaryKey = 'id_sub';
     public $incrementing = false;
 
+    public function scopeFilter($query, $search, $sortBy)
+    {        
+        $query->when($search ?? false, function ($query, $search) {
+            return $query->where('penyakit', 'like', '%' . $search . '%');
+        });
+
+        $query->when($sortBy ?? false, function ($query, $sortBy) {
+            return $query->orderBy('id_sub', $sortBy);
+        });
+    }
+
     public function rekamMedis()
     {
         return $this->belongsTo(RekamMedis::class, 'id_rekam_medis');

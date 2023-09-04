@@ -12,11 +12,6 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PasienController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -30,7 +25,7 @@ class PasienController extends Controller
 
         $pasien_lama = Pasien::filter($search, $sortBy, $status)
                                 ->where('status_pendaftaran', 'Pasien Lama')
-                                ->paginate(16);
+                                ->paginate(12);
 
         return view('pasien.pasien-lama', compact('pasien_lama'));
     }
@@ -48,7 +43,7 @@ class PasienController extends Controller
 
         $pasien_baru = Pasien::filter($search, $sortBy, $status)
                                 ->where('status_pendaftaran', 'Prapasien')
-                                ->paginate(20);
+                                ->paginate(12);
 
         return view('pasien.pasien-baru', compact('pasien_baru'));
     }

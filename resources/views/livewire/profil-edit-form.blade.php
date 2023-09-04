@@ -126,8 +126,8 @@
                   <div class="mb-4">
                     <label for="password" class="form-label fw-bold">Password</label>
                     <div class="input-group">
-                      <input type="password" class="form-control border-end-0 @error('password') is-invalid @enderror" id="password" name="password" rows="4" style="text-transform: full-width-kana;" oninput="capFirst('password')" placeholder="Masukkan password baru" wire:model="password">
-                      <button type="button" class="input-group-text border-start-0 bg-white @error('password') is-invalid @enderror" id="mybutton"><i class="bi bi-eye-fill text-secondary"></i></button>
+                      <input type="password" class="form-control border-end-0 @error('password') is-invalid @enderror" id="password" name="password" rows="4" placeholder="Masukkan password baru" wire:model="password">
+                      <button type="button" class="input-group-text border-start-0 bg-white @error('password') is-invalid @enderror" id="pswButton"><i class="bi bi-eye-fill text-secondary"></i></button>
                     </div>
                     <div class="form-text">Minimal 3 karakter.</div>
                     @error('password')
@@ -190,7 +190,7 @@
   } 
 
   document.addEventListener('livewire:load', function () {
-  
+    
     Livewire.on('runScript', function () {
       const btn = document.querySelector('#pswButton');
       let input = document.getElementById('password');

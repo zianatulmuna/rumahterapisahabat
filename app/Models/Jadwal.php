@@ -15,7 +15,7 @@ class Jadwal extends Model
 
     public function getRouteKeyName(): string
     {
-        return 'tanggal';
+        return 'id_jadwal';
     }
 
     public function pasien()
@@ -25,6 +25,10 @@ class Jadwal extends Model
     public function terapis()
     {
         return $this->belongsTo(Terapis::class, 'id_terapis');
+    }
+    public function subRekamMedis()
+    {
+        return $this->belongsTo(SubRekamMedis::class, 'id_sub');
     }
     public function allPasien()
     {

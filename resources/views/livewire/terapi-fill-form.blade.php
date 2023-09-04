@@ -13,7 +13,7 @@
       </div>
   
       {{-- form --}}
-      <form wire:submit.prevent='update' class="main-form" id="updateForm" enctype="multipart/form-data">
+      <form wire:submit.prevent='create' class="main-form" id="createForm" enctype="multipart/form-data">
         @csrf
         <div class="mt-4 mt-sm-5" id="nav-tabContent">
           {{-- data diri --}}
@@ -21,38 +21,20 @@
             <div class="row row-cols-1 row-cols-lg-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
                 <div class="col">
                   <div class="mb-4">
-                    <label for="id_terapis" class="form-label fw-bold @error('id_terapis') is-invalid @enderror">Terapis <span class="text-danger">*</span></label>
-                    <div class="dropdown search-dinamis dropdown-terapis">
-                    <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false"{{ $userTerapis ? ' disabled' : '' }}>
-                        <span id="selectedTerapis">{{ $nama_terapis ? $nama_terapis : 'Pilih Terapis' }}</span>
-                        <i class="bi bi-chevron-down"></i>
-                    </button>
-                    <div class="dropdown-menu px-3 w-100 bg-body-tertiary shadow">
-                        <div class="input-group py-2">
-                          <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
-                          <input type="text" class="form-control border-start-0 search-input" placeholder="Cari nama terapis">
-                       </div>
-                        <ul class="select-options bg-white rounded"></ul>
-                    </div>
-                    </div>
-                    @error('id_terapis')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                    <div class="mb-4"> 
-                        <label for="tanggal" class="form-label fw-bold">Tanggal Terapi <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" wire:model="tanggal"{{ $userTerapis ? ' disabled' : '' }}>
-                        @error('tanggal')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-4">
-                        <label for="waktu" class="form-label fw-bold">Waktu Terapi</label>
-                        <input type="time" class="form-control @error('waktu') is-invalid @enderror" id="waktu" name="waktu" value="{{ old('waktu') }}" wire:model="waktu">
-                        @error('waktu')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <label for="pasien" class="form-label fw-bold">Pasien</label>
+                    <input type="text" class="form-control" value="{{ $pasien->nama }}" id="pasien" name="pasien" readonly>
+                  </div>
+                  <div class="mb-4"> 
+                      <label for="tanggal" class="form-label fw-bold">Tanggal Terapi <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small></label>
+                      <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ $tanggal }}" readonly>
+                  </div>
+                  <div class="mb-4">
+                      <label for="waktu" class="form-label fw-bold">Waktu Terapi</label>
+                      <input type="time" class="form-control @error('waktu') is-invalid @enderror" id="waktu" name="waktu" value="{{ old('waktu', $waktu) }}" wire:model="waktu">
+                      @error('waktu')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                  </div>
                 </div>
                 <div class="col">
                     <div class="mb-4"> 
@@ -161,83 +143,4 @@
         }
       } 
     </script>
-
-    {{-- script terapis --}}
-    <script>
-        function setTerapisToController(selectedLi) {
-              let id = selectedLi.getAttribute('data-id');
-              let nama = selectedLi.getAttribute('data-nama');
-              Livewire.emit('setTerapis', { id: id, nama: nama });
-          };
-  
-        function setScript() {
-          let dataTerapis = @json($terapis->toArray());
-  
-          const dropTerapis = document.querySelector(".dropdown-terapis");
-          let selectBtnTerapis = dropTerapis.querySelector("button");
-          let selectedTerapis = dropTerapis.querySelector("#selectedTerapis");
-          let searchInpTerapis = dropTerapis.querySelector(".search-input");
-          let optionsTerapis = dropTerapis.querySelector(".select-options");
-  
-          function addTerapis() {
-            optionsTerapis.innerHTML = "";
-            dataTerapis.forEach(terapis => {
-              let isSelected = (terapis.nama == selectedTerapis.innerText) ? " active" : "";
-              console.log(terapis.nama + " " + selectedTerapis.innerText)
-              let li = `
-                        <li class="dropdown-item ps-2${isSelected}" 
-                            id="terapisOption"
-                            data-id="${terapis.id_terapis}" 
-                            data-nama="${terapis.nama}"
-                            onclick="setTerapisToController(this)">
-                            <p class="m-0 d-flex justify-content-between w-100" >
-                                <span class="col-8 text-start text-truncate">${terapis.nama}</span>
-                                <span class="small fst-italic">${terapis.tingkatan}</span>
-                            </p>
-                        </li>
-                      `;     
-              optionsTerapis.insertAdjacentHTML("beforeend", li);
-            });
-          }
-  
-          searchInpTerapis.addEventListener("keyup", () => {
-            let arr = [];
-            let searchWord = searchInpTerapis.value.toLowerCase();
-            arr = dataTerapis.filter(terapis => {
-              let data = terapis.nama;
-              return data.toLowerCase().startsWith(searchWord);
-            }).map(terapis => {
-              let isSelected = (terapis.nama == selectedTerapis.innerText) ? " active" : "";
-                return `
-                        <li class="dropdown-item ps-2${isSelected}" 
-                            id="terapisOption"
-                            data-id="${terapis.id_terapis}" 
-                            data-nama="${terapis.nama}"
-                            onclick="setTerapisToController(this)">
-                            <p class="m-0 d-flex justify-content-between w-100" >
-                                <span class="col-8 text-start text-truncate">${terapis.nama}</span>
-                                <span class="small fst-italic">${terapis.tingkatan}</span>
-                            </p>
-                        </li>
-                        `; 
-            }).join("");
-            optionsTerapis.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
-          });
-  
-          selectBtnTerapis.addEventListener("click", () => {
-            dropTerapis.classList.toggle("active");
-            addTerapis();
-          });
-  
-        }
-  
-        document.addEventListener('livewire:load', function () {
-          setScript();
-  
-          Livewire.on('runScriptTerapis', function () {
-            setScript();
-          });
-        });
-  
-      </script>
   @endpush

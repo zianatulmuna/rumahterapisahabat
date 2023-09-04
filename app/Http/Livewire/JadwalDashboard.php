@@ -70,4 +70,14 @@ class JadwalDashboard extends Component
         $this->tglAkhir = $value['akhir'];
         $this->tanggal = "";  
     }
+
+    
+    public function ambilJadwal($id_jadwal, $id_terapis)
+    {        
+        Jadwal::where('id_jadwal', $id_jadwal)->update(['id_terapis' => $id_terapis]);
+    }
+    public function lepasJadwal($id_jadwal)
+    {        
+        Jadwal::where('id_jadwal', $id_jadwal)->update(['id_terapis' => null]);
+    }
 }

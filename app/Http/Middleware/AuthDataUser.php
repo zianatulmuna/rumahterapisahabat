@@ -19,9 +19,11 @@ class AuthDataUser
     {
         $userAdmin = Auth::guard('admin')->user();
         $userTerapis = Auth::guard('terapis')->user();
+        $userKepala = Auth::guard('kepala_terapis')->user();
 
         View::share('userAdmin', $userAdmin);
         View::share('userTerapis', $userTerapis);
+        View::share('userKepala', $userKepala);
 
         return $next($request);
     }

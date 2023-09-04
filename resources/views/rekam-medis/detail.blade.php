@@ -73,7 +73,7 @@
                   $arrayPenyakit = explode(",", $rm->penyakit);
                @endphp
                @foreach($arrayPenyakit as $p)
-                  <a href="#" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@endif
+                  <a href="/rekam-terapi/tag?search={{ $p }}" target="_blank" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@endif
                @endforeach
             </div>
          </div>
@@ -151,17 +151,24 @@
       </div>
    @endif
 
-   @if($rmDetected == 1) 
-      <div class="d-flex justify-content-between my-5 g-4">
+   @if($userAdmin)
+      @if($rmDetected == 1) 
+         <div class="d-flex justify-content-between my-5 g-4">
+            <a href="" class="btn btn-outline-danger py-1 px-2 py-sm-2 px-sm-3" data-toggle="modal" data-target="#pasienDeleteModal"><i class="bi bi-exclamation-triangle"></i> Hapus Pasien</a>
+            <div class="d-flex justify-content-end pe-lg-1">
+               <a type="button" class="btn c-btn-danger py-1 px-2 px-sm-3 py-sm-2 mx-2 mx-sm-3" data-toggle="modal" data-target="#rmDeleteModal"><i class="bi bi-trash"></i> Hapus</a>
+               <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="btn c-btn-warning  py-1 px-2 py-sm-2 px-sm-3 ml-3"><i class="bi bi-pencil-square pe-lg-1"></i> Edit</a>
+            </div>
+         </div>
+      @else
          <a href="" class="btn btn-outline-danger py-1 px-2 py-sm-2 px-sm-3" data-toggle="modal" data-target="#pasienDeleteModal"><i class="bi bi-exclamation-triangle"></i> Hapus Pasien</a>
-         <div class="d-flex justify-content-end pe-lg-1">
-            <a type="button" class="btn c-btn-danger py-1 px-2 px-sm-3 py-sm-2 mx-2 mx-sm-3" data-toggle="modal" data-target="#rmDeleteModal"><i class="bi bi-trash"></i> Hapus</a>
+      @endif
+   @elseif($userKepala)
+         <div class="d-flex justify-content-end my-5">
             <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="btn c-btn-warning  py-1 px-2 py-sm-2 px-sm-3 ml-3"><i class="bi bi-pencil-square pe-lg-1"></i> Edit</a>
          </div>
-      </div>
-   @else
-      <a href="" class="btn btn-outline-danger py-1 px-2 py-sm-2 px-sm-3" data-toggle="modal" data-target="#pasienDeleteModal"><i class="bi bi-exclamation-triangle"></i> Hapus Pasien</a>
    @endif
+
 </div>
 @endsection
 

@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class TerapisReady extends Component
 {
-    
+    protected $listeners = ['toggleSwitch'];
     public function render()
     {
         $terapis = Terapis::orderBy('nama', 'ASC')->get();

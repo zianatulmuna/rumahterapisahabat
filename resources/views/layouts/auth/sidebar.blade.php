@@ -27,7 +27,8 @@
       <li class="nav-item">
         <a href="{{ route('jadwal') }}" class="nav-link hstack {{ Request::is('jadwal*') ? 'active' : ''}}">
           <i class="bi bi-calendar-plus-fill me-2"></i>
-          {{ $userTerapis ? "Terapi" : "Jadwal" }}
+          Jadwal
+          {{-- {{ $userTerapis ? "Terapi" : "Jadwal" }} --}}
         </a>
       </li>
       @unless($userTerapis) 

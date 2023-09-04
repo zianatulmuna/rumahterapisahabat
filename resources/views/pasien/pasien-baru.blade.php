@@ -33,7 +33,7 @@
         </p>
       </button>
       <div class="dropdown-menu dropdown-menu-right mt-1 shadow w-100" aria-labelledby="dropdownMenuButton">
-        <li><h6 class="dropdown-header pb-0">Urutkan berdasarkan</h6></li>
+        <li><h6 class="dropdown-header">Urutkan berdasarkan</h6></li>
         <li><a href="?{{ Request::query('search') ? 'search=' . request('search') . '&' : '' }}urut=Terbaru" class="dropdown-item {{ Request::query('urut') == 'Terbaru' ? 'active' : '' }}"><i class="bi bi-sort-numeric-down-alt pe-1"></i> Terbaru</a></li>
         <li><a href="?{{ Request::query('search') ? 'search=' . request('search') . '&' : '' }}urut=Terlama" class="dropdown-item {{ Request::query('urut') == 'Terlama' ? 'active' : '' }}"><i class="bi bi-sort-numeric-down pe-1"></i> Terlama</a></li>
       </div>
@@ -46,9 +46,15 @@
         @foreach ($pasien_baru as $pasien)                  
           <div class="col">
             <div class="card card-baru border-0 shadow-sm">
-              <a href="{{ route('pasien.edit', $pasien->slug) }}"class="card-header py-2">
+              @if($userAdmin)
+              <a href="{{ route('pasien.edit', $pasien->slug) }}" class="card-header py-2">
                 <h6 class="card-header-text">{{ $pasien->nama }}</h6>
               </a>
+              @else
+                <div class="card-header py-2 text-white">
+                  <h6 class="card-header-text">{{ $pasien->nama }}</h6>
+                </div>
+              @endif
                @if($pasien->jenis_kelamin === 'Laki-Laki')
                   <img src="/img/avatar-l.png" class="card-img-top" alt="...">
                @else

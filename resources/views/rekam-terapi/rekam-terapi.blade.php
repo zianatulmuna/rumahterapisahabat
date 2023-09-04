@@ -13,7 +13,7 @@
         <div class="col">
         <h4 class="mt-4 mt-lg-5 mb-3">Penyakit</h4>
         <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 60px">
-                <a href="#" class="link-secondary link-underline-light">{{ $sub->penyakit }}</a>
+                <a href="/rekam-terapi/tag?search={{ $sub->penyakit }}" target="_blank" class="link-secondary link-underline-light">{{ $sub->penyakit }}</a>
         </div>
         </div>
         <div class="col">
@@ -64,16 +64,26 @@
     @else
       <span class="fst-italic">Belum ada histori terapi.</span>
     @endif
-    <div class="d-flex justify-content-between my-5 gap-3">
-        <a type="button" class="btn c-btn-danger" data-toggle="modal" data-target="#terapiDeleteModal">
-            <i class="bi bi-trash"></i>
-            Hapus
-        </a>
+
+    @if($userAdmin)
+        <div class="d-flex justify-content-between my-5 gap-3">
+            <a type="button" class="btn c-btn-danger" data-toggle="modal" data-target="#terapiDeleteModal">
+                <i class="bi bi-trash"></i>
+                Hapus
+            </a>
+            <a href="{{ route('terapi.tambah', [$pasien->slug, $sub->id_sub]) }}" class="btn btn-primary">
+                <i class="bi bi-plus-square pe-2"></i>
+                Tambah
+            </a>
+        </div>
+    @elseif($userKepala)
+    <div class="d-flex justify-content-end my-5">
         <a href="{{ route('terapi.tambah', [$pasien->slug, $sub->id_sub]) }}" class="btn btn-primary">
             <i class="bi bi-plus-square pe-2"></i>
             Tambah
         </a>
     </div>
+    @endif
 </div>
 @endsection
 

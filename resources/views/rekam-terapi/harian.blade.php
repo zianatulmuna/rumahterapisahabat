@@ -145,16 +145,37 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-between my-5 mx-0 mx-sm-2">
-        <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#terapiDeleteModal">
-            <i class="bi bi-trash"></i>
-            Hapus
-        </a>
-        <a href="{{ route('terapi.edit', [$pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn c-btn-warning px-3 px-sm-4">
+    @if($userAdmin)
+      <div class="d-flex justify-content-between my-5 mx-0 mx-sm-2">
+         <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#terapiDeleteModal">
+               <i class="bi bi-trash"></i>
+               Hapus
+         </a>
+         <a href="{{ route('terapi.edit', [$pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn c-btn-warning px-3 px-sm-4">
             <i class="bi bi-pencil-square"></i>
             Edit
-        </a>
-    </div>
+         </a>
+      </div>
+    @elseif($userKepala)
+      <div class="d-flex justify-content-end my-5 mx-0 mx-sm-2">
+         <a href="{{ route('terapi.edit', [$pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn c-btn-warning px-3 px-sm-4">
+            <i class="bi bi-pencil-square"></i>
+            Edit
+         </a>
+      </div>
+   @else
+      @if($terapi->id_terapis === $userTerapis->id_terapis)
+      <div class="mt-5 mx-0 mx-sm-2 text-end">
+         <a href="{{ route('terapi.edit', [$pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn c-btn-warning px-3 px-sm-4">
+            <i class="bi bi-pencil-square"></i>
+            Edit
+         </a>
+      </div>
+      @endif
+   @endif
+      
+        
+    
     
 </div>
 @endsection

@@ -13,6 +13,8 @@
       <title>Admin - Rumah Terapi Sahabat</title>
     @elseif($userTerapis)
       <title>Terapis - Rumah Terapi Sahabat</title>
+    @elseif($userKepala)
+      <title>Kepala Terapis - Rumah Terapi Sahabat</title>
     @endif
 
     <!-- Custom fonts -->
@@ -42,6 +44,31 @@
         <main class="ms-lg-auto col-lg-10 py-1 container-bg">
           @yield('container')          
         </main>
+      </div>
+    </div>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" style="background-color: rgba(0, 0, 0, 0.3)" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-expanded="false">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content mx-3">
+          <div class="modal-header justify-content-center border-0 bg-danger">
+            <h1 class="fw-bold text-white">
+              <i class="bi bi-exclamation-circle" style="font-size: 40px;"></i>
+            </h1>
+          </div>
+          <div class="modal-body text-center py-4">
+            <h5 class="fw-bold">Yakin ingin keluar?</h5>
+            Tekan "Logout" jika ingin mengakhiri session.
+          </div>
+          <div class="modal-footer justify-content-between mx-3">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+            <form action="/logout" method="post">
+              @csrf
+              <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
 

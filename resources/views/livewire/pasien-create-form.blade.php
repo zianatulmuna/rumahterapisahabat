@@ -534,7 +534,7 @@
     </div>
   </div>
   
-  @push('script')
+@push('script')
   <script>
     const target = document.querySelector(".main-bg");
     
@@ -745,5 +745,5 @@
       });
     });
   </script>
-  @endpush
+@endpush
   

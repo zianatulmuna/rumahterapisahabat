@@ -28,6 +28,7 @@ h1, h2, h3, h4,
 
 .content-container {
   padding: 30px 28px;
+  /* margin-bottom: 50px; */
 }
 
 .main-bg {
@@ -100,9 +101,9 @@ h1, h2, h3, h4,
   right: 0;
 }
 
-.dropdown-profil i {
+/* .dropdown-profil i {
   color: #9eabb6;
-}
+} */
 
 .dropdown-profil a {
   font-size: 14px;

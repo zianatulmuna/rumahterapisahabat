@@ -5,19 +5,8 @@
             <strong class="header-message text-success">Success!</strong>
             <p class="m-0 text-dark body-alert">{{ session('success') }}</p>
         </div>
-        <button type="button" class="btn-close small" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close small" data-dismiss="alert" aria-label="Close"></button>
     </div>
-        <div class="toast-header d-flex justify-content-between">
-            <div class="d-flex align-items-center">
-                <i class="bi bi-check-circle-fill fs-5 header-color me-2"></i>
-                <strong class="header-message fs-6">Success!</strong>
-            </div>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body text-black" style="font-size: 12pt;">
-            {{ session('success') }} sukses berhasil ditaman
-        </div>
-      </div> --}}
 </div>
 
 @push('script')  

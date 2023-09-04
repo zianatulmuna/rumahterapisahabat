@@ -53,6 +53,8 @@ class PasienEditForm extends Component
         $this->slug = $pasien->slug;
         $this->tag;
 
+        $this->rm = $rm;
+
         if($rm) {
             $this->id_rekam_medis = $rm->id_rekam_medis;
             $this->keluhan = $rm->keluhan;
@@ -150,7 +152,7 @@ class PasienEditForm extends Component
 
     public function deleteFoto() {
         $this->foto = null;        
-        $this->dbFoto = null;
+        $this->dbFoto = null; //menghapus foto yang ada dari db
     }
 
     public function checkDuplicateTag($value) {
@@ -384,23 +386,30 @@ class PasienEditForm extends Component
         }
 
         if ($this->foto) {
-            if ($this->dbFoto) {
-                Storage::delete($this->dbFoto);
-            }
+            //jika foto ada dari db tapi tidak tekan delete
+            if ($this->pathFoto) {
+                // Storage::delete($this->dbFoto);
+                Storage::delete($this->pathFoto);
+            } 
             $ext = $this->foto->getClientOriginalExtension();
             $dataDiri['foto'] = $this->foto->storeAs('pasien', $this->slug . '.' . $ext);
         } 
         
+        //jika foto ada && dihapus && tidak diganti
         if ($this->pathFoto && $this->dbFoto == null && $this->foto == null) {
-            $dataDiri['foto'] = '';
+            $dataDiri['foto'] = null;
             Storage::delete($this->pathFoto);
         }
+        // if ($this->pathFoto && $this->dbFoto == null && $this->foto == null) {
+        //     $dataDiri['foto'] = '';
+        //     Storage::delete($this->pathFoto);
+        // }
 
         if($this->rm) {   
             $idRM = $this->id_rekam_medis;
-            // $this->k_bsni = $this->provId ? $this->k_bsni : substr($this->id_rekam_medis, 0, 3);
+            $this->k_bsni = $this->provId ? $this->k_bsni : substr($this->id_rekam_medis, 0, 3);
             
-            $this->k_bsni = substr($this->id_rekam_medis, 0, 3);
+            // $this->k_bsni = substr($this->id_rekam_medis, 0, 3);
             
             $date = substr($this->id_rekam_medis, 3, 4);
             $isTanggalRMChanged = $isPenyakitChanged = false;

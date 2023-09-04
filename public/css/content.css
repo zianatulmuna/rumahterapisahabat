@@ -222,9 +222,7 @@
 }
 
 .card-baru a{
-  font-family: "Raleway", sans-serif;
   color: #ffffff;
-  /* font-weight: 600; */
   padding: 10px 8px;
   text-decoration: none;
 }
@@ -236,6 +234,8 @@
 }
 
 .card-baru .card-header .card-header-text {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

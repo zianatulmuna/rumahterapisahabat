@@ -37,24 +37,6 @@ function updateNameTerapis(selectedLi) {
     idTerapis.value = selectedLi.getAttribute('data-id');
 }
 
-// searchInpTerapis.addEventListener("keyup", () => {
-//     let arr = [];
-//     let searchWord = searchInpTerapis.value.toLowerCase();
-//     arr = dataTerapis.filter(terapis => {
-//         let data = terapis.nama;
-//         return data.toLowerCase().startsWith(searchWord);
-//     }).map(terapis => {
-//         let isSelected = terapis.nama == selectBtnTerapis.firstElementChild.innerText ? "active" : "";
-//         return `<li class="dropdown-item d-flex justify-content-between ${isSelected}" 
-//                     data-id="${terapis.id_terapis}" 
-//                     data-nama="${terapis.nama}" 
-//                     onclick="updateNameTerapis(this)">
-//                     <div class="col-8 text-truncate">${terapis.nama}</div>
-//                     <div class="small fst-italic">${terapis.tingkatan}</div>
-//                 </li>`;
-//     }).join("");
-//     optionsTerapis.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
-// });
 searchInpTerapis.addEventListener("keyup", () => {
     let arr = [];
     let searchWords = searchInpTerapis.value.toLowerCase().split(' ');
@@ -71,7 +53,7 @@ searchInpTerapis.addEventListener("keyup", () => {
                   <div class="small fst-italic">${terapis.tingkatan}</div>
               </li>`;
     }).join("");
-    optionsTerapis.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
+    optionsTerapis.innerHTML = arr ? arr : `<p class="p-2 m-0">Oops! Data tidak ditemukan</p>`;
   });
   
 

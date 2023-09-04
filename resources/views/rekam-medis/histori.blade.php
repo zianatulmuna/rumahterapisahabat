@@ -26,7 +26,7 @@
                                  $arrayPenyakit = explode(",", $rm->penyakit);
                               @endphp
                               @foreach($arrayPenyakit as $p)
-                                 <a href="#" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@endif
+                                 <a href="/rekam-terapi/tag?search={{ $p }}" target="_blank" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@endif
                               @endforeach
                            </p>
                         </li>
@@ -47,7 +47,11 @@
                      </ul>
                      <div class="card-body row">
                         @if(count($rm->subRekamMedis) == 0)
-                           <div class="fst-italic">Data rekam terapi telah dihapus. Tambahkan penyakit pada Rekam Medis <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.</div>
+                           <div class="fst-italic">Data rekam terapi telah dihapus. 
+                              @if($userAdmin)
+                                 Tambahkan penyakit pada Rekam Medis <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.
+                              @endif
+                           </div>
                         @elseif(count($rm->subRekamMedis) == 1)
                            <a href="{{ route('terapi.rekam', [$pasien->slug, $rm->subRekamMedis[0]->id_sub]) }}" class="link-success text-decoration-none">
                               Rekam Terapi 
@@ -87,7 +91,7 @@
                               $arrayPenyakit = explode(",", $rm->penyakit);
                            @endphp
                            @foreach($arrayPenyakit as $p)
-                              <a href="#" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@endif
+                              <a href="/rekam-terapi/tag?search={{ $p }}" target="_blank" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@endif
                            @endforeach
                         </p>
                      </li>
@@ -142,8 +146,11 @@
          Pasien ini tidak memiliki histori rekam medis.
       </div>
    @endif
-   <div class="d-flex mt-3 justify-content-end">
-      <a href="{{ route('rm.create', $pasien->slug) }}" class="btn c-btn-primary"><i class="bi bi-file-earmark-plus pe-2"></i>Tambah Rekam Medis</a>
-   </div>
+
+   @if($userAdmin || $userKepala)
+      <div class="d-flex mt-3 justify-content-end">
+         <a href="{{ route('rm.create', $pasien->slug) }}" class="btn c-btn-primary"><i class="bi bi-file-earmark-plus pe-2"></i>Tambah Rekam Medis</a>
+      </div>
+   @endif
 </div>
 @endsection

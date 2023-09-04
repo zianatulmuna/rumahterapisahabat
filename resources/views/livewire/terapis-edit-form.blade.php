@@ -110,29 +110,7 @@
           {{-- data penunjang --}}
           @if($currentStep == 2)
             <div class="" id="nav-penunjang" aria-labelledby="nav-penunjang-tab" tabindex="0">
-              <div class="row row-cols-1 row-cols-lg-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">                
-                <div class="col">
-                  <div class="mb-4">
-                    <label for="username" class="form-label fw-bold">Username</label>
-                    <input type="text" name="username" id="username" class="form-control @error('username') is-invalid @enderror" id="username" value="{{ old('username') }}" wire:model="username">
-                    @error('username')
-                    <div class="invalid-feedback">
-                      {{ $message }}
-                    </div>
-                    @enderror
-                  </div>
-                  <div class="mb-4">
-                    <label for="password" class="form-label fw-bold">Password</label>
-                    <div class="input-group">
-                      <input type="password" class="form-control border-end-0 @error('password') is-invalid @enderror" id="password" name="password" rows="4" style="text-transform: full-width-kana;" placeholder="Masukkan password baru" wire:model="password">
-                      <button type="button" class="input-group-text border-start-0 bg-white @error('password') is-invalid @enderror" id="pswButton"><i class="bi bi-eye-fill text-secondary"></i></button>
-                    </div>
-                    <div class="form-text">Minimal 3 karakter.</div>
-                    @error('password')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                  </div>
-                </div>
+              <div class="row row-cols-1 row-cols-lg-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
                 <div class="col">
                   <div class="mb-4">
                     <label class="form-label fw-bold">Tingkatan Terapis</label>
@@ -151,6 +129,15 @@
                     @enderror
                   </div>
                   <div class="mb-4">
+                    <label for="total_terapi" class="form-label fw-bold">Total Terapi</label>
+                    <input type="number" name="total_terapi" id="total_terapi" class="form-control @error('total_terapi') is-invalid @enderror" id="total_terapi" value="{{ old('total_terapi') }}" wire:model="total_terapi">
+                    @error('total_terapi')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                  <div class="mb-4">
                     <label label class="form-label fw-bold w-100">Status Terapis</label>
                     @foreach($statusTerapis as $status)
                       @if (old('status') == $status)
@@ -166,7 +153,30 @@
                       @endif
                     @endforeach
                   </div>
-                </div>           
+                </div>                
+                <div class="col">
+                  <div class="mb-4">
+                    <label for="username" class="form-label fw-bold">Username</label>
+                    <input type="text" name="username" id="username" class="form-control @error('username') is-invalid @enderror" id="username" value="{{ old('username') }}" wire:model="username">
+                    @error('username')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                  <div class="mb-4">
+                    <label for="password" class="form-label fw-bold">Password</label>
+                    <div class="input-group">
+                      <input type="password" class="form-control border-end-0 @error('password') is-invalid @enderror" id="password" name="password" rows="4" placeholder="Masukkan password baru" wire:model="password">
+                      <button type="button" class="input-group-text border-start-0 bg-white @error('password') is-invalid @enderror" id="pswButton"><i class="bi bi-eye-fill text-secondary"></i></button>
+                    </div>
+                    <div class="form-text">Minimal 3 karakter.</div>
+                    @error('password')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+                           
               </div>
             </div>
           @endif

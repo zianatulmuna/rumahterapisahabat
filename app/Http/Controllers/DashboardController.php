@@ -25,7 +25,7 @@ class DashboardController extends Controller
 
         // $tahunTersedia = $this->selectTahun();
 
-        if(Auth::guard('admin')->user()) {
+        if(Auth::guard('admin')->user() || Auth::guard('kepala_terapis')->user()) {
             $view = 'admin.beranda';
         } elseif(Auth::guard('terapis')->user()) {
             $view = 'terapis.beranda';

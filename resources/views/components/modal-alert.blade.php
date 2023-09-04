@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content px-3 py-2">
                 <div class="modal-header border-0 p-0 pt-2">
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body mb-2">
                     <h1 class="fw-bold" id="exampleModalLabel">
@@ -14,7 +14,7 @@
                     {!! $body !!}
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
                     {!! $slot !!}
                 </div>
             </div>

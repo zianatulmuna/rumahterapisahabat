@@ -77,14 +77,25 @@
                                     <i class="bi bi-eye"></i>
                                 </a>  
                             </td>
-                            <td class="text-capitalize text-center">{{ $jadwal->terapis->username }}</td>
+                            <td class="text-capitalize text-center">
+                            @if($userTerapis)
+                                @if($jadwal->id_terapis === $userTerapis->id_terapis)
+                                    <button type="button" class="btn btn-sm c-btn-danger px-2 rounded-3 {{ $jadwal->status === 'Tertunda' ? '' : 'disabled'  }}" wire:click="lepasJadwal('{{ $jadwal->id_jadwal }}')" {{ $jadwal->status === 'Tertunda' ? '' : 'disabled'  }}>Lepas</button>
+                                @elseif($jadwal->id_terapis === null)
+                                    <button type="button" class="btn btn-sm c-btn-warning px-2 rounded-3" wire:click="ambilJadwal('{{ $jadwal->id_jadwal }}','{{ $userTerapis->id_terapis }}')">Ambil</button>
+                                @else
+                                    {{ $jadwal->terapis->username }}
+                                @endif
+                            @else
+                                {{ $jadwal->id_terapis ? $jadwal->terapis->username : '' }}
+                            @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
             <div class="d-flex justify-content-center mt-5 mb-3 p">
                 {{ $jadwal_terapi->links() }}
-                {{-- <a wire:click="updatedResetPagination">Reset Pagination</a> --}}
             </div>
         @else
             <div class="alert alert-warning py-2 mt-3 d-inline-flex align-items-center fst-italic" role="alert">

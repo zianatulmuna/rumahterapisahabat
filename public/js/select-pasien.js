@@ -43,6 +43,10 @@ function updateNamePasien(selectedLi) {
     telp.value = selectedLi.getAttribute('data-telp');
     gender.value = selectedLi.getAttribute('data-gender');
     birth.value = selectedLi.getAttribute('data-birth');
+
+    setTimeout(function() {
+        pasienChange();
+    }, 1000);
 }
 
 searchInpPasien.addEventListener("keyup", () => {
@@ -63,7 +67,7 @@ searchInpPasien.addEventListener("keyup", () => {
                     ${pasien.nama}
                 </li>`;
     }).join("");
-    optionsPasien.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Data tidak ditemukan</p>`;
+    optionsPasien.innerHTML = arr ? arr : `<p class="p-2 m-0">Oops! Data tidak ditemukan</p>`;
 });
 
 selectBtnPasien.addEventListener("click", () => dropPasien.classList.toggle("active"));

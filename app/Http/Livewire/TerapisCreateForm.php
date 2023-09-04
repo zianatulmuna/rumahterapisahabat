@@ -82,7 +82,7 @@ class TerapisCreateForm extends Component
             }
         } else {
             $this->validate([
-                'username' => ['required', 'min:3', 'max:30', 'unique:terapis'],
+                'username' => ['required', 'min:3', 'max:30', 'unique:terapis', 'unique:admin', 'unique:kepala_terapis'],
                 'password' => 'required|min:3|max:60',
                 'tingkatan' => 'required',
                 'total_terapi' => 'numeric|max_digits:10',

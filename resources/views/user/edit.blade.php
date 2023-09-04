@@ -6,7 +6,7 @@
       <h1 h1 class="h2">Edit Profil</h1>
   </div>
 
-  @livewire('form-edit-profil', ['user' => $user])
+  @livewire('profil-edit-form', ['user' => $user])
 </div>
 @endsection
 

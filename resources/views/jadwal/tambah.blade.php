@@ -12,7 +12,7 @@
         <div class="row row-cols-1 row-cols-md-2 p-3 py-sm-2 g-0 g-md-4 g-lg-5">
             <div class="col"> 
                <div class="mb-4">
-                  <label for="id_pasien" class="form-label fw-bold @error('id_pasien') is-invalid @enderror">Pasien</label>
+                  <label for="id_pasien" class="form-label fw-bold @error('id_pasien') is-invalid @enderror">Pasien <span class="text-danger">*</span></label>
                   <div class="dropdown search-dinamis dropdown-pasien">
                      <input type="hidden" name="id_pasien" value="{{ old('id_pasien') }}" id="id_pasien" class="form-control">
                      <button class="form-control d-flex justify-content-between align-items-center @error('id_pasien') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -46,7 +46,7 @@
             </div>            
             <div class="col"> 
                <div class="mb-4">
-                  <label for="id_terapis" class="form-label fw-bold @error('id_terapis') is-invalid @enderror">Terapis</label>
+                  <label for="id_terapis" class="form-label fw-bold @error('id_terapis') is-invalid @enderror">Terapis <span class="text-danger">*</span></label>
                   <div class="dropdown search-dinamis dropdown-terapis">
                      <input type="hidden" name="id_terapis" value="{{ old('id_terapis') }}" id="id_terapis" class="form-control">
                      <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -65,10 +65,18 @@
                      <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                </div>
+               <div class="mb-4">
+                  <label class="form-label fw-bold">Pilih Penyakit <span class="text-danger">*</span></label>
+                  <select class="form-select @error('id_sub') is-invalid @enderror" id="id_sub" name="id_sub">
+                    <option value="">Pilih Penyakit</option>
+                  </select>
+                  @error('id_sub')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                </div>
                <div class="mb-4"> 
-                  <label for="tanggal" class="form-label fw-bold">Tanggal Terapi</label>
+                  <label for="tanggal" class="form-label fw-bold">Tanggal Terapi <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
                   <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ old('tanggal') }}">
-                  <div class="form-text">Contoh: 9 Desember 2022 diisi 12/09/2022</div>
                   @error('tanggal')
                   <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
@@ -100,4 +108,22 @@
    </script>
    <script src="/js/select-pasien.js"></script>
    <script src="/js/select-terapis.js"></script>
+   <script>
+      const subSelect = document.querySelector("#id_sub");
+
+      function pasienChange() {
+         fetch('/jadwal/tambah/getSubRekamMedis?id=' + idPasien.value)
+            .then(response => response.json())
+            .then(data => {
+               data.forEach(sub => {
+                  subSelect.innerHTML += `
+                  <option value="${sub.id_sub}">${sub.penyakit}  (ID.RM: ${sub.id_rm})</option>
+                  `;               
+               });
+            })
+            .catch(error => {
+                  console.error('Error fetching JSON data:', error);
+               });
+      };
+   </script>
 @endpush

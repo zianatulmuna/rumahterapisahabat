@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+// use Livewire\Kernel;
 use App\Http\Livewire\TerapisReady;
 use Carbon\Carbon;
 use App\Models\Terapis;
@@ -11,11 +12,6 @@ use Illuminate\Support\Facades\Storage;
 
 class TerapisController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $terapis = Terapis::latest()->filter(request(['search', 'tingkatan']))->paginate(20);
@@ -24,37 +20,13 @@ class TerapisController extends Controller
         return view('terapis.terapis', compact('terapis', 'tingkatan'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('terapis.tambah');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Terapis  $terapis
-     * @return \Illuminate\Http\Response
-     */
     public function show(Terapis $terapis)
     {
-        // $histori_terapi = RekamTerapi::where('id_terapis', $terapis->id_terapis)->orderBy('tanggal', 'DESC')->paginate(10);
-
         $query = RekamTerapi::query();
 
         $request = false;
@@ -89,48 +61,24 @@ class TerapisController extends Controller
                             ->paginate(10);
 
         $tanggal_lahir = Carbon::parse($terapis->tanggal_lahir)->formatLocalized('%d %B %Y');        
-        $total_terapi = RekamTerapi::totalTerapi($terapis->id_terapis);
+        // $total_terapi = RekamTerapi::totalTerapi($terapis->id_terapis);
 
         return view('terapis.detail', compact(
             'terapis', 
             'histori_terapi', 
             'tanggal_caption',
             'tanggal_lahir', 
-            'total_terapi',
+            // 'total_terapi',
             'request'
         ));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Terapis  $terapis
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Terapis $terapis)
     {
         
         return view('terapis.edit', compact('terapis'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Terapis  $terapis
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Terapis $terapis)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Terapis  $terapis
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Terapis $terapis)
     {
         if ($terapis->foto) {
@@ -146,10 +94,11 @@ class TerapisController extends Controller
 
     public function setReady(Request $request)
     {
-        Terapis::where('username', $request->username)->update([
+        dd("halo");
+        Terapis::where('id_terapis', $request->id)->update([
             'is_ready' => $request->status,
         ]);
-
-        // TerapisReady::dispatch('toggleSwitch', [$request->username, $request->status]);
     }
+
+    
 }

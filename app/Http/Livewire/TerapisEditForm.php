@@ -16,7 +16,7 @@ class TerapisEditForm extends Component
 {
     use WithFileUploads;
 
-    public $nama, $no_telp, $jenis_kelamin, $tanggal_lahir, $agama, $alamat, $foto, $tingkatan, $status;
+    public $nama, $no_telp, $jenis_kelamin, $tanggal_lahir, $agama, $alamat, $foto, $tingkatan, $status, $total_terapi;
     public $username, $password;
 
     public $terapis, $id_terapis, $dbUsername, $dbPassword, $dbFoto, $pathFoto;
@@ -32,6 +32,7 @@ class TerapisEditForm extends Component
         $this->dbPassword = $terapis->password;
         $this->tingkatan = $terapis->tingkatan;
         $this->status = $terapis->status;
+        $this->total_terapi = $terapis->total_terapi;
         $this->no_telp = $terapis->no_telp;
         $this->jenis_kelamin = $terapis->jenis_kelamin;
         $this->tanggal_lahir = $terapis->tanggal_lahir;
@@ -104,10 +105,13 @@ class TerapisEditForm extends Component
                 'username' => ['required', 
                                 'min:3', 
                                 'max:30', 
-                                Rule::unique('terapis')->ignore($this->id_terapis, 'id_terapis')],
+                                Rule::unique('terapis')->ignore($this->id_terapis, 'id_terapis'),
+                                Rule::unique('admin')->ignore($this->id_terapis, 'id_admin'),
+                                Rule::unique('kepala_terapis')->ignore($this->id_user, 'id_kepala')],
                 'password' => 'nullable|min:3|max:10',
                 'tingkatan' => 'required',
-                'status' => 'required'
+                // 'status' => 'required',                
+                'total_terapi' => 'numeric|max_digits:10',
             ], $message);
 
         }
@@ -126,6 +130,7 @@ class TerapisEditForm extends Component
             'agama' => $this->agama,
             'tingkatan' => $this->tingkatan,
             'status' => $this->status,
+            'total_terapi' => $this->total_terapi,
             'username' => $this->username,
             'password' => $this->password,
         ); 

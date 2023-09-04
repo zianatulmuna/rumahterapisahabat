@@ -18,7 +18,7 @@
                   @foreach($rm->subRekamMedis as $sub)
                      <div class="col mb-4">
                         <div class="card shadow-sm">
-                           <h6 class="card-header bg-success text-white text-center">{{ $sub->penyakit }}</h6>
+                           <h6 class="card-header bg-success text-white fw-bold text-center">{{ $sub->penyakit }}</h6>
                            <ul class="list-group list-group-flush text-left list-group-histori">
                               <li class="list-group-item">
                                  <div class="d-flex justify-content-between right-0">
@@ -67,7 +67,7 @@
                            </ul>
                            <div class="card-body d-flex justify-content-between mx-2">
                               <a href="{{ route('terapi.rekam', [$pasien->slug, $sub->id_sub]) }}" class="link-success">Rekam Terapi</a>
-                              <a href="{{ route('pasien.rm', $pasien->slug) }}" class="link-success">Rekam Medis</a>
+                              <a href="{{ route('rm.detail', [$pasien->slug, $rm->id_rekam_medis]) }}" class="link-success">Rekam Medis</a>
                            </div>
                         </div>
                      </div>
@@ -76,8 +76,11 @@
                <div class="w-100">
                   <div class="alert alert-warning hstack gap-1 p-2 px-3 d-inline-flex">
                      <i class="bi bi-exclamation-circle pe-1 fw-semibold"></i>
-                     <p class="m-0">Data rekam terapi telah dihapus. Tambahkan penyakit pada Rekam Medis
-                     <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.</p>
+                     <p class="m-0">Data rekam terapi telah dihapus. 
+                        @if($userAdmin)
+                           Tambahkan penyakit pada Rekam Medis <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.
+                        @endif
+                     </p>
                   </div>
                </div>
                @endif
@@ -96,7 +99,7 @@
                   @foreach($rm->subRekamMedis as $sub)
                   <div class="col mb-4">
                      <div class="card shadow-sm">
-                        <h6 class="card-header bg-secondary text-white text-center">{{ $sub->penyakit }}</h6>
+                        <h6 class="card-header bg-nonaktif fw-bold text-center">{{ $sub->penyakit }}</h6>
                         <ul class="list-group list-group-flush text-left list-group-histori">
                            <li class="list-group-item">
                               <div class="d-flex justify-content-between right-0">
@@ -145,7 +148,7 @@
                         </ul>
                         <div class="card-body d-flex justify-content-between mx-2">
                            <a href="{{ route('terapi.rekam', [$pasien->slug, $sub->id_sub]) }}" class="link-success">Rekam Terapi</a>
-                           <a href="{{ route('pasien.rm', $pasien->slug) }}" class="link-success">Rekam Medis</a>
+                           <a href="{{ route('rm.detail', [$pasien->slug, $rm->id_rekam_medis]) }}" class="link-success">Rekam Medis</a>
                         </div>
                      </div>
                   </div>
@@ -157,7 +160,9 @@
       <div class="alert alert-danger d-inline-flex mt-5 p-0 p-2 px-3">
          <i class="bi bi-exclamation-circle pe-1 fw-semibold"></i>
          Pasien ini tidak memiliki histori rekam terapi.
-         <a href="{{ route('rm.create', $pasien->slug) }}" class="alert-link ps-2">Tambah Rekam Medis</a>
+         @if($userAdmin)
+            <a href="{{ route('rm.create', $pasien->slug) }}" class="alert-link ps-2">Tambah Rekam Medis</a>
+         @endif
       </div>
    @endif
 </div>

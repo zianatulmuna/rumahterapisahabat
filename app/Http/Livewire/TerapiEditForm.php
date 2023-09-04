@@ -78,6 +78,7 @@ class TerapiEditForm extends Component
         if($this->currentStep == 1){
             $id_sub = $this->id_sub;
             $id_terapis = $this->id_terapis;
+            $tanggal = $this->tanggal;
             $this->validate([
                 'id_terapis' => 'required',
                 'pra_terapi' => 'max:100',
@@ -85,8 +86,8 @@ class TerapiEditForm extends Component
                 'tanggal' => [
                     'required',
                     'date',
-                    Rule::unique('rekam_terapi', 'tanggal')->where(function ($query) use ($id_sub, $id_terapis) {
-                        return $query->where('id_sub', $id_sub)->where('id_terapis', $id_terapis);
+                    Rule::unique('rekam_terapi', 'tanggal')->where(function ($query) use ($tanggal, $id_sub, $id_terapis) {
+                        return $query->where('tanggal', '!=', $tanggal)->where('id_sub', $id_sub)->where('id_terapis', $id_terapis);
                     }),
                 ]
             ], $message);

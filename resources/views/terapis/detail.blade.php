@@ -62,7 +62,7 @@
                   <td>Total Terapi</td>
                   <td class="d-flex align-items-center">
                      <i class="bi bi-heart-pulse-fill text-success pe-1"></i>
-                     <span>{{ $total_terapi }}</span>
+                     <span>{{ $terapis->total_terapi }}</span>
                   </td>
                </tr>
             </tbody>            
@@ -162,12 +162,13 @@
          </tbody>
       </table>
    </div>
-   <div class="mt-3 mb-5">
+   <div class="mt-3">
       {{ $histori_terapi->appends(request()->query())->links() }}
    </div>
    @endif
    
-   <div class="d-flex justify-content-end mb-4 gap-3">
+   @if($userAdmin)
+   <div class="d-flex justify-content-end mb-4 mt-5 gap-3">
       <a type="button" class="btn c-btn-danger" data-toggle="modal" data-target="#terapisDeleteModal">
          <i class="bi bi-trash"></i>
          Hapus
@@ -177,6 +178,7 @@
          Edit
      </a>
    </div>
+   @endif
 
 </div>
 @endsection

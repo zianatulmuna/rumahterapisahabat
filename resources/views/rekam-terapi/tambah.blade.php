@@ -6,7 +6,7 @@
     <h1 h1 class="h3">Tambah Terapi Harian</h1>
   </div>
 
-  @livewire('terapi-create-form', ['pasien' => $pasien, 'id_sub' => $id_sub])
+  @livewire('terapi-create-form', ['pasien' => $pasien, 'id_sub' => $id_sub, 'jadwal' => $jadwal, 'aksiDari' => $aksiDari])
 
   
 </div>
