@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SubRekamMedis;
 use Carbon\Carbon;
 use App\Models\Jadwal;
 use App\Models\Pasien;
@@ -46,7 +47,7 @@ class JadwalController extends Controller
         return view($view, compact('jadwal_terapi', 'today'));
     }
 
-    public function create()
+    public function add()
     {
         $pasien = Pasien::whereHas('rekamMedis', function ($query) {
             $query->where('status_pasien', 'Rawat Jalan')
@@ -60,8 +61,42 @@ class JadwalController extends Controller
         return view('jadwal.tambah', compact('pasien', 'terapis'));
     }
 
-    public function createTerapiFromJadwal(Pasien $pasien, Jadwal $jadwal)
-    {        
+    public function jadwalDummy($id_sub) {
+        $t = 6;
+
+        for ($i = 0; $i < 5; $i++) {
+            $id = IdGenerator::generate([
+                'table' => 'jadwal', 
+                'field' => 'id_jadwal', 
+                'length' => 10, 
+                'prefix' => 'JDW2309',
+                'reset_on_prefix_change' => true
+            ]);
+            
+            $jam_acak = rand(9, 22);        // Nilai acak untuk jam (0-23)
+            $menit_acak = rand(0, 59);      // Nilai acak untuk menit (0-59)
+            $detik_acak = rand(0, 59);      // Nilai acak untuk detik (0-59)
+
+            // Membuat waktu acak
+            $waktu_acak = sprintf("%02d:%02d:%02d", $jam_acak, $menit_acak, $detik_acak);
+
+            $sub = SubRekamMedis::all()->random();
+
+            $dataTerapi = array(
+                'id_jadwal' => $id,
+                'id_pasien' => $sub->rekamMedis->id_pasien,
+                'id_terapis' => Terapis::all()->random()->id_terapis,
+                'id_sub' => $sub->id_sub,
+                'tanggal' => '2023-09-' . $t,
+                'waktu' => $waktu_acak,
+            ); 
+            Jadwal::create($dataTerapi);
+        }
+        return redirect()->back();
+    }
+
+    public function addTerapiFromJadwal(Pasien $pasien, Jadwal $jadwal)
+    {  
         $id_sub = $jadwal->id_sub;
         $aksiDari = "jadwal";
 
@@ -80,7 +115,7 @@ class JadwalController extends Controller
         ];
 
         $dataJadwal = $request->validate([
-            'id_terapis' => 'required',
+            'id_terapis' => 'nullable',
             'id_pasien' => 'required',
             'id_sub' => 'required',
             'tanggal' => [
@@ -155,7 +190,7 @@ class JadwalController extends Controller
                             ->with('update', true);
     }
 
-    public function destroy($jadwal)
+    public function delete($jadwal)
     {
         Jadwal::where('id_jadwal', $jadwal)->delete();
 
@@ -178,7 +213,7 @@ class JadwalController extends Controller
         return response()->json($dataSub);
     }
 
-    public function lepasJadwal(Pasien $pasien, Jadwal $jadwal)
+    public function cancelJadwal(Pasien $pasien, Jadwal $jadwal)
     {        
         Jadwal::where('id_jadwal', $jadwal->id_jadwal)->update(['id_terapis' => null]);
 

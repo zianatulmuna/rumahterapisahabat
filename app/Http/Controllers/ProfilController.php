@@ -13,6 +13,7 @@ class ProfilController extends Controller
 
         return view('user.profil', compact('user', 'tanggal_lahir'));
     }
+    
     public function edit () {
         $user = auth()->user();
 

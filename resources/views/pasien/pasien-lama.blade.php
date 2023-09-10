@@ -16,7 +16,7 @@
       @endif
       <div class="input-group rounded shadow-sm custom-search-input">
         <span class="input-group-text border-success-subtle bg-white border-end-0 pe-1" id="addon-wrapping"><i class="bi bi-search"></i></span>
-        <input type="search" name="search" value="{{ request('search') }}" class="form-control py-2 border-success-subtle border-start-0 rounded-end" placeholder="Cari Nama Pasien/Penyakit/No.RM" aria-label="Search" aria-describedby="search-addon" />
+        <input type="search" name="search" value="{{ request('search') }}" class="form-control py-2 border-success-subtle border-start-0 rounded-end" placeholder="Cari Nama Pasien/Penyakit/ID.Pasien/No.RM" aria-label="Search" aria-describedby="search-addon" />
         <button type="submit" class="btn btn-outline-success px-4 btn-cari">Cari</button>
       </div>        
     </form>
@@ -44,6 +44,11 @@
           href="?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}status=Rawat Jalan{{ Request::query('urut') ? '&urut=' . request('urut') : '' }}"
           class="dropdown-item {{ Request::query('status') == 'Rawat Jalan' ? 'active' : '' }}">
           Rawat Jalan
+        </a>
+        <a 
+          href="?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}status=Jeda{{ Request::query('urut') ? '&urut=' . request('urut') : '' }}" 
+          class="dropdown-item {{ Request::query('status') == 'Jeda' ? 'active' : '' }}">
+          Jeda
         </a>
         <a 
           href="?{{ Request::query('search') != '' ? 'search=' . request('search') . '&' : '' }}status=Selesai{{ Request::query('urut') ? '&urut=' . request('urut') : '' }}" 

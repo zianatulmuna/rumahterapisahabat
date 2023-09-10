@@ -20,12 +20,12 @@ class TerapisController extends Controller
         return view('terapis.terapis', compact('terapis', 'tingkatan'));
     }
 
-    public function create()
+    public function add()
     {
         return view('terapis.tambah');
     }
 
-    public function show(Terapis $terapis)
+    public function detail(Terapis $terapis)
     {
         $query = RekamTerapi::query();
 
@@ -60,26 +60,23 @@ class TerapisController extends Controller
                             ->orderBy('tanggal', 'DESC')
                             ->paginate(10);
 
-        $tanggal_lahir = Carbon::parse($terapis->tanggal_lahir)->formatLocalized('%d %B %Y');        
-        // $total_terapi = RekamTerapi::totalTerapi($terapis->id_terapis);
+        $tanggal_lahir = Carbon::parse($terapis->tanggal_lahir)->formatLocalized('%d %B %Y'); 
 
         return view('terapis.detail', compact(
             'terapis', 
             'histori_terapi', 
             'tanggal_caption',
             'tanggal_lahir', 
-            // 'total_terapi',
             'request'
         ));
     }
 
     public function edit(Terapis $terapis)
-    {
-        
+    {        
         return view('terapis.edit', compact('terapis'));
     }
 
-    public function destroy(Terapis $terapis)
+    public function delete(Terapis $terapis)
     {
         if ($terapis->foto) {
             Storage::delete($terapis->foto);
@@ -92,13 +89,13 @@ class TerapisController extends Controller
                             ->with('delete', true); 
     }
 
-    public function setReady(Request $request)
-    {
-        dd("halo");
-        Terapis::where('id_terapis', $request->id)->update([
-            'is_ready' => $request->status,
-        ]);
-    }
+    // public function setReady(Request $request)
+    // {
+    //     dd("halo");
+    //     Terapis::where('id_terapis', $request->id)->update([
+    //         'is_ready' => $request->status,
+    //     ]);
+    // }
 
     
 }

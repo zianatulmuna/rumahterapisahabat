@@ -127,11 +127,15 @@
                   <td class="px-2">Target Akhir</td>
                   <td class="px-2">{{ $rm->target_akhir }}</td>
                </tr>
+               <tr>
+                  <td class="px-2">Hasil Lab</td>
+                  <td class="px-2"><a href="{{ $rm->link_perkembangan }}">{{ $rm->link_perkembangan }}</a></td>
+               </tr>
             </table>
          </div>
          <div class="col">
             <h4 class="mt-4 mt-lg-5 mb-3">Kesimpulan</h4>
-            <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 65px">
+            <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 100px">
                <p>{{ $rm->kesimpulan }}</p>
             </div>
          </div>

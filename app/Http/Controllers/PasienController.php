@@ -4,33 +4,26 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Pasien;
-use App\Models\RekamMedis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
-use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PasienController extends Controller
 {
-    public function index(Request $request)
+    public function allPasien(Request $request)
     {
         $search = $request->input('search');
         $status = $request->input('status');
 
-        if(request('urut') === 'Terlama') {
-            $sortBy = 'ASC';
-        } else {
-            $sortBy = 'DESC';
-        }
+        $sortBy = request('urut') === 'Terlama' ? 'ASC' : 'DESC';
 
         $pasien_lama = Pasien::filter($search, $sortBy, $status)
-                                ->where('status_pendaftaran', 'Pasien Lama')
+                                ->where('status_pendaftaran', 'Pasien')
                                 ->paginate(12);
 
         return view('pasien.pasien-lama', compact('pasien_lama'));
     }
 
-    public function getPrapasien(Request $request)
+    public function allPrapasien(Request $request)
     {
         $search = $request->input('search');
         $status = '';
@@ -48,82 +41,47 @@ class PasienController extends Controller
         return view('pasien.pasien-baru', compact('pasien_baru'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function add()
     {
-        return view('pasien.tambah', [
-            'pasien' => ''
-        ]);
+        $pasien = '';
+
+        return view('pasien.tambah', compact('pasien'));
     }
 
-    
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Pasien  $pasien
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pasien $pasien)
+    public function detail(Pasien $pasien)
     {
         $rekamMedis = $pasien->rekamMedis()->where('status_pasien', 'Rawat Jalan')->get();
+        $rm = $rekamMedis->first();
+        $umur = Carbon::parse($pasien->tanggal_lahir)->age;
 
         if($rekamMedis->count() < 1) {
             $rmDetected = 0;
-        }elseif ($rekamMedis->count() == 1) {
+        } elseif ($rekamMedis->count() == 1) {
             $rmDetected = 1;
-        }else{
+        } else {
             $rmDetected = 2;
         }
         
-        return view('rekam-medis.detail', [
-            'pasien' => $pasien,
-            'rmDetected' => $rmDetected,
-            'rm' =>$rekamMedis->first(),
-            'umur' => Carbon::parse($pasien->tanggal_lahir)->age
-        ]);
+        return view('rekam-medis.detail', compact(
+            'pasien',
+            'rmDetected',
+            'rm',
+            'umur'
+        ));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pasien  $pasien
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Pasien $pasien)
     {
-        return view('pasien.edit', [
-            'pasien' => $pasien,
-            'rm'=> ''
-        ]);
+        $rm = '';
+        return view('pasien.edit', compact('pasien', 'rm'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pasien  $pasien
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pasien $pasien)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Pasien  $pasien
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pasien $pasien)
+    public function delete(Pasien $pasien)
     {
         if ($pasien->foto) {
             Storage::delete($pasien->foto);
         }
+        
         Pasien::destroy($pasien->id_pasien);
 
         return redirect()->route('pasien.lama')

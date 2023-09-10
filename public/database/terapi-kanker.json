@@ -1,0 +1,83 @@
+[
+    {
+        "kondisi_sebelum_terapi": "Demam dan lemah",
+        "kondisi_setelah_terapi": "Suhu tubuh normal dan energi pulih",
+        "keluhan": "Sakit kepala dan kelelahan",
+        "tindakan_terapi": "Pengukuran suhu tubuh, istirahat, dan minum air banyak",
+        "deteksi": "Suhu tubuh tinggi",
+        "saran": "Istirahat yang cukup, minum air banyak, dan konsultasi dengan dokter jika demam berlanjut"
+    },
+    {
+        "kondisi_sebelum_terapi": "Nyeri dan penurunan berat badan",
+        "kondisi_setelah_terapi": "Nyeri berkurang dan berat badan stabil",
+        "keluhan": "Mual dan muntah",
+        "tindakan_terapi": "Kemoterapi dan antiemetik",
+        "deteksi": "Tumor pada pemeriksaan CT scan",
+        "saran": "Pantau efek samping kemoterapi dan konsumsi makanan ringan jika mual"
+    },
+    {
+        "kondisi_sebelum_terapi": "Kelelahan kronis",
+        "kondisi_setelah_terapi": "Energi meningkat",
+        "keluhan": "Kehilangan nafsu makan",
+        "tindakan_terapi": "Terapi nutrisi dan konseling",
+        "deteksi": "Penurunan berat badan signifikan",
+        "saran": "Konsumsi makanan bernutrisi tinggi dan pantau perkembangan berat badan"
+    },
+    {
+        "kondisi_sebelum_terapi": "Nyeri hebat",
+        "kondisi_setelah_terapi": "Nyeri berkurang",
+        "keluhan": "Sulit tidur",
+        "tindakan_terapi": "Penggunaan analgesik",
+        "deteksi": "Metastasis pada pemeriksaan PET-CT",
+        "saran": "Pantau efek samping analgesik dan konsultasi dengan ahli nyeri"
+    },
+    {
+        "kondisi_sebelum_terapi": "Pembengkakan kelenjar getah bening",
+        "kondisi_setelah_terapi": "Pembengkakan berkurang",
+        "keluhan": "Demam ringan",
+        "tindakan_terapi": "Terapi radiasi",
+        "deteksi": "Pembengkakan pada pemeriksaan MRI",
+        "saran": "Istirahat dan jaga kebersihan daerah radiasi"
+    },
+    {
+      "kondisi_sebelum_terapi": "Kelelahan kronis",
+      "kondisi_setelah_terapi": "Energi meningkat",
+      "keluhan": "Kehilangan nafsu makan",
+      "tindakan_terapi": "Terapi nutrisi dan konseling",
+      "deteksi": "Penurunan berat badan signifikan",
+      "saran": "Konsumsi makanan bernutrisi tinggi dan pantau perkembangan berat badan"
+    },
+    {
+      "kondisi_sebelum_terapi": "Nyeri hebat",
+      "kondisi_setelah_terapi": "Nyeri berkurang",
+      "keluhan": "Sulit tidur",
+      "tindakan_terapi": "Penggunaan analgesik",
+      "deteksi": "Metastasis pada pemeriksaan PET-CT",
+      "saran": "Pantau efek samping analgesik dan konsultasi dengan ahli nyeri"
+    },
+    {
+      "kondisi_sebelum_terapi": "Pembengkakan kelenjar getah bening",
+      "kondisi_setelah_terapi": "Pembengkakan berkurang",
+      "keluhan": "Demam ringan",
+      "tindakan_terapi": "Terapi radiasi",
+      "deteksi": "Pembengkakan pada pemeriksaan MRI",
+      "saran": "Istirahat dan jaga kebersihan daerah radiasi"
+    },
+    {
+      "kondisi_sebelum_terapi": "Mual dan muntah parah",
+      "kondisi_setelah_terapi": "Mual dan muntah berkurang",
+      "keluhan": "Sakit perut",
+      "tindakan_terapi": "Kemoterapi dan obat anti-mual",
+      "deteksi": "Tumor mengecil pada pemeriksaan PET scan",
+      "saran": "Pantau efek samping kemoterapi dan konsultasi dengan ahli gizi"
+    },
+    {
+      "kondisi_sebelum_terapi": "Kelemahan otot",
+      "kondisi_setelah_terapi": "Kelemahan berkurang",
+      "keluhan": "Kulit pucat",
+      "tindakan_terapi": "Terapi fisik dan suplemen zat besi",
+      "deteksi": "Anemia pada pemeriksaan darah",
+      "saran": "Rutin pemeriksaan darah dan konsumsi makanan tinggi zat besi"
+    }
+]
+  

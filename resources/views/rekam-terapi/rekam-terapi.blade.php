@@ -13,7 +13,7 @@
         <div class="col">
         <h4 class="mt-4 mt-lg-5 mb-3">Penyakit</h4>
         <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 60px">
-                <a href="/rekam-terapi/tag?search={{ $sub->penyakit }}" target="_blank" class="link-secondary link-underline-light">{{ $sub->penyakit }}</a>
+                <a href="/rekam-terapi/tag?search={{ $sub->penyakit }}" target="_blank" class="link-dark link-underline-light">{{ $sub->penyakit }}</a>
         </div>
         </div>
         <div class="col">

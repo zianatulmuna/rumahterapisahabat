@@ -139,6 +139,9 @@ class TerapiCreateForm extends Component
         if($isTerapiSuccess) {
             $totalTerapiSub = RekamTerapi::totalTerapiSub($this->id_sub);
             SubRekamMedis::where('id_sub', $this->id_sub)->update(['total_terapi' => $totalTerapiSub]);
+            Jadwal::where('id_sub', $this->id_sub)
+                    ->where('id_terapis', $this->id_terapis)
+                    ->update(['status' => 'Terlaksana']);
             if($this->aksiDari === 'pasien') {
                 return redirect(route('terapi.rekam', [$this->pasien, $this->id_sub]))
                                 ->with('success', 'Terapi Harian berhasil ditambahkan.')

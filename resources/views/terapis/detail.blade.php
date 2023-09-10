@@ -91,8 +91,8 @@
               </button>
               <ul class="dropdown-menu w-100 shadow-lg">
                   <li><h6 class="dropdown-header">Berdasarkan Periode</h6></li>
-                  <li><a href="?filter=bulan-ini" class="dropdown-item {{ request('bulan-ini') ? 'active' : '' }}">Bulan Ini</a></li>
-                  <li><a href="?filter=tahun-ini" class="dropdown-item {{ request('tahun-ini') ? 'active' : '' }}">Tahun Ini</a></li>
+                  <li><a href="?filter=bulan-ini" class="dropdown-item {{ request('filter') == 'bulan-ini' ? 'active' : '' }}">Bulan Ini</a></li>
+                  <li><a href="?filter=tahun-ini" class="dropdown-item {{ request('filter') == 'tahun-ini' ? 'active' : '' }}">Tahun Ini</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><h6 class="dropdown-header">Berdasarkan Tanggal</h6></li>
                   <li class="px-3 pb-2 hstack stack-input-icon">

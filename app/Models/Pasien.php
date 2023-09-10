@@ -28,6 +28,12 @@ class Pasien extends Model
             });
         });
 
+        $query->when($status == 'Jeda' ?? false, function ($query) {
+            return $query->whereHas('rekamMedis', function ($query) {
+                $query->where('status_pasien', 'Jeda');
+            });
+        });
+
         $query->when($status == 'Rawat Jalan' ?? false, function ($query) {
             return $query->whereHas('rekamMedis', function ($query) {
                 $query->where('status_pasien', 'Rawat Jalan');
@@ -36,7 +42,7 @@ class Pasien extends Model
         
         $query->when($search ?? false, function ($query, $search) {
             return $query->where('nama', 'like', '%' . $search . '%')
-                        //  ->orWhere('tanggal_pendaftaran', 'like', '%' . $search . '%')
+                         ->orWhere('id_pasien', 'like', '%' . $search . '%')
                          ->orWhereHas('rekamMedis', function ($query) use ($search) {
                             $query->where('penyakit', 'like', '%' . $search . '%')
                                     ->orWhere('id_rekam_medis', 'like', '%' . $search . '%');

@@ -27,7 +27,7 @@
                 <td>{{ $pasien->nama }}</td>
              </tr>
              <tr>
-                <td>No. Telp</td>
+                <td>No. Telpon</td>
                 <td>{{ $pasien->no_telp }}</td>
              </tr>
              <tr>

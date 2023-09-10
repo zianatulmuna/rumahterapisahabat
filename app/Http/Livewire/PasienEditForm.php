@@ -509,7 +509,7 @@ class PasienEditForm extends Component
             $dataRM['id_rekam_medis'] = $idRM;
             $dataRM['id_pasien'] = $this->id_pasien;
             $dataRM['penyakit'] = implode(',', $this->tag);
-            $dataDiri['status_pendaftaran'] = 'Pasien Lama';
+            $dataDiri['status_pendaftaran'] = 'Pasien';
 
             $createRM = RekamMedis::create($dataRM);
 

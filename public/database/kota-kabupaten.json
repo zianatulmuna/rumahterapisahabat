@@ -1080,42 +1080,42 @@
  {
   "id": 155,
   "provinsi_id": 11,
-  "kabupaten_kota": "Kab. Adm. Kepulauan Seribu",
+  "kabupaten_kota": "Kab. Kepulauan Seribu",
   "ibukota": "Kepulauan Seribu Utara",
   "k_bsni": "KSU"
  },
  {
   "id": 156,
   "provinsi_id": 11,
-  "kabupaten_kota": "Kota Adm. Jakarta Barat",
+  "kabupaten_kota": "Kota Jakarta Barat",
   "ibukota": "Grogol Petamburan",
   "k_bsni": "GGP"
  },
  {
   "id": 157,
   "provinsi_id": 11,
-  "kabupaten_kota": "Kota Adm. Jakarta Pusat",
+  "kabupaten_kota": "Kota Jakarta Pusat",
   "ibukota": "Tanah Abang",
   "k_bsni": "TNA"
  },
  {
   "id": 158,
   "provinsi_id": 11,
-  "kabupaten_kota": "Kota Adm. Jakarta Selatan",
+  "kabupaten_kota": "Kota Jakarta Selatan",
   "ibukota": "Kebayoran Baru",
   "k_bsni": "KYB"
  },
  {
   "id": 159,
   "provinsi_id": 11,
-  "kabupaten_kota": "Kota Adm. Jakarta Timur",
+  "kabupaten_kota": "Kota Jakarta Timur",
   "ibukota": "Cakung",
   "k_bsni": "CKG"
  },
  {
   "id": 160,
   "provinsi_id": 11,
-  "kabupaten_kota": "Kota Adm. Jakarta Utara",
+  "kabupaten_kota": "Kota Jakarta Utara",
   "ibukota": "Tanjung Priok",
   "k_bsni": "TJP"
  },

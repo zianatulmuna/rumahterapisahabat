@@ -4,6 +4,7 @@
     </button>
     <div class="dropdown-menu dropdown-menu-end rounded-2 shadow px-1 py-2" aria-labelledby="dropdownMenuButton">
         <button type="button" class="dropdown-item {{ $filter == 'minggu ini' ? 'active' : '' }}" wire:click="setFilter('minggu ini')">Minggu Ini</button>
+        <button type="button" class="dropdown-item {{ $filter == 'bulan ini' ? 'active' : '' }}" wire:click="setFilter('bulan ini')">Bulan Ini</button>
         <button type="button" class="dropdown-item {{ $filter == 'tahun ini' ? 'active' : '' }}" wire:click="setFilter('tahun ini')">Tahun Ini</button>
         <button type="button" class="dropdown-item {{ $filter == 'semua tahun' ? 'active' : '' }}" wire:click="setFilter('semua tahun')">Semua Tahun</button>
         <div class="input-group p-2">

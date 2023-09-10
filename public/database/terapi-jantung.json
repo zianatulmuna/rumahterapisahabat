@@ -1,0 +1,98 @@
+[
+  {
+    "kondisi_sebelum_terapi": "Nyeri dada dan sesak napas",
+    "kondisi_setelah_terapi": "Nyeri dada berkurang dan napas lebih lancar",
+    "keluhan": "Pusing dan kelelahan",
+    "tindakan_terapi": "Pemberian obat antihipertensi dan istirahat",
+    "deteksi": "Tekanan darah tinggi pada pemeriksaan",
+    "saran": "Pantau tekanan darah secara teratur dan konsumsi diet rendah garam"
+  },
+  {
+    "kondisi_sebelum_terapi": "Sakit dada akut",
+    "kondisi_setelah_terapi": "Sakit dada berkurang dan stabil",
+    "keluhan": "Nyeri lengan kiri",
+    "tindakan_terapi": "Pemberian obat pengencer darah dan aspirin",
+    "deteksi": "EKG menunjukkan perubahan pada segmen ST",
+    "saran": "Hindari aktivitas fisik berat dan pantau tekanan darah"
+  },
+  {
+    "kondisi_sebelum_terapi": "Sesak napas parah",
+    "kondisi_setelah_terapi": "Sesak napas berkurang dan pernapasan lebih baik",
+    "keluhan": "Pegal-pegal di dada",
+    "tindakan_terapi": "Terapi rehabilitasi jantung dan obat bronkodilator",
+    "deteksi": "Fungsi paru-paru terganggu pada pemeriksaan spirometri",
+    "saran": "Lakukan latihan pernapasan dan ikuti program rehabilitasi jantung"
+  },
+  {
+    "kondisi_sebelum_terapi": "Nyeri dada saat aktivitas fisik",
+    "kondisi_setelah_terapi": "Aktivitas fisik dapat dilakukan tanpa nyeri dada",
+    "keluhan": "Nyeri di leher",
+    "tindakan_terapi": "Pemberian nitrat dan obat antiangina",
+    "deteksi": "Stres tes menunjukkan iskemia",
+    "saran": "Hindari stres berlebihan dan pantau gejala angina"
+  },
+  {
+    "kondisi_sebelum_terapi": "Nyeri dada yang menjalar ke punggung",
+    "kondisi_setelah_terapi": "Nyeri dada berkurang dan punggung nyaman",
+    "keluhan": "Pusing dan berkeringat",
+    "tindakan_terapi": "Pemberian nitrogliserin dan istirahat",
+    "deteksi": "EKG menunjukkan tanda-tanda infark miokard",
+    "saran": "Hindari aktivitas berat dan konsultasi dengan dokter secara berkala"
+  },
+  {
+    "kondisi_sebelum_terapi": "Sesak napas saat tidur",
+    "kondisi_setelah_terapi": "Tidur lebih nyenyak tanpa sesak napas",
+    "keluhan": "Kaki bengkak",
+    "tindakan_terapi": "Pemberian diuretik dan pengendalian diet garam",
+    "deteksi": "Edema pada pemeriksaan fisik",
+    "saran": "Ikuti diet rendah garam dan pantau pembengkakan kaki"
+  },
+  {
+    "kondisi_sebelum_terapi": "Rasa berdebar di dada",
+    "kondisi_setelah_terapi": "Rasa berdebar berkurang",
+    "keluhan": "Nyeri di perut",
+    "tindakan_terapi": "Pemberian beta-blocker dan antasida",
+    "deteksi": "Aritmia jantung pada EKG",
+    "saran": "Hindari konsumsi kafein dan alkohol serta pantau denyut jantung"
+  },
+  {
+    "kondisi_sebelum_terapi": "Nyeri dada tiba-tiba",
+    "kondisi_setelah_terapi": "Nyeri dada hilang",
+    "keluhan": "Nyeri di punggung",
+    "tindakan_terapi": "Pemberian nitrogliserin dan istirahat",
+    "deteksi": "EKG menunjukkan perubahan segmen ST",
+    "saran": "Hindari aktivitas berat dan pantau tekanan darah"
+  },
+  {
+    "kondisi_sebelum_terapi": "Sesak napas saat berolahraga",
+    "kondisi_setelah_terapi": "Bisa berolahraga tanpa sesak napas",
+    "keluhan": "Nyeri di bahu kiri",
+    "tindakan_terapi": "Pemberian beta-blocker dan analgesik",
+    "deteksi": "Tes latihan terbimbing positif",
+    "saran": "Ikuti program rehabilitasi jantung dan pantau denyut jantung"
+  },
+  {
+    "kondisi_sebelum_terapi": "Nyeri dada saat tidur malam",
+    "kondisi_setelah_terapi": "Tidur lebih nyenyak tanpa nyeri dada",
+    "keluhan": "Pusing dan berkeringat",
+    "tindakan_terapi": "Pemberian nitrogliserin dan istirahat",
+    "deteksi": "EKG menunjukkan tanda-tanda iskemia",
+    "saran": "Hindari makan berlebihan sebelum tidur dan pantau tekanan darah"
+  },
+  {
+    "kondisi_sebelum_terapi": "Sesak napas saat berjalan cepat",
+    "kondisi_setelah_terapi": "Berjalan cepat tanpa sesak napas",
+    "keluhan": "Nyeri di tengah dada",
+    "tindakan_terapi": "Pemberian obat nitrat",
+    "deteksi": "Tes latihan terbimbing positif",
+    "saran": "Pantau tekanan darah dan hindari asap rokok"
+  },
+  {
+    "kondisi_sebelum_terapi": "Nyeri dada saat stres",
+    "kondisi_setelah_terapi": "Stres dapat diatasi tanpa nyeri dada",
+    "keluhan": "Nyeri di leher",
+    "tindakan_terapi": "Pemberian beta-blocker dan istirahat",
+    "deteksi": "EKG menunjukkan tanda-tanda aritmia",
+    "saran": "Hindari stres berlebihan dan rutin pantau tekanan darah"
+  }
+]

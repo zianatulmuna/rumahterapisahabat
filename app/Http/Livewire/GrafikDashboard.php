@@ -16,7 +16,7 @@ class GrafikDashboard extends Component
     public $id_terapis, $nama_terapis, $nama_penyakit;
     public $menu = 'Pasien Selesai';
     public $grafik = 'Sesi Terapi';
-    public $filter = 'minggu ini';
+    public $filter = 'tahun ini';
     public $tahun;
     public $dataGrafik;
 
@@ -37,9 +37,9 @@ class GrafikDashboard extends Component
             $this->id_terapis = $this->userTerapis->id_terapis;
             $this->nama_terapis = $this->userTerapis->nama;   
 
-            $this->dataGrafik = $this->grafikMingguIni($this->grafik, $this->id_terapis, '');
+            $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year, $this->id_terapis, '');
         } else {            
-            $this->dataGrafik = $this->grafikMingguIni($this->grafik, '', '');
+            $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year, '', '');
         }
 
         $max = (!empty($this->dataGrafik)) ? $max = max($this->dataGrafik) : 0;
@@ -68,6 +68,8 @@ class GrafikDashboard extends Component
     public function setFilterAction($filter) {
         if($filter == 'minggu ini') {
             $data = $this->grafikMingguIni($this->grafik, $this->id_terapis, $this->nama_penyakit);
+        } elseif($filter == 'bulan ini') {
+            $data = $this->grafikBulanIni($this->grafik, $this->id_terapis, $this->nama_penyakit);
         } elseif($filter == 'tahun ini') {
             $data = $this->grafikPerTahun($this->grafik, Carbon::now()->year, $this->id_terapis, $this->nama_penyakit);
         } elseif($filter == 'semua tahun') {
@@ -197,6 +199,98 @@ class GrafikDashboard extends Component
         }
 
         return $totalPerHari;        
+    }
+    
+    public function grafikBulanIni($menu, $terapis, $penyakit)
+    {
+        
+        if ($menu == 'Pasien Baru') {
+            if(!empty($penyakit)) { 
+                $model = Pasien::selectRaw('tanggal_pendaftaran as tanggal, COUNT(*) as total')
+                                ->whereHas('rekamMedis', function ($query) use ($penyakit) {
+                                    $query->where('penyakit', 'like', '%' . $penyakit . '%');
+                                });
+            } else {
+                $model = Pasien::selectRaw('tanggal_pendaftaran as tanggal, COUNT(*) as total');
+            }
+            $tanggal = 'tanggal_pendaftaran';
+        } elseif ($menu == 'Pasien Selesai') {
+            if(!empty($penyakit)) { 
+                $model = RekamMedis::where('status_pasien', 'Selesai')
+                                ->where('penyakit', 'like', '%' . $penyakit . '%')
+                                ->selectRaw('tanggal_selesai as tanggal, COUNT(*) as total');
+            } else {
+                $model = RekamMedis::where('status_pasien', 'Selesai')
+                                    ->selectRaw('tanggal_selesai as tanggal, COUNT(*) as total');
+            }
+            $tanggal = 'tanggal_selesai';
+        } else {
+            if(!empty($terapis) && !empty($penyakit)) {
+                $model = RekamTerapi::where('id_terapis', $terapis)
+                                    ->whereHas('subRekamMedis', function ($query) use ($penyakit) {
+                                        $query->where('penyakit', 'like', '%' . $penyakit . '%');
+                                    })
+                                    ->selectRaw('tanggal, COUNT(*) as total');
+            } else {
+                $cek = "";
+                if(!empty($terapis)) {
+                    $cek = $cek . "terapis";
+                    $model = RekamTerapi::where('id_terapis', $terapis)
+                                        ->selectRaw('tanggal, COUNT(*) as total');
+                } elseif(!empty($penyakit)) {
+                    $cek = $cek . "penyakit";
+                    $model = RekamTerapi::whereHas('subRekamMedis', function ($query) use ($penyakit) {
+                                            $query->where('penyakit', 'like', '%' . $penyakit . '%');
+                                        })
+                                        ->selectRaw('tanggal, COUNT(*) as total');
+                } else {
+                    $model = RekamTerapi::selectRaw('tanggal, COUNT(*) as total');
+                }
+            }
+            $tanggal = 'tanggal';
+        }
+
+        $startDate = now()->startOfMonth();
+        $endDate = now()->endOfMonth();
+
+        $data = $model->whereBetween($tanggal, [$startDate, $endDate])
+            ->groupBy($tanggal)
+            ->orderBy($tanggal)
+            ->get()
+            ->pluck('total', 'tanggal')
+            ->toArray();
+        
+        $dateTime = [];
+
+        if($tanggal === 'tanggal_pendaftaran') {
+            foreach ($data as $datetime => $value) {
+                $carbonDate = Carbon::parse($datetime);
+                $formattedDate = $carbonDate->format('Y-m-d');
+                $dateTime[$formattedDate] = $value;
+            }
+        }
+
+        $allDates = [];
+
+        $currentDate = clone $startDate; 
+        while ($currentDate <= $endDate) {
+            $allDates[$currentDate->toDateString()] = 0;
+            $currentDate->addDay();
+        }
+
+        $data = $tanggal === 'tanggal_pendaftaran' ? $dateTime : $data;
+        $mergedData = array_merge($allDates, $data);
+
+        $formattedData = [];
+
+        foreach ($mergedData as $tanggal => $total) {
+            $carbonDate = Carbon::createFromFormat('Y-m-d', $tanggal);
+            // $formattedDate = $carbonDate->isoFormat('D MMM');
+            $formattedDate = $carbonDate->day;
+            $formattedData[$formattedDate] = $total;
+        }
+
+        return $formattedData;        
     }
 
     public function grafikPerTahun($menu, $tahun, $terapis, $penyakit)

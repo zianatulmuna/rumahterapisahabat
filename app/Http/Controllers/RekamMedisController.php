@@ -5,15 +5,9 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Pasien;
 use App\Models\RekamMedis;
-use Illuminate\Http\Request;
 
 class RekamMedisController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('dashboard');
@@ -33,87 +27,34 @@ class RekamMedisController extends Controller
             'rmDetected' => $rmDetected,
             'rm_terkini' => $rmTerkini,
             'rm_terdahulu' => $rmTerdahulu,
-            // 'rm' =>$rekamMedis->first(),
             'pasien' => $pasien,
             'umur' => Carbon::parse($pasien->tanggal_lahir)->age
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Pasien $pasien)
+    public function add(Pasien $pasien)
     {
         return view('pasien.tambah', [
             'pasien' => $pasien
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function detail(Pasien $pasien, RekamMedis $rekamMedis)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\RekamMedis  $rekamMedis
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pasien $pasien, RekamMedis $rekamMedis)
-    {
-        // $arrayPenyakit = collect(explode(",", $rekamMedis->penyakit));
-
         return view('rekam-medis.detail', [
             'rmDetected' => 1,
             'rm' => $rekamMedis,
             'pasien' => $pasien,
-            // 'penyakit' => $arrayPenyakit,
             'umur' => Carbon::parse($pasien->tanggal_lahir)->age
         ]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\RekamMedis  $rekamMedis
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit(Pasien $pasien, RekamMedis $rekamMedis)
     {
-        return view('pasien.edit', [
-            'rm' => $rekamMedis,
-            'pasien' => $pasien
-        ]);
+        return view('pasien.edit', compact('pasien', 'rm'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\RekamMedis  $rekamMedis
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, RekamMedis $rekamMedis)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\RekamMedis  $rekamMedis
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pasien $pasien, RekamMedis $rekamMedis)
+    public function delete(Pasien $pasien, RekamMedis $rekamMedis)
     {
         RekamMedis::destroy($rekamMedis->id_rekam_medis);
 

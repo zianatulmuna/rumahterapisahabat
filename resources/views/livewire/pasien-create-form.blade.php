@@ -187,7 +187,7 @@
                     @enderror
                   </div>    
                   <div class="mb-4">
-                    <label for="tanggal_pendaftaran" class="form-label fw-bold">Tanggal Pendaftaran <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
+                    <label for="tanggal_pendaftaran" class="form-label fw-bold">Tanggal Registrasi <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
                       <input type="date" class="form-control @error('tanggal_pendaftaran') is-invalid @enderror" id="tanggal_pendaftaran" name="tanggal_pendaftaran" 
                         value="{{ old('tanggal_pendaftaran') }}" wire:model="tanggal_pendaftaran" @if($id_pasien) disabled @endif>
                       <div class="form-text">Contoh: 9 Desember 2023 diisi 12/09/2023</div>
@@ -199,7 +199,7 @@
                   </div>  
                   @if($id_pasien)
                   <div class="mb-4">
-                    <label for="tanggal_rm" class="form-label fw-bold">Tanggal Pendaftaran Rekam Medis <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
+                    <label for="tanggal_rm" class="form-label fw-bold">Tanggal Registrasi Rekam Medis <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
                     <input type="date" class="form-control @error('tanggal_ditambahkan') is-invalid @enderror" id="tanggal_ditambahkan" name="tanggal_ditambahkan" 
                       value="{{ old('tanggal_ditambahkan') }}" wire:model="tanggal_ditambahkan">
                     @error('tanggal_ditambahkan')

@@ -13,67 +13,65 @@ use Illuminate\Validation\Rule;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class RekamTerapiController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Pasien $pasien, SubRekamMedis $subRM)
-    {
-        // $terapis = $subRM->terapis;
-        // $rekamTerapi = $subRM->rekamTerapi;
+{  
 
-        // $combined = $rekamTerapi->zip($terapis);
-        $rekam = $subRM->rekamTerapi()->orderBy('tanggal', 'ASC')->get();
+    public function terapiDummy($id_sub) {
+        $json_file = 'database/terapi-kolesterol.json';
+        $json_data = file_get_contents($json_file);
+        $data = json_decode($json_data, true);
 
-        return view('rekam-terapi.rekam-terapi', [
-            'rekam_terapi' => $rekam,
-            'sub' => $subRM,
-            'rmDetected' => 1,
-            'rm' => $subRM->rekamMedis,
-            // 'rekam_terapi' => $subRM->rekamTerapi,
-            'pasien' => $pasien,
-            'umur' => Carbon::parse($pasien->tanggal_lahir)->age
-        ]);
-    }
+        $t = 2;
 
-    public function histori(Pasien $pasien) 
-    {
-        $rmTerkini = $pasien->rekamMedis()->where('status_pasien', 'Rawat Jalan')->get();
-        $rmTerdahulu = $pasien->rekamMedis()->where('status_pasien', '!=', 'Rawat Jalan')->get();
+        for ($i = 0; $i < 5; $i++) {
+            $id = IdGenerator::generate([
+                'table' => 'rekam_terapi', 
+                'field' => 'id_terapi', 
+                'length' => 8, 
+                'prefix' => 'T2207',
+                'reset_on_prefix_change' => true
+            ]);
+            
+            $jam_acak = rand(0, 22);
+            $menit_acak = rand(0, 59);
+            $detik_acak = rand(0, 59);
 
-        if(count($rmTerkini) > 0 || count($rmTerdahulu) > 0) {
-            $rmDetected = 1;
-        } else {
-            $rmDetected = 0;
+            $waktu_acak = sprintf("%02d:%02d:%02d", $jam_acak, $menit_acak, $detik_acak);
+            
+            $item = $data[$i];
+            $dataTerapi = array(
+                'id_terapi' => $id,
+                'id_terapis' => Terapis::all()->random()->id_terapis,
+                'id_sub' => $id_sub,
+                'tanggal' => '2022-07-' . $t,
+                'waktu' => $waktu_acak,
+                'keluhan' => $item['keluhan'],
+                'deteksi' => $item['deteksi'],
+                'tindakan' => $item['tindakan_terapi'],
+                'saran' => $item['saran'],
+                'pra_terapi' => $item['kondisi_sebelum_terapi'],
+                'post_terapi' => $item['kondisi_setelah_terapi']
+            ); 
+            $t = $t+7;
+            RekamTerapi::create($dataTerapi);
         }
-
-        // dd($rmTerdahulu);
-
-        return view('rekam-terapi.histori', [
-            'rmDetected' => $rmDetected,
-            'rm' => $rmTerkini->first(),
-            'rm_terkini' => $rmTerkini,
-            'rm_terdahulu' => $rmTerdahulu,
-            'pasien' => $pasien,
-            'umur' => Carbon::parse($pasien->tanggal_lahir)->age
-        ]);
+        return redirect()->back();
     }
 
-    public function create(Pasien $pasien, SubRekamMedis $subRM)
-    {
+    public function add(Pasien $pasien, SubRekamMedis $subRM)
+    {        
+        // $this->terapiDummy($subRM->id_sub);
+
         $jadwal = '';
         $id_sub = $subRM->id_sub;
         $aksiDari = 'pasien';
         return view('rekam-terapi.tambah', compact('pasien', 'id_sub', 'jadwal', 'aksiDari'));
     }
 
-    public function show(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi) 
+    public function detail(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi) 
     {
         $rekamTerapi = $subRM->rekamTerapi()->orderBy('tanggal', 'ASC')->get();
         $index = $rekamTerapi->search($terapi) + 1;
-        // dd($index);
+     
         return view('rekam-terapi.harian', [
             'rmDetected' => 1,
             'terapi' => $terapi,
@@ -92,7 +90,7 @@ class RekamTerapiController extends Controller
         ]);
     }
 
-    public function destroy(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi)
+    public function delete(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi)
     {
         RekamTerapi::destroy($terapi->id_terapi);
 
@@ -103,40 +101,5 @@ class RekamTerapiController extends Controller
                             ->with('success', 'Terapi Harian berhasil dihapus.')
                             ->with('delete', true);
     }
-
-    public function deleteSub(Pasien $pasien, SubRekamMedis $subRM)
-    {
-
-        $stringWithoutSpaces = str_replace(', ', ',', $subRM->rekamMedis->penyakit);
-        
-        $penyakitArray = explode(",", $stringWithoutSpaces);
-
-        $remove = $subRM->penyakit;
-        $resultArray = array_diff($penyakitArray, [$remove]);
-
-        $dataRM['penyakit'] = implode(",", $resultArray);
-        
-        SubRekamMedis::destroy($subRM->id_sub);
-        RekamMedis::where('id_rekam_medis', $subRM->rekamMedis->id_rekam_medis)->update($dataRM);
-
-        return redirect(route('sub.histori', [$pasien->slug, $subRM->id_sub]))
-                            ->with('success', 'Terapi Harian berhasil dihapus.')
-                            ->with('delete', true);
-    }
-
-    public function tagPenyakit(Request $request) 
-    {
-        $search = $request->input('search');
-
-        if(request('urut') === 'Terlama') {
-            $sortBy = 'ASC';
-        } else {
-            $sortBy = 'DESC';
-        }
-
-        $sub_penyakit = SubRekamMedis::filter($search, $sortBy)
-                                ->paginate(16);
-
-        return view('rekam-terapi.tagging', compact('sub_penyakit'));
-    }
+    
 }
