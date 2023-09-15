@@ -27,24 +27,29 @@ class JadwalController extends Controller
             $view = 'jadwal.jadwal';
         }
 
-        if(request('tanggal')) {
+        if(request('filter')) {
+            $m = request('filter') == "tahun-ini" ? date('Y') : date('Y-m');
+            $query->where('tanggal', 'like', $m . '%');
+            $caption = request('filter') == "tahun-ini" ? date('Y') : Carbon::today()->formatLocalized('%B %Y');
+            $request = true;
+        } elseif(request('tanggal')) {
             $tanggal = request('tanggal');
-            $today = Carbon::createFromFormat('Y-m-d', $tanggal)->formatLocalized('%A, %d %B %Y');
+            $caption = Carbon::createFromFormat('Y-m-d', $tanggal)->formatLocalized('%A, %d %B %Y');
             $query->where('tanggal', $tanggal)->paginate(10);
-        } elseif (request('mulai')) {
-            $awal = Carbon::createFromFormat('Y-m-d', request('mulai'))->formatLocalized('%d %B %Y');
+        } elseif (request('awal')) {
+            $awal = Carbon::createFromFormat('Y-m-d', request('awal'))->formatLocalized('%d %B %Y');
             $akhir = Carbon::createFromFormat('Y-m-d', request('akhir'))->formatLocalized('%d %B %Y');
 
-            $today = $awal . ' - ' . $akhir;
-            $query->whereBetween('tanggal', [request('mulai'), request('akhir')])->paginate(10);
+            $caption = $awal . ' - ' . $akhir;
+            $query->whereBetween('tanggal', [request('awal'), request('akhir')])->paginate(10);
         } else {
-            $today = Carbon::today()->formatLocalized('%A, %d %B %Y');
+            $caption = Carbon::today()->formatLocalized('%A, %d %B %Y');
             $query->where('tanggal', Carbon::today()->format('Y-m-d'))->paginate(10);
         }
 
-        $jadwal_terapi = $query->paginate(10);        
+        $jadwal_terapi = $query->paginate(10);  
 
-        return view($view, compact('jadwal_terapi', 'today'));
+        return view($view, compact('jadwal_terapi', 'caption'));
     }
 
     public function add()
@@ -218,5 +223,28 @@ class JadwalController extends Controller
         Jadwal::where('id_jadwal', $jadwal->id_jadwal)->update(['id_terapis' => null]);
 
         return redirect()->back();
+    }
+
+    public function print(Request $request)
+    {
+        if(request('filter')) {
+            $m = request('filter') == "tahun-ini" ? date('Y') : date('Y-m');
+            $list_jadwal = Jadwal::where('tanggal', 'like', $m . '%')->get();
+            $caption = request('filter') == "tahun-ini" ? date('Y') : Carbon::today()->formatLocalized('%B %Y');
+        } elseif(request('awal') == 'null') {
+            $today = Carbon::today();
+            $list_jadwal = Jadwal::where('tanggal', $today->format('Y-m-d'))->get();
+            $caption = $today->format('d-m-Y');
+        } elseif (request('akhir') == 'null') {
+            $list_jadwal = Jadwal::where('tanggal', request('awal'))->get();   
+            $caption = Carbon::parse(request('awal'))->format('d-m-Y');         
+        } else {
+            $list_jadwal = Jadwal::whereBetween('tanggal', [request('awal'), request('akhir')])->orderBy('tanggal', 'ASC')->get();  
+            $caption = Carbon::parse(request('awal'))->format('d-m-Y') . ' sd ' . Carbon::parse(request('akhir'))->format('d-m-Y');          
+        }
+        
+        return view('unduh.jadwal', compact(
+            'list_jadwal', 'caption'
+        ));
     }
 }

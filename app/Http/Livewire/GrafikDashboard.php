@@ -438,4 +438,12 @@ class GrafikDashboard extends Component
         return $jumlahPerTahun;
         
     }
+
+    function selectTahun() {
+        $tahunTersedia = RekamTerapi::selectRaw('YEAR(tanggal) as tahun')
+            ->groupBy('tahun')
+            ->orderBy('tahun', 'desc')
+            ->pluck('tahun');
+        return ($tahunTersedia);
+    }
 }

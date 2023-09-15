@@ -62,4 +62,13 @@ class RekamMedisController extends Controller
                             ->with('success', 'Rekam Medis berhasil dihapus.')
                             ->with('delete', true);
     }
+
+    public function print(Pasien $pasien, RekamMedis $rekamMedis)
+    {
+        return view('unduh.rekam-medis', [
+            'rm' => $rekamMedis,
+            'pasien' => $pasien,
+            'umur' => Carbon::parse($pasien->tanggal_lahir)->age
+        ]);
+    }
 }

@@ -2,14 +2,19 @@
 
 @section('container')
 <div class="content-container">
-   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
+   <div class="d-flex justify-content-between align-items-center pb-2 mb-4 border-bottom">
+      <h1 class="h2">
       @if(Request::is('pasien/' . $pasien->slug . '/rekam-medis*'))
-         <h1 class="h2">Histori Rekam Medis</h1>
+         Histori Rekam Medis
       @elseif(Request::is('pasien/'. $pasien->slug))
-         <h1 class="h2">Data Pasien</h1>
+         Rekam Medis
       @elseif(Request::is('pasien/' . $pasien->slug . '/rekam*'))
-         <h1 class="h2">Histori Rekam Terapi</h1>
+         Histori Rekam Terapi
       @endif
+      </h1>
+      <a href="{{ route('rm.print', [$pasien->slug, $rm->id_rekam_medis]) }}" target="_blank" class="btn btn-success btn-sm rounded-3 mb-2">
+         <i class="bi bi-download pe-1"></i> Unduh
+      </a>
    </div>
 
    {{-- Data Diri Pasien --}}
@@ -126,10 +131,6 @@
                <tr>
                   <td class="px-2">Target Akhir</td>
                   <td class="px-2">{{ $rm->target_akhir }}</td>
-               </tr>
-               <tr>
-                  <td class="px-2">Hasil Lab</td>
-                  <td class="px-2"><a href="{{ $rm->link_perkembangan }}">{{ $rm->link_perkembangan }}</a></td>
                </tr>
             </table>
          </div>

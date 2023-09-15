@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\SubRekamMedis;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\JadwalController;
@@ -10,6 +9,7 @@ use App\Http\Controllers\TerapisController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RekamMedisController;
 use App\Http\Controllers\RekamTerapiController;
+use App\Http\Controllers\SubRekamMedisController;
 
 Route::get('/', function () {
     return view('landing-page.index');
@@ -40,6 +40,11 @@ Route::middleware('auth:admin,terapis,kepala_terapis')->group(function () {
         Route::prefix('rekam-terapi')->group(function () {
             Route::get('', [SubRekamMedisController::class, 'histori'])->name('sub.histori');            
             Route::get('/{subRM}', [SubRekamMedisController::class, 'detail'])->name('terapi.rekam');
+
+            Route::get('/{subRM}/semua-harian/print', [SubRekamMedisController::class, 'printHarian'])->name('sub.print');
+
+            Route::get('/{subRM}/print', [SubRekamMedisController::class, 'printRekam'])->name('rekam.print');
+
             Route::get('/{subRM}/harian/tambah', [RekamTerapiController::class, 'add'])->name('terapi.tambah');
             Route::post('/{subRM}/harian/store', [RekamTerapiController::class, 'store'])->name('terapi.store');
             Route::get('/{subRM}/harian/{terapi}', [RekamTerapiController::class, 'detail'])->name('terapi.detail');
@@ -47,12 +52,14 @@ Route::middleware('auth:admin,terapis,kepala_terapis')->group(function () {
             Route::put('/{subRM}/harian/{terapi}', [RekamTerapiController::class, 'update'])->name('terapi.update');
             Route::delete('/{subRM}/harian/{terapi}', [RekamTerapiController::class, 'delete'])->name('terapi.delete');       
             
+            Route::get('/{subRM}/harian/{terapi}/print', [RekamTerapiController::class, 'print'])->name('terapi.print');
             
         });
     });    
     
     Route::prefix('jadwal')->group(function () {
         Route::get('', [JadwalController::class, 'index'])->name('jadwal');
+        Route::get('/print', [JadwalController::class, 'print'])->name('jadwal.print');
 
         Route::get('/{pasien}/{jadwal}/tambah', [JadwalController::class, 'addTerapiFromJadwal'])->name('jadwal.isi');
     });
@@ -70,6 +77,7 @@ Route::middleware('auth:admin,kepala_terapis')->group(function () {
         Route::prefix('rekam-medis')->group(function () {
             Route::get('/tambah', [RekamMedisController::class, 'add'])->name('rm.create');
             Route::get('/{rekamMedis}/edit', [RekamMedisController::class, 'edit'])->name('rm.edit');
+            
             
         });
     }); 

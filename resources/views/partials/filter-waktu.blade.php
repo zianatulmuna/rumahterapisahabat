@@ -7,6 +7,9 @@
         <button type="button" class="dropdown-item {{ $filter == 'bulan ini' ? 'active' : '' }}" wire:click="setFilter('bulan ini')">Bulan Ini</button>
         <button type="button" class="dropdown-item {{ $filter == 'tahun ini' ? 'active' : '' }}" wire:click="setFilter('tahun ini')">Tahun Ini</button>
         <button type="button" class="dropdown-item {{ $filter == 'semua tahun' ? 'active' : '' }}" wire:click="setFilter('semua tahun')">Semua Tahun</button>
+        <div class="p-2">
+            <input type="year" class="form-control" id="start" name="start" min="2018-03" value="2018-05" />
+        </div>
         <div class="input-group p-2">
             <input type="search" class="form-control py-0" name="tahunForm" id="tahunInput" min="2014" max="2023" placeholder="Tahun">
             <button type="button" id="tahunBtn" class="btn btn-outline-success">

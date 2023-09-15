@@ -297,3 +297,9 @@
       margin-right: 1.3rem;
     }   
   }
+
+  @media (min-width: 1400px) and (max-width: 1450px) {
+    .card-custom img {
+      height: 48%;
+    }
+  }

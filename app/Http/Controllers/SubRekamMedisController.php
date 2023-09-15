@@ -80,4 +80,29 @@ class SubRekamMedisController extends Controller
 
         return view('rekam-terapi.tagging', compact('sub_penyakit'));
     }
+
+    public function printRekam(Pasien $pasien, SubRekamMedis $subRM)
+    {
+        $list_terapi = $subRM->rekamTerapi()->orderBy('tanggal', 'ASC')->get();
+
+        $sub = $subRM;
+
+        return view('unduh.rekam-terapi-harian-loop', compact(
+            'sub', 'pasien', 'list_terapi' 
+        ));
+    }
+    public function printHarian(Pasien $pasien, SubRekamMedis $subRM)
+    {
+        $list_terapi = $subRM->rekamTerapi()->orderBy('tanggal', 'ASC')->get();
+
+        foreach ($list_terapi as $terapi) {
+            $terapi->tanggal = Carbon::createFromFormat('Y-m-d', $terapi->tanggal)->formatLocalized('%d %B %Y');
+        }
+
+        $sub = $subRM;
+
+        return view('unduh.rekam-terapi-harian-loop', compact(
+            'sub', 'pasien', 'list_terapi' 
+        ));
+    }
 }

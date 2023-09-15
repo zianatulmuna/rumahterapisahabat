@@ -2,8 +2,11 @@
 
 @section('container')
 <div class="content-container">
-   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
+   <div class="d-flex justify-content-between align-items-center pb-2 mb-4 border-bottom">
       <h1 class="h2">Rekam Terapi</h1>
+      <a href="{{ route('rekam.print', [$pasien->slug, $rm->id_rekam_medis]) }}" target="_blank" class="btn btn-success btn-sm rounded-3 mb-2">
+        <i class="bi bi-download pe-1"></i> Unduh
+     </a>
    </div>
 
    {{-- Data Diri Pasien --}}
@@ -24,7 +27,12 @@
         </div>
     </div>
 
-    <h4 class="mt-4 mt-lg-5 mb-3" id="rekamTerapi">Histori Terapi</h4>
+    <div class="d-flex justify-content-between align-items-center mt-4 mt-lg-5 mb-3">
+        <h4 class="mb-0" id="rekamTerapi">Histori Terapi</h4>
+        <a href="{{ route('sub.print', [$pasien->slug, $sub->id_sub]) }}" target="_blank" class="c-badge c-badge-successboot">
+            <i class="bi bi-download pe-1"></i> Unduh Semua
+        </a>
+    </div>
     @if(count($rekam_terapi) > 0)
         <div class="overflow-auto">
             <table class="table table-bordered text-center"  style="min-width: 420px;">
@@ -48,10 +56,10 @@
                             <td class="text-capitalize">{{ $terapi->terapis->username }}</td>
                             <td>{{ $terapi->pra_terapi }}</td>
                             <td style="width: 130px">
-                                <a href="" class="c-badge c-bg-info">
+                                <a href="{{ route('terapi.print', [$pasien->slug, $sub->id_sub, $terapi->id_terapi]) }}" class="c-badge c-badge-info">
                                     <i class="bi bi-download"></i>
                                 </a>
-                                <a href="{{ route('terapi.detail', [$pasien->slug, $sub->id_sub, $terapi->id_terapi]) }}" class="c-badge c-bg-success ms-1">
+                                <a href="{{ route('terapi.detail', [$pasien->slug, $sub->id_sub, $terapi->id_terapi]) }}" class="c-badge c-badge-success ms-1">
                                     <i class="bi bi-eye"></i>
                                 </a>
                             </td>

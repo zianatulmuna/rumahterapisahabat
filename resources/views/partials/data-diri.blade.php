@@ -83,9 +83,11 @@
     </div>
     <div class="col-lg-2 p-0">
        <div class="button-rm d-flex align-items-sm-center flex-lg-column justify-content-center ps-lg-4">
-          <a href="{{ route('rm.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0">Histori Rekam Medis</a>
-         <a href="{{ route('sub.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0">Histori Rekam Terapi</a>
-         <a href="" class="btn btn-outline-success btn-sm mb-3">Unduh Rekam Medis</a>
+          <a href="{{ route('rm.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0 w-100">Histori Rekam Medis</a>
+         <a href="{{ route('sub.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0 w-100">Histori Rekam Terapi</a>
+         @if(Request::is('pasien/'. $pasien->slug))
+         <a href="{{ $rm->link_perkembangan }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0 w-100 {{ $rm->link_perkembangan ? '' : 'disabled' }}">Link Hasil Lab</a>
+         @endif
        </div>
     </div>
 </div>

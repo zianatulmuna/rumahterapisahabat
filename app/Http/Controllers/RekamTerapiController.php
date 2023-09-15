@@ -101,5 +101,17 @@ class RekamTerapiController extends Controller
                             ->with('success', 'Terapi Harian berhasil dihapus.')
                             ->with('delete', true);
     }
+
+    public function print(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi)
+    {
+        $rekamTerapi = $subRM->rekamTerapi()->orderBy('tanggal', 'ASC')->get();
+        $index = $rekamTerapi->search($terapi) + 1;
+        $tanggal = Carbon::createFromFormat('Y-m-d', $terapi->tanggal)->formatLocalized('%d %B %Y');
+        $sub = $subRM;
+        
+        return view('unduh.rekam-terapi-harian', compact(
+            'sub', 'pasien', 'terapi', 'tanggal', 'index' 
+        ));
+    }
     
 }

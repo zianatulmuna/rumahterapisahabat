@@ -107,10 +107,10 @@
                 @if($pasien->rekamMedis->count() < 1)
                     <a href="{{ route('sub.histori', $pasien->slug) }}" class="link-secondary link-underline-secondary disabled">Rekam Terapi</a>
                 @else
-                    <a href="{{ route('sub.histori', $pasien->slug) }}" class="lh-sm px-1">Histori Terapi</a>
+                    <a href="{{ route('sub.histori', $pasien->slug) }}" class="lh-sm">Histori Terapi</a>
                 @endif
                 <div class="vr"></div>
-                <a href="{{ route('pasien.rm', $pasien->slug) }}" class="lh-sm px-1">Rekam Medis</a>
+                <a href="{{ route('pasien.rm', $pasien->slug) }}" class="lh-sm">Rekam Medis</a>
               </div>
             </div>
           </div>

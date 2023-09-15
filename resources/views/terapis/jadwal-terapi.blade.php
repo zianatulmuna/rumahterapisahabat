@@ -8,7 +8,7 @@
 
     <div class="d-flex justify-content-between align-items-sm-end flex-column-reverse flex-sm-row mb-sm-3">
         <div class="text-center mb-2 mt-4 my-sm-0">
-            {{ $today }}
+            {{ $caption }}
         </div>
         <div class="col-12 col-sm-7 col-md-6 col-lg-5 col-xl-4 mt-4">
             <div class="btn-group w-100">
@@ -25,6 +25,10 @@
                         <input type="date" value="{{ request('tanggal') }}" id="date" class="form-control">
                     </li>
                     <li><hr class="dropdown-divider"></li>
+                    <li><h6 class="dropdown-header">Berdasarkan Periode</h6></li>
+                    <li><a href="?filter=bulan-ini" class="dropdown-item {{ request('filter') == 'bulan-ini' ? 'active' : '' }}">Bulan Ini</a></li>
+                    <li><a href="?filter=tahun-ini" class="dropdown-item {{ request('filter') == 'tahun-ini' ? 'active' : '' }}">Tahun Ini</a></li>
+                    <li><hr class="dropdown-divider"></li>
                     <li><h6 class="dropdown-header">Berdasarkan Range Tanggal</h6></li>
                     <li class="px-3 pb-2">
                         <div class="d-flex gap-2 w-100">
@@ -36,7 +40,7 @@
                                 <div class="d-block d-sm-none form-control input-icon pe-1" style="width: auto;">
                                     <i class="bi bi-calendar2-plus text-body-tertiary"></i>
                                 </div>
-                                <input type="date" value="{{ request('mulai') }}" id="startDate" class="form-control">
+                                <input type="date" value="{{ request('awal') }}" id="startDate" class="form-control">
                             </div>
                             <div class="hstack stack-input-icon w-100 overflow-hidden">
                                 <div class="d-block d-sm-none form-control pe-1 input-icon" style="width: auto;">
@@ -60,6 +64,9 @@
                 <thead>
                 <tr class="text-center">
                     <th scope="col">No</th>
+                    @if(request('filter') || request('awal'))
+                    <th scope="col">Tanggal</th>
+                    @endif
                     <th scope="col">Nama Pasien</th>
                     <th scope="col" class="table-col-rm">Rekam Medis</th>
                     <th scope="col" class="table-col-terapis">Penyakit</th>
@@ -74,6 +81,9 @@
                     @foreach ($jadwal_terapi as $jadwal)
                         <tr>
                             <th scope="row" class="text-center">{{ $startIndex++ }}</th>
+                            @if(request('filter') || request('awal'))
+                            <td class="text-center">{{ date('d/m/Y', strtotime($jadwal->tanggal)) }}</td>
+                            @endif
                             <td>{{ $jadwal->pasien->nama }}</td>
                             <td class="text-center">
                                 <a href="{{ route('pasien.rm', $jadwal->pasien->slug) }}" class="btn btn-sm c-btn-success rounded-3">
@@ -134,7 +144,7 @@
                 end.classList.add('is-invalid');
             } else {
                 end.classList.remove('is-invalid');
-                window.location.href = '?mulai=' + start.value + '&akhir=' + end.value;
+                window.location.href = '?awal=' + start.value + '&akhir=' + end.value;
             }
         })
 
