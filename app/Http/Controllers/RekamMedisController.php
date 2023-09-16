@@ -8,11 +8,6 @@ use App\Models\RekamMedis;
 
 class RekamMedisController extends Controller
 {
-    public function index()
-    {
-        return view('dashboard');
-    }
-
     public function histori(Pasien $pasien) 
     {
         $rmTerkini = $pasien->rekamMedis()->where('status_pasien', 'Rawat Jalan')->get();
@@ -23,7 +18,7 @@ class RekamMedisController extends Controller
             $rmDetected = 1;
         }
 
-        return view('rekam-medis.histori', [
+        return view('pages.rekam-medis.histori', [
             'rmDetected' => $rmDetected,
             'rm_terkini' => $rmTerkini,
             'rm_terdahulu' => $rmTerdahulu,
@@ -34,14 +29,14 @@ class RekamMedisController extends Controller
 
     public function add(Pasien $pasien)
     {
-        return view('pasien.tambah', [
+        return view('pages.pasien.tambah', [
             'pasien' => $pasien
         ]);
     }
 
     public function detail(Pasien $pasien, RekamMedis $rekamMedis)
     {
-        return view('rekam-medis.detail', [
+        return view('pages.rekam-medis.detail', [
             'rmDetected' => 1,
             'rm' => $rekamMedis,
             'pasien' => $pasien,
@@ -51,7 +46,8 @@ class RekamMedisController extends Controller
     
     public function edit(Pasien $pasien, RekamMedis $rekamMedis)
     {
-        return view('pasien.edit', compact('pasien', 'rm'));
+        $rm = $rekamMedis;
+        return view('pages.pasien.edit', compact('pasien', 'rm'));
     }
 
     public function delete(Pasien $pasien, RekamMedis $rekamMedis)
@@ -65,7 +61,7 @@ class RekamMedisController extends Controller
 
     public function print(Pasien $pasien, RekamMedis $rekamMedis)
     {
-        return view('unduh.rekam-medis', [
+        return view('pages.unduh.rekam-medis', [
             'rm' => $rekamMedis,
             'pasien' => $pasien,
             'umur' => Carbon::parse($pasien->tanggal_lahir)->age

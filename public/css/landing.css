@@ -1,0 +1,274 @@
+@media (max-width: 1700px) {
+    .navbar-landing{
+        height: 65px;
+    }
+    .tentang-klinik img{
+        height: 350px;
+    }
+    .offcanvas-start {
+        width: 28% !important; 
+    }
+    .owl-show-events,
+    .custom-controls,
+    .landing-jadwal,
+    .testimoni,
+    .tim{
+        padding-left: 72px;
+        padding-right: 72px;
+    }
+    
+}
+@media (max-width: 992px) {
+    .navbar-landing{
+        height: 50px;
+    }
+    .owl-show-events,
+    .custom-controls,
+    .landing-jadwal,
+    .testimoni,
+    .tim{
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+    .tentang-klinik h2{
+        margin-top: 12px;
+        text-align: center;
+    }
+    .tentang-klinik img{
+        height: 275px;
+    }
+    .tentang-klinik{
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+    .offcanvas-start {
+        width: 40% !important; 
+    }
+}
+@media (max-width: 768px) {
+    .tentang-klinik h2{
+        margin-top: 12px;
+        text-align: center;
+    }
+    .tentang-klinik img{
+        height: 275px;
+    }
+    .owl-show-events,
+    .tentang-klinik,
+    .custom-controls,
+    .custom-controls,
+    .landing-jadwal,
+    .testimoni,
+    .tim {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+    .offcanvas-start {
+        width: 50% !important; 
+    }
+}
+
+@media (max-width: 576px){
+    .landing-jadwal {
+        padding: 0px 32px 0px 32px;
+    }
+    .offcanvas-start {
+        width: 100% !important; 
+    }
+}
+
+.offcanvas.show {
+    overflow: visible !important;
+}
+
+.main-bg-landing {
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 10px 10px 10px 10px;
+    box-shadow: 0 0.125rem 0.25rem 0 rgba(58, 59, 69, 0.2) !important;
+    border: 1px solid #e3e6f0;
+}
+
+.main-banner {
+    height: 350px;
+    background-color: #0E8357;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    display: flex;
+    text-align: center;    
+    align-items: center;
+    justify-content: center;
+}
+.main-banner img{
+    height: 70%;
+    width: auto;
+}
+
+.main-banner h1{
+    font-family: "Raleway", sans-serif;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.main-banner p{
+    color: #ffffff;
+}
+
+.main-banner .btn{
+    background-color: #ffffff;
+    color: #0E8357;
+    outline: #0E8357;
+    font-size: 20px;
+}
+
+
+/* carousel foto klinik */
+
+.owl-show-events {
+    position: relative;
+    margin-top: -60px;
+    
+}
+
+.owl-show-events img{
+    height: 200px;
+    object-fit: cover;
+}
+.owl-show-events .owl-nav {
+    position: absolute;
+    /* width: 100%; */
+    top: 50%;
+}
+
+.owl-show-events .owl-dots{
+    margin-top: 12px;
+    z-index: -1;
+}
+
+.custom-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -32px;
+}
+
+.custom-prev,
+.custom-next {
+    z-index: 2;
+    background-color: #0E8357;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.owl-show-events .owl-nav .owl-prev span,
+.owl-show-events .owl-nav .owl-next span {
+    display: none;
+}
+
+/* offcanvas */
+.modal-backdrop {
+    display: none !important;
+}
+
+.offcanvas-content{
+    border-radius: 0; 
+    height: 100vmax;
+}
+
+.offcanvas-header{
+    display: flex;
+    justify-content: space-between;
+    width: 88%;
+    margin: 0 auto;
+    padding-bottom: 5px;
+    padding-top: 20px;
+}
+
+.offcanvas-header i{
+    font-size: 24px;
+}
+  
+.offcanvas-body{
+    width: 90%;
+    margin: 0 auto;
+    flex: unset;
+}
+
+.offcanvas-body .container-fluid{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 5px 10px 5px;
+    cursor: pointer;
+    transition: all .5s ease;
+  }
+  
+/* .offcanvas-body .container-fluid:hover{
+    background-color: #d2f4ea;
+    color: #0E8357;
+} */
+
+/* tentang-klinik */
+
+.tentang-klinik{
+    background-color: #0E8357;
+}
+
+.tentang-klinik p{
+    text-align: justify;
+}
+
+.tentang-klinik p{
+    color: #ffffff;
+    line-height: 1.75;
+}
+
+.tentang-klinik h2{
+    font-family: "Raleway", sans-serif;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+
+/* tentang-Tim */
+
+.tim{
+    background-color: #0E8357;
+}
+
+.tim h2{
+    font-family: "Raleway", sans-serif;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.tentang-tim h5{
+    margin: 8px 0px 0px 0px;
+    font-family: "Raleway", sans-serif;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.tentang-tim p{
+    padding-top: 4px;
+    color: #ffffff;
+}
+
+.tentang-tim img{
+    height: 150px;
+    width: auto;
+    border-radius: 50%;
+}
+
+/* testimoni */
+
+.testimoni img{
+    height: 100px; 
+    width: 100px; 
+    border-radius: 50%;
+    object-fit:cover;
+}

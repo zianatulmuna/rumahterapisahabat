@@ -141,7 +141,7 @@
          </div>
       @endif
    @else
-      <div class="alert alert-danger d-inline-flex mt-5 p-0 p-2 px-3">
+      <div class="alert alert-danger w-auto d-inline-flex mt-5 p-0 p-2 px-3">
          <i class="bi bi-exclamation-circle pe-2 fw-semibold"></i>
          Pasien ini tidak memiliki histori rekam medis.
       </div>

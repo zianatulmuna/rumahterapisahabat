@@ -11,13 +11,14 @@ use App\Http\Controllers\RekamMedisController;
 use App\Http\Controllers\RekamTerapiController;
 use App\Http\Controllers\SubRekamMedisController;
 
-Route::get('/', function () {
-    return view('landing-page.index');
-});
+Route::get('/', [DashboardController::class, 'landingPage']);
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::get('/daftar-sebagai-pasien', [PasienController::class, 'addPrapasien'])->name('landing.form');
+Route::post('/daftar-sebagai-pasien', [PasienController::class, 'store'])->name('landing.store');
 
 Route::middleware('auth:admin,terapis,kepala_terapis')->group(function () {
     Route::get('/beranda', [DashboardController::class, 'index'])->name('beranda');
@@ -68,7 +69,7 @@ Route::middleware('auth:admin,terapis,kepala_terapis')->group(function () {
 Route::middleware('auth:admin,kepala_terapis')->group(function () {    
     Route::prefix('pasien-baru')->group(function () {
         Route::get('', [PasienController::class, 'allPrapasien'])->name('pasien.baru');
-        Route::get('/create', [PasienController::class, 'add'])->name('pasien.create');
+        Route::get('/create', [PasienController::class, 'addPasien'])->name('pasien.create');
         Route::get('/{pasien}/edit', [PasienController::class, 'edit'])->name('pasien.edit');
     });
 

@@ -33,6 +33,12 @@ class GrafikDashboard extends Component
 
         $this->userTerapis = Auth::guard('terapis')->user();
 
+        
+        
+    }
+    
+    public function render()
+    {
         if($this->userTerapis) {
             $this->id_terapis = $this->userTerapis->id_terapis;
             $this->nama_terapis = $this->userTerapis->nama;   
@@ -46,10 +52,6 @@ class GrafikDashboard extends Component
         $newMax = ($max <= 10) ? 10 : ceil($max / 10) * 10;
         $this->maxChart = $newMax;
         
-    }
-    
-    public function render()
-    {
         if($this->userTerapis) {
             $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
     
@@ -413,6 +415,7 @@ class GrafikDashboard extends Component
         }
 
         $dataPerTahun = $model->groupBy('tahun')->orderBy('tahun', 'ASC')->get();
+        // dd($dataPerTahun);
 
         $tahun = []; 
         $jumlahPerTahun = []; 
@@ -421,6 +424,8 @@ class GrafikDashboard extends Component
             $tahun[] = $data->tahun; 
             $jumlahPerTahun[$data->tahun] = $data->total; 
         }
+
+        // dd($tahun);
 
         if (!empty($tahun)) {
             $allYears = range(min($tahun), max($tahun));

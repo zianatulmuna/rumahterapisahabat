@@ -1,14 +1,17 @@
 <header class="navbar navbar-expand-sm navbar-light bg-light shadow px-4 sticky-top navbar-custom">
     <!-- Button trigger modal -->
     <div class="mobile-toggler d-lg-none me-3">
-      <a href="#" data-bs-toggle="modal" data-bs-target="#navbModal">
+      <a href="#" data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasAuth" aria-controls="offcanvasWithBothOptions">
         <i class="bi bi-list"></i>
       </a>
     </div>
   
     <div class="navbar-nav">
       <div class="nav-item text-nowrap">
-        <img src="/assets/Logo_Klinik.jpg" class="logo" alt="Logo Klinik">
+        <a href="/">
+          <img src="/assets/Logo_Klinik.jpg" class="logo" alt="Logo Klinik">
+        </a>
       </div>
     </div>
   
@@ -39,7 +42,6 @@
                   <img src="/img/undraw_profile_1.svg" class="avatar-img mx-1" alt="{{ auth()->user()->nama }}">
                 @endif
             @endif
-            {{-- <img src="/img/undraw_profile.svg" class="avatar-img ml-2"> --}}
             <i class="bi bi-caret-down-fill text-secondary small"></i>
           </a>
           <div class="dropdown-menu shadow dropdown-profil" aria-labelledby="dropdown03">

@@ -1,6 +1,6 @@
 @extends('layouts.guest.main')
 
-@section('continer')
+@section('container')
         <h1>Landing Page</h1>
 @endsection
 

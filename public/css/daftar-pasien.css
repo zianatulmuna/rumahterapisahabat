@@ -1,0 +1,27 @@
+/* Screen Extra Large */
+@media (max-width: 1700px) {
+  .daftar-pasien{
+   width: 55%;
+  }
+}
+
+/* screen large */
+@media(max-width: 992px) {
+  .daftar-pasien{
+    width: 75%;
+  }   
+}
+
+/* screen Medium [Tablet] */
+@media (max-width: 768px) {
+  .daftar-pasien{
+    width: 95%;
+   }
+}
+
+/* screen small [Phone] */
+@media (max-width: 576px) {
+  .daftar-pasien{
+    width: 100%;
+   }
+}

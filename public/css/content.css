@@ -98,6 +98,12 @@
 .content-ready::-webkit-scrollbar-thumb:hover{
   background: #b3b3b3;
 }
+
+.content-ready-landing {
+  max-height: 300px;
+  min-height: 250px;
+  overflow-y: auto;
+}
 /* Grafik */
 .dropdown-filter-tahun .button-toggle {
   width: 100%; 

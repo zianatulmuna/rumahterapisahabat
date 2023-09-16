@@ -29,7 +29,7 @@ class PasienEditForm extends Component
 
     public $totalStep = 5, $currentStep = 1;
 
-    public $pasien, $rm, $id_pasien, $id_rekam_medis, $slug, $dbNama, $dbFoto, $pathFoto, $dbTahun_pendaftaran, $dbTanggal_ditambahkan, $id_rm_baru;
+    public $pasien, $rm, $id_pasien, $id_rekam_medis, $slug, $dbNama, $dbFoto, $pathFoto, $dbTahun_pendaftaran, $dbTanggal_ditambahkan, $id_rm_baru, $isPasien;
 
     public $tag = [], $dataTag = [], $newTag, $dbPenyakit, $stringPenyakit, $deletedTag = [], $checkDuplikat = false;
 
@@ -54,14 +54,18 @@ class PasienEditForm extends Component
         $this->tag;
 
         $this->rm = $rm;
+        $this->isPasien = $pasien->status_pendaftaran == "Pasien" ? true : false;
 
-        if($rm) {
-            $this->id_rekam_medis = $rm->id_rekam_medis;
-            $this->keluhan = $rm->keluhan;
+        $this->id_rekam_medis = $rm->id_rekam_medis;
+        $this->keluhan = $rm->keluhan;
+        $this->penanggungjawab = $rm->penanggungjawab;
+
+        if($this->isPasien) {
+            
             // $this->link_rm = $rm->link_rm;
             $this->tipe_pembayaran = $rm->tipe_pembayaran;
             $this->biaya_pembayaran = $rm->biaya_pembayaran;
-            $this->penanggungjawab = $rm->penanggungjawab;
+            
             $this->tempat_layanan = $rm->tempat_layanan;
             $this->sistem_layanan = $rm->sistem_layanan;
             $this->jumlah_layanan = $rm->jumlah_layanan;
@@ -405,7 +409,7 @@ class PasienEditForm extends Component
         //     Storage::delete($this->pathFoto);
         // }
 
-        if($this->rm) {   
+        if($this->isPasien) {   
             $idRM = $this->id_rekam_medis;
             $this->k_bsni = $this->provId ? $this->k_bsni : substr($this->id_rekam_medis, 0, 3);
             
@@ -511,7 +515,7 @@ class PasienEditForm extends Component
             $dataRM['penyakit'] = implode(',', $this->tag);
             $dataDiri['status_pendaftaran'] = 'Pasien';
 
-            $createRM = RekamMedis::create($dataRM);
+            $createRM = RekamMedis::where('id_rekam_medis', $this->id_rekam_medis)->update($dataRM);
 
             if($createRM) {
                 foreach ($this->tag as $penyakit) {
@@ -536,7 +540,7 @@ class PasienEditForm extends Component
 
         $path = $this->slug;
 
-        $rmCheck = $this->rm ? true : false;
+        $rmCheck = $this->isPasien ? true : false;
         
         $this->reset();
         $this->currentStep = 1;

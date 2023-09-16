@@ -28,6 +28,7 @@ h1, h2, h3, h4,
 
 .content-container {
   padding: 30px 28px;
+  min-height: 100vh;
   /* margin-bottom: 50px; */
 }
 

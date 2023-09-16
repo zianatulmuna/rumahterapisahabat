@@ -306,7 +306,7 @@
                 <div class="col">
                   <div class="mb-4">
                     <label class="form-label fw-bold w-100">Status Terapi <span class="text-danger">*</span></label>
-                    <div class="form-check form-check-custom p-0">
+                    <div class="form-check p-0 @error('status_terapi') form-control py-1 px-2 is-invalid @enderror">
                       @foreach($statusTerapi as $status)
                         @if(old('status_terapi') == $status['value'])
                           <div class="form-check form-check-custom"> 
@@ -321,6 +321,11 @@
                         @endif
                       @endforeach
                     </div>
+                    @error('status_terapi')
+                      <div class="invalid-feedback d-block">
+                        {{ $message }}
+                      </div>
+                    @enderror
                   </div>
   
                   <div class="mb-4">
@@ -335,7 +340,7 @@
                   
                   <div class="mb-4">
                     <label class="form-label fw-bold w-100">Status Pasien <span class="text-danger">*</span></label>
-                    <div class="form-check form-check-custom p-0">
+                    <div class="form-check p-0 @error('status_pasien') form-control py-1 px-2 is-invalid @enderror">
                       @foreach($statusPasien as $statusp)
                         @if(old('status_pasien') == $statusp['value'])
                           <div class="form-check form-check-custom">
@@ -349,12 +354,12 @@
                           </div>
                         @endif
                       @endforeach
-                      @error('status_pasien')
-                        <div class="invalid-feedback d-block">
-                          {{ $message }}
-                        </div>
-                      @enderror
                     </div>
+                    @error('status_pasien')
+                      <div class="invalid-feedback d-block">
+                        {{ $message }}
+                      </div>
+                    @enderror
                   </div>
   
                   <div class="mb-4">
@@ -559,7 +564,7 @@
           @endif
   
           {{-- button step --}}
-          @if($rm == null) 
+          @if($isPasien == false) 
             <div class="d-flex justify-content-between my-4 mx-3 mb-md-5 mx-md-5 form-navigation">
               <a href="" class="btn btn-outline-danger py-1 px-2 py-sm-2 px-sm-3" data-toggle="modal" data-target="#pasienDeleteModal">
                 <span class="d-none d-sm-block"><i class="bi bi-exclamation-triangle pe-2"></i>Hapus Pasien</span>
@@ -577,16 +582,13 @@
     
               @if($currentStep >= 2 && $currentStep <= 5)
                 <button class="btn btn-secondary py-1 px-2 px-sm-3 py-sm-2" type="button" onclick="toTop()" wire:click="toPrev()">
-                  <span class="{{ $rm == null ? 'd-none d-md-block' : '' }}">Sebelumnya</span>
-                  <span class="{{ $rm == null ? 'd-block d-md-none' : 'd-none' }}"><i class="bi bi-caret-left"></i> Prev</span>
+                  <span class="{{ $isPasien == false ? 'd-none d-md-block' : '' }}">Sebelumnya</span>
+                  <span class="{{ $isPasien == false ? 'px-2 d-block d-md-none' : 'd-none' }}">Prev</span>
                 </button>            
               @endif
               
               @if($currentStep >= 1 && $currentStep <= 4)     
-                <button class="btn c-btn-success py-1 px-2 py-sm-2 px-sm-3 ms-2 ms-md-3" type="button" onclick="toTop()" wire:click="toNext()">
-                  <span class="{{ $rm == null ? 'd-none d-md-block' : '' }}">Lanjut</span>
-                  <span class="{{ $rm == null ? 'd-block d-md-none' : 'd-none' }}">Next <i class="bi bi-caret-right"></i></span>
-                </button>
+                <button class="btn c-btn-success py-1 px-2 py-sm-2 px-sm-3 ms-2 ms-md-3" type="button" onclick="toTop()" wire:click="toNext()">Lanjut</button>
               @endif
     
               @if($currentStep == 5)

@@ -72,7 +72,9 @@
                 </div>
             </div>
 
-            <canvas id="grafikChart"></canvas>
+            <div class="canvasBox">
+                <canvas id="grafikChart"></canvas>
+            </div>
 
             <div class="text-center mt-3">
                 <span class="text-center">
@@ -200,9 +202,18 @@
 </script>
 
 <script>
+    const chartBox = document.querySelector(".canvasBox");
+
     document.addEventListener('livewire:load', function () {
         Livewire.on('chartUpdated', grafik => {
-            updateChart(grafik.dataGrafik, grafik.maxChart);    
+            const oldCanvas = chartBox.querySelector("canvas");
+            chartBox.removeChild(oldCanvas);
+
+            const newCanvas = document.createElement("canvas");
+            newCanvas.id = "grafikChart";    
+            chartBox.appendChild(newCanvas); 
+            
+            updateChart(grafik.dataGrafik, grafik.maxChart);
 
             addTerapis();      
             addPenyakit();      
@@ -211,7 +222,9 @@
         function updateChart(dataGrafik, max) {
             const value = Object.values(dataGrafik);
             const label = Object.keys(dataGrafik);
-            const maxValue = max;
+            const maxValue = max;    
+
+               
 
             const chart = new Chart("grafikChart", {
                 type: "line",

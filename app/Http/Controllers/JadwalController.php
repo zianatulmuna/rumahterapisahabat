@@ -22,9 +22,9 @@ class JadwalController extends Controller
         if(Auth::guard('terapis')->user()) {
             $idTerapis = Auth::guard('terapis')->user()->id_terapis;
             $query->where('id_terapis', $idTerapis);
-            $view = 'terapis.jadwal-terapi';
+            $view = 'pages.terapis.jadwal-terapi';
         } else {
-            $view = 'jadwal.jadwal';
+            $view = 'pages.jadwal.jadwal';
         }
 
         if(request('filter')) {
@@ -54,6 +54,7 @@ class JadwalController extends Controller
 
     public function add()
     {
+        $this->jadwalDummy();
         $pasien = Pasien::whereHas('rekamMedis', function ($query) {
             $query->where('status_pasien', 'Rawat Jalan')
                   ->where('penyakit', '!=', '');
@@ -63,11 +64,11 @@ class JadwalController extends Controller
         
         $terapis = Terapis::where('status', 'Aktif')->orderBy('nama', 'ASC')->get(['id_terapis', 'nama', 'tingkatan']);
 
-        return view('jadwal.tambah', compact('pasien', 'terapis'));
+        return view('pages.jadwal.tambah', compact('pasien', 'terapis'));
     }
 
-    public function jadwalDummy($id_sub) {
-        $t = 6;
+    public function jadwalDummy() {
+        $t = 16;
 
         for ($i = 0; $i < 5; $i++) {
             $id = IdGenerator::generate([
@@ -105,7 +106,7 @@ class JadwalController extends Controller
         $id_sub = $jadwal->id_sub;
         $aksiDari = "jadwal";
 
-        return view('rekam-terapi.tambah', compact('pasien', 'id_sub', 'jadwal', 'aksiDari'));
+        return view('pages.rekam-terapi.tambah', compact('pasien', 'id_sub', 'jadwal', 'aksiDari'));
     }
 
     public function store(Request $request)
@@ -159,7 +160,7 @@ class JadwalController extends Controller
         $list_terapis = Terapis::orderBy('nama', 'ASC')->get();
         $id_terapis = $jadwal->id_terapis;
         
-        return view('jadwal.edit', compact(
+        return view('pages.jadwal.edit', compact(
             'list_pasien', 'list_terapis', 'pasien', 'id_terapis', 'jadwal'
         ));
     }
@@ -243,8 +244,32 @@ class JadwalController extends Controller
             $caption = Carbon::parse(request('awal'))->format('d-m-Y') . ' sd ' . Carbon::parse(request('akhir'))->format('d-m-Y');          
         }
         
-        return view('unduh.jadwal', compact(
+        return view('pages.unduh.jadwal', compact(
             'list_jadwal', 'caption'
         ));
+    }
+
+    function jadwalDashboard() {
+        $query = Jadwal::query();
+
+        if(request('tanggal')) {
+            $tglCaption = Carbon::parse(request('tanggal'))->formatLocalized('%A, %d %B %Y');
+            $query->where('tanggal', request('tanggal'));
+
+        } 
+        // elseif($this->filter === "Range")  {
+        //     $awal = Carbon::parse($this->tglAwal)->formatLocalized('%d %B %Y');
+        //     $akhir = Carbon::parse($this->tglAkhir)->formatLocalized('%d %B %Y');
+
+        //     $this->tglCaption = $awal . ' - ' . $akhir;
+        //     $query->whereBetween('tanggal', [$this->tglAwal, $this->tglAkhir]);
+        // } else {            
+        //     $this->tglCaption = Carbon::today()->formatLocalized('%A, %d %B %Y');
+        //     $query->where('tanggal', Carbon::today()->format('Y-m-d'));
+        // }
+
+        $jadwal_terapi = $query->paginate(10);
+
+        return response()->json($jadwal_terapi, $tglCaption);
     }
 }

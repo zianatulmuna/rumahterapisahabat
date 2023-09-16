@@ -11,12 +11,12 @@ class ProfilController extends Controller
         $user = auth()->user();
         $tanggal_lahir = Carbon::parse($user->tanggal_lahir )->formatLocalized('%A, %d %B %Y');
 
-        return view('user.profil', compact('user', 'tanggal_lahir'));
+        return view('pages.profil.profil', compact('user', 'tanggal_lahir'));
     }
     
     public function edit () {
         $user = auth()->user();
 
-        return view('user.edit', compact('user'));
+        return view('pages.profil.edit', compact('user'));
     }
 }

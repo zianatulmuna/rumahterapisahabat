@@ -17,12 +17,12 @@ class TerapisController extends Controller
         $terapis = Terapis::latest()->filter(request(['search', 'tingkatan']))->paginate(20);
         $tingkatan = ['Utama', 'Madya', 'Muda', 'Pratama', 'Latihan'];
 
-        return view('terapis.terapis', compact('terapis', 'tingkatan'));
+        return view('pages.terapis.terapis', compact('terapis', 'tingkatan'));
     }
 
     public function add()
     {
-        return view('terapis.tambah');
+        return view('pages.terapis.tambah');
     }
 
     public function detail(Terapis $terapis)
@@ -62,7 +62,7 @@ class TerapisController extends Controller
 
         $tanggal_lahir = Carbon::parse($terapis->tanggal_lahir)->formatLocalized('%d %B %Y'); 
 
-        return view('terapis.detail', compact(
+        return view('pages.terapis.detail', compact(
             'terapis', 
             'histori_terapi', 
             'tanggal_caption',
@@ -73,7 +73,7 @@ class TerapisController extends Controller
 
     public function edit(Terapis $terapis)
     {        
-        return view('terapis.edit', compact('terapis'));
+        return view('pages.terapis.edit', compact('terapis'));
     }
 
     public function delete(Terapis $terapis)

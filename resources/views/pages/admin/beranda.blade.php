@@ -8,7 +8,7 @@
 
     {{-- card performa --}}
     <div class="row card-performa">        
-        <div class="col-12 col-sm col-md-6 col-xl px-0 py-2 p-sm-2">
+        <div class="col-12 col-sm col-md-6 col-xl px-0 py-2 p-sm-2 ps-sm-0">
             <div class="card shadow-sm rounded-3 border border-light h-100 h-100">
                 <div class="card-body py-2 px-3 p-sm-3">
                     <div class="d-flex justify-content-between align-items-center">
@@ -27,7 +27,27 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm col-md-6 col-xl px-0 py-2 p-sm-2">
+        <div class="col-12 col-sm col-md-6 col-xl px-0 py-2 p-sm-2 pe-md-0 pe-xl-2">
+            <div class="card shadow-sm rounded-3 border border-light h-100">
+                <div class="card-body py-2 px-3 p-sm-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="order-2 flex-fill d-flex justify-content-end">
+                            <div class="col-auto rounded-50 d-flex justify-content-center align-items-center" style="background: #d3f0f5; height: 50px; width: 50px; border-radius: 50%">
+                                <i class="bi bi-person fs-4 text-info"></i>
+                            </div>
+                        </div>
+                        <div class="order-1">
+                            <div class="h2 mb-0 fw-bold text-secondary mb-1">{{ $pasienTotal }}</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase">
+                                Total Pasien</div>
+                            <span class="small text-secondary">Semua</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-12 col-sm col-md-6 col-xl px-0 py-2 p-sm-2 pe-sm-0 pe-md-2 ps-md-0 ps-xl-2">
             <div class="card shadow-sm rounded-3 border border-light h-100">
                 <div class="card-body py-2 px-3 p-sm-3">
                     <div class="d-flex align-items-center justify-content-between">
@@ -46,26 +66,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm col-md-6 col-xl px-0 py-2 p-sm-2">
-            <div class="card shadow-sm rounded-3 border border-light h-100">
-                <div class="card-body py-2 px-3 p-sm-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="order-2 flex-fill d-flex justify-content-end">
-                            <div class="col-auto rounded-50 d-flex justify-content-center align-items-center" style="background: #d3f0f5; height: 50px; width: 50px; border-radius: 50%">
-                                <i class="bi bi-person fs-4 text-info"></i>
-                            </div>
-                        </div>
-                        <div class="order-1">
-                            <div class="h2 mb-0 fw-bold text-secondary mb-1">{{ $pasienTotal }}</div>
-                            <div class="text-xs font-weight-bold text-info text-uppercase">
-                                Total Pasien</div>
-                            <span class="small text-secondary">Semua</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-6 col-xl-4 py-2 px-0 py-2 p-sm-2">
+        <div class="col-12 col-md-6 col-xl-4 py-2 px-0 py-2 ps-md-2">
             <div class="card shadow-sm rounded-3 border border-light h-100">
                 <div class="card-body py-2 px-3 p-sm-3 pb-sm-2">
                     <div class="d-flex align-items-center justify-content-between">
@@ -77,7 +78,7 @@
                         <div class="order-1">
                             <div class="h2 mb-0 fw-bold text-secondary mb-1">{{ $rekamMedisTahunIni }}</div>
                             <div class="text-xs font-weight-bold text-success">
-                                REKAM MEDIS <span class="small text-secondary ps-1">(Tahun ini)</span></div>
+                                REKAM MEDIS <span class="small text-secondary ps-1">(Tahun Ini)</span></div>
                             </div>
                                                  
                         

@@ -62,7 +62,7 @@
             Tekan "Logout" jika ingin mengakhiri session.
           </div>
           <div class="modal-footer justify-content-between mx-3">
-            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-secondary" type="button" id="logoutCloseBtn">Cancel</button>
             <form action="/logout" method="post">
               @csrf
               <button type="submit" class="btn btn-danger">Logout</button>
@@ -95,6 +95,11 @@
     {{-- font awesome --}}
     <script src="https://kit.fontawesome.com/c40b365784.js" crossorigin="anonymous"></script> 
 
+    <script>
+      document.querySelector('#logoutCloseBtn').addEventListener('click', function(event) {
+        document.getElementById('logoutModal').classList.remove('show');
+      });
+    </script>
     @stack('script')
   </body>
 </html>

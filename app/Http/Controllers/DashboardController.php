@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jadwal;
+use App\Models\Terapis;
 use Carbon\Carbon;
 use App\Models\Pasien;
 use App\Models\RekamMedis;
@@ -34,9 +36,9 @@ class DashboardController extends Controller
                             ->where('status_pasien', 'Selesai')->count();
 
         if(Auth::guard('admin')->user() || Auth::guard('kepala_terapis')->user()) {
-            $view = 'admin.beranda';
+            $view = 'pages.admin.beranda';
         } elseif(Auth::guard('terapis')->user()) {
-            $view = 'terapis.beranda';
+            $view = 'pages.terapis.beranda';
         }
 
         return view($view, compact(
@@ -48,5 +50,13 @@ class DashboardController extends Controller
             'rawatJalanTahunIni', 
             'selesaiTahunIni'
         ));
+    }
+
+    function landingPage(Request $request) {
+        // $jadwal_terapi = Jadwal::where('tanggal', date('Y-m-d'))->orderBy('waktu')->paginate(5);
+        $terapis_ready = Terapis::where('is_ready', 1)->get();
+        // $today = Carbon::today()->formatLocalized('%A, %d %B %Y');
+
+        return view('pages.landing-page.landing-page', compact('terapis_ready'));
     }
 }

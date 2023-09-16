@@ -1,43 +1,11 @@
 [
   {
-    "kondisi_sebelum_terapi": "Nyeri dada dan sesak napas",
-    "kondisi_setelah_terapi": "Nyeri dada berkurang dan napas lebih lancar",
-    "keluhan": "Pusing dan kelelahan",
-    "tindakan_terapi": "Pemberian obat antihipertensi dan istirahat",
-    "deteksi": "Tekanan darah tinggi pada pemeriksaan",
-    "saran": "Pantau tekanan darah secara teratur dan konsumsi diet rendah garam"
-  },
-  {
-    "kondisi_sebelum_terapi": "Sakit dada akut",
-    "kondisi_setelah_terapi": "Sakit dada berkurang dan stabil",
-    "keluhan": "Nyeri lengan kiri",
-    "tindakan_terapi": "Pemberian obat pengencer darah dan aspirin",
-    "deteksi": "EKG menunjukkan perubahan pada segmen ST",
-    "saran": "Hindari aktivitas fisik berat dan pantau tekanan darah"
-  },
-  {
-    "kondisi_sebelum_terapi": "Sesak napas parah",
-    "kondisi_setelah_terapi": "Sesak napas berkurang dan pernapasan lebih baik",
-    "keluhan": "Pegal-pegal di dada",
+    "kondisi_sebelum_terapi": "Nyeri dada dan sesak napas. Sakit dada akut",
+    "kondisi_setelah_terapi": "Nyeri dada berkurang dan napas lebih lancar, sakit dada berkurang dan stabil",
+    "keluhan": "Pusing dan kelelahan, nyeri lengan kiri",
     "tindakan_terapi": "Terapi rehabilitasi jantung dan obat bronkodilator",
-    "deteksi": "Fungsi paru-paru terganggu pada pemeriksaan spirometri",
-    "saran": "Lakukan latihan pernapasan dan ikuti program rehabilitasi jantung"
-  },
-  {
-    "kondisi_sebelum_terapi": "Nyeri dada saat aktivitas fisik",
-    "kondisi_setelah_terapi": "Aktivitas fisik dapat dilakukan tanpa nyeri dada",
-    "keluhan": "Nyeri di leher",
-    "tindakan_terapi": "Pemberian nitrat dan obat antiangina",
-    "deteksi": "Stres tes menunjukkan iskemia",
-    "saran": "Hindari stres berlebihan dan pantau gejala angina"
-  },
-  {
-    "kondisi_sebelum_terapi": "Nyeri dada yang menjalar ke punggung",
-    "kondisi_setelah_terapi": "Nyeri dada berkurang dan punggung nyaman",
-    "keluhan": "Pusing dan berkeringat",
-    "tindakan_terapi": "Pemberian nitrogliserin dan istirahat",
-    "deteksi": "EKG menunjukkan tanda-tanda infark miokard",
-    "saran": "Hindari aktivitas berat dan konsultasi dengan dokter secara berkala"
+    "deteksi": "Tekanan darah tinggi pada pemeriksaan, fungsi paru-paru terganggu, ada tanda-tanda infark miokard",
+    "saran": "Pantau tekanan darah secara teratur dan konsumsi diet rendah garam. Hindari aktivitas fisik berat dan pantau tekanan darah"
   },
   {
     "kondisi_sebelum_terapi": "Sesak napas saat tidur",
