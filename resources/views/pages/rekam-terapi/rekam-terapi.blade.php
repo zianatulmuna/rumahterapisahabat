@@ -4,7 +4,7 @@
 <div class="content-container">
    <div class="d-flex justify-content-between align-items-center pb-2 mb-4 border-bottom">
       <h1 class="h2">Rekam Terapi</h1>
-      <a href="{{ route('rekam.print', [$pasien->slug, $rm->id_rekam_medis]) }}" target="_blank" class="btn btn-success btn-sm rounded-3 mb-2">
+      <a href="{{ route('rekam.print', [$pasien->slug, $sub->id_sub]) }}" target="_blank" class="btn btn-success btn-sm rounded-3 mb-2">
         <i class="bi bi-download pe-1"></i> Unduh
      </a>
    </div>
@@ -22,16 +22,20 @@
         <div class="col">
         <h4 class="mt-4 mt-lg-5 mb-3">Keluhan</h4>
         <div class="bg-white px-3 py-2 border border-body-tertiary"  style="min-height: 60px">
-            <p>{{ $sub->rekamMedis->keluhan }}</p>
+            <p>{!! $sub->rekamMedis->keluhan !!}</p>
         </div>
         </div>
     </div>
 
     <div class="d-flex justify-content-between align-items-center mt-4 mt-lg-5 mb-3">
         <h4 class="mb-0" id="rekamTerapi">Histori Terapi</h4>
+        @if(count($rekam_terapi) > 0)
         <a href="{{ route('sub.print', [$pasien->slug, $sub->id_sub]) }}" target="_blank" class="c-badge c-badge-successboot">
             <i class="bi bi-download pe-1"></i> Unduh Semua
         </a>
+        @else
+        <div class=""></div>
+        @endif
     </div>
     @if(count($rekam_terapi) > 0)
         <div class="overflow-auto">
@@ -54,7 +58,7 @@
                             <th scope="row" style="max-width: 50px">{{ $i++ }}</th>
                             <td style="width: 200px">{{ date('d/m/Y', strtotime($terapi->tanggal)) }}</td>
                             <td class="text-capitalize">{{ $terapi->terapis->username }}</td>
-                            <td>{{ $terapi->pra_terapi }}</td>
+                            <td>{!! $terapi->pra_terapi !!}</td>
                             <td style="width: 130px">
                                 <a href="{{ route('terapi.print', [$pasien->slug, $sub->id_sub, $terapi->id_terapi]) }}" class="c-badge c-badge-info">
                                     <i class="bi bi-download"></i>

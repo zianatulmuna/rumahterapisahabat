@@ -55,7 +55,7 @@ class PasienController extends Controller
     {
         $pasien = '';
 
-        return view('pasien.tambah', compact('pasien'));
+        return view('pages.pasien.tambah', compact('pasien'));
     }
 
     public function store(Request $request)
@@ -112,6 +112,7 @@ class PasienController extends Controller
             $idRM = IdGenerator::generate(['table' => 'rekam_medis', 'field' => 'id_rekam_medis', 'length' => 10, 'prefix' => 'PRA', 'reset_on_prefix_change' => true]);
             $dataRM['id_rekam_medis'] = $idRM;
             $dataRM['id_pasien'] = $idPasien;
+            $dataRM['keluhan'] = nl2br($request->keluhan);
             
             RekamMedis::create($dataRM);
         }

@@ -76,7 +76,7 @@ Route::middleware('auth:admin,kepala_terapis')->group(function () {
     Route::prefix('pasien/{pasien}')->group(function () {      
 
         Route::prefix('rekam-medis')->group(function () {
-            Route::get('/tambah', [RekamMedisController::class, 'add'])->name('rm.create');
+            Route::get('/histori/tambah', [RekamMedisController::class, 'add'])->name('rm.create');
             Route::get('/{rekamMedis}/edit', [RekamMedisController::class, 'edit'])->name('rm.edit');
             
             
@@ -84,7 +84,7 @@ Route::middleware('auth:admin,kepala_terapis')->group(function () {
     }); 
 
     Route::get('/terapis', [TerapisController::class, 'index'])->name('terapis');    
-    Route::get('/terapis/{terapis}', [TerapisController::class, 'detail'])->name('terapis.detail');
+    Route::get('/terapis/detail/{terapis}', [TerapisController::class, 'detail'])->name('terapis.detail');
 });
 
 Route::middleware('auth:admin')->group(function () {    
@@ -103,7 +103,7 @@ Route::middleware('auth:admin')->group(function () {
     }); 
 
     Route::prefix('jadwal')->group(function () {        
-        Route::get('/tambah', [JadwalController::class, 'add'])->name('jadwal.create');
+        Route::get('/tambah', [JadwalController::class, 'add'])->name('jadwal.add');
         Route::post('/tambah', [JadwalController::class, 'store'])->name('jadwal.store');
         Route::get('/{pasien}&{jadwal}/edit', [JadwalController::class, 'edit'])->name('jadwal.edit');
         Route::put('/{jadwal}/update', [JadwalController::class, 'update'])->name('jadwal.update');
@@ -113,9 +113,9 @@ Route::middleware('auth:admin')->group(function () {
     });
 
     Route::prefix('terapis')->group(function () {        
-        Route::get('/create', [TerapisController::class, 'add'])->name('terapis.create');
-        Route::delete('/{terapis}', [TerapisController::class, 'delete'])->name('terapis.delete');
-        Route::get('/{terapis}/edit', [TerapisController::class, 'edit'])->name('terapis.edit');
+        Route::get('/tambah', [TerapisController::class, 'add'])->name('terapis.add');
+        Route::delete('/detail/{terapis}', [TerapisController::class, 'delete'])->name('terapis.delete');
+        Route::get('/detail/{terapis}/edit', [TerapisController::class, 'edit'])->name('terapis.edit');
     });
 });
 

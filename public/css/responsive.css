@@ -288,7 +288,9 @@
   }
   /* min lg */
   @media (min-width: 992px) { 
-
+    .content-ready-landing {
+      min-height: 250px;
+    }
   }
   
   @media (min-width: 1300px) {

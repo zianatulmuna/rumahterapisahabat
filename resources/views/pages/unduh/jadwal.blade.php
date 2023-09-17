@@ -7,14 +7,14 @@
   <title>Jadwal {{ $caption }}</title>
 
   <!-- Custom fonts -->
-  @include('unduh.partials.head')
+  @include('partials.unduh-head')
 </head>
 
 <body>
     <div class="halaman">
     <div class="d-flex align-items-center mb-4 mx-4">
         <div class="col-1 px-0">
-          <img src="/assets/Logo_Klinik.png" style="height: 48px; width: auto" alt="" />
+          <img src="/assets/logo/logo_klinik.png" style="height: 48px; width: auto" alt="" />
         </div>
         <div class="col">
           <h1 class="h2 mb-0 pe-5 text-center">Jadwal</h1>
@@ -47,6 +47,6 @@
 </div>
 
   <!-- Bootstrap core JavaScript-->
-  @include('unduh.partials.script')
+  @include('partials.unduh-script')
 
 </html>

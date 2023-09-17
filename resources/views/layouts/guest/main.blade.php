@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="/assets/icon_klinik.png">
+  <link rel="icon" href="/assets/logo/icon_klinik.png">
   <title>Rumah Terapi Sahabat</title>
 
   <!-- Custom fonts -->
@@ -43,6 +43,31 @@
 
   @yield('modal-alert')
 
+  <!-- Logout Modal-->
+  <div class="modal fade" style="background-color: rgba(0, 0, 0, 0.3)" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-expanded="false">
+    <div class="modal-dialog modal-dialog-centered mx-auto" role="document">
+      <div class="modal-content mx-3">
+        <div class="modal-header justify-content-center border-0 bg-danger">
+          <h1 class="fw-bold text-white">
+            <i class="bi bi-exclamation-circle" style="font-size: 40px;"></i>
+          </h1>
+        </div>
+        <div class="modal-body text-center py-4">
+          <h5 class="fw-bold">Yakin ingin keluar?</h5>
+          Tekan "Logout" jika ingin mengakhiri session.
+        </div>
+        <div class="modal-footer justify-content-between mx-3">
+          <button class="btn btn-secondary" type="button" id="logoutCloseBtn">Cancel</button>
+          <form action="/logout" method="post">
+            @csrf
+            <button type="submit" class="btn btn-danger">Logout</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   @unless(Request::is('login'))
     @include('layouts.guest.footer')       
   @endunless
@@ -69,6 +94,14 @@
   <!-- font awesome -->
   <script src="https://kit.fontawesome.com/c40b365784.js" crossorigin="anonymous"></script>
 
+  <!-- script logout modal -->
+  <script>
+    document.querySelector('#logoutCloseBtn').addEventListener('click', function(event) {
+      document.getElementById('logoutModal').classList.remove('show');
+    });
+  </script>
+
+  <!-- script pages -->
   @stack('script')
   
 </body>

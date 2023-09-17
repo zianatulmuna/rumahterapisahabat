@@ -38,6 +38,14 @@ class Terapis extends Authenticatable
         });
     }
 
+    // public function scopeTerapisInGrafik($penyakit)
+    // {
+    //     Terapis::whereHas('subRekamMedis', function ($query) use ($penyakit) {
+    //         $query->where('penyakit', $penyakit);
+        
+    //     })->orderBy('nama', 'ASC')->get();
+    // }
+
     public function subRekamMedis()
     {
         return $this->belongsToMany(SubRekamMedis::class, 'rekam_terapi', 'id_terapis', 'id_sub');

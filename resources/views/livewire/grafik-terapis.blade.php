@@ -31,12 +31,13 @@
                     @include('partials.filter-waktu')
                 </div>
             </div> 
-            <canvas id="grafikChart"></canvas>
+            <div class="canvasBox">
+                <canvas id="grafikChart"></canvas>
+            </div>
 
             <div class="text-center mt-3">
                 <span class="text-center">
-                    Data {{ $grafik }}{{ $nama_penyakit ? ' penyakit ' . $nama_penyakit : '' }} {{ $filter }} {{ $filter == 'tahun' ? $tahun : '' }}
-                    {{ $nama_terapis ? 'oleh terapis ' . $nama_terapis : '' }}
+                    {{ $totalDataGrafik }} Data {{ $grafik }}{{ $nama_penyakit ? ' penyakit ' . $nama_penyakit : '' }} {{ $filter }} {{ $filter == 'tahun' ? $tahun : '' }}
                 </span>
             </div>
         </div>
@@ -166,9 +167,12 @@
 </script>
 
 <script>
+    const chartBox = document.querySelector(".canvasBox");
     document.addEventListener('livewire:load', function () {
         Livewire.on('chartUpdated', grafik => {
+            chartBox.innerHTML = `<canvas id="grafikChart"></canvas>`
             updateChart(grafik.dataGrafik, grafik.maxChart);    
+            
 
             // addTerapis();      
             // addPenyakit();      
@@ -201,8 +205,6 @@
         }
 
         updateChart(@json($dataGrafik), @json($maxChart));
-        
-        
     });
 </script>
 @endpush

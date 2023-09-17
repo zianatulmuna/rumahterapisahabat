@@ -29,7 +29,7 @@
     {{ $jadwal_terapi->links() }}
     </div>
     @else
-    <div class="alert alert-light fst-italic py-1 px-2 mt-2 d-inline-flex w-100">
+    <div class="alert alert-light col-sm-7 fst-italic py-1 px-2 mt-2" role="alert">
         Belum ada jadwal.
     </div>
     @endif

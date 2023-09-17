@@ -2,7 +2,7 @@
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasAuth"
   aria-labelledby="offcanvasWithBothOptionsLabel">
   <div class="offcanvas-header border-bottom pb-2">
-    <img src="/assets/icon_terapi.png" class="logo">
+    <a href="/"><img src="/assets/logo/logo_klinik.png" class="logo"></a>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-content">

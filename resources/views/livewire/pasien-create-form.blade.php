@@ -173,12 +173,21 @@
                   <div class="mb-4">
                     <label for="foto" class="form-label fw-bold">Foto</label>
                     <input class="form-control @error('foto') is-invalid @enderror" type="file" id="foto" name="foto" value="{{ old('foto') }}" wire:model="foto" @if($id_pasien) disabled @endif>
-                    @if ($foto)
+                    {{-- @if ($foto)
                     <div class="row my-3 justify-content-sm-start fotoPreview">
                       <p class="col-sm-auto m-0">Preview :</p>
-                      <img src="{{ $foto->temporaryUrl() }}" class="img-fluid pt-2 col-sm-5 img-preview">
+                      <img src="{{ $foto->temporaryUrl() }}" class="img-fluid pt-2 col-sm-5 img-preview"  style="max-height: 100px; width: auto">
                       <button type="button" class="btn-close small" aria-label="Close" onclick="deleteFoto()" wire:click="deleteFoto"></button>
-                    </div>
+                    </div> 
+                    @endif --}}
+                    @if($foto || $dbFoto)
+                      <div class="row my-3 justify-content-sm-start fotoPreview">
+                        <p class="col-sm-auto m-0">Preview :</p>
+                        <img src="{{ $foto ? $foto->temporaryUrl() : asset('storage/' . $dbFoto) }}" class="img-fluid pt-2 col-sm-3 img-preview" style="max-height: 100px; width: auto">
+                        @if($foto)
+                        <button type="button" class="btn-close small" aria-label="Close" wire:click="deleteFoto"></button>
+                        @endif
+                      </div>
                     @endif
                     @error('foto')
                       <div class="invalid-feedback">
@@ -231,7 +240,7 @@
                     @enderror
                   </div>
                   {{-- modal alamat --}}
-                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal fade" style="background-color: rgba(0, 0, 0, 0.2)" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -277,7 +286,13 @@
   
                   <div class="mb-4">
                     <label for="sistem_layanan" class="form-label fw-bold">Sistem Layanan</label>
-                    <input type="text" class="form-control @error('sistem_layanan') is-invalid @enderror" id="sistem_layanan" name="sistem_layanan" value="{{ old('sistem_layanan') }}" wire:model="sistem_layanan">
+                    <div class="input-group">
+                      <input type="text" class="form-control me-auto @error('sistem_layanan') is-invalid @enderror" id="sistem_layanan" name="sistem_layanan" value="{{ old('sistem_layanan') }}" oninput="capFirst('sistem_layanan')" wire:model="sistem_layanan">
+                      <select class="form-select" id="sistemOption" name="sistemOption" wire:model="sistemOption">
+                        <option value="Paket" selected>Paket</option>
+                        <option value="Non-Paket">Non-Paket</option>
+                      </select>
+                    </div>
                     @error('sistem_layanan')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -320,16 +335,6 @@
                       </div>
                     @enderror
                   </div>
-  
-                  <div class="mb-4">
-                    <label for="ket_status" class="form-label fw-bold">Keterangan Status Terapi</label>
-                    <input type="text" class="form-control @error('ket_status') is-invalid @enderror" id="ket_status" name="ket_status" value="{{ old('ket_status') }}" wire:model="ket_status">
-                    @error('ket_status')
-                      <div class="invalid-feedback">
-                        {{ $message }}
-                      </div>
-                    @enderror
-                  </div>
                   
                   <div class="mb-4">
                     <label class="form-label fw-bold w-100">Status Rekam Medis <span class="text-danger">*</span></label>
@@ -354,6 +359,7 @@
                       </div>
                     @enderror
                   </div>
+
                   <div class="mb-4">
                     <label for="tanggal_selesai" class="form-label fw-bold">Tanggal Selesai <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small></label>
                       <input type="date" class="form-control @error('tanggal_selesai') is-invalid @enderror" id="tanggal_selesai" name="tanggal_selesai" 
@@ -364,6 +370,16 @@
                             {{ $message }}
                           </div>
                         @enderror
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="ket_status" class="form-label fw-bold">Keterangan Status</label>
+                    <input type="text" class="form-control @error('ket_status') is-invalid @enderror" id="ket_status" name="ket_status" value="{{ old('ket_status') }}" oninput="capFirst('ket_status')" wire:model="ket_status">
+                    @error('ket_status')
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
+                    @enderror
                   </div>
                 </div>
               </div>
@@ -409,14 +425,14 @@
                   </div>
                   <div class="mb-4">
                     <label for="keluhan" class="form-label fw-bold">Keluhan</label>
-                    <textarea class="form-control @error('keluhan') is-invalid @enderror" id="keluhan" name="keluhan" rows="3" style="text-transform: full-width-kana;" oninput="capFirst('keluhan')" wire:model="keluhan"></textarea>
+                    <textarea class="form-control @error('keluhan') is-invalid @enderror" id="keluhan" name="keluhan" rows="4" style="text-transform: full-width-kana;" oninput="capFirst('keluhan')" wire:model="keluhan"></textarea>
                     @error('keluhan')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </div>
                   <div class="mb-4">
                       <label for="data_deteksi" class="form-label fw-bold">Data Deteksi</label>
-                      <textarea class="form-control @error('data_deteksi') is-invalid @enderror" id="data_deteksi" name="data_deteksi" rows="3" oninput="capFirst('data_deteksi')" wire:model="data_deteksi"></textarea>
+                      <textarea class="form-control @error('data_deteksi') is-invalid @enderror" id="data_deteksi" name="data_deteksi" rows="5" oninput="capFirst('data_deteksi')" wire:model="data_deteksi"></textarea>
                       @error('data_deteksi')
                         <div class="invalid-feedback">
                           {{ $message }}
@@ -427,7 +443,7 @@
                 <div class="col">
                   <div class="mb-4">
                     <label for="catatan_fisik" class="form-label fw-bold">Catatan Fisik</label>
-                    <input type="text" class="form-control @error('catatan_fisik') is-invalid @enderror" id="catatan_fisik" name="catatan_fisik" value="{{ old('catatan_fisik') }}" oninput="capFirst('catatan_fisik')" wire:model="catatan_fisik">
+                    <textarea type="text" class="form-control @error('catatan_fisik') is-invalid @enderror" id="catatan_fisik" name="catatan_fisik" value="{{ old('catatan_fisik') }}" oninput="capFirst('catatan_fisik')" wire:model="catatan_fisik"></textarea>
                     @error('catatan_fisik')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -436,7 +452,7 @@
                   </div>
                   <div class="mb-4">
                     <label for="catatan_bioplasmatik" class="form-label fw-bold">Catatan Bioplasmatik</label>
-                    <input type="text" class="form-control @error('catatan_bioplasmatik') is-invalid @enderror" id="catatan_bioplasmatik" name="catatan_bioplasmatik" value="{{ old('catatan_bioplasmatik') }}" oninput="capFirst('catatan_bioplasmatik')" wire:model="catatan_bioplasmatik">
+                    <textarea type="text" class="form-control @error('catatan_bioplasmatik') is-invalid @enderror" id="catatan_bioplasmatik" name="catatan_bioplasmatik" value="{{ old('catatan_bioplasmatik') }}" oninput="capFirst('catatan_bioplasmatik')"  wire:model="catatan_bioplasmatik"></textarea>
                     @error('catatan_bioplasmatik')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -445,7 +461,7 @@
                   </div>
                   <div class="mb-4">
                       <label for="catatan_psikologis" class="form-label fw-bold">Catatan Psikologis</label>
-                      <input type="text" class="form-control @error('catatan_psikologis') is-invalid @enderror" id="catatan_psikologis" name="catatan_psikologis" value="{{ old('catatan_psikologis') }}" oninput="capFirst('catatan_psikologis')" wire:model="catatan_psikologis">
+                      <textarea type="text" class="form-control @error('catatan_psikologis') is-invalid @enderror" id="catatan_psikologis" name="catatan_psikologis" value="{{ old('catatan_psikologis') }}" oninput="capFirst('catatan_psikologis')"  wire:model="catatan_psikologis"></textarea>
                       @error('catatan_psikologis')
                         <div class="invalid-feedback">
                           {{ $message }}
@@ -454,7 +470,7 @@
                   </div>
                   <div class="mb-4">
                     <label for="catatan_rohani" class="form-label fw-bold">Catatan Rohani</label>
-                    <input type="text" class="form-control @error('catatan_rohani') is-invalid @enderror" id="catatan_rohani" name="catatan_rohani" value="{{ old('catatan_rohani') }}" oninput="capFirst('catatan_rohani')" wire:model="catatan_rohani">
+                    <textarea type="text" class="form-control @error('catatan_rohani') is-invalid @enderror" id="catatan_rohani" name="catatan_rohani" value="{{ old('catatan_rohani') }}"  oninput="capFirst('catatan_rohani')" wire:model="catatan_rohani"></textarea>
                     @error('catatan_rohani')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -560,6 +576,15 @@
         input.value = capitalizedWord;
       }
     } 
+
+    function breakLine(inputId) {
+      var input = document.getElementById(inputId);
+      var textarea = input.value;
+
+      if (event.key === "Enter") {
+        textarea.value += '\n';
+      }
+    } 
   
     function toTop() {
       target.scrollIntoView({
@@ -635,7 +660,9 @@
         });
   
         tambahBtn.addEventListener("click", function() {
-          addTagToController(searchInpPenyakit.value);
+          if(searchInpPenyakit.value != '') {
+            addPenyakitToController(searchInpPenyakit.value);
+          }
           searchInpPenyakit.value = "";
         });
   

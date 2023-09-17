@@ -64,14 +64,27 @@
                <td>ID Pasien</td>
                <td><span class="bg-body-secondary px-2 rounded-4 border">{{ $pasien->id_pasien }}</span></td>
             </tr>
+            
             @if(Request::is('pasien/' . $pasien->slug . '*') )
                @unless (Request::is('pasien/*/rekam-medis') || Request::is('pasien/*/rekam-terapi'))
                   @if($rmDetected == 1)
-                  <tr class="table-rm-p">
+                  {{-- <tr class="table-rm-btn">
                      <td>No. RM</td>
-                     <td class="px-2">{{ $rm->id_rekam_medis }}</td>                  
+                     <td class="">
+                        <div class="d-inline-flex bg-success-subtle px-2 rounded-4 border text-decoration-none link-dark">
+                           <span class="">{{ $rm->id_rekam_medis }}</span>
+                           <a href=""><i class="bi bi-arrow-right-circle-fill small ps-2 text-success"></i></a>
+                        </div>
+                     </td>                  
+                  </tr> --}}
+                  <tr class="table-rm-btn">
+                     <td>No. RM</td>
+                     <td class="px-2">
+                        <span class="">{{ $rm->id_rekam_medis }}</span>
+                        <a href="{{ route('rm.detail', [$pasien->slug, $rm->id_rekam_medis]) }}"><i class="bi bi-arrow-right-circle-fill small ps-1 text-success"></i></a>
+                     </td>                  
                   </tr>
-                  <tr>
+                  <tr class="table-rm-p">
                      <td>Status</td>
                      <td class="px-2">{{ $rm->status_pasien }}</td>                  
                   </tr>
@@ -86,7 +99,9 @@
           <a href="{{ route('rm.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0 w-100">Histori Rekam Medis</a>
          <a href="{{ route('sub.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0 w-100">Histori Rekam Terapi</a>
          @if(Request::is('pasien/'. $pasien->slug))
-         <a href="{{ $rm->link_perkembangan }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0 w-100 {{ $rm->link_perkembangan ? '' : 'disabled' }}">Link Hasil Lab</a>
+            @if($rmDetected == 1)
+            <a href="{{ $rm->link_perkembangan }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0 w-100 {{ $rm->link_perkembangan ? '' : 'disabled' }}">Link Hasil Lab</a>
+            @endif
          @endif
        </div>
     </div>

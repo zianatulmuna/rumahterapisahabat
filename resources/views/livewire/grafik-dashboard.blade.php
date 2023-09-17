@@ -20,7 +20,7 @@
         </div>
 
         <div class="tab-content py-3 border border-top-0" id="myTabContent">
-            <div class="row row-cols-1 row-cols-sm-3 p-3 mb-3">
+            <div class="row row-cols-1 row-cols-sm-3 p-3">
                 {{-- terapis --}}
                 <div class="col col-sm-4 col-lg-5 px-1 mb-2 my-sm-2 my-md-0">                      
                     <div class="dropdown w-100 search-dinamis dropdown-terapis">
@@ -78,7 +78,7 @@
 
             <div class="text-center mt-3">
                 <span class="text-center">
-                    Data {{ $grafik }}{{ $nama_penyakit ? ' penyakit ' . $nama_penyakit : '' }} {{ $filter }} {{ $filter == 'tahun' ? $tahun : '' }}
+                    {{ $totalDataGrafik }} Data {{ $grafik }}{{ $nama_penyakit ? ' penyakit ' . $nama_penyakit : '' }} {{ $filter }} {{ $filter == 'tahun' ? $tahun : '' }}
                     {{ $nama_terapis ? 'oleh terapis ' . $nama_terapis : '' }}
                 </span>
             </div>
@@ -103,24 +103,32 @@
         Livewire.emit('setTerapis', { id: id, nama: nama });
     };
 
+    function setDataTerapis(scope) {
+        dataTerapis = scope;
+    }
+
     function addTerapis() {
         optionsTerapis.innerHTML = "";
-        dataTerapis.forEach(terapis => {
-            let isSelected = terapis.nama == document.querySelector("#namaTerapis").innerText ? "active" : "";
-            let li = `
-                        <li class="dropdown-item ${isSelected}" 
-                            id="terapisOption"
-                            data-id="${terapis.id_terapis}" 
-                            data-nama="${terapis.nama}"
-                            onclick="setTerapisToController(this)">
-                            <p class="m-0 d-flex justify-content-between w-100" >
-                                <span class="col-8 text-start text-truncate">${terapis.nama}</span>
-                                <span class="small fst-italic">${terapis.tingkatan}</span>
-                            </p>
-                        </li>
-                    `;     
-            optionsTerapis.insertAdjacentHTML("beforeend", li);
-        });
+        if(dataTerapis.length > 0) {
+            dataTerapis.forEach(terapis => {
+                let isSelected = terapis.nama == document.querySelector("#namaTerapis").innerText ? "active" : "";
+                let li = `
+                            <li class="dropdown-item ${isSelected}" 
+                                id="terapisOption"
+                                data-id="${terapis.id_terapis}" 
+                                data-nama="${terapis.nama}"
+                                onclick="setTerapisToController(this)">
+                                <p class="m-0 d-flex justify-content-between w-100" >
+                                    <span class="col-8 text-start text-truncate">${terapis.nama}</span>
+                                    <span class="small fst-italic">${terapis.tingkatan}</span>
+                                </p>
+                            </li>
+                        `;     
+                optionsTerapis.insertAdjacentHTML("beforeend", li);
+            });
+        } else {
+            optionsTerapis.innerHTML = `<p class="p-2 m-0 fst-italic small">Belum ada Terapis yang menangani penyakit ini.</p>`;
+        }
     }
 
     searchInpTerapis.addEventListener("keyup", () => {
@@ -166,6 +174,8 @@
 
     function addPenyakit() {
         optionsPenyakit.innerHTML = "";
+
+        if(dataPenyakit.length > 0) {
         dataPenyakit.forEach(penyakit => {
             let isSelected = penyakit == document.querySelector("#namaPenyakit").innerText ? "active" : "";
                 let li = `
@@ -176,7 +186,14 @@
                             </li>
                         `;
                 optionsPenyakit.insertAdjacentHTML("beforeend", li);
-        });
+            });
+        } else {
+                optionsTerapis.innerHTML = `<p class="p-2 m-0 fst-italic small">Belum ada Penyakit yang ditangani oleh terapis ini.</p>`;
+            }
+    }
+
+    function setDataPenyakit(scope) {
+        dataPenyakit = scope;
     }
 
     searchInpPenyakit.addEventListener("keyup", () => {
@@ -209,11 +226,12 @@
             const oldCanvas = chartBox.querySelector("canvas");
             chartBox.removeChild(oldCanvas);
 
-            const newCanvas = document.createElement("canvas");
-            newCanvas.id = "grafikChart";    
-            chartBox.appendChild(newCanvas); 
+            chartBox.innerHTML = `<canvas id="grafikChart"></canvas>`;
             
             updateChart(grafik.dataGrafik, grafik.maxChart);
+            
+            setDataTerapis(grafik.scopeTerapis);
+            setDataPenyakit(grafik.scopePenyakit);
 
             addTerapis();      
             addPenyakit();      
@@ -222,9 +240,7 @@
         function updateChart(dataGrafik, max) {
             const value = Object.values(dataGrafik);
             const label = Object.keys(dataGrafik);
-            const maxValue = max;    
-
-               
+            const maxValue = max;  
 
             const chart = new Chart("grafikChart", {
                 type: "line",

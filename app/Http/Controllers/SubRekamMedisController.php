@@ -87,8 +87,10 @@ class SubRekamMedisController extends Controller
 
         $sub = $subRM;
 
-        return view('pages.unduh.rekam-terapi-harian-loop', compact(
-            'sub', 'pasien', 'list_terapi' 
+        $umur = Carbon::parse($pasien->tanggal_lahir)->age;
+
+        return view('pages.unduh.rekam-terapi', compact(
+            'sub', 'pasien', 'list_terapi', 'umur'
         ));
     }
     public function printHarian(Pasien $pasien, SubRekamMedis $subRM)

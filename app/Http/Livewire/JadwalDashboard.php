@@ -12,29 +12,40 @@ class JadwalDashboard extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     
-    public $tanggal, $tglAwal, $tglAkhir;
-    public $filter = "Today", $tglCaption, $prevTanggal, $prevTglAwal, $prevTglAkhir ;
+    public $tanggal, $tglAwal, $tglAkhir, $periode;
+    public $filter = "Today", $tglCaption, $prevTanggal, $prevTglAwal, $prevTglAkhir, $prevPeriode;
 
     protected $listeners = ['setFilterTanggal', 'setFilterRange'];
 
-    public function updatingTanggal()
+    public function mount()
     {
-        // $this->tglCaption = Carbon::today()->formatLocalized('%A, %d %B %Y');
+        if (session()->has('livewire_page')) {
+            $this->page = session('livewire_page');
+        }
     }
     
     public function render()
     {
         $query = Jadwal::query();
 
-        if ($this->tanggal !== $this->prevTanggal || $this->tglAwal !== $this->prevTglAwal || $this->tglAkhir !== $this->prevTglAkhir) {
+        if($this->tanggal == '' && $this->tglAwal == '' && $this->tglAkhir == '' && $this->periode == '') {
+            $this->resetPage();
+        }
+
+        if ($this->tanggal !== $this->prevTanggal || $this->tglAwal !== $this->prevTglAwal || $this->tglAkhir !== $this->prevTglAkhir || $this->periode !== $this->prevPeriode) {
             $this->resetPage();
         }
     
         $this->prevTanggal = $this->tanggal;
         $this->prevTglAwal = $this->tglAwal;
         $this->prevTglAkhir = $this->tglAkhir;
+        $this->prevPeriode = $this->periode;
         
-        if($this->filter === "Tunggal") {
+        if($this->filter === "Periode") {
+            $m = $this->periode == "tahun-ini" ? date('Y') : date('Y-m');
+            $query->where('tanggal', 'like', $m . '%');
+            $this->tglCaption = $this->periode == "tahun-ini" ? date('Y') : Carbon::today()->formatLocalized('%B %Y');
+        } elseif($this->filter === "Tunggal") {
             $this->tglCaption = Carbon::parse($this->tanggal)->formatLocalized('%A, %d %B %Y');
             $query->where('tanggal', $this->tanggal);
 
@@ -49,7 +60,7 @@ class JadwalDashboard extends Component
             $query->where('tanggal', Carbon::today()->format('Y-m-d'));
         }
 
-        $jadwal_terapi = $query->paginate(10);
+        $jadwal_terapi = $query->orderBy('tanggal')->orderBy('waktu')->paginate(10);
 
 
         return view('livewire.jadwal-dashboard', compact(
@@ -57,6 +68,10 @@ class JadwalDashboard extends Component
         ));
     }
 
+    public function setFilterPeriode($value) {
+        $this->filter = "Periode";
+        $this->periode = $value;
+    }
     public function setFilterTanggal($value) {
         $this->filter = "Tunggal";
         $this->tanggal = $value;        

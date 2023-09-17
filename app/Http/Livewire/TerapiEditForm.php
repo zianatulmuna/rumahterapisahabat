@@ -23,12 +23,12 @@ class TerapiEditForm extends Component
         $this->id_sub = $terapi->id_sub;
         $this->id_terapis = $terapi->id_terapis;
         $this->nama_terapis = $terapi->terapis->nama;
-        $this->keluhan = $terapi->keluhan;
-        $this->deteksi = $terapi->deteksi;
-        $this->tindakan = $terapi->tindakan;
-        $this->saran = $terapi->saran;
-        $this->pra_terapi = $terapi->pra_terapi;
-        $this->post_terapi = $terapi->post_terapi;
+        $this->keluhan = str_replace('<br />', '', $terapi->keluhan);
+        $this->deteksi = str_replace('<br />', '', $terapi->deteksi);
+        $this->tindakan = str_replace('<br />', '', $terapi->tindakan);
+        $this->saran = str_replace('<br />', '', $terapi->saran);
+        $this->pra_terapi = str_replace('<br />', '', $terapi->pra_terapi);
+        $this->post_terapi = str_replace('<br />', '', $terapi->post_terapi);
         $this->tanggal = $terapi->tanggal;
         $this->waktu = $terapi->waktu;
         $this->currentStep;
@@ -109,12 +109,12 @@ class TerapiEditForm extends Component
             'id_sub' => $this->id_sub,
             'tanggal' => $this->tanggal,
             'waktu' => $this->waktu,
-            'keluhan' => $this->keluhan,
-            'deteksi' => $this->deteksi,
-            'tindakan' => $this->tindakan,
-            'saran' => $this->saran,
-            'pra_terapi' => $this->pra_terapi,
-            'post_terapi' => $this->post_terapi
+            'keluhan' => nl2br($this->keluhan),
+            'deteksi' => nl2br($this->deteksi),
+            'tindakan' => nl2br($this->tindakan),
+            'saran' => nl2br($this->saran),
+            'pra_terapi' => nl2br($this->pra_terapi),
+            'post_terapi' => nl2br($this->post_terapi)
         ); 
 
         RekamTerapi::where('id_terapi', $this->id_terapi)->update($dataTerapi);

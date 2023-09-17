@@ -144,8 +144,8 @@
 @section('modal-alert')
   @if(session()->has('success'))
     <!-- Modal Daftar-->
-    <div class="modal" style="background-color: rgba(0, 0, 0, 0.3); display: block;" id="daftarSuccessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal" style="background-color: rgba(0, 0, 0, 0.4); display: block;" id="daftarSuccessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered mx-auto" role="document">
         <div class="modal-content mx-3">
           <div class="modal-header justify-content-center border-0">
             <h1 class="fw-bold text-white mb-0">
@@ -157,7 +157,7 @@
             Selamat! Anda berhasil terdaftar sebagai pasien baru dengan ID <strong>{{ session('success') }}</strong>. Silahkan hubungi kami di nomor <strong>085960664604</strong> atau klik <a href="https://wa.me/6285960664604" target="_blank" class="btn btn-sm c-btn-success"> <i class="bi bi-whatsapp pe-1"></i> disini</a>
           </div>
           <div class="modal-footer justify-content-between mx-3">
-            <button class="btn btn-secondary btn-sm" type="button" id="closeModal" data-bs-dismiss="modal">Tutup</button>
+            <button class="btn btn-secondary btn-sm" type="button" id="closeModal" data-bs-dismiss="modal" onclick="closeModalDaftar()">Tutup</button>
             <a href="/" class="btn btn-primary btn-sm">Ke Beranda</a>
           </div>
         </div>
@@ -183,9 +183,9 @@
       }
     });
 
-    document.querySelector('#closeModal').addEventListener('click', function(event) {
+    function closeModalDaftar() {
       document.getElementById('daftarSuccessModal').style.display = 'none';
-    });
+    };
 
     function previewImage() {
       const image = document.querySelector('#foto');

@@ -68,7 +68,7 @@ class JadwalController extends Controller
     }
 
     public function jadwalDummy() {
-        $t = 16;
+        $t = 17;
 
         for ($i = 0; $i < 5; $i++) {
             $id = IdGenerator::generate([

@@ -29,7 +29,7 @@ class PasienEditForm extends Component
 
     public $totalStep = 5, $currentStep = 1;
 
-    public $pasien, $rm, $id_pasien, $id_rekam_medis, $slug, $dbNama, $dbFoto, $pathFoto, $dbTahun_pendaftaran, $dbTanggal_ditambahkan, $id_rm_baru, $isPasien;
+    public $pasien, $rm, $id_pasien, $id_rekam_medis, $slug, $dbNama, $dbFoto, $pathFoto, $dbTahun_pendaftaran, $dbTanggal_ditambahkan, $id_rm_baru, $isPasien, $sistemOption;
 
     public $tag = [], $dataTag = [], $newTag, $dbPenyakit, $stringPenyakit, $deletedTag = [], $checkDuplikat = false;
 
@@ -57,29 +57,25 @@ class PasienEditForm extends Component
         $this->isPasien = $pasien->status_pendaftaran == "Pasien" ? true : false;
 
         $this->id_rekam_medis = $rm->id_rekam_medis;
-        $this->keluhan = $rm->keluhan;
+        $this->keluhan = str_replace('<br />', '', $rm->keluhan);
         $this->penanggungjawab = $rm->penanggungjawab;
 
         if($this->isPasien) {
-            
-            // $this->link_rm = $rm->link_rm;
             $this->tipe_pembayaran = $rm->tipe_pembayaran;
             $this->biaya_pembayaran = $rm->biaya_pembayaran;
-            
             $this->tempat_layanan = $rm->tempat_layanan;
-            $this->sistem_layanan = $rm->sistem_layanan;
             $this->jumlah_layanan = $rm->jumlah_layanan;
             $this->jadwal_layanan = $rm->jadwal_layanan;
             $this->status_terapi = $rm->status_terapi;
             $this->status_pasien = $rm->status_pasien;
-            $this->catatan_fisik = $rm->catatan_fisik;
-            $this->catatan_psikologis = $rm->catatan_psikologis;
-            $this->catatan_bioplasmatik = $rm->catatan_bioplasmatik;
-            $this->catatan_rohani = $rm->catatan_rohani;
-            $this->data_deteksi = $rm->data_deteksi;
-            $this->kondisi_awal = $rm->kondisi_awal;
-            $this->target_akhir = $rm->target_akhir;
-            $this->kesimpulan = $rm->kesimpulan;
+            $this->catatan_fisik = str_replace('<br />', '', $rm->catatan_fisik);
+            $this->catatan_psikologis = str_replace('<br />', '', $rm->catatan_psikologis);
+            $this->catatan_bioplasmatik = str_replace('<br />', '', $rm->catatan_bioplasmatik);
+            $this->catatan_rohani = str_replace('<br />', '', $rm->catatan_rohani);
+            $this->data_deteksi = str_replace('<br />', '', $rm->data_deteksi);
+            $this->kondisi_awal = str_replace('<br />', '', $rm->kondisi_awal);
+            $this->target_akhir = str_replace('<br />', '', $rm->target_akhir);
+            $this->kesimpulan = str_replace('<br />', '', $rm->kesimpulan);
             $this->link_perkembangan = $rm->link_perkembangan;
             $this->tanggal_selesai = $rm->tanggal_selesai;
             $this->tanggal_ditambahkan = $rm->tanggal_ditambahkan;
@@ -87,6 +83,12 @@ class PasienEditForm extends Component
             $this->id_rm_baru = $rm->id_rekam_medis;
 
             $this->currentStep = 1;
+
+            $sistemParts = explode(' ', $rm->sistem_layanan);
+            $this->sistemOption = $sistemParts[count($sistemParts)-1];
+
+            $potonganSistem = array_slice($sistemParts, 0, -1);
+            $this->sistem_layanan = implode(' ', $potonganSistem); 
 
             $alamatParts = explode(', ', $this->tempat_layanan);
             $this->provinsi = $alamatParts[count($alamatParts)-1];
@@ -303,7 +305,12 @@ class PasienEditForm extends Component
                 'jadwal_layanan' => 'max:50',
                 'sistem_layanan' => 'max:50',
                 'jumlah_layanan' => 'max:50',
-                'status_pasien' => 'required',
+                'status_pasien' => [
+                    'required',
+                    Rule::unique('rekam_medis')->ignore($this->id_rekam_medis, 'id_rekam_medis')->where(function ($query) {
+                        $query->where('id_pasien', $this->id_pasien)->where('status_pasien', 'Rawat Jalan');
+                    }),
+                ],
                 'status_terapi' => 'required',
                 'tanggal_selesai' => [
                     Rule::requiredIf($this->status_pasien == 'Selesai' || $this->status_pasien == 'Jeda')
@@ -322,11 +329,11 @@ class PasienEditForm extends Component
                     Rule::requiredIf($tagPenyakit == 0),
                 ],
                 'keluhan' => 'max:100',
-                'catatan_fisik' => 'max:50',
-                'catatan_psikologis' => 'max:50',
-                'catatan_bioplasmatik' => 'max:50',
-                'catatan_rohani' => 'max:50',
-                'data_deteksi' => 'max:50',                
+                'catatan_fisik' => 'max:100',
+                'catatan_psikologis' => 'max:100',
+                'catatan_bioplasmatik' => 'max:100',
+                'catatan_rohani' => 'max:100',
+                'data_deteksi' => 'max:100',              
             ], $message);    
         }else{
             $this->validate([
@@ -353,29 +360,30 @@ class PasienEditForm extends Component
         );        
 
         $dataRM = array(
-            // 'penyakit' => $this->penyakit,
-            'keluhan' => $this->keluhan,
-            // 'link_rm' => $this->link_rm,
+            'penyakit' => $this->penyakit,
+            'keluhan' => nl2br($this->keluhan),
             'tipe_pembayaran' => $this->tipe_pembayaran,
             'biaya_pembayaran' => $this->biaya_pembayaran,
             'penanggungjawab' => $this->penanggungjawab,
             'tempat_layanan' => $this->tempat_layanan,
-            'jadwal_layanan' => $this->jadwal_layanan,
-            'sistem_layanan' => $this->sistem_layanan,
-            'jumlah_layanan' => $this->jumlah_layanan,
-            'status_terapi' => $this->status_terapi,
-            'status_pasien' => $this->status_pasien,
-            'catatan_fisik' => $this->catatan_fisik,
-            'catatan_psikologis' => $this->catatan_psikologis,
-            'catatan_bioplasmatik' => $this->catatan_bioplasmatik,
+            'jadwal_layanan' => $this->jadwal_layanan,        
+            'status_terapi' => nl2br($this->status_terapi),
+            'status_pasien' => nl2br($this->status_pasien),
+            'catatan_fisik' => nl2br($this->catatan_fisik),
+            'catatan_psikologis' => nl2br($this->catatan_psikologis),
+            'catatan_bioplasmatik' => nl2br($this->catatan_bioplasmatik),
             'catatan_rohani' => $this->catatan_rohani,
-            'data_deteksi' => $this->data_deteksi,
-            'kondisi_awal' => $this->kondisi_awal,
-            'target_akhir' => $this->target_akhir,
-            'kesimpulan' => $this->kesimpulan,
+            'data_deteksi' => nl2br($this->data_deteksi),
+            'kondisi_awal' => nl2br($this->kondisi_awal),
+            'target_akhir' => nl2br($this->target_akhir),
+            'kesimpulan' => nl2br($this->kesimpulan),
             'link_perkembangan' => $this->link_perkembangan,
             'tanggal_ditambahkan' => $this->tanggal_ditambahkan,
         );
+
+        $this->sistemOption = $this->sistemOption == '' ? 'Paket' : $this->sistemOption;
+            
+        $dataRM['sistem_layanan'] = $this->sistem_layanan == '' ? $this->sistemOption : $this->sistem_layanan. ' ' . $this->sistemOption; 
 
         $dateYForIdPasien = Carbon::parse($this->tanggal_pendaftaran)->format('Y');
 
@@ -548,7 +556,7 @@ class PasienEditForm extends Component
 
         if($rmCheck) {
             return redirect(route('pasien.rm', $path))
-                            ->with('success', 'Pasien berhasil diupdate.')   
+                            ->with('success', 'Rekam Medis Pasien berhasil diupdate.')   
                             ->with('update', true);   
         } else {
             return redirect(route('pasien.rm', $path))

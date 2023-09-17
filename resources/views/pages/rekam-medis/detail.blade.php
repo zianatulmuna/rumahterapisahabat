@@ -12,9 +12,11 @@
          Histori Rekam Terapi
       @endif
       </h1>
-      <a href="{{ route('rm.print', [$pasien->slug, $rm->id_rekam_medis]) }}" target="_blank" class="btn btn-success btn-sm rounded-3 mb-2">
-         <i class="bi bi-download pe-1"></i> Unduh
-      </a>
+      @if($rmDetected == 1)
+         <a href="{{ route('rm.print', [$pasien->slug, $rm->id_rekam_medis]) }}" target="_blank" class="btn btn-success btn-sm rounded-3 mb-2">
+            <i class="bi bi-download pe-1"></i> Unduh
+         </a>
+      @endif
    </div>
 
    {{-- Data Diri Pasien --}}
@@ -85,7 +87,7 @@
          <div class="col">
             <h4 class="mt-4 mt-lg-5 mb-3">Keluhan</h4>
             <div class="bg-white px-3 py-2 border border-body-tertiary"  style="min-height: 60px">
-               <p>{{ $rm->keluhan }}</p>
+               <p>{!! $rm->keluhan !!}</p>
             </div>
          </div>
       </div>
@@ -94,7 +96,7 @@
          <div class="col">
             <h4 class="mt-4 mt-lg-5 mb-3">Data Deteksi</h4>
             <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 140px">
-               <p>{{ $rm->data_deteksi }}</p>
+               <p>{!! $rm->data_deteksi !!}</p>
             </div>
          </div>
          <div class="col">
@@ -102,19 +104,19 @@
             <table class="table table-bordered border-body-tertiary table-sm table-top bg-white">
                <tr>
                   <td class="px-2 col-2">Fisik</td>
-                  <td class="px-2">{{ $rm->catatan_fisik }}</td>
+                  <td class="px-2">{!! $rm->catatan_fisik !!}</td>
                </tr>
                <tr>
                   <td class="px-2">Bioplasmatik</td>
-                  <td class="px-2">{{ $rm->catatan_bioplasmatik }}</td>
+                  <td class="px-2">{!! $rm->catatan_bioplasmatik !!}</td>
                </tr>
                <tr>
                   <td class="px-2">Psikologis</td>
-                  <td class="px-2">{{ $rm->catatan_psikologis }}</td>
+                  <td class="px-2">{!! $rm->catatan_psikologis !!}</td>
                </tr>
                <tr>
                   <td class="px-2">Rohani</td>
-                  <td class="px-2">{{ $rm->catatan_rohani }}</td>
+                  <td class="px-2">{!! $rm->catatan_rohani !!}</td>
                </tr>
             </table>
          </div>
@@ -126,18 +128,18 @@
             <table class="table table-bordered border-body-tertiary table-sm table-top bg-white">
                <tr>
                   <td class="px-2 col-5 col-sm-4">Kondisi Awal</td>
-                  <td class="px-2">{{ $rm->kondisi_awal }}</td>
+                  <td class="px-2">{!! $rm->kondisi_awal !!}</td>
                </tr>
                <tr>
                   <td class="px-2">Target Akhir</td>
-                  <td class="px-2">{{ $rm->target_akhir }}</td>
+                  <td class="px-2">{!! $rm->target_akhir !!}</td>
                </tr>
             </table>
          </div>
          <div class="col">
             <h4 class="mt-4 mt-lg-5 mb-3">Kesimpulan</h4>
             <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 100px">
-               <p>{{ $rm->kesimpulan }}</p>
+               <p>{!! $rm->kesimpulan !!}</p>
             </div>
          </div>
          

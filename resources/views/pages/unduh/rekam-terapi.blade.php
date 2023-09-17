@@ -23,14 +23,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
   <!-- Custom styles -->
-  @include('unduh.partials.head')
+  @include('partials.unduh-head')
 </head>
 
 <body>
   <div class="halaman">
     <div class="d-flex align-items-center mb-4 mx-4">
       <div class="col-1 px-0">
-        <img src="/assets/Logo_Klinik.png" style="height: 48px; width: auto" alt="" />
+        <img src="/assets/logo/logo_klinik.png" style="height: 48px; width: auto" alt="" />
       </div>
       <div class="col">
         <h1 class="h2 mb-0 pe-5 text-center">Rekam Terapi</h1>
@@ -84,7 +84,7 @@
         <h4 class="fw-semibold mt-3 mb-1 ps-0" style="font-size: 15px">
           Keluhan
         </h4>
-        <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 60px; font-size: 13px">{{ $sub->rekamMedis->keluhan }}</div>
+        <div class="bg-white px-3 py-2 border border-body-tertiary" style="min-height: 60px; font-size: 13px">{!! $sub->rekamMedis->keluhan !!}</div>
       </div>
     </div>
 
@@ -107,7 +107,7 @@
             <th scope="row" style="max-width: 50px">{{ $loop->index + 1 }}</th>
             <td style="width: 200px">{{ date('d-m-Y', strtotime($terapi->tanggal)) }}</td>
             <td class="text-capitalize">{{ $terapi->terapis->username }}</td>
-            <td>{{ $terapi->pra_terapi }}</td>
+            <td>{!! $terapi->pra_terapi !!}</td>
           </tr>                        
           @endforeach
         </tbody>
@@ -115,7 +115,7 @@
     </div>
   </div>
 
-  @include('unduh.partials.script')
+  @include('partials.unduh-script')
 </body>
 
 </html>

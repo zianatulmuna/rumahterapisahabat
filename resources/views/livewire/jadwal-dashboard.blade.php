@@ -18,6 +18,10 @@
                         <input type="date" value="{{ $tanggal }}" id="date" class="form-control">
                     </li>
                     <li><hr class="dropdown-divider"></li>
+                    <li><h6 class="dropdown-header">Berdasarkan Periode</h6></li>
+                    <li><button type="button" class="dropdown-item {{ $periode == 'bulan-ini' ? 'active' : '' }}" wire:click="setFilterPeriode('bulan-ini')">Bulan Ini</button></li>
+                    <li><button type="button" class="dropdown-item {{ $periode == 'tahun-ini' ? 'active' : '' }}" wire:click="setFilterPeriode('tahun-ini')">Tahun Ini</button></li>
+                    <li><hr class="dropdown-divider"></li>
                     <li><h6 class="dropdown-header">Berdasarkan Range Tanggal</h6></li>
                     <li class="px-3 pb-2">
                         <div class="d-flex gap-2 w-100">
@@ -29,13 +33,13 @@
                                 <div class="d-block d-sm-none form-control input-icon pe-1" style="width: auto;">
                                     <i class="bi bi-calendar2-plus text-body-tertiary"></i>
                                 </div>
-                                <input type="date" value="{{ $tglAwal }}" id="startDate" class="form-control">
+                                <input type="date" id="startDate" class="form-control">
                             </div>
                             <div class="hstack stack-input-icon w-100 overflow-hidden">
                                 <div class="d-block d-sm-none form-control pe-1 input-icon" style="width: auto;">
                                     <i class="bi bi-calendar2-check text-body-tertiary"></i>
                                 </div>
-                                <input type="date" value="{{ $tglAkhir }}" id="endDate" class="form-control">
+                                <input type="date" id="endDate" class="form-control">
                             </div>
                         </div>
                         <div class="text-center">
@@ -47,12 +51,16 @@
         </div>
     </div>
 
-    <div class="px-0 px-sm-2 overflow-auto">
+    <div class="px-0 px-sm-2">
         @if(count($jadwal_terapi) > 0)
+            <div class="overflow-auto">
             <table class="table table-bordered align-middle">
                 <thead>
                 <tr class="text-center">
                     <th scope="col" style="width: 50px;">No</th>
+                    @if($periode)
+                    <th scope="col">Tanggal</th>
+                    @endif
                     <th scope="col" style="">Nama Pasien</th>
                     <th scope="col" style="">Waktu</th>
                     <th scope="col" style="width: 150px;">Rekam Medis</th>
@@ -67,7 +75,10 @@
                     @foreach ($jadwal_terapi as $jadwal)
                         <tr>
                             <th scope="row" class="text-center">{{ $startIndex++ }}</th>
-                            <td>{{ $jadwal->pasien->nama }}</td>
+                            @if($periode)
+                            <td class="text-center">{{ date('d/m/Y', strtotime($jadwal->tanggal)) }}</td>
+                            @endif
+                            <td class="text-center">{{ $jadwal->pasien->nama }}</td>
                             @php
                                 $waktu = substr($jadwal->waktu, 0, 5);;
                             @endphp
@@ -94,6 +105,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
             <div class="d-flex justify-content-center mt-5 mb-3 p">
                 {{ $jadwal_terapi->links() }}
             </div>

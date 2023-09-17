@@ -16,7 +16,7 @@
                   <label for="id_pasien" class="form-label fw-bold @error('id_pasien') is-invalid @enderror">Pasien</label>
                   <div class="dropdown search-dinamis dropdown-pasien">
                      <input type="hidden" name="id_pasien" value="{{ old('id_pasien', $pasien->id_pasien) }}" id="id_pasien" class="form-control">
-                     <button class="form-control d-flex justify-content-between align-items-center @error('id_pasien') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     <button class="form-control d-flex justify-content-between align-items-center @error('id_pasien') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>
                        <span>Pilih Pasien</span>
                        <i class="bi bi-chevron-down"></i>
                      </button>
@@ -34,15 +34,15 @@
                </div>
                 <div class="mb-4">
                   <label for="no_telp" class="form-label fw-bold @error('no_telp') is-invalid @enderror">Nomor Telepon</label>
-                  <input type="text" class="form-control" value="{{ old('no_telp', $pasien->no_telp) }}" id="no_telp" name="no_telp" readonly>
+                  <input type="text" class="form-control" value="{{ old('no_telp', $pasien->no_telp) }}" id="no_telp" name="no_telp" disabled>
                 </div>
                 <div class="mb-4">
                   <label for="jenis_kelamin" class="form-label fw-bold @error('jenis_kelamin') is-invalid @enderror">Jenis Kelamin</label>
-                  <input type="text" class="form-control" value="{{ old('jenis_kelamin', $pasien->jenis_kelamin) }}" id="jenis_kelamin" name="jenis_kelamin" readonly>
+                  <input type="text" class="form-control" value="{{ old('jenis_kelamin', $pasien->jenis_kelamin) }}" id="jenis_kelamin" name="jenis_kelamin" disabled>
                 </div>
                 <div class="mb-4">
                   <label for="tanggal_lahir" class="form-label fw-bold">Tanggal Lahir</label>
-                  <input type="text" class="form-control" value="{{ old('tanggal_lahir', $pasien->tanggal_lahir) }}" id="tanggal_lahir" name="tanggal_lahir" readonly>
+                  <input type="text" class="form-control" value="{{ old('tanggal_lahir', $pasien->tanggal_lahir) }}" id="tanggal_lahir" name="tanggal_lahir" disabled>
                 </div>
             </div>            
             <div class="col">

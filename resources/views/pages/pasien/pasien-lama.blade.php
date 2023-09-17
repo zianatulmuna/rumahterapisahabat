@@ -84,9 +84,9 @@
                   <img src="{{ asset('storage/' . $pasien->foto) }}" class="card-img-top" alt="...">
                 @else
                   @if($pasien->jenis_kelamin === 'Laki-Laki')
-                      <img src="/img/avatar-l.png" class="card-img-top" alt="...">
+                      <img src="/img/avatar-men.jpg" class="card-img-top" alt="...">
                   @else
-                      <img src="/img/avatar-p.png" class="card-img-top" alt="...">
+                      <img src="/img/avatar-women.jpg" class="card-img-top" alt="...">
                   @endif
                 @endif
               <div class="card-body py-1 px-2 align-middle">

@@ -1,13 +1,13 @@
 <header class="navbar navbar-expand-lg navbar-light bg-light shadow px-4 sticky-top navbar-landing">
     <!-- Button trigger offcanvas -->
-    <button class="btn btn-success btn-sm me-2 d-lg-none" type="button" data-bs-toggle="offcanvas"
+    <button class="btn btn-success btn-sm py-1 me-2 d-lg-none" type="button" data-bs-toggle="offcanvas"
       data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-      <i class="bi bi-list"></i>
+      <i class="bi bi-list fs-6"></i>
     </button>
 
     <div class="navbar-nav">
       <div class="nav-item text-nowrap">
-        <img src="/assets/Logo_Klinik.jpg" class="logo" />
+        <a href="/"><img src="/assets/logo/logo_klinik.png" class="logo" alt="Rumah Terapi Sahabat"></a>
       </div>
     </div>
 
@@ -53,7 +53,7 @@
                 <img src="{{ asset('storage/' . $userAdmin->foto) }}" class="avatar-img mx-1" alt="{{ $userAdmin->nama }}">
               @else
                 @if($userAdmin->jenis_kelamin === 'Laki-Laki')
-                  <img src="/img/undraw_profile.svg" class="avatar-img mx-1" alt="{{ $userAdmin->nama }}">
+                  <img src="/img/avatar-l.png" class="avatar-img mx-1" alt="{{ $userAdmin->nama }}">
                 @else
                   <img src="/img/undraw_profile_1.svg" class="avatar-img mx-1" alt="{{ $userAdmin->nama }}">
                 @endif
@@ -64,7 +64,7 @@
                 <img src="{{ asset('storage/' . $userTerapis->foto) }}" class="avatar-img mx-1" alt="{{ $userTerapis->nama }}">
               @else
                 @if($userTerapis->jenis_kelamin === 'Laki-Laki')
-                  <img src="/img/undraw_profile.svg" class="avatar-img mx-1" alt="{{ $userTerapis->nama }}">
+                  <img src="/img/avatar-l.png" class="avatar-img mx-1" alt="{{ $userTerapis->nama }}">
                 @else
                   <img src="/img/undraw_profile_1.svg" class="avatar-img mx-1" alt="{{ $userTerapis->nama }}">
                 @endif
@@ -75,7 +75,7 @@
                 <img src="{{ asset('storage/' . $userKepala->foto) }}" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
               @else
                 @if($userKepala->jenis_kelamin === 'Laki-Laki')
-                  <img src="/img/undraw_profile.svg" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
+                  <img src="/img/avatar-l.png" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
                 @else
                   <img src="/img/undraw_profile_1.svg" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
                 @endif

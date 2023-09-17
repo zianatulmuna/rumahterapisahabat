@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/assets/icon_klinik.png">
+    <link rel="icon" href="/assets/logo/icon_klinik.png">
 
     @if($userAdmin)
       <title>Admin - Rumah Terapi Sahabat</title>
@@ -50,7 +50,7 @@
     <!-- Logout Modal-->
     <div class="modal fade" style="background-color: rgba(0, 0, 0, 0.3)" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-expanded="false">
-      <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-dialog modal-dialog-centered mx-auto" role="document">
         <div class="modal-content mx-3">
           <div class="modal-header justify-content-center border-0 bg-danger">
             <h1 class="fw-bold text-white">

@@ -12,7 +12,7 @@
       </div>
     </div>
     <p class="float-end mb-1 d-none d-md-block">
-      <a href="#">Kembali ke Atas</a>
+      <a href="http://www.freepik.com/" class="link-secondary">Illustration by Freepik</a>
     </p>
     <p class="mb-1">&copy; Klinik Rumah Terapi Sahabat 2023</p>
   </div>

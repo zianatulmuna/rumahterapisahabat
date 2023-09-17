@@ -14,7 +14,7 @@
 
    @if($userAdmin)
    <div class="d-flex justify-content-between mb-4">
-        <a href="{{ route('jadwal.create') }}" class="btn c-btn-primary">
+        <a href="{{ route('jadwal.add') }}" class="btn c-btn-primary">
             <i class="bi bi-plus-square pe-2"></i>
             Tambah
         </a>
@@ -109,7 +109,7 @@
                             <td class="text-capitalize text-center">{{ $jadwal->id_terapis ? $jadwal->terapis->username : '' }}</td>
                             @if($userAdmin)
                             <td class="text-center">
-                                <a href="{{ route('jadwal.delete', $jadwal->id_jadwal) }}" class="c-badge c-badge-danger me-2" data-bs-toggle="modal" data-bs-target="#jadwalDeleteModal">
+                                <a href="{{ route('jadwal.delete', $jadwal->id_jadwal) }}" class="c-badge c-badge-danger me-2" data-bs-toggle="modal" data-bs-target="#jadwalDeleteModal" onclick="setDeleteJadwal('{{ $jadwal->id_jadwal }}')">
                                     <i class="bi bi-trash"></i>                      
                                 </a>
                                 <a href="{{ route('jadwal.edit', [$jadwal->pasien->slug, $jadwal->id_jadwal]) }}" class="c-badge c-badge-warning">
@@ -144,7 +144,7 @@
       :body="'<span>Jadwal akan dihapus <strong>permanen</strong>!</span>'"
       icon="bi bi-exclamation-circle text-danger"
       >
-      <form action="{{ route('jadwal.delete', $jadwal->id_jadwal) }}" method="post">
+      <form action="" method="post">
         @method('delete')
         @csrf
         <button type="submit" class="btn btn-danger"><i class="bi bi-exclamation-triangle"></i> Hapus</button>
@@ -175,6 +175,22 @@
                 window.location.href = '?awal=' + start.value + '&akhir=' + end.value;
             }
         })
+
+        document.querySelector('#alertBtn').addEventListener('click', function(event) {
+            document.getElementById('jadwalDeleteModal').classList.remove('show');
+        });
+        document.querySelector('#xAlertBtn').addEventListener('click', function(event) {
+            document.getElementById('jadwalDeleteModal').classList.remove('show');
+        });
+
+        function setDeleteJadwal(id) {
+            const modal = document.querySelector("#jadwalDeleteModal");
+            var form = modal.querySelector("form");
+            var targetUrl = '/jadwal/' + id + '/delete';
+            form.action = targetUrl;
+
+            console.log(id, targetUrl, form);
+        }
 
         function printJadwal() {
             let currentPath = window.location.search;

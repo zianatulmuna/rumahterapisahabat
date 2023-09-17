@@ -10,21 +10,31 @@
   </div>
   <div class="owl-carousel owl-theme owl-show-events">
     <div class="item">
-      <img src="/assets/klinik2.jpg" alt="" />
+      <img src="/img/klinik/klinik1.jpg" alt="Tampak Klinik Dari Seberang Jalan">
     </div>
     <div class="item">
-      <img src="/assets/klinik1.jpg" alt="" />
+      <img src="/img/klinik/klinik2.jpg" alt="Tampak Klinik Dari Seberang Jalan">
     </div>
     <div class="item">
-      <img src="/assets/klinik2.jpg" alt="" />
+      <img src="/img/klinik/klinik3.jpg" alt="Tampak Klinik Dari Kiri Depan">
     </div>
     <div class="item">
-      <img src="/assets/klinik3.jpg" alt="" />
+      <img src="/img/klinik/klinik4.jpg" alt="Sesi Terapi Oleh Terapis">
     </div>
     <div class="item">
-      <img src="/assets/klinik3.jpg" alt="" />
+      <img src="/img/klinik/klinik5.jpg" alt="Sesi Terapi Oleh Terapis">
+    </div>
+    <div class="item">
+      <img src="/img/klinik/klinik6.jpg" alt="Tampak Klinik Dari Kanan Depan">
+    </div>
+    <div class="item">
+      <img src="/img/klinik/klinik7.jpg" alt="Tampak Klinik Dari Depan">
+    </div>
+    <div class="item">
+      <img src="/img/klinik/klinik8.jpg" alt="Tampak Klinik Dari Luar Gerbang">
     </div>
   </div>
+  
   <div class="custom-controls pb-3">
     <button class="custom-prev">
       <i class="bi bi-arrow-left"></i>
@@ -36,8 +46,8 @@
   </div>
 
   <div class="container-fluid px-3 px-sm-5 py-5 d-flex justify-content-center" id="jadwal">
-    <div class="row px-sm-5" style="width: 99%; max-height: 480px;">
-      <div class="col-lg-8 py-2">
+    <div class="row px-sm-5" style="width: 99%;">
+      <div class="col-lg-8 py-2" style=" max-height: 480px;">
         <div class="card p-4 shadow rounded-3 h-100">
           <div class="pb-2 mb-3 border-bottom">
             <h3>Jadwal Terapi</h3>
@@ -55,12 +65,12 @@
           @foreach($terapis_ready as $terapis)
             <div class="hstack gap-2 my-2 p-2 border rounded-3">
               @if ($terapis->foto)
-                  <img src="{{ asset('storage/' . $terapis->foto) }}" class="avatar-img me-2" alt="...">
+                  <img src="{{ asset('storage/' . $terapis->foto) }}" class="avatar-img me-2" alt="{{ $terapis->nama }}">
               @else
                   @if($terapis->jenis_kelamin === 'Laki-Laki')
-                  <img src="/img/avatar-l.png" class="avatar-img me-2" alt="...">
+                  <img src="/img/avatar-l.png" class="avatar-img me-2" alt="No Profile">
                   @else
-                  <img src="/img/avatar-p.png" class="avatar-img me-2" alt="...">
+                  <img src="/img/avatar-p.png" class="avatar-img me-2" alt="No Profile">
                   @endif
               @endif
               <span class="me-auto text-truncate text-black text-capitalize">{{ $terapis->nama }}</span>
@@ -76,7 +86,7 @@
     <div class="tentang-klinik" id="tentang-klinik">
       <div class="row d-flex align-items-md-center" style="width: 99%">
         <div class="col-lg-5 d-flex justify-content-center my-2">
-          <img src="/assets/Login.svg" alt="" />
+          <img src="/assets/Login.svg" alt="Login Avatar">
         </div>
         <div class="col-lg-7">
           <h2>Tentang Klinik</h2>
@@ -86,7 +96,7 @@
             Biogenesis yang dipelajari beliau ketika berada di Belanda. Klinik
             yang berlokasi di Pagesangan Barat, Mataram, NTB telah berdiri
             selama 9 tahun semenjak tahun 2014.
-            <br />Dalam kurun waktu tersebut, klinik telah menerima banyak
+            <br>Dalam kurun waktu tersebut, klinik telah menerima banyak
             pasien yang memiliki kasus penyakit berat seperti tumor, gagal
             organ dalam, kelumpuhan, dan masih banyak lagi. Tidak hanya itu,
             Klinik juga menangani penyakit non-fisik dan gangguan psikologi
@@ -104,70 +114,70 @@
       <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4">
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/assets/Terapis/Arif.jpg" alt="" />
+            <img src="/img/terapis/Arif.jpg" alt="Arif">
             <h5 class="border-bottom">Arif</h5>
             <p>Terapis Muda</p>
           </div>
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/assets/Terapis/Firnadi.jpg" alt="" />
+            <img src="/img/terapis/Firnadi.jpg" alt="Firnadi">
             <h5 class="border-bottom">Firnadi</h5>
             <p>Terapis Muda</p>
           </div>
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/assets/Terapis/Haris.jpg" alt="" />
+            <img src="/img/terapis/Haris.jpg" alt="Haris">
             <h5 class="border-bottom">Haris</h5>
             <p>Terapis Muda</p>
           </div>
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/assets/Terapis/Ichan.jpg" alt="" />
+            <img src="/img/terapis/Ichan.jpg" alt="Ichan">
             <h5 class="border-bottom">Ichan</h5>
             <p>Terapis Muda</p>
           </div>
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/assets/Terapis/Idan.jpg" alt="" />
+            <img src="/img/terapis/Idan.jpg" alt="Idan">
             <h5 class="border-bottom">Idan</h5>
             <p>Terapis Muda</p>
           </div>
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/assets/Terapis/Irwan.jpg" alt="" />
+            <img src="/img/terapis/Irwan.jpg" alt="Irwan">
             <h5 class="border-bottom">Irwan</h5>
             <p>Terapis Muda</p>
           </div>
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/assets/Terapis/Pardi.jpg" alt="" />
+            <img src="/img/terapis/Pardi.jpg" alt="Pardi">
             <h5 class="border-bottom">Pardi</h5>
             <p>Terapis Muda</p>
           </div>
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/assets/Terapis/Risky.jpg" alt="" />
+            <img src="/img/terapis/Risky.jpg" alt="Risky">
             <h5 class="border-bottom">Risky</h5>
             <p>Terapis Muda</p>
           </div>
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/assets/Terapis/Rizal.jpg" alt="" />
+            <img src="/img/terapis/Rizal.jpg" alt="Rizal">
             <h5 class="border-bottom">Rizal</h5>
             <p>Terapis Muda</p>
           </div>
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/assets/Terapis/wadi.jpg" alt="" />
+            <img src="/img/terapis/wadi.jpg" alt="wadi">
             <h5 class="border-bottom">Wadi</h5>
             <p>Terapis Muda</p>
           </div>
@@ -190,7 +200,7 @@
             </p>
           </div>
           <div class="col-auto p-3 my-auto">
-            <img src="/assets/testimoni.jpg" />
+            <img src="/img/testimoni/testimoni.jpg" alt="Ferry Budiman">
           </div>
         </div>
       </div>
@@ -207,7 +217,7 @@
             </p>
           </div>
           <div class="col-auto p-3 my-auto">
-            <img src="/assets/avatar-test.JPG" />
+            <img src="/img/testimoni/avatar-test.JPG" alt="Trisdayanti Putri">
           </div>
         </div>
       </div>
@@ -236,8 +246,8 @@
 
   $(".owl-carousel").owlCarousel({
     items: 1,
-    nav: false, // Turn off default navigation
-    dots: false, // Turn off default dots
+    nav: false,
+    dots: false,
   });
 
   $(".custom-prev").click(function () {

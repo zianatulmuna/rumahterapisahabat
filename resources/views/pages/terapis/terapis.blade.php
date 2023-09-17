@@ -8,7 +8,7 @@
 
   @if($userAdmin)
   <div class="pb-3 d-flex justify-content-start">
-    <a href="{{ route('terapis.create') }}" class="btn c-btn-primary"><i class="bi bi-person-add"></i> Tambah Terapis</a>
+    <a href="{{ route('terapis.add') }}" class="btn c-btn-primary"><i class="bi bi-person-add"></i> Tambah Terapis</a>
   </div>
   @endif
 

@@ -912,3 +912,40 @@ button.c-bg-dark:focus {
   a.c-text-danger:hover, a.c-text-danger:focus {
     color: #be2617 !important;
   }
+
+  /* border */
+  .c-border-primary {
+    border-color: #4e73df !important;
+  }
+  
+  .c-border-secondary {
+    border-color: #858796 !important;
+  }
+  
+  .c-border-success {
+    border-color: #1cc88a !important;
+  }
+  
+  .c-border-info {
+    border-color: #36b9cc !important;
+  }
+  
+  .c-border-warning {
+    border-color: #f6c23e !important;
+  }
+  
+  .c-border-danger {
+    border-color: #e74a3b !important;
+  }
+  
+  .c-border-light {
+    border-color: #f8f9fc !important;
+  }
+  
+  .c-border-dark {
+    border-color: #5a5c69 !important;
+  }
+  
+  .c-border-white {
+    border-color: #fff !important;
+  }

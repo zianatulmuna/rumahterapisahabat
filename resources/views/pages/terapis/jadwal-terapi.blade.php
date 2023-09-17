@@ -84,7 +84,7 @@
                             @if(request('filter') || request('awal'))
                             <td class="text-center">{{ date('d/m/Y', strtotime($jadwal->tanggal)) }}</td>
                             @endif
-                            <td>{{ $jadwal->pasien->nama }}</td>
+                            <td class="text-center">{{ $jadwal->pasien->nama }}</td>
                             <td class="text-center">
                                 <a href="{{ route('pasien.rm', $jadwal->pasien->slug) }}" class="btn btn-sm c-btn-success rounded-3">
                                     <i class="bi bi-eye"></i>

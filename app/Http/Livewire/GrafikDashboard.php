@@ -18,7 +18,7 @@ class GrafikDashboard extends Component
     public $grafik = 'Sesi Terapi';
     public $filter = 'tahun ini';
     public $tahun;
-    public $dataGrafik;
+    public $dataGrafik, $listTerapis, $listPenyakit, $totalDataGrafik;
 
     public $userTerapis;
     public $maxChart = 10;
@@ -30,35 +30,49 @@ class GrafikDashboard extends Component
         $this->filter;
         $this->id_terapis;
         $this->tahun;
+        // $this->totalDataGrafik;
+
+        $this->listTerapis = Terapis::orderBy('nama', 'ASC')->get();
+        
 
         $this->userTerapis = Auth::guard('terapis')->user();
 
-        
-        
-    }
-    
-    public function render()
-    {
         if($this->userTerapis) {
             $this->id_terapis = $this->userTerapis->id_terapis;
-            $this->nama_terapis = $this->userTerapis->nama;   
+            $this->nama_terapis = $this->userTerapis->nama; 
+            
+            $this->listPenyakit = SubRekamMedis::distinct('penyakit')->whereHas('rekamTerapi', function ($query) {
+                $query->where('id_terapis', $this->id_terapis);
+            })->orderBy('penyakit', 'ASC')->pluck('penyakit');
 
             $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year, $this->id_terapis, '');
         } else {            
             $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year, '', '');
+            
+
+            $this->listPenyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
+
         }
+        
+        $nilaiArray = array_values($this->dataGrafik);
+        $this->totalDataGrafik = array_sum($nilaiArray);
 
         $max = (!empty($this->dataGrafik)) ? $max = max($this->dataGrafik) : 0;
         $newMax = ($max <= 10) ? 10 : ceil($max / 10) * 10;
         $this->maxChart = $newMax;
+    }
+    
+    public function render()
+    {
+        
         
         if($this->userTerapis) {
-            $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
+            $penyakit = $this->listPenyakit;
     
             return view('livewire.grafik-terapis', compact('penyakit'));
         } else {
-            $terapis = Terapis::orderBy('nama', 'ASC')->get();
-            $penyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
+            $terapis = $this->listTerapis;
+            $penyakit = $this->listPenyakit;
     
             return view('livewire.grafik-dashboard', compact(
                 'terapis',
@@ -80,13 +94,31 @@ class GrafikDashboard extends Component
             $data = $this->grafikPerTahun($this->grafik, $this->tahun, $this->id_terapis, $this->nama_penyakit);         
         }
 
+        $nilaiArray = array_values($data);
+        $this->totalDataGrafik = array_sum($nilaiArray);
+
         $max = (!empty($data)) ? $max = max($data) : 0;
         $newMax = ($max <= 10) ? 10 : ceil($max / 10) * 10;
         $this->maxChart = $newMax;
 
+        $namaP = $this->nama_penyakit;
+
+        $scopeTerapis = $this->nama_penyakit == '' ? $this->listTerapis : 
+                        Terapis::whereHas('subRekamMedis', function ($query) use ($namaP) {
+                                $query->where('penyakit', $namaP);
+                            
+                        })->orderBy('nama', 'ASC')->get();
+
+        $scopePenyakit = $this->id_terapis == '' ? $this->listPenyakit : 
+                        SubRekamMedis::distinct('penyakit')->whereHas('rekamTerapi', function ($query) {
+                            $query->where('id_terapis', $this->id_terapis);
+                        })->orderBy('penyakit', 'ASC')->pluck('penyakit');
+
         $grafik = [
             'dataGrafik' => $data,
             'maxChart' => $newMax,
+            'scopeTerapis' => $scopeTerapis,
+            'scopePenyakit' => $scopePenyakit,
         ];
 
         $this->emit('chartUpdated', $grafik);

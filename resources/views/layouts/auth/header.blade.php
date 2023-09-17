@@ -10,7 +10,7 @@
     <div class="navbar-nav">
       <div class="nav-item text-nowrap">
         <a href="/">
-          <img src="/assets/Logo_Klinik.jpg" class="logo" alt="Logo Klinik">
+          <img src="/assets/logo/logo_klinik.png" class="logo" alt="Rumah Terapi Sahabat">
         </a>
       </div>
     </div>
@@ -37,9 +37,9 @@
                 <img src="{{ asset('storage/' . auth()->user()->foto) }}" class="avatar-img mx-1" alt="{{ auth()->user()->nama }}">
             @else
                 @if(auth()->user()->jenis_kelamin === 'Laki-Laki')
-                  <img src="/img/undraw_profile.svg" class="avatar-img mx-1" alt="{{ auth()->user()->nama }}">
+                  <img src="/img/avatar-l.png" class="avatar-img mx-1" alt="{{ auth()->user()->nama }}">
                 @else
-                  <img src="/img/undraw_profile_1.svg" class="avatar-img mx-1" alt="{{ auth()->user()->nama }}">
+                  <img src="/assets/undraw_profile_1.svg" class="avatar-img mx-1" alt="{{ auth()->user()->nama }}">
                 @endif
             @endif
             <i class="bi bi-caret-down-fill text-secondary small"></i>

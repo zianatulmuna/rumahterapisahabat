@@ -27,7 +27,7 @@ class PasienCreateForm extends Component
     public $penyakit, $keluhan, $catatan_psikologis, $catatan_bioplasmatik, $catatan_rohani, $catatan_fisik, $data_deteksi;
     public $kondisi_awal, $target_akhir, $link_perkembangan, $kesimpulan;
 
-    public $pasien, $id_pasien, $slug, $dbNama, $dbFoto, $pathFoto;
+    public $pasien, $id_pasien, $slug, $dbNama, $dbFoto, $pathFoto, $sistemOption;
 
     public $totalStep = 5, $currentStep = 1;
 
@@ -39,6 +39,7 @@ class PasienCreateForm extends Component
         $this->currentStep;
         $this->tag;
         $this->tempat_layanan;
+        $this->sistemOption;
 
         if($pasien) {
             $this->pasien = $pasien;
@@ -161,7 +162,8 @@ class PasienCreateForm extends Component
             'url' => 'Kolom :attribute harus berupa link URL valid',
             'file' => 'Kolom :attribute harus diisi file.',
             'image' => 'Kolom :attribute harus diisi file gambar.',
-            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.'
+            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
+            'status_pasien.unique' => 'Masih ada Rekam Medis dengan status Rawat Jalan.'
         ];
 
         if($this->currentStep == 1){
@@ -198,7 +200,12 @@ class PasienCreateForm extends Component
                 'jadwal_layanan' => 'max:50',
                 'sistem_layanan' => 'max:50',
                 'jumlah_layanan' => 'max:50',
-                'status_pasien' => 'required',
+                'status_pasien' => [
+                    'required',
+                    Rule::unique('rekam_medis')->where(function ($query) {
+                        $query->where('id_pasien', $this->id_pasien)->where('status_pasien', 'Rawat Jalan');
+                    }),
+                ],
                 'status_terapi' => 'required',
                 'tanggal_selesai' => [
                     Rule::requiredIf($this->status_pasien == 'Selesai' || $this->status_pasien == 'Jeda')
@@ -211,11 +218,11 @@ class PasienCreateForm extends Component
                     Rule::requiredIf(count($this->tag) == 0),
                 ],
                 'keluhan' => 'max:100',
-                'catatan_fisik' => 'max:50',
-                'catatan_psikologis' => 'max:50',
-                'catatan_bioplasmatik' => 'max:50',
-                'catatan_rohani' => 'max:50',
-                'data_deteksi' => 'max:50',
+                'catatan_fisik' => 'max:100',
+                'catatan_psikologis' => 'max:100',
+                'catatan_bioplasmatik' => 'max:100',
+                'catatan_rohani' => 'max:100',
+                'data_deteksi' => 'max:100',
             ], $message);    
         }else{
             $this->validate([
@@ -257,7 +264,7 @@ class PasienCreateForm extends Component
             }
 
             $dataDiri['id_pasien'] = $this->id_pasien;
-            $dataDiri['status_pendaftaran'] = 'Pasien Lama';
+            $dataDiri['status_pendaftaran'] = 'Pasien';
             $dataDiri['slug'] = $this->slug;
             $dataDiri['tanggal_pendaftaran'] = $this->tanggal_pendaftaran . ' ' . $waktuDaftar;
             $this->tanggal_ditambahkan = $this->tanggal_pendaftaran . ' ' . $waktuDaftar;
@@ -268,37 +275,41 @@ class PasienCreateForm extends Component
 
         $dataRM = array(
             'penyakit' => $this->penyakit,
-            'keluhan' => $this->keluhan,
-            // 'link_rm' => $this->link_rm,
+            'keluhan' => nl2br($this->keluhan),
             'tipe_pembayaran' => $this->tipe_pembayaran,
             'biaya_pembayaran' => $this->biaya_pembayaran,
             'penanggungjawab' => $this->penanggungjawab,
             'tempat_layanan' => $this->tempat_layanan,
-            'jadwal_layanan' => $this->jadwal_layanan,
-            'sistem_layanan' => $this->sistem_layanan,            
-            'status_terapi' => $this->status_terapi,
-            'status_pasien' => $this->status_pasien,
-            'catatan_fisik' => $this->catatan_fisik,
-            'catatan_psikologis' => $this->catatan_psikologis,
-            'catatan_bioplasmatik' => $this->catatan_bioplasmatik,
+            'jadwal_layanan' => $this->jadwal_layanan,        
+            'status_terapi' => nl2br($this->status_terapi),
+            'status_pasien' => nl2br($this->status_pasien),
+            'catatan_fisik' => nl2br($this->catatan_fisik),
+            'catatan_psikologis' => nl2br($this->catatan_psikologis),
+            'catatan_bioplasmatik' => nl2br($this->catatan_bioplasmatik),
             'catatan_rohani' => $this->catatan_rohani,
-            'data_deteksi' => $this->data_deteksi,
-            'kondisi_awal' => $this->kondisi_awal,
-            'target_akhir' => $this->target_akhir,
-            'kesimpulan' => $this->kesimpulan,
+            'data_deteksi' => nl2br($this->data_deteksi),
+            'kondisi_awal' => nl2br($this->kondisi_awal),
+            'target_akhir' => nl2br($this->target_akhir),
+            'kesimpulan' => nl2br($this->kesimpulan),
             'link_perkembangan' => $this->link_perkembangan,
             'tanggal_ditambahkan' => $this->tanggal_ditambahkan,
         );              
 
         $idRM = IdGenerator::generate(['table' => 'rekam_medis', 'field' => 'id_rekam_medis', 'length' => 10, 'prefix' => $this->k_bsni . $dateY.$dateM, 'reset_on_prefix_change' => true]);
+        
+        $this->sistemOption = $this->sistemOption == '' ? 'Paket' : $this->sistemOption;
 
         $penyakit = implode(',', $this->tag);
         $dataRM['id_rekam_medis'] = $idRM;
         $dataRM['id_pasien'] = $this->id_pasien;
         $dataRM['penyakit'] = $penyakit;     
+        $dataRM['sistem_layanan'] = $this->sistem_layanan == '' ? $this->sistemOption : $this->sistem_layanan. ' ' . $this->sistemOption; 
+            
         if($this->jumlah_layanan) {
             $dataRM['jumlah_layanan'] = $this->jumlah_layanan;
         }   
+
+        // dd($dataDiri, $dataRM);
         
         $createRM = RekamMedis::create($dataRM);
 
@@ -324,7 +335,7 @@ class PasienCreateForm extends Component
         Storage::deleteDirectory('livewire-tmp');
 
         if(empty($this->pasien)) {
-            return redirect(route('pasien.create'))
+            return redirect(route('pasien.baru'))
                             ->with('success', 'Pasien berhasil ditambahkan. ')   
                             ->with('createPasien', $this->slug);   
         } else {

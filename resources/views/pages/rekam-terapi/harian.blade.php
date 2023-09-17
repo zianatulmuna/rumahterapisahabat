@@ -128,19 +128,19 @@
          <div class="mb-4 mb-lg-5">
             <h4 class="mb-2 mb-md-3 ps-0">Keluhan</h4>
             <div class="bg-white py-1 px-2 py-md-2 px-md-3 border border-body-tertiary text-black" style="min-height: 100px">
-                  {{ $terapi->keluhan }}
+                  {!! $terapi->keluhan !!}
             </div>
          </div>
          <div class="mb-4 mb-lg-5">
             <h4 class="mb-2 mb-md-3 ps-0">Deteksi/Pengukuran</h4>
             <div class="bg-white py-1 px-2 py-md-2 px-md-3 border border-body-tertiary text-black" style="min-height: 100px">
-                  {{ $terapi->deteksi }}
+                  {!! $terapi->deteksi !!}
             </div>
          </div>
          <div class="mb-4 mb-lg-5">
             <h4 class="mb-2 mb-md-3 ps-0">Terapi/Tindakan yang Sudah Dilakukan</h4>
             <div class="bg-white py-1 px-2 py-md-2 px-md-3 border border-body-tertiary text-black" style="min-height: 100px">
-               {{ $terapi->tindakan }}
+               {!! $terapi->tindakan !!}
             </div>
          </div>
       </div>
@@ -148,19 +148,19 @@
       <div class="mb-4 mb-lg-5">
          <h4 class="mb-2 mb-md-3 ps-0">Saran</h4>
          <div class="bg-white py-1 px-2 py-md-2 px-md-3 border border-body-tertiary text-black" style="min-height: 100px">
-               {{ $terapi->saran }}
+               {!! $terapi->saran !!}
          </div>
       </div>
       <div class="mb-4 mb-lg-5">
          <h4 class="mb-2 mb-md-3 ps-0">Pra Terapi</h4>
          <div class="bg-white py-1 px-2 py-md-2 px-md-3 border border-body-tertiary text-black" style="min-height: 100px">
-               {{ $terapi->pra_terapi }}
+               {!! $terapi->pra_terapi !!}
          </div>
       </div>
       <div class="mb-4 mb-lg-5">
          <h4 class="mb-2 mb-md-3 ps-0">Post Terapi</h4>
          <div class="bg-white py-1 px-2 py-md-2 px-md-3 border border-body-tertiary text-black" style="min-height: 100px">
-               {{ $terapi->post_terapi }}
+               {!! $terapi->post_terapi !!}
          </div>
       </div>
       </div>
