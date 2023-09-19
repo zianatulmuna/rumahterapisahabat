@@ -126,7 +126,7 @@ class ProfilEditForm extends Component
             'jenis_kelamin' => $this->jenis_kelamin,
             'agama' => $this->agama,
             'username' => $this->username,
-            'password' => $this->password,
+            'password' => bcrypt($this->password),
         ); 
 
         if ($this->foto) {

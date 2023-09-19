@@ -84,8 +84,7 @@
             </div>      
         </div>
   
-        <div class="d-flex justify-content-between p-3 mt-3">
-          <button type="button" id="resetButton" class="btn btn-outline-secondary"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+        <div class="d-flex justify-content-end p-3 mt-3">
           <button type="submit" class="btn btn-success px-4 py-2">Kirim</button>
         </div>
       </form>
@@ -93,18 +92,6 @@
 
 </div>
 @endsection
-
-
-@push('script')
-
-<script>
-   const resetButton = document.getElementById("resetButton");
-
-   resetButton.addEventListener("click", function() {
-      location.reload();
-   });
-</script>
-@endpush
 
 @push('script')
    <script>

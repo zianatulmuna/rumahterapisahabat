@@ -122,7 +122,7 @@
       Telp : 085960664604 (WhatsApp)
     </div>
     @if(!$loop->last)
-      <div class="pagebreak"></div>
+      <div class="pagebreak pt-5"></div>
     @endif
   @endforeach
   </div>

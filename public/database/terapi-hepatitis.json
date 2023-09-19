@@ -1,0 +1,50 @@
+[
+  {
+    "kondisi_sebelum_terapi": "Terdapat warna kuning pada kulit dan putih mata",
+    "kondisi_setelah_terapi": "warna putih pada mata memudar",
+    "keluhan": "Kulit dan warna mata terdapat bercak kuning",
+    "tindakan_terapi": "Pemberian Obat imunosupresan",
+    "deteksi": "Tes Fungsi Hati",
+    "saran": "Mengkonsimsi Obat imunosupresan"
+  },
+  {
+    "kondisi_sebelum_terapi": "Diare yang disertai dengan penyakit kuning",
+    "kondisi_setelah_terapi": "Diare mulai berkurang",
+    "keluhan": "Diare tiada henti dan kulit mulai menguning",
+    "tindakan_terapi": "pemberian Obat cacing hati",
+    "deteksi": "Biopsi Hati",
+    "saran": "Menjaga pola makan teratur"
+  },
+  {
+    "kondisi_sebelum_terapi": "Warna kekuningan pada kulit dan diare",
+    "kondisi_setelah_terapi": "Diare mulai berkurang",
+    "keluhan": "Sering diare dan ada bercak kuning",
+    "tindakan_terapi": "Pemberian obat interferon",
+    "deteksi": "Melalui USG",
+    "saran": "Mengkonsimsi Obat imunosupresan"
+  },
+  {
+    "kondisi_sebelum_terapi": "Bercak kuning pada putih di mata ",
+    "kondisi_setelah_terapi": "Warna mata mulai menjernih",
+    "keluhan": "Warna kulit sama mata jadi kuning",
+    "tindakan_terapi": "Pemberian obat antivirus",
+    "deteksi": "Tes Fungsi Hati",
+    "saran": "mengkonsumsi obat antivirus"
+  },
+  {
+    "kondisi_sebelum_terapi": "Tidak napsu makan dan bercak kekuningan pada kulit",
+    "kondisi_setelah_terapi": "Napsu makan mulai kembali",
+    "keluhan": "Udah lama ngga napsu makan terus kulit jadi kuning",
+    "tindakan_terapi": "Pemberian obat interferon",
+    "deteksi": "Tes darah",
+    "saran": "Menjaga pola makan yang sehat"
+  },
+  {
+    "kondisi_sebelum_terapi": "Warna kuning pada kulit dan mata",
+    "kondisi_setelah_terapi": "Warna kuning mulai memudar",
+    "keluhan": "Kulit dan mata jadi kuning sekarang",
+    "tindakan_terapi": "Pemberian obat antivirus",
+    "deteksi": "Biopsi Hati",
+    "saran": "mengkonsumsi obat antivirus"
+  }
+]

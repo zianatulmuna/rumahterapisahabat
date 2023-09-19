@@ -1,0 +1,50 @@
+[
+  {
+    "kondisi_sebelum_terapi": "Pandangan menjadi kabur dan memburam",
+    "kondisi_setelah_terapi": "Pandangan mulai menajam",
+    "keluhan": "Mata saya burem, ngga bisa lihat dengan jelas",
+    "tindakan_terapi": "Memberikan kaca mata sementara",
+    "deteksi": "Deteksi observasi",
+    "saran": "Menjaga kesehatan mata dan menggunakan kacamata khusus"
+  },
+  {
+    "kondisi_sebelum_terapi": "Pandangan menjadi berkabut dan warna dari mata memutih",
+    "kondisi_setelah_terapi": "Kabut mulai hilang dari pandangan",
+    "keluhan": "Mata saya cuman bisa lihat kabut",
+    "tindakan_terapi": "Pelaksaan terapi mata",
+    "deteksi": "Deteksi tajam penglihatan",
+    "saran": "Memberikan mata istirahat yang cukup"
+  },
+  {
+    "kondisi_sebelum_terapi": "Sensitif terhadap cahaya matahari dan warna dari mata memutih",
+    "kondisi_setelah_terapi": "Dapat melihat matahari lebih baik",
+    "keluhan": "Kalau lihat yang terang agak sakit",
+    "tindakan_terapi": "Memberikan kaca mata sementara",
+    "deteksi": "Deteksi observasi",
+    "saran": "Menjaga kesehatan mata dan meminimalisir stress mata"
+  },
+  {
+    "kondisi_sebelum_terapi": "Kesulitan melihat saat malam disertai dengan pandangan berkabut",
+    "kondisi_setelah_terapi": "Pandangan berkabut mulai menurut",
+    "keluhan": "Kalau malam ngga bisa lihat apa apa",
+    "tindakan_terapi": "Pelaksaan terapi mata",
+    "deteksi": "Deteksi tajam penglihatan",
+    "saran": "meminimalisir stress mata dan Memberikan mata istirahat yang cukup"
+  },
+  {
+    "kondisi_sebelum_terapi": "Warna yang dapat dilihat semakin memudar serta sulit melihat saat gelap",
+    "kondisi_setelah_terapi": "Dapat melihat warna lebih jernih",
+    "keluhan": "Saya ngga bisa lihat warna dengan jelas terutama saat malam",
+    "tindakan_terapi": "Pelaksaan terapi mata",
+    "deteksi": "Deteksi observasi",
+    "saran": "meminimalisir stress mata"
+  },
+  {
+    "kondisi_sebelum_terapi": "Pandangan memiliki lingkaran saat melihat cahaya disertai dengan pandangan berkabut",
+    "kondisi_setelah_terapi": "Lingkaran menghilang saat melihat cahaya",
+    "keluhan": "Waktu siang saya sering liat ada lingkaran putih di pandangan saya terus berkabut",
+    "tindakan_terapi": "Memberikan kaca mata sementara",
+    "deteksi": "Deteksi tajam penglihatan",
+    "saran": "Memberikan mata istirahat yang cukup dan menggunakan kacamata khusus "
+  }
+]

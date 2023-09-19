@@ -1,0 +1,50 @@
+[
+  {
+    "kondisi_sebelum_terapi": "Pembengkakan kelenjar getah bening di leher",
+    "kondisi_setelah_terapi": "Pembengkakan mulai mereda",
+    "keluhan": "Leher ngilu dan ada bengkak di sana",
+    "tindakan_terapi": "Radioterapi",
+    "deteksi": "Tes Pemindaian dengan Scan MRI",
+    "saran": "Istirahat yang cukup"
+  },
+  {
+    "kondisi_sebelum_terapi": "Penurunan nafsu makan disertai Nyeri sendi dan tulang",
+    "kondisi_setelah_terapi": "Napsu makan mulai meningkatan",
+    "keluhan": "Mual saat ingin makan dan sendi ngilu",
+    "tindakan_terapi": "imunoterapi untuk meningkatkan sistem imun",
+    "deteksi": "Scan USG",
+    "saran": "Menjaga pola makan"
+  },
+  {
+    "kondisi_sebelum_terapi": "Penurunan berat badan dengan Pembengkakan dan nyeri di perut",
+    "kondisi_setelah_terapi": "Pembengkakan mulai mengecil",
+    "keluhan": "Perut saya terasa membengkak dan berat badan jatuh",
+    "tindakan_terapi": "Kemoterapi",
+    "deteksi": "Tes darah",
+    "saran": "Meningkatkan konsumsi makanan sehat"
+  },
+  {
+    "kondisi_sebelum_terapi": "Kulit pucat disertai Mudah memar dan berdarah",
+    "kondisi_setelah_terapi": "Memar di kulit semakin berkurang",
+    "keluhan": "Sering muncul memar dan memarnya berdarah",
+    "tindakan_terapi": "Radioterapi",
+    "deteksi": "Aspirasi sumsum tulang",
+    "saran": "Mengurangi aktivitas berat"
+  },
+  {
+    "kondisi_sebelum_terapi": "Pembengkakan leher dengan Sesak napas",
+    "kondisi_setelah_terapi": "Sesak napas mulai berkurang dan kini bisa menghela napas panjang",
+    "keluhan": "Susah untuk bernapas terlebih ada bengkak di leher",
+    "tindakan_terapi": "Terapi target",
+    "deteksi": "Tes Pemindaian dengan Scan USG",
+    "saran": "Melakukan pola pernapasan panjang"
+  },
+  {
+    "kondisi_sebelum_terapi": "Demam parah disertai Nyeri sendi dan tulang",
+    "kondisi_setelah_terapi": "Panas demam menurun hingga normal",
+    "keluhan": "Sudah beberapa demam parah terus sakit di persendian",
+    "tindakan_terapi": "Terapi target",
+    "deteksi": "Tes Pemindaian dengan Scan CT",
+    "saran": "Istirahat yang cukup"
+  }
+]

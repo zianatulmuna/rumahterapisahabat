@@ -1,0 +1,50 @@
+[
+  {
+    "kondisi_sebelum_terapi": "Nyeri kepala disertai pandangan berkunang-kunang",
+    "kondisi_setelah_terapi": "Pandangan mulai kembali",
+    "keluhan": "Pusing hingga pandangan jadi berkunang-kunang",
+    "tindakan_terapi": "Memberikan Ergotamine",
+    "deteksi": "pemeriksaan kardiovaskular",
+    "saran": "Mengistirahatkan mata dan mengurangi stress"
+  },
+  {
+    "kondisi_sebelum_terapi": "Nyeri kepala disertai mual dan muntah",
+    "kondisi_setelah_terapi": "Mual dan muntah mulai berkurang",
+    "keluhan": "Sakit di kepala hingga muntah-muntah",
+    "tindakan_terapi": "Memberikan obat antimual",
+    "deteksi": "pemeriksaan kardiovaskular",
+    "saran": "Menjaga pola makan"
+  },
+  {
+    "kondisi_sebelum_terapi": "Nyeri pada kepala beserta pandangan menjadi tidak fokus",
+    "kondisi_setelah_terapi": "Nyeri di kepala mulai mereda",
+    "keluhan": "Pandangan kabur saat kepala menjadi sakit",
+    "tindakan_terapi": "Memberikan Triptan",
+    "deteksi": "pemeriksaan di daerah kepala dan leher",
+    "saran": "Istirahat yang cukup"
+  },
+  {
+    "kondisi_sebelum_terapi": "Nyeri kepala disertai vertigo",
+    "kondisi_setelah_terapi": "Nyeri di kepala serta vertigo menghilang",
+    "keluhan": "Kepala saya vertigo berat karena pusing",
+    "tindakan_terapi": "Memberikan Ergotamine",
+    "deteksi": "Pemeriksaan sensorik",
+    "saran": "Mengistirahatkan tubuh dan meminum obat"
+  },
+  {
+    "kondisi_sebelum_terapi": "Nyeri kepala berkepanjangan",
+    "kondisi_setelah_terapi": "Nyeri di kepala mulai mereda",
+    "keluhan": "Sudah beberapa hari saya pusing dan sakit kepala",
+    "tindakan_terapi": "Memberikan Triptan",
+    "deteksi": "pemeriksaan kardiovaskular",
+    "saran": "mengurangi stress dan Mengistirahatkan tubuh"
+  },
+  {
+    "kondisi_sebelum_terapi": "Nyeri kepala disertai peningkatan sensitivitas pada cahaya",
+    "kondisi_setelah_terapi": "Mata mulai bisa melihat cahaya",
+    "keluhan": "Saya ngga bisa lihat ke luar jendela, kalau liat yang terang jadi sakit kepala",
+    "tindakan_terapi": "Memberikan Ergotamine",
+    "deteksi": "pemeriksaan di daerah kepala dan leher",
+    "saran": " "
+  }
+]

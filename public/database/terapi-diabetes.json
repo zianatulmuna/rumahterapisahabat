@@ -1,0 +1,50 @@
+[
+  {
+    "kondisi_sebelum_terapi": "Sering buang air kecil dalam jangka pendek",
+    "kondisi_setelah_terapi": "Frekuensi buang air kecil berkurang",
+    "keluhan": "Tidak bisa berhenti buang air kecil",
+    "tindakan_terapi": "Menggunakan terapi insulin",
+    "deteksi": "Tes Toleransi Glukosa Oral (TTGO)",
+    "saran": "Tes gula darah mandiri dilakukan sebanyak minimal 4 kali dalam sehari"
+  },
+  {
+    "kondisi_sebelum_terapi": "Sering diserang rasa lapar yang ekstrem",
+    "kondisi_setelah_terapi": "Rasa lapar mulai mereda",
+    "keluhan": "Sering lapar dan haus",
+    "tindakan_terapi": "menggunakan  Metformin untuk menurunkan produksi glukosa dari hati",
+    "deteksi": "Tes Toleransi Glukosa Oral (TTGO)",
+    "saran": "untuk mengatur pola makan dengan memperbanyak konsumsi buah, sayur, protein dari biji-bijian"
+  },
+  {
+    "kondisi_sebelum_terapi": "Sering merasa lelah padahal tidak melakukan aktivitas fisik",
+    "kondisi_setelah_terapi": "Lebih bernergi dari sebelumnya",
+    "keluhan": "Letih badan meskipun tidak melakukan apa pun",
+    "tindakan_terapi": "Melakukan pergerakan otot",
+    "deteksi": "Tes Toleransi Gula Darah",
+    "saran": "berolahraga secara rutin, setidaknya 150 menit dalam seminggu"
+  },
+  {
+    "kondisi_sebelum_terapi": "mengalami infeksi pada kulit dan gusi",
+    "kondisi_setelah_terapi": "Infeksi tidak terlalu parah dan perlahan membaik",
+    "keluhan": "Infeksi tiba-tiba di gusi dan kulit",
+    "tindakan_terapi": "memberikan suplemen atau vitamin guna mengurangi risiko terjadinya komplikasi",
+    "deteksi": "Tes Toleransi Gula Darah",
+    "saran": "melakukan konsultasi gizi dan pola makan dengan dokter"
+  },
+  {
+    "kondisi_sebelum_terapi": "Luka sulit sembuh dan Pandangan kabur",
+    "kondisi_setelah_terapi": "Pandangan mulai membaik",
+    "keluhan": "Pandangan sangat kabur dan luka goresan masih berdarah",
+    "tindakan_terapi": "memberikan daun insulin untuk menurunkan kadar gula dalam darah",
+    "deteksi": "Tes Gula Darah Puasa",
+    "saran": "menjalani tes HbA1C secara mandiri guna memantau kadar gula darah"
+  },
+  {
+    "kondisi_sebelum_terapi": "Penurunan berat badan dan massa otot tanpa sebab yang jelas",
+    "kondisi_setelah_terapi": "Penurunan berat badan mulai membaik",
+    "keluhan": "Berat badan tidak dapat naik, tetapi malah turun drastis",
+    "tindakan_terapi": "Menggunakan terapi insulin",
+    "deteksi": "Tes Toleransi Glukosa Oral (TTGO)",
+    "saran": "mengganti asupan gula dengan pemanis yang lebih aman"
+  }
+]

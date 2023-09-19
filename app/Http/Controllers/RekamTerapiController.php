@@ -16,7 +16,7 @@ class RekamTerapiController extends Controller
 {  
 
     public function terapiDummy($id_sub) {
-        $json_file = 'database/terapi-kolesterol.json';
+        $json_file = 'database/terapi-hepatitis.json';
         $json_data = file_get_contents($json_file);
         $data = json_decode($json_data, true);
 
@@ -27,7 +27,7 @@ class RekamTerapiController extends Controller
                 'table' => 'rekam_terapi', 
                 'field' => 'id_terapi', 
                 'length' => 8, 
-                'prefix' => 'T2207',
+                'prefix' => 'T2201',
                 'reset_on_prefix_change' => true
             ]);
             
@@ -42,7 +42,7 @@ class RekamTerapiController extends Controller
                 'id_terapi' => $id,
                 'id_terapis' => Terapis::all()->random()->id_terapis,
                 'id_sub' => $id_sub,
-                'tanggal' => '2022-07-' . $t,
+                'tanggal' => '2022-01-' . $t,
                 'waktu' => $waktu_acak,
                 'keluhan' => $item['keluhan'],
                 'deteksi' => $item['deteksi'],

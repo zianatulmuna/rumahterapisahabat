@@ -135,7 +135,7 @@ class TerapisEditForm extends Component
             'status' => $this->status,
             'total_terapi' => $this->total_terapi,
             'username' => $this->username,
-            'password' => $this->password,
+            'password' => bcrypt($this->password),
         ); 
 
         if ($this->foto) {

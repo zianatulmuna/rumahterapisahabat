@@ -2,7 +2,7 @@
 
 @section('container')
 <div class="content-container">
-    <div class="align-items-center pt-3 pb-2 mb-4 border-bottom">
+    <div class="align-items-center pb-2 mb-4 border-bottom">
         <h2>Data User</h2>
     </div>
 

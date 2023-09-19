@@ -1,0 +1,50 @@
+[
+  {
+    "kondisi_sebelum_terapi": "jarang kencing dan terdapat pembengkakan di perut",
+    "kondisi_setelah_terapi": "Pembengkakan mulai berkurang",
+    "keluhan": "Tidak bisa buang air kecil serta ada bengkak di perut",
+    "tindakan_terapi": "pemberian Obat diuretik",
+    "deteksi": "Pencitraan lanjutan dengan USG",
+    "saran": "Memberpanyak minum air putih dan menjaga pola makan"
+  },
+  {
+    "kondisi_sebelum_terapi": "letih disertai Dehidrasi",
+    "kondisi_setelah_terapi": "Gejala dehidrasi berkurang",
+    "keluhan": "pusing karena letih serta mulut terasa kering kerontang",
+    "tindakan_terapi": "pemberian Obat diuretik",
+    "deteksi": "Tes darah",
+    "saran": "Memberpanyak minum air putih dan mineral"
+  },
+  {
+    "kondisi_sebelum_terapi": "Sakit pada bagian dada dan punggung",
+    "kondisi_setelah_terapi": "Rasa sakit mereda",
+    "keluhan": "ngilu parah di dada dan punggung",
+    "tindakan_terapi": "pemberian Obat kortikosteroid",
+    "deteksi": "Pencitraan lanjutan dengan CT scan",
+    "saran": "Menjaga pola hidup dan konsumsi air putih"
+  },
+  {
+    "kondisi_sebelum_terapi": "Mengalami tekanan darah tinggi atau hipertensi disertai sakit di perut",
+    "kondisi_setelah_terapi": "Tekanan darah menurun dan sakit mulai mereda",
+    "keluhan": "tekanan darah tinggi dan sakit sekali di perut",
+    "tindakan_terapi": "pemberian Obat diuretik",
+    "deteksi": "Pencitraan lanjutan dengan MRI",
+    "saran": "Menjaga pola diet dan olaharaga ringan"
+  },
+  {
+    "kondisi_sebelum_terapi": "Urin berbusa dan berwarna gelap",
+    "kondisi_setelah_terapi": "Kondisi urin mulai normal",
+    "keluhan": "Warna kulit sangat gelap dan ada busa",
+    "tindakan_terapi": "pemberian Obat kortikosteroid",
+    "deteksi": "Tes Urin",
+    "saran": "Memberpanyak minum air putih dan konsumsi suplemen"
+  },
+  {
+    "kondisi_sebelum_terapi": "dehidrasi disertai mual dan muntah",
+    "kondisi_setelah_terapi": "gejala mual mulai berkurang",
+    "keluhan": "mulut dan kulit semakin kering tetapi sering muntah",
+    "tindakan_terapi": "pemberian Obat kortikosteroid",
+    "deteksi": "Tes darah",
+    "saran": "Memberpanyak minum air putih dan menjaga diet makan"
+  }
+]

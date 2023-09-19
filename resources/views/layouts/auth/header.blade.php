@@ -37,9 +37,9 @@
                 <img src="{{ asset('storage/' . auth()->user()->foto) }}" class="avatar-img mx-1" alt="{{ auth()->user()->nama }}">
             @else
                 @if(auth()->user()->jenis_kelamin === 'Laki-Laki')
-                  <img src="/img/avatar-l.png" class="avatar-img mx-1" alt="{{ auth()->user()->nama }}">
+                  <img src="/img/profile-l.png" class="avatar-img mx-1" alt="{{ auth()->user()->nama }}">
                 @else
-                  <img src="/assets/undraw_profile_1.svg" class="avatar-img mx-1" alt="{{ auth()->user()->nama }}">
+                  <img src="/img/profile-p.png" class="avatar-img mx-1" alt="{{ auth()->user()->nama }}">
                 @endif
             @endif
             <i class="bi bi-caret-down-fill text-secondary small"></i>

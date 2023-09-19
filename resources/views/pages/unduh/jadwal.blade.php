@@ -37,7 +37,7 @@
           <th scope="row " class="text-center py-1">{{ $loop->index + 1 }}</th>
           <td class="text-center py-1">{{ date('d/m/Y', strtotime($jadwal->tanggal)) }}</td>
           <td class="text-center py-1">{{ $jadwal->pasien->nama }}</td>
-          <td class="text-center py-1">{{ $jadwal->terapis->username }}</td>
+          <td class="text-center py-1 text-capitalize">{{ $jadwal->id_terapis == '' ? '' : $jadwal->terapis->username }}</td>
           <td class="text-center py-1">{{ $jadwal->status }}</td>
         </tr>
         @endforeach

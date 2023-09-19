@@ -46,9 +46,9 @@
             </div>            
             <div class="col"> 
                <div class="mb-4">
-                  <label for="id_terapis" class="form-label fw-bold @error('id_terapis') is-invalid @enderror">Terapis <span class="text-danger">*</span></label>
+                  <label for="id_terapis" class="form-label fw-bold @error('id_terapis') is-invalid @enderror">Terapis</label>
                   <div class="dropdown search-dinamis dropdown-terapis">
-                     <input type="hidden" name="id_terapis" value="{{ old('id_terapis') }}" id="id_terapis" class="form-control">
+                     <input type="hidden" name="id_terapis" value="{{ old('id_terapis') }}" id="id_terapis" class="form-control" required>
                      <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                        <span>Pilih Terapis</span>
                        <i class="bi bi-chevron-down"></i>
@@ -67,7 +67,7 @@
                </div>
                <div class="mb-4">
                   <label class="form-label fw-bold">Pilih Penyakit <span class="text-danger">*</span></label>
-                  <select class="form-select @error('id_sub') is-invalid @enderror" id="id_sub" name="id_sub">
+                  <select class="form-select @error('id_sub') is-invalid @enderror" id="id_sub" name="id_sub" required>
                     <option value="">Pilih Penyakit</option>
                   </select>
                   @error('id_sub')
@@ -76,7 +76,7 @@
                 </div>
                <div class="mb-4"> 
                   <label for="tanggal" class="form-label fw-bold">Tanggal Terapi <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
-                  <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ old('tanggal') }}">
+                  <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
                   @error('tanggal')
                   <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
@@ -91,8 +91,7 @@
             </div>      
         </div>
   
-        <div class="d-flex justify-content-between p-3 mt-3">
-          <button type="button" id="resetButton" class="btn btn-outline-secondary"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+        <div class="text-end p-3 mt-3">          
           <button type="submit" class="btn btn-success px-4 py-2">Kirim</button>
         </div>
       </form>
@@ -100,6 +99,8 @@
 
 </div>
 @endsection
+
+
 
 @push('script')
    <script>
@@ -110,9 +111,10 @@
    <script src="/js/select-terapis.js"></script>
    <script>
       const subSelect = document.querySelector("#id_sub");
-
+      
       function pasienChange() {
-         fetch('/jadwal/tambah/getSubRekamMedis?id=' + idPasien.value)
+         // const id_pasien = document.querySelector("#id_pasien");
+         fetch('/jadwal/tambah/getSubRekamMedis?id=' + id_pasien.value)
             .then(response => response.json())
             .then(data => {
                data.forEach(sub => {
@@ -127,3 +129,13 @@
       };
    </script>
 @endpush
+
+@if ($errors->any()) 
+   @push('script')
+      <script>
+         setTimeout(function() {
+            pasienChange();
+         }, 1000);
+      </script>
+   @endpush
+@endif

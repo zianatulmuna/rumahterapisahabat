@@ -1,0 +1,50 @@
+[
+  {
+    "kondisi_sebelum_terapi": "Menurunnya nafsu makan disertai Penurunan berat badan",
+    "kondisi_setelah_terapi": "Napsu makan mulai kembali",
+    "keluhan": "Tidak enak makan",
+    "tindakan_terapi": "memberikan pengobatan TBC dan terapi psikologis",
+    "deteksi": "Tes darah",
+    "saran": "Makan makanan yang bernutrisi"
+  },
+  {
+    "kondisi_sebelum_terapi": "demam tinggi dan Berkeringat pada malam hari",
+    "kondisi_setelah_terapi": "Demam perlahan menurun",
+    "keluhan": "Sakit demam saat malam",
+    "tindakan_terapi": "memberikan pengobatan TBC",
+    "deteksi": "Tes Mantoux dengan TST (Tuberculin Skin Test)",
+    "saran": "istirahat yang cukup dan jangan beraktivitas"
+  },
+  {
+    "kondisi_sebelum_terapi": "Batuk mengeluarkan dahak berdarah",
+    "kondisi_setelah_terapi": "Durasi batuk mulai memendek dengan darah berkurang",
+    "keluhan": "Tidak bisa berhenti batuk hingga berdarah",
+    "tindakan_terapi": "Perlatihan pernapas diikuti oleh pemberian pengobatan TBC",
+    "deteksi": "Rontgen dan tes dahak",
+    "saran": "Mengkonsumsi obat serta perbanyak istirahat"
+  },
+  {
+    "kondisi_sebelum_terapi": "Mengalami sesak napas secara bertahap dan akan semakin memburuk",
+    "kondisi_setelah_terapi": "Mulai bisa bernapas lebih lega",
+    "keluhan": "Susah napas selama dua minggu",
+    "tindakan_terapi": "Perlatihan pernapasan",
+    "deteksi": "Rontgen dan tes darah",
+    "saran": "Melakukan latihan pernapasan dan mengurangi aktivitas"
+  },
+  {
+    "kondisi_sebelum_terapi": " rasa sakit di area perut dan persendian",
+    "kondisi_setelah_terapi": "Rasa sakit di perut dan sendi berkurag",
+    "keluhan": "Perut terasa perih dan ngilu di siku",
+    "tindakan_terapi": "memberikan pengobatan TBC",
+    "deteksi": "Tes darah",
+    "saran": "Menjaga pola makan dan melakukn checkup"
+  },
+  {
+    "kondisi_sebelum_terapi": "Kelenjar membengkak secara terus menerus",
+    "kondisi_setelah_terapi": "Kelenjar berhenti membengkak",
+    "keluhan": "Bengkak di tenggorokan terus membesar",
+    "tindakan_terapi": "memberikan pengobatan TBC",
+    "deteksi": "Tes Mantoux dengan TST (Tuberculin Skin Test) ",
+    "saran": "Beristirahat yang cukup dan menjaga pola makan"
+  }
+]

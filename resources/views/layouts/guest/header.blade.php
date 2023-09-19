@@ -53,9 +53,9 @@
                 <img src="{{ asset('storage/' . $userAdmin->foto) }}" class="avatar-img mx-1" alt="{{ $userAdmin->nama }}">
               @else
                 @if($userAdmin->jenis_kelamin === 'Laki-Laki')
-                  <img src="/img/avatar-l.png" class="avatar-img mx-1" alt="{{ $userAdmin->nama }}">
+                  <img src="/img/profile-l.png" class="avatar-img mx-1" alt="{{ $userAdmin->nama }}">
                 @else
-                  <img src="/img/undraw_profile_1.svg" class="avatar-img mx-1" alt="{{ $userAdmin->nama }}">
+                  <img src="/img/profile-p.png" class="avatar-img mx-1" alt="{{ $userAdmin->nama }}">
                 @endif
               @endif
             @elseif($userTerapis)
@@ -64,9 +64,9 @@
                 <img src="{{ asset('storage/' . $userTerapis->foto) }}" class="avatar-img mx-1" alt="{{ $userTerapis->nama }}">
               @else
                 @if($userTerapis->jenis_kelamin === 'Laki-Laki')
-                  <img src="/img/avatar-l.png" class="avatar-img mx-1" alt="{{ $userTerapis->nama }}">
+                  <img src="/img/profile-l.png" class="avatar-img mx-1" alt="{{ $userTerapis->nama }}">
                 @else
-                  <img src="/img/undraw_profile_1.svg" class="avatar-img mx-1" alt="{{ $userTerapis->nama }}">
+                  <img src="/img/profile-p.png" class="avatar-img mx-1" alt="{{ $userTerapis->nama }}">
                 @endif
               @endif
             @else
@@ -75,9 +75,9 @@
                 <img src="{{ asset('storage/' . $userKepala->foto) }}" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
               @else
                 @if($userKepala->jenis_kelamin === 'Laki-Laki')
-                  <img src="/img/avatar-l.png" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
+                  <img src="/img/profile-l.png" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
                 @else
-                  <img src="/img/undraw_profile_1.svg" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
+                  <img src="/img/profile-p.png" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
                 @endif
               @endif
             @endif 

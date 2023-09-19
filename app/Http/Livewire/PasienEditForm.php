@@ -418,6 +418,7 @@ class PasienEditForm extends Component
         // }
 
         if($this->isPasien) {   
+            // dd('masuk');
             $idRM = $this->id_rekam_medis;
             $this->k_bsni = $this->provId ? $this->k_bsni : substr($this->id_rekam_medis, 0, 3);
             
@@ -425,7 +426,7 @@ class PasienEditForm extends Component
             
             $date = substr($this->id_rekam_medis, 3, 4);
             $isTanggalRMChanged = $isPenyakitChanged = false;
-            $updatePenyakit = [];
+            $updatePenyakit = $this->dbPenyakit;
 
             // cek tanggal RM berubah
             if(substr($this->tanggal_ditambahkan, 0, 7) != substr($this->dbTanggal_ditambahkan, 0, 7)) {
@@ -460,6 +461,7 @@ class PasienEditForm extends Component
                     }
                     $isPenyakitChanged = true;
                     $updatePenyakit = $currentArrayPenyakit;
+                    // $updatePenyakit = array_merge($updatePenyakit, $currentArrayPenyakit);
                 }
                 
             }
@@ -510,7 +512,7 @@ class PasienEditForm extends Component
                     }
                 }
             }
-
+            // dd($updatePenyakit);
             RekamMedis::where('id_rekam_medis', $this->id_rekam_medis)->update($dataRM);
         } else {           
             $dateM = Carbon::parse($this->tanggal_pendaftaran)->format('m');

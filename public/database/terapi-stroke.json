@@ -1,0 +1,50 @@
+[
+  {
+    "kondisi_sebelum_terapi": "pusing dan kehilangan keseimbangan",
+    "kondisi_setelah_terapi": "Mulai bisa berdiri dan berjalan tanpa pusing",
+    "keluhan": "Sering terjatuh karena pusing ketika berdiri atau berjalan karena lupa cara berjalan",
+    "tindakan_terapi": "Terapi okupasi untuk belajar cara berjalan",
+    "deteksi": "Menguji keseimbangan ketika berdiri",
+    "saran": "Melakukan pergerakan untuk membiasakan tubuh"
+  },
+  {
+    "kondisi_sebelum_terapi": "Kesulitan dalam berbicara, hingga artikulasi tidak terdengar dengan jelas",
+    "kondisi_setelah_terapi": "Dapat bicara secara pelan tetapi bisa dimengerti",
+    "keluhan": "tidak dapat berbicara secara stabil",
+    "tindakan_terapi": "melakukan terapi komunikasi untuk melatih kemampuan bicara",
+    "deteksi": "Menguji ejaan dan pengucapan kata tertentu",
+    "saran": "Berlatih mengeja dan mengucapkan kata untuk pembiasaan"
+  },
+  {
+    "kondisi_sebelum_terapi": "kelumpuhan pada bagian kaki",
+    "kondisi_setelah_terapi": "Jari-jari kaki mulai bisa digerakkan",
+    "keluhan": "Kaki terasa berat dan tidak bisa bergerak",
+    "tindakan_terapi": "melakukan stimulasi pada otot yang lemah dengan kekuatan listrik",
+    "deteksi": "Menguji reaksi fisik pada kaki",
+    "saran": "Berlatih untuk terus menggerakkan jari kaki"
+  },
+  {
+    "kondisi_sebelum_terapi": "kebutaan pada salah satu mata",
+    "kondisi_setelah_terapi": "pengeliatan perlahan kembali meskipun sedikit buram",
+    "keluhan": "Tidak dapat melihat apa-apa di mata kiri",
+    "tindakan_terapi": "melakukan terapi fisik untuk melatih pergerakan mata",
+    "deteksi": "Mengetes pergerakan mata",
+    "saran": "Sering membuka dan menutup mata secara perlahan untuk memicu pergerakan"
+  },
+  {
+    "kondisi_sebelum_terapi": "sakit kepala parah tanpa penyebab yang jelas",
+    "kondisi_setelah_terapi": "Sakit kepala mulai mereda dan bisa berpikir jernih",
+    "keluhan": "kepala tiba-tiba sangat sakit sehingga tidak dapat bangun",
+    "tindakan_terapi": "Terapi rekreasi untuk menjernihkan kepala",
+    "deteksi": "Melihat reaksi ketika sakit kepala",
+    "saran": "Mengatur pola istirahat sehingga tidak melelahkan tubuh"
+  },
+  {
+    "kondisi_sebelum_terapi": "pusing disertai Mual dan muntah",
+    "kondisi_setelah_terapi": "pusing sedikit mendingan sehingga tidak lagi mual",
+    "keluhan": "Tiba tiba kepala terasa pusing, sehingga muntah beberapa kali",
+    "tindakan_terapi": "Terapi pernapasan dan rekreasi",
+    "deteksi": "menguji reaksi pusing pada aktivitas tertentu",
+    "saran": "menjaga pola makan dengan pola diet yang sehat, kaya antioksidan, jangan sampai terlambat makan"
+  }
+]
