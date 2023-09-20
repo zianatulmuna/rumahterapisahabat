@@ -11,6 +11,7 @@ use App\Models\SubRekamMedis;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
@@ -126,7 +127,7 @@ class ProfilEditForm extends Component
             'jenis_kelamin' => $this->jenis_kelamin,
             'agama' => $this->agama,
             'username' => $this->username,
-            'password' => bcrypt($this->password),
+            // 'password' => Hash::make($this->password),
         ); 
 
         if ($this->foto) {
@@ -134,7 +135,11 @@ class ProfilEditForm extends Component
                 Storage::delete($this->dbFoto);
             }
             $ext = $this->foto->getClientOriginalExtension();
-            $folder = Auth::guard('terapis')->user() ? 'terapis' : 'admin';
+
+            $folder = (Auth::guard('terapis')->user()) ? 'terapis' : (Auth::guard('admin')->user() ? 'admin' : 'kepala_terapis');
+
+
+
             $dataDiri['foto'] = $this->foto->storeAs($folder, $this->username . '.' . $ext);
         } 
         
@@ -143,7 +148,7 @@ class ProfilEditForm extends Component
             Storage::delete($this->pathFoto);
         }
 
-        $dataDiri['password'] = $this->password ? $this->password : $this->dbPassword;
+        $dataDiri['password'] = $this->password ? bcrypt($this->password) : $this->dbPassword;
 
         if(Auth::guard('admin')->user()) {
             Admin::where('id_admin', $this->id_user)->update($dataDiri);

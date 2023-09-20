@@ -1,4 +1,6 @@
 <header class="navbar navbar-expand-sm navbar-light bg-light shadow px-4 sticky-top navbar-custom">
+
+    @unless($userTerapis)
     <!-- Button trigger modal -->
     <div class="mobile-toggler d-lg-none me-3">
       <a href="#" data-bs-toggle="offcanvas"
@@ -6,6 +8,27 @@
         <i class="bi bi-list"></i>
       </a>
     </div>
+    @endunless
+
+    @can('terapis')
+    <!-- Button trigger modal -->
+    <div class="mobile-toggler">
+      <div class="row d-flex align-content-between align-items-center">
+        <div class="col d-lg-none">
+          <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAuth" aria-controls="offcanvasWithBothOptions">
+            <i class="bi bi-list"></i>
+          </a>
+        </div>
+        <div class="col vr p-0 d-sm-none" style="width: 1px"></div>
+        <div class="col d-sm-none">
+          <div class="form-switch custom-toggle">
+            <input class="form-check-input" type="checkbox" value="{{ $userTerapis->id_terapis }}" data-ready="" id="customSwitch" @if($userTerapis->is_ready) checked @endif onchange="handleSwitchChange(this)">
+            <label class="form-check-label ps-2" for="customSwitch">Hadir</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    @endcan
   
     <div class="navbar-nav">
       <div class="nav-item text-nowrap">
@@ -66,7 +89,7 @@
       function handleSwitchChange(checkbox) {
         if (checkbox.checked) {
             fetch('/setTerapisReady?id=' + checkbox.value + '&status=1')
-            console.log(checkbox.value);
+            // console.log(checkbox.value);
         } else {
             fetch('/setTerapisReady?id=' + checkbox.value + '&status=0')
         }

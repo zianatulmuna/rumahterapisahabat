@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 // use Livewire\Kernel;
-use App\Http\Livewire\TerapisReady;
 use Carbon\Carbon;
 use App\Models\Terapis;
 use App\Models\RekamTerapi;
 use Illuminate\Http\Request;
+use App\Http\Livewire\TerapisReady;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class TerapisController extends Controller
@@ -62,7 +63,13 @@ class TerapisController extends Controller
 
         $tanggal_lahir = Carbon::parse($terapis->tanggal_lahir)->formatLocalized('%d %B %Y'); 
 
-        return view('pages.terapis.detail', compact(
+        if(Auth::guard('admin')->user() || Auth::guard('kepala_terapis')->user()) {
+            $view = 'pages.terapis.detail';
+        } elseif(Auth::guard('terapis')->user()) {
+            $view = 'pages.terapis.sesi-terapi';
+        }
+
+        return view($view, compact(
             'terapis', 
             'histori_terapi', 
             'tanggal_caption',
@@ -89,13 +96,12 @@ class TerapisController extends Controller
                             ->with('delete', true); 
     }
 
-    // public function setReady(Request $request)
-    // {
-    //     dd("halo");
-    //     Terapis::where('id_terapis', $request->id)->update([
-    //         'is_ready' => $request->status,
-    //     ]);
-    // }
+    public function setReady(Request $request)
+    {
+        Terapis::where('id_terapis', $request->id)->update([
+            'is_ready' => $request->status,
+        ]);
+    }
 
     
 }

@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Jadwal;
-use App\Models\SubRekamMedis;
 use Carbon\Carbon;
+use App\Models\Jadwal;
 use App\Models\Terapis;
 use Livewire\Component;
 use App\Models\RekamTerapi;
 use Illuminate\Http\Request;
+use App\Models\SubRekamMedis;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class TerapiCreateForm extends Component
@@ -29,6 +30,10 @@ class TerapiCreateForm extends Component
         $this->aksiDari = $aksiDari;
         $this->currentStep;
         $this->nama_terapis;
+
+        if(Auth::guard('terapis')->user()) {
+            $this->id_terapis = Auth::guard('terapis')->user()->id_terapis;
+        }
 
         if($this->aksiDari === 'jadwal') {            
             $this->id_jadwal = $jadwal->id_jadwal;
@@ -113,12 +118,12 @@ class TerapiCreateForm extends Component
             'id_sub' => $this->id_sub,
             'tanggal' => $this->tanggal,
             'waktu' => $this->waktu,
-            'keluhan' => $this->keluhan,
-            'deteksi' => $this->deteksi,
-            'tindakan' => $this->tindakan,
-            'saran' => $this->saran,
-            'pra_terapi' => $this->pra_terapi,
-            'post_terapi' => $this->post_terapi
+            'keluhan' => nl2br($this->keluhan),
+            'deteksi' => nl2br($this->deteksi),
+            'tindakan' => nl2br($this->tindakan),
+            'saran' => nl2br($this->saran),
+            'pra_terapi' => nl2br($this->pra_terapi),
+            'post_terapi' => nl2br($this->post_terapi)
         ); 
 
         $dateY = substr(Carbon::parse($request->tanggal)->format('Y'), 2);

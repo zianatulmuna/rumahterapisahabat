@@ -32,7 +32,7 @@
       <div class="my-4">
         <a href="{{ route('jadwal') }}" class="nav-link hstack gap-2 {{ Request::is('jadwal*') ? 'fw-bold text-success' : ''}}">
           <i class="bi bi-calendar-plus-fill"></i>
-          {{ $userTerapis ? "Terapi" : "Jadwal" }}
+          Jadwal
         </a>
       </div>
 
@@ -44,6 +44,15 @@
         </a>
       </div>
       @endunless
+
+      @if($userTerapis) 
+      <div class="my-4">
+        <a href="{{ route('sesi.terapi', $userTerapis->username) }}" class="nav-link hstack align-items-center gap-2 {{ Request::is('sesi-terapi*') ? 'active' : ''}}">
+          <i class="bi-heart-pulse-fill"></i>
+          Sesi Terapi
+        </a>
+      </div>
+      @endif
 
       <div class="mt-5 pb-5">
         <div class="my-4">

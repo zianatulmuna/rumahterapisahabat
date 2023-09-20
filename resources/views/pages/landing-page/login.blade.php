@@ -57,11 +57,17 @@
       background-image: url("/assets/Login-bg.svg");
       background-position: center center;
       background-repeat: no-repeat;
-      min-height: 93vh;
+      min-height: 100vh;
       height: 100%;
       background-size: cover;
       z-index: 1;
       /* background-color: #cee6dc */
+    }
+
+    @media (max-width: 450px) {
+      body {
+        min-height: 93vh;
+      }
     }
 </style>
 @endpush

@@ -177,7 +177,7 @@
          </a>
       </div>
     @elseif($userKepala)
-      <div class="d-flex justify-content-end my-5 mx-0 mx-sm-2">
+      <div class="d-flex justify-content-end mb-3 mx-0 mx-sm-2">
          <a href="{{ route('terapi.edit', [$pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn c-btn-warning px-3 px-sm-4">
             <i class="bi bi-pencil-square"></i>
             Edit
@@ -185,7 +185,11 @@
       </div>
    @else
       @if($terapi->id_terapis === $userTerapis->id_terapis)
-      <div class="mt-5 mx-0 mx-sm-2 text-end">
+      <div class="d-flex justify-content-between mt-3 mt-lg-0 mb-3 mx-0 mx-sm-2">
+         <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#terapiDeleteModal">
+               <i class="bi bi-trash"></i>
+               Hapus
+         </a>
          <a href="{{ route('terapi.edit', [$pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn c-btn-warning px-3 px-sm-4">
             <i class="bi bi-pencil-square"></i>
             Edit

@@ -111,14 +111,21 @@
       <div class="pb-2 mb-3 border-bottom h-0">
         <h2>Tentang Tim</h2>
       </div>
-      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4">
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4">          
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/img/terapis/Arif.jpg" alt="Arif">
-            <h5 class="border-bottom">Arif</h5>
-            <p>Terapis Muda</p>
+            <img src="/img/Terapis/Irwan.jpg" alt="Irwan">
+            <h5 class="border-bottom">Irwan</h5>
+            <p>Terapis Madya</p>
           </div>
         </div>
+        <div class="col d-flex justify-content-center text-center">
+          <div class="tentang-tim">
+            <img src="/img/terapis/Risky.jpg" alt="Risky">
+            <h5 class="border-bottom">Risky</h5>
+            <p>Terapis Madya</p>
+          </div>
+        </div>          
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
             <img src="/img/terapis/Firnadi.jpg" alt="Firnadi">
@@ -135,22 +142,8 @@
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/img/terapis/Ichan.jpg" alt="Ichan">
-            <h5 class="border-bottom">Ichan</h5>
-            <p>Terapis Muda</p>
-          </div>
-        </div>
-        <div class="col d-flex justify-content-center text-center">
-          <div class="tentang-tim">
             <img src="/img/terapis/Idan.jpg" alt="Idan">
             <h5 class="border-bottom">Idan</h5>
-            <p>Terapis Muda</p>
-          </div>
-        </div>
-        <div class="col d-flex justify-content-center text-center">
-          <div class="tentang-tim">
-            <img src="/img/terapis/Irwan.jpg" alt="Irwan">
-            <h5 class="border-bottom">Irwan</h5>
             <p>Terapis Muda</p>
           </div>
         </div>
@@ -163,23 +156,30 @@
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
-            <img src="/img/terapis/Risky.jpg" alt="Risky">
-            <h5 class="border-bottom">Risky</h5>
-            <p>Terapis Muda</p>
+            <img src="/img/terapis/Ichan.jpg" alt="Ichan">
+            <h5 class="border-bottom">Ichan</h5>
+            <p>Terapis Pratama</p>
+          </div>
+        </div>
+        <div class="col d-flex justify-content-center text-center">
+          <div class="tentang-tim">
+            <img src="/img/terapis/Arif.jpg" alt="Arif">
+            <h5 class="border-bottom">Arif</h5>
+            <p>Terapis Pratama</p>
           </div>
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
             <img src="/img/terapis/Rizal.jpg" alt="Rizal">
             <h5 class="border-bottom">Rizal</h5>
-            <p>Terapis Muda</p>
+            <p>Terapis Pratama</p>
           </div>
         </div>
         <div class="col d-flex justify-content-center text-center">
           <div class="tentang-tim">
             <img src="/img/terapis/wadi.jpg" alt="wadi">
             <h5 class="border-bottom">Wadi</h5>
-            <p>Terapis Muda</p>
+            <p>Terapis Pratama</p>
           </div>
         </div>
       </div>

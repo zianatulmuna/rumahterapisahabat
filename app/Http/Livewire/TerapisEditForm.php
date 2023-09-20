@@ -135,7 +135,6 @@ class TerapisEditForm extends Component
             'status' => $this->status,
             'total_terapi' => $this->total_terapi,
             'username' => $this->username,
-            'password' => bcrypt($this->password),
         ); 
 
         if ($this->foto) {
@@ -151,7 +150,7 @@ class TerapisEditForm extends Component
             Storage::delete($this->pathFoto);
         }
 
-        $dataDiri['password'] = $this->password ? $this->password : $this->dbPassword;
+        $dataDiri['password'] = $this->password ? bcrypt($this->password) : $this->dbPassword;
 
         Terapis::where('id_terapis', $this->id_terapis)->update($dataDiri);
 

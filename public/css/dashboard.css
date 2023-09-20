@@ -158,10 +158,12 @@ h1, h2, h3, h4,
   margin-bottom: 5px;
   font-size: 15px;
   color: #fff;
+  text-decoration: none;
 }
 
 .sidebar-custom a:visited {
-  color: #ffffff;
+  color: #fff;
+  text-decoration: none;
 }
 
 .sidebar-custom a:hover {
@@ -172,7 +174,7 @@ h1, h2, h3, h4,
 }
 
 .sidebar-custom .active {
-  color: #ffffff;
+  color: #fff;
   background-color: #fff;
   background: linear-gradient(to right, #fbfdfc, #c3ebdf);
   color: #0e8357;
@@ -181,6 +183,7 @@ h1, h2, h3, h4,
 
 .sidebar-custom .active:visited {
   color: #0e8357;
+  text-decoration: none;
 }
 
 .sidebar-custom .active:hover {

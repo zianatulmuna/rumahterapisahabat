@@ -20,6 +20,7 @@
           @if($currentStep == 1)
             <div class="row row-cols-1 row-cols-lg-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
                 <div class="col">
+                  @unless($userTerapis)
                   <div class="mb-4">
                     <label for="id_terapis" class="form-label fw-bold @error('id_terapis') is-invalid @enderror">Terapis <span class="text-danger">*</span></label>
                     <div class="dropdown search-dinamis dropdown-terapis">
@@ -39,6 +40,13 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </div>
+                  @endunless
+                  @if($userTerapis) 
+                    <div class="mb-4">
+                      <label for="terapis" class="form-label fw-bold">Terapis</label>
+                      <input type="text" class="form-control" value="{{ $userTerapis->nama }}" readonly>
+                  </div>
+                  @endif
                   <div class="mb-4"> 
                       <label for="tanggal" class="form-label fw-bold">Tanggal Terapi <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
                       <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" wire:model="tanggal">

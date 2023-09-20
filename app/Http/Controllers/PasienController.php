@@ -47,8 +47,14 @@ class PasienController extends Controller
     public function addPrapasien()
     {
         $jenisKelamin = ['Perempuan','Laki-Laki'];
+        $tipePembayaran = [
+            ['value' => 'Profesional', 'id' => 'profesional'], 
+            ['value' => 'Kesepakatan', 'id' => 'kesepakatan'], 
+            ['value' => 'Kontrak', 'id' => 'kontrak'], 
+            ['value' => 'Tidak Mampu', 'id' => 'tidak_mampu']
+        ];
 
-        return view('pages.landing-page.form-pendaftaran', compact('jenisKelamin'));
+        return view('pages.landing-page.form-pendaftaran', compact('jenisKelamin', 'tipePembayaran'));
     }
 
     public function addPasien()
@@ -87,6 +93,7 @@ class PasienController extends Controller
 
         $dataRM = $request->validate([
             'penanggungjawab' => 'max:50',
+            'tipe_pembayaran' => 'nullable',
             'keluhan' => 'required|max:100'
         ], $message);
 
@@ -107,7 +114,7 @@ class PasienController extends Controller
         $dataDiri['tanggal_pendaftaran'] = Carbon::now()->format('Y-m-d H:i:s');
 
         $pasien = Pasien::create($dataDiri);
-
+        
         if($pasien) {
             $idRM = IdGenerator::generate(['table' => 'rekam_medis', 'field' => 'id_rekam_medis', 'length' => 10, 'prefix' => 'PRA', 'reset_on_prefix_change' => true]);
             $dataRM['id_rekam_medis'] = $idRM;

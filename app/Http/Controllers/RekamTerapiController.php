@@ -4,30 +4,27 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Pasien;
-use App\Models\Terapis;
-use App\Models\RekamMedis;
+use App\Models\Terapis;;
 use App\Models\RekamTerapi;
-use Illuminate\Http\Request;
 use App\Models\SubRekamMedis;
-use Illuminate\Validation\Rule;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class RekamTerapiController extends Controller
 {  
 
     public function terapiDummy($id_sub) {
-        $json_file = 'database/terapi-hepatitis.json';
+        $json_file = 'database/terapi-stroke.json';
         $json_data = file_get_contents($json_file);
         $data = json_decode($json_data, true);
 
-        $t = 2;
+        $t = 4;
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $id = IdGenerator::generate([
                 'table' => 'rekam_terapi', 
                 'field' => 'id_terapi', 
                 'length' => 8, 
-                'prefix' => 'T2201',
+                'prefix' => 'T2306',
                 'reset_on_prefix_change' => true
             ]);
             
@@ -42,7 +39,7 @@ class RekamTerapiController extends Controller
                 'id_terapi' => $id,
                 'id_terapis' => Terapis::all()->random()->id_terapis,
                 'id_sub' => $id_sub,
-                'tanggal' => '2022-01-' . $t,
+                'tanggal' => '2023-06-' . $t,
                 'waktu' => $waktu_acak,
                 'keluhan' => $item['keluhan'],
                 'deteksi' => $item['deteksi'],

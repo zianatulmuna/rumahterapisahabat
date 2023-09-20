@@ -20,6 +20,16 @@
         </div>
     </div>
 
+    {{-- @if($userTerapis)
+    <div class="text-center mt-4 mb-0">
+      <div class="d-flex justify-content-center align-center">
+         <h5 class="alert alert-light rounded-0 border border-dark-subtle shadow-sm p-3 py-4">
+            <i class="bi bi-award-fill text-primary"></i> Terapis {{ $user->tingkatan }}   
+         </h5>
+      </div>
+   </div>
+   @endif --}}
+
     <table class="table mx-auto shadow-sm border mt-4 table-admin">
         <tbody>
           <tr>

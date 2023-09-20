@@ -7,7 +7,7 @@
           Beranda
         </a>
       </li>
-      @unless($userTerapis) 
+      @unless($userTerapis && !$userKepala) 
         <hr class="sidebar-divider my-0" />
         <li class="nav-item">
           <a href="{{ route('pasien.baru') }}" class="nav-link hstack {{ Request::is('pasien-baru*') ? 'active shadow-sm' : ''}}">
@@ -20,7 +20,7 @@
       <li class="nav-item">
         <a href="{{ route('pasien.lama') }}" class="nav-link hstack {{ Request::is('pasien/*') ? 'active' : ''}}">
           <i class="bi bi-person-fill-check me-2"></i>
-          Pasien {{ $userTerapis ? "" : " Lama" }}
+          Pasien {{ $userAdmin || $userKepala ? "Lama" : "" }}
         </a>
       </li>
       <hr class="sidebar-divider my-0" />
@@ -40,6 +40,15 @@
         </a>
       </li>
       @endunless
+      @if($userTerapis) 
+      <hr class="sidebar-divider my-0" />
+      <li class="nav-item">
+        <a href="{{ route('sesi.terapi', $userTerapis->username) }}" class="nav-link hstack align-items-center {{ Request::is('sesi-terapi*') ? 'active' : ''}}">
+          <i class="bi-heart-pulse-fill me-2"></i>
+          Sesi Terapi
+        </a>
+      </li>
+      @endif
     </ul>
   </div>
 </nav>

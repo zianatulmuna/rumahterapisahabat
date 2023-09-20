@@ -66,7 +66,7 @@ Route::middleware('auth:admin,terapis,kepala_terapis')->group(function () {
     });
 });
 
-Route::middleware('auth:admin,kepala_terapis')->group(function () {    
+Route::middleware('auth:admin,terapis')->group(function () {    
     Route::prefix('pasien-baru')->group(function () {
         Route::get('', [PasienController::class, 'allPrapasien'])->name('pasien.baru');
         Route::get('/create', [PasienController::class, 'addPasien'])->name('pasien.create');
@@ -121,6 +121,8 @@ Route::middleware('auth:admin')->group(function () {
 
 Route::middleware('auth:terapis')->group(function () {
     Route::get('/setTerapisReady', [TerapisController::class, 'setReady']);
+
+    Route::get('/sesi-terapi/{terapis}', [TerapisController::class, 'detail'])->name('sesi.terapi');
 
     Route::prefix('jadwal')->group(function () {
         Route::get('/{pasien}/{jadwal}/lepas', [JadwalController::class, 'cancelJadwal'])->name('jadwal.lepas');

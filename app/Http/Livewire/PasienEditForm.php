@@ -19,7 +19,7 @@ class PasienEditForm extends Component
     use WithFileUploads;
 
     public $nama, $no_telp, $jenis_kelamin, $email, $tanggal_lahir, $pekerjaan, $agama, $alamat;
-    public $tipe_pembayaran, $penanggungjawab, $biaya_pembayaran, $link_rm, $foto, $tanggal_pendaftaran, $tanggal_ditambahkan; 
+    public $tipe_pembayaran, $penanggungjawab, $biaya_pembayaran, $link_rm, $foto, $tanggal_pendaftaran, $tanggal_ditambahkan, $jumlah_bayar; 
     public $tempat_layanan, $jadwal_layanan, $sistem_layanan, $jumlah_layanan, $status_pasien, $status_terapi, $ket_status, $tanggal_selesai;
 
     public $k_bsni, $provId, $jalan, $provinsi, $kabupaten;
@@ -59,10 +59,11 @@ class PasienEditForm extends Component
         $this->id_rekam_medis = $rm->id_rekam_medis;
         $this->keluhan = str_replace('<br />', '', $rm->keluhan);
         $this->penanggungjawab = $rm->penanggungjawab;
+        $this->tipe_pembayaran = $rm->tipe_pembayaran;
 
         if($this->isPasien) {
-            $this->tipe_pembayaran = $rm->tipe_pembayaran;
             $this->biaya_pembayaran = $rm->biaya_pembayaran;
+            $this->jumlah_bayar = $rm->jumlah_bayar;
             $this->tempat_layanan = $rm->tempat_layanan;
             $this->jumlah_layanan = $rm->jumlah_layanan;
             $this->jadwal_layanan = $rm->jadwal_layanan;
@@ -116,6 +117,7 @@ class PasienEditForm extends Component
             'tipePembayaran' => [
                 ['value' => 'Profesional', 'id' => 'profesional'], 
                 ['value' => 'Kesepakatan', 'id' => 'kesepakatan'], 
+                ['value' => 'Kontrak', 'id' => 'kontrak'], 
                 ['value' => 'Tidak Mampu', 'id' => 'tidak_mampu']
             ],
             'statusPasien' => [
@@ -265,7 +267,8 @@ class PasienEditForm extends Component
             'max' => 'Kolom :attribute harus diisi maksimal :max karakter.',
             'foto.max' => 'Kolom :attribute harus diisi maksimal :max KB (1 MB).',
             'min' => 'Kolom :attribute harus diisi minimal :min karakter.',
-            'min_digits' => 'Kolom :attribute harus diisi minimal :min digits angka.',
+            'min_digits' => 'Kolom :attribute harus diisi minimal :min digit angka.',
+            'max_digits' => 'Kolom :attribute harus diisi minimal :max digit angka.',
             'numeric' => 'Kolom :attribute harus diisi angka.',
             'url' => 'Kolom :attribute harus berupa link URL valid',
             'file' => 'Kolom :attribute harus diisi file.',
@@ -286,7 +289,8 @@ class PasienEditForm extends Component
             ], $message);
         }elseif($this->currentStep == 2){
             $this->validate([                
-                'biaya_pembayaran' => 'max:20',
+                'biaya_pembayaran' => 'max:100',
+                'jumlah_bayar' => 'nullable|max_digits:3',
                 'penanggungjawab' => 'max:50',
                 'link_rm' => 'nullable|url|max:100',
                 'foto' => 'nullable|file|image|max:1024',
@@ -364,6 +368,7 @@ class PasienEditForm extends Component
             'keluhan' => nl2br($this->keluhan),
             'tipe_pembayaran' => $this->tipe_pembayaran,
             'biaya_pembayaran' => $this->biaya_pembayaran,
+            'jumlah_bayar' => $this->jumlah_bayar,
             'penanggungjawab' => $this->penanggungjawab,
             'tempat_layanan' => $this->tempat_layanan,
             'jadwal_layanan' => $this->jadwal_layanan,        

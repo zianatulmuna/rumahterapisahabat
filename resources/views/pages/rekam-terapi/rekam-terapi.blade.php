@@ -60,7 +60,7 @@
                             <td class="text-capitalize">{{ $terapi->terapis->username }}</td>
                             <td>{!! $terapi->pra_terapi !!}</td>
                             <td style="width: 130px">
-                                <a href="{{ route('terapi.print', [$pasien->slug, $sub->id_sub, $terapi->id_terapi]) }}" class="c-badge c-badge-info">
+                                <a href="{{ route('terapi.print', [$pasien->slug, $sub->id_sub, $terapi->id_terapi]) }}" target="_blank" class="c-badge c-badge-info">
                                     <i class="bi bi-download"></i>
                                 </a>
                                 <a href="{{ route('terapi.detail', [$pasien->slug, $sub->id_sub, $terapi->id_terapi]) }}" class="c-badge c-badge-success ms-1">
@@ -78,7 +78,7 @@
     @endif
 
     @if($userAdmin)
-        <div class="d-flex justify-content-between my-5 gap-3">
+        <div class="d-flex justify-content-between mb-3 mt-4 gap-3">
             <a type="button" class="btn c-btn-danger" data-toggle="modal" data-target="#terapiDeleteModal">
                 <i class="bi bi-trash"></i>
                 Hapus
@@ -88,8 +88,8 @@
                 Tambah
             </a>
         </div>
-    @elseif($userKepala)
-    <div class="d-flex justify-content-end my-5">
+    @elseif($userKepala || $userTerapis)
+    <div class="d-flex justify-content-end mb-3 mt-4">
         <a href="{{ route('terapi.tambah', [$pasien->slug, $sub->id_sub]) }}" class="btn btn-primary">
             <i class="bi bi-plus-square pe-2"></i>
             Tambah

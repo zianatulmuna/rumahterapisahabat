@@ -117,10 +117,6 @@
         {!! $terapi->post_terapi !!}
       </div>
     </div>
-    <div class="small mx-4 mb-5 fw-lighter" style="position: fixed; bottom: 0; font-size: 13px">
-      Jl. Meninting Raya No.18, Pagesangan Barat, Mataram, NTB. <br>
-      Telp : 085960664604 (WhatsApp)
-    </div>
     @if(!$loop->last)
       <div class="pagebreak pt-5"></div>
     @endif

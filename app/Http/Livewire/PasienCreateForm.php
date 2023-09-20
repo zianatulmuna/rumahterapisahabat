@@ -19,7 +19,7 @@ class PasienCreateForm extends Component
     use WithFileUploads;
 
     public $nama, $no_telp, $jenis_kelamin, $email, $tanggal_lahir, $pekerjaan, $agama, $alamat;
-    public $tipe_pembayaran, $penanggungjawab, $biaya_pembayaran, $link_rm, $foto, $tanggal_pendaftaran, $tanggal_ditambahkan; 
+    public $tipe_pembayaran, $penanggungjawab, $biaya_pembayaran, $link_rm, $foto, $tanggal_pendaftaran, $tanggal_ditambahkan, $jumlah_bayar; 
     public $tempat_layanan, $jadwal_layanan, $sistem_layanan, $jumlah_layanan, $status_pasien, $status_terapi, $ket_status, $tanggal_selesai;
 
     public $k_bsni, $provId, $jalan, $provinsi, $kabupaten;
@@ -72,6 +72,7 @@ class PasienCreateForm extends Component
             'tipePembayaran' => [
                 ['value' => 'Profesional', 'id' => 'profesional'], 
                 ['value' => 'Kesepakatan', 'id' => 'kesepakatan'], 
+                ['value' => 'Kontrak', 'id' => 'kontrak'], 
                 ['value' => 'Tidak Mampu', 'id' => 'tidak_mampu']
             ],
             'statusPasien' => [
@@ -181,7 +182,8 @@ class PasienCreateForm extends Component
             }
         }elseif($this->currentStep == 2){
             $this->validate([                
-                'biaya_pembayaran' => 'max:20',
+                'biaya_pembayaran' => 'max:100',
+                'jumlah_bayar' => 'nullable|numeric|max:3',
                 'penanggungjawab' => 'max:50',
                 'foto' => 'nullable|file|image|max:1024',
                 'link_rm' => 'nullable|url|max:100',
@@ -278,6 +280,7 @@ class PasienCreateForm extends Component
             'keluhan' => nl2br($this->keluhan),
             'tipe_pembayaran' => $this->tipe_pembayaran,
             'biaya_pembayaran' => $this->biaya_pembayaran,
+            'jumlah_bayar' => $this->jumlah_bayar,
             'penanggungjawab' => $this->penanggungjawab,
             'tempat_layanan' => $this->tempat_layanan,
             'jadwal_layanan' => $this->jadwal_layanan,        

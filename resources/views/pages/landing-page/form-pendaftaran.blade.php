@@ -113,6 +113,22 @@
                 @enderror
               </div>
               <div class="mb-4">
+                <label label class="form-label fw-bold w-100">Metode Pembayaran</label>
+                @foreach($tipePembayaran as $tipe)
+                  @if (old('tipe_pembayaran') == $tipe['value'])
+                    <div class="form-check form-check-custom">                        
+                        <input class="form-check-input" type="radio" name="tipe_pembayaran" id="{{ $tipe['id'] }}" value="{{ $tipe['value'] }}">
+                        <label class="form-check-label" for="{{ $tipe['value'] }}">{{ $tipe['value'] }}</label>
+                    </div>
+                  @else
+                    <div class="form-check form-check-custom">                        
+                        <input class="form-check-input" type="radio" name="tipe_pembayaran" id="{{ $tipe['id'] }}" value="{{ $tipe['value'] }}">
+                        <label class="form-check-label" for="{{ $tipe['value'] }}">{{ $tipe['value'] }}</label>
+                    </div>
+                  @endif
+                @endforeach
+              </div>
+              <div class="mb-4">
                 <label for="penanggungjawab" class="form-label fw-bold">Nama Penanggungjawab</label>
                 <input type="text" class="form-control @error('penanggungjawab') is-invalid @enderror" id="penanggungjawab" name="penanggungjawab" value="{{ old('penanggungjawab') }}" oninput="capEach('penanggungjawab')">
                 @error('penanggungjawab')
