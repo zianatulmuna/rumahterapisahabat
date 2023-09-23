@@ -281,7 +281,7 @@ class PasienEditForm extends Component
                 'nama' => 'required|max:50',
                 'email' => 'nullable|max:35',
                 'alamat' => 'max:100',
-                'no_telp' => 'required|min_digits:10',
+                'no_telp' => 'required|min_digits:8|max_digits:15',
                 'tanggal_lahir' => 'nullable|date',
                 'jenis_kelamin' => 'required',
                 'agama' => 'max:20',

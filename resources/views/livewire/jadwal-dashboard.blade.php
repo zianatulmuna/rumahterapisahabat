@@ -1,6 +1,6 @@
 <div>
     <div class="d-flex justify-content-between align-items-sm-end flex-column-reverse flex-sm-row px-0 px-sm-2 mb-sm-3">
-        <div class="text-center mb-2 mt-4 my-sm-0">
+        <div class="mb-2 mt-4 my-sm-0">
             {{ $tglCaption }}
         </div>
         <div class="col-12 col-sm-7 col-md-6 col-lg-5 col-xl-4 mt-2">

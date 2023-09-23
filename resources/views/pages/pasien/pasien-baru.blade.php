@@ -46,7 +46,7 @@
         @foreach ($pasien_baru as $pasien)                  
           <div class="col">
             <div class="card card-baru border-0 shadow-sm">
-              @if($userAdmin)
+              @if($userAdmin || $userTerapis->id_terapis == 'KTR001')
               <a href="{{ route('pasien.edit', $pasien->slug) }}" class="card-header py-2">
                 <h6 class="card-header-text">{{ $pasien->nama }}</h6>
               </a>

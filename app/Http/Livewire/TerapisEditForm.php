@@ -83,18 +83,20 @@ class TerapisEditForm extends Component
             'foto.max' => 'Kolom :attribute harus diisi maksimal :max kb.',
             'max' => 'Kolom :attribute harus diisi maksimal :max karakter.',
             'min' => 'Kolom :attribute harus diisi minimal :min karakter.',
-            'min_digits' => 'Kolom :attribute harus diisi minimal :min digits angka.',
+            'min_digits' => 'Kolom :attribute harus diisi minimal :min digit angka.',
+            'max_digits' => 'Kolom :attribute harus diisi minimal :max digit angka.',
             'numeric' => 'Kolom :attribute harus diisi angka.',
             'url' => 'Kolom :attribute harus berupa link URL valid',
             'file' => 'Kolom :attribute harus diisi file.',
             'image' => 'Kolom :attribute harus diisi file gambar.',
-            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.'
+            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
+            'username.regex' => 'Username tidak boleh mengandung spasi.'
         ];
 
         if($this->currentStep == 1) {
             $this->validate([
                 'nama' => 'required|max:50',
-                'no_telp' => 'required|min_digits:10',
+                'no_telp' => 'required|min_digits:8|max_digits:15',
                 'tanggal_lahir' => 'nullable|date',
                 'jenis_kelamin' => 'required',
                 'agama' => 'max:20',
@@ -105,16 +107,13 @@ class TerapisEditForm extends Component
                 'username' => ['required', 
                                 'min:3', 
                                 'max:30', 
-                                // 'unique:admin',
-                                // 'unique:terapis',
-                                // 'unique:kepala_terapis',
+                                'regex:/^\S*$/u',
                                 Rule::unique('terapis')->ignore($this->id_terapis, 'id_terapis'),
                                 Rule::unique('admin')->ignore($this->id_terapis, 'id_admin'),
                                 Rule::unique('kepala_terapis')->ignore($this->id_terapis, 'id_kepala')],
                 'password' => 'nullable|min:3|max:10',
-                'tingkatan' => 'required',
-                // 'status' => 'required',                
-                'total_terapi' => 'numeric|max_digits:10',
+                'tingkatan' => 'required',             
+                'total_terapi' => 'nullable|numeric|max_digits:10',
             ], $message);
 
         }
@@ -136,6 +135,8 @@ class TerapisEditForm extends Component
             'total_terapi' => $this->total_terapi,
             'username' => $this->username,
         ); 
+
+        $this->username = strtolower($this->username);
 
         if ($this->foto) {
             if ($this->dbFoto) {

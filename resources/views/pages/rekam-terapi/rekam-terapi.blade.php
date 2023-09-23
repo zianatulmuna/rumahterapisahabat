@@ -88,7 +88,7 @@
                 Tambah
             </a>
         </div>
-    @elseif($userKepala || $userTerapis)
+    @elseif($userTerapis)
     <div class="d-flex justify-content-end mb-3 mt-4">
         <a href="{{ route('terapi.tambah', [$pasien->slug, $sub->id_sub]) }}" class="btn btn-primary">
             <i class="bi bi-plus-square pe-2"></i>

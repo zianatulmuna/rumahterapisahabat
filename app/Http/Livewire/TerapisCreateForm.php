@@ -60,19 +60,21 @@ class TerapisCreateForm extends Component
             'foto.max' => 'Kolom :attribute harus diisi maksimal :max kb.',
             'max' => 'Kolom :attribute harus diisi maksimal :max karakter.',
             'min' => 'Kolom :attribute harus diisi minimal :min karakter.',
-            'max_digits' => 'Kolom :attribute harus diisi maksimal :max digits angka.',
+            'min_digits' => 'Kolom :attribute harus diisi minimal :min digit angka.',
+            'max_digits' => 'Kolom :attribute harus diisi minimal :max digit angka.',
             'numeric' => 'Kolom :attribute harus diisi angka.',
             'url' => 'Kolom :attribute harus berupa link URL valid',
             'file' => 'Kolom :attribute harus diisi file.',
             'image' => 'Kolom :attribute harus diisi file gambar.',
-            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.'
+            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
+            'username.regex' => 'Username tidak boleh mengandung spasi.',
         ];
 
         if($this->currentStep == 1) {
             if(empty($this->id_pasien)) {
                 $this->validate([
                     'nama' => 'required|max:50',
-                    'no_telp' => 'required|min_digits:10',
+                    'no_telp' => 'required|min_digits:8',
                     'tanggal_lahir' => 'nullable|date',
                     'jenis_kelamin' => 'required',
                     'agama' => 'max:20',
@@ -82,11 +84,10 @@ class TerapisCreateForm extends Component
             }
         } else {
             $this->validate([
-                'username' => ['required', 'min:3', 'max:30', 'unique:terapis', 'unique:admin', 'unique:kepala_terapis'],
+                'username' => ['required', 'min:3', 'max:30', 'unique:terapis', 'unique:admin', 'unique:kepala_terapis','regex:/^\S*$/u'],
                 'password' => 'required|min:3|max:60',
                 'tingkatan' => 'required',
-                'total_terapi' => 'numeric|max_digits:10',
-                // 'status' => 'required'
+                'total_terapi' => 'nullable|numeric|max_digits:10',
             ], $message);
 
         }
@@ -105,10 +106,12 @@ class TerapisCreateForm extends Component
             'agama' => $this->agama,
             'tingkatan' => $this->tingkatan,
             'total_terapi' => $this->total_terapi,
-            'status' => $this->status,
+            // 'status' => $this->status,
             'username' => $this->username,
-            'password' => $this->password,
+            'password' => bcrypt($this->password),
         ); 
+
+        $this->username = strtolower($this->username);
 
         $idTerapis = IdGenerator::generate(['table' => 'terapis', 'field' => 'id_terapis', 'length' => 6, 'prefix' => 'TRP', 'reset_on_prefix_change' => true]);
 
@@ -117,11 +120,12 @@ class TerapisCreateForm extends Component
 
             // $resizedImage = Image::make($request->file('photo'))->resize(115, null);
 
-            $dataDiri['foto'] = $this->foto->store('terapis');
+            $ext = $this->foto->getClientOriginalExtension();
+            $dataDiri['foto'] = $this->foto->storeAs('terapis', $this->username . '.' . $ext);
         }
         
         $dataDiri['id_terapis'] = $idTerapis;
-        // dd($dataDiri);
+        $dataDiri['status'] = $this->status == '' ? 'Aktif' : $this->status;
 
         Terapis::create($dataDiri);
 

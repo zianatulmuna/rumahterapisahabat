@@ -4,49 +4,7 @@
             <h1 class="h4">Terapis Ready</h1>
         </div>
         
-        @if($userTerapis)
-            <div class="d-flex justify-content-between align-items-center my-3">
-                <h5 class="text-right m-0" id="totalReady">{{ $terapisReady }} Terapis</h5>
-            </div>
-            <div class="pe-3 content-ready" style="">
-            @foreach($terapisForReady as $t)
-                @if($t->is_ready)
-                <div class="hstack my-2 p-2 border rounded-3">
-                    @if ($t->foto)
-                        <img src="{{ asset('storage/' . $t->foto) }}" class="avatar-img me-2" alt="...">
-                    @else
-                        @if($t->jenis_kelamin === 'Laki-Laki')
-                        <img src="/img/avatar-l.png" class="avatar-img me-2" alt="...">
-                        @else
-                        <img src="/img/avatar-p.png" class="avatar-img me-2" alt="...">
-                        @endif
-                    @endif
-                    <span class="me-auto text-truncate text-black">{{ $t->nama }}</span>
-                </div>
-                @endif
-            @endforeach
-            </div>
-        @elseif($userKepala)
-            <div class="align-items-center my-3">
-                <h5 class="text-right m-0" id="totalReady">{{ $terapisReady }} Terapis</h5>
-            </div>
-            <div class="pe-3 content-ready" style="">
-            @foreach($terapisForReady as $t)
-                <div class="hstack my-2 p-2 border {{ $t->is_ready ? 'border-success' : '' }} rounded-3">
-                    @if ($t->foto)
-                        <img src="{{ asset('storage/' . $t->foto) }}" class="avatar-img me-2" alt="...">
-                    @else
-                        @if($t->jenis_kelamin === 'Laki-Laki')
-                        <img src="/img/avatar-l.png" class="avatar-img me-2" alt="...">
-                        @else
-                        <img src="/img/avatar-p.png" class="avatar-img me-2" alt="...">
-                        @endif
-                    @endif
-                    <span class="me-auto text-truncate text-black">{{ $t->nama }}</span>
-                </div>
-                @endforeach
-            </div>            
-        @else
+        @if($userAdmin)
             <div class="d-flex justify-content-between align-items-center my-3">
                 <h5 class="text-right m-0" id="totalReady">{{ $terapisReady }} Terapis</h5>
                 <button type="button" class="btn text-danger me-3" wire:click="offTerapis()">Off <i class="fa-solid fa-power-off"></i></button>
@@ -74,6 +32,48 @@
                 </div>
                 @endforeach
             </div>
+        @elseif($userTerapis->id_terapis == 'KTR001')
+            <div class="align-items-center my-3">
+                <h5 class="text-right m-0" id="totalReady">{{ $terapisReady }} Terapis</h5>
+            </div>
+            <div class="pe-3 content-ready" style="">
+            @foreach($terapisForReady as $t)
+                <div class="hstack my-2 p-2 border {{ $t->is_ready ? 'border-success' : '' }} rounded-3">
+                    @if ($t->foto)
+                        <img src="{{ asset('storage/' . $t->foto) }}" class="avatar-img me-2" alt="...">
+                    @else
+                        @if($t->jenis_kelamin === 'Laki-Laki')
+                        <img src="/img/avatar-l.png" class="avatar-img me-2" alt="...">
+                        @else
+                        <img src="/img/avatar-p.png" class="avatar-img me-2" alt="...">
+                        @endif
+                    @endif
+                    <span class="me-auto text-truncate text-black">{{ $t->nama }}</span>
+                </div>
+                @endforeach
+            </div>   
+        @elseif($userTerapis)
+            <div class="d-flex justify-content-between align-items-center my-3">
+                <h5 class="text-right m-0" id="totalReady">{{ $terapisReady }} Terapis</h5>
+            </div>
+            <div class="pe-3 content-ready" style="">
+            @foreach($terapisForReady as $t)
+                @if($t->is_ready)
+                <div class="hstack my-2 p-2 border rounded-3">
+                    @if ($t->foto)
+                        <img src="{{ asset('storage/' . $t->foto) }}" class="avatar-img me-2" alt="...">
+                    @else
+                        @if($t->jenis_kelamin === 'Laki-Laki')
+                        <img src="/img/avatar-l.png" class="avatar-img me-2" alt="...">
+                        @else
+                        <img src="/img/avatar-p.png" class="avatar-img me-2" alt="...">
+                        @endif
+                    @endif
+                    <span class="me-auto text-truncate text-black">{{ $t->nama }}</span>
+                </div>
+                @endif
+            @endforeach
+            </div>   
         @endif
     </div>
 </div>

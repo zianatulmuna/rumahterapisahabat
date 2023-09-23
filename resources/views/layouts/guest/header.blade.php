@@ -69,17 +69,6 @@
                   <img src="/img/profile-p.png" class="avatar-img mx-1" alt="{{ $userTerapis->nama }}">
                 @endif
               @endif
-            @else
-              {{-- {{ $userKepala->nama }} --}}
-              @if ($userKepala->foto)
-                <img src="{{ asset('storage/' . $userKepala->foto) }}" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
-              @else
-                @if($userKepala->jenis_kelamin === 'Laki-Laki')
-                  <img src="/img/profile-l.png" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
-                @else
-                  <img src="/img/profile-p.png" class="avatar-img mx-1" alt="{{ $userKepala->nama }}">
-                @endif
-              @endif
             @endif 
             
           </a>

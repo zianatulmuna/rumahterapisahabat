@@ -20,7 +20,7 @@ class GrafikDashboard extends Component
     public $tahun;
     public $dataGrafik, $listTerapis, $listPenyakit, $totalDataGrafik;
 
-    public $userTerapis;
+    public $userTerapis, $userAdmin;
     public $maxChart = 10;
 
     protected $listeners = ['setTahun', 'setTerapis', 'setPenyakit'];
@@ -36,8 +36,15 @@ class GrafikDashboard extends Component
         
 
         $this->userTerapis = Auth::guard('terapis')->user();
+        $this->userAdmin = Auth::guard('admin')->user();
 
-        if($this->userTerapis) {
+        if($this->userAdmin || $this->userTerapis->id_terapis == 'KTR001') {
+            $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year, '', '');
+            
+
+            $this->listPenyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
+            
+        } else {            
             $this->id_terapis = $this->userTerapis->id_terapis;
             $this->nama_terapis = $this->userTerapis->nama; 
             
@@ -46,11 +53,6 @@ class GrafikDashboard extends Component
             })->orderBy('penyakit', 'ASC')->pluck('penyakit');
 
             $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year, $this->id_terapis, '');
-        } else {            
-            $this->dataGrafik = $this->grafikPerTahun($this->grafik, Carbon::now()->year, '', '');
-            
-
-            $this->listPenyakit = SubRekamMedis::distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');
 
         }
         
@@ -66,11 +68,21 @@ class GrafikDashboard extends Component
     {
         
         
-        if($this->userTerapis) {
-            $penyakit = $this->listPenyakit;
+        // if($this->userTerapis->id_terapis != 'KTR001') {
+        //     $penyakit = $this->listPenyakit;
     
-            return view('livewire.grafik-terapis', compact('penyakit'));
-        } else {
+        //     return view('livewire.grafik-terapis', compact('penyakit'));
+        // } else {
+        //     $terapis = $this->listTerapis;
+        //     $penyakit = $this->listPenyakit;
+    
+        //     return view('livewire.grafik-dashboard', compact(
+        //         'terapis',
+        //         'penyakit',
+        //     ));
+        // }
+
+        if($this->userAdmin || $this->userTerapis->id_terapis == 'KTR001') {
             $terapis = $this->listTerapis;
             $penyakit = $this->listPenyakit;
     
@@ -78,6 +90,10 @@ class GrafikDashboard extends Component
                 'terapis',
                 'penyakit',
             ));
+        } else {
+            $penyakit = $this->listPenyakit;
+    
+            return view('livewire.grafik-terapis', compact('penyakit'));
         }
     }
 
@@ -103,7 +119,7 @@ class GrafikDashboard extends Component
 
         $namaP = $this->nama_penyakit;
 
-        $scopeTerapis = $this->nama_penyakit == '' ? $this->listTerapis : 
+        $scopeTerapis = $this->nama_penyakit == null ? $this->listTerapis : 
                         Terapis::whereHas('subRekamMedis', function ($query) use ($namaP) {
                                 $query->where('penyakit', $namaP);
                             
@@ -113,7 +129,8 @@ class GrafikDashboard extends Component
                         SubRekamMedis::distinct('penyakit')->whereHas('rekamTerapi', function ($query) {
                             $query->where('id_terapis', $this->id_terapis);
                         })->orderBy('penyakit', 'ASC')->pluck('penyakit');
-
+                    
+                        // dd($scopeTerapis);
         $grafik = [
             'dataGrafik' => $data,
             'maxChart' => $newMax,
@@ -144,6 +161,8 @@ class GrafikDashboard extends Component
     public function setTerapis($terapis) {
         $this->id_terapis = $terapis['id'];
         $this->nama_terapis = $terapis['nama'];
+
+        // dd($this->nama_penyakit);
         $this->setFilterAction($this->filter);
     }
     public function setPenyakit($nama) {

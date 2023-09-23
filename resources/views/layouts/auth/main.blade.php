@@ -11,10 +11,10 @@
 
     @if($userAdmin)
       <title>Admin - Rumah Terapi Sahabat</title>
+    @elseif($userTerapis->id_terapis == 'KTR001')
+        <title>Kepala Terapis - Rumah Terapi Sahabat</title>
     @elseif($userTerapis)
       <title>Terapis - Rumah Terapi Sahabat</title>
-    @elseif($userKepala)
-      <title>Kepala Terapis - Rumah Terapi Sahabat</title>
     @endif
 
     <!-- Custom fonts -->
@@ -74,6 +74,9 @@
 
     @if(session()->has('success'))
       <x-alert-success/>
+    @endif
+    @if(session()->has('errorAuth'))
+      <x-alert-auth/>
     @endif
 
     <!-- modal alert -->

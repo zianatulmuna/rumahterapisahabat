@@ -13,19 +13,19 @@
           Beranda
         </a>
       </div>
-      @unless ($userTerapis)
+      @if($userAdmin || $userTerapis->id_terapis == 'KTR001') 
       <div class="my-4">
         <a href="{{ route('pasien.baru') }}" class="nav-link hstack gap-2 {{ Request::is('pasien-baru*') ? 'fw-bold text-success' : ''}}">
           <i class="bi bi-person-plus-fill"></i>
           Pasien Baru
         </a>
       </div>                
-      @endunless
+      @endif
 
       <div class="my-4">
         <a href="{{ route('pasien.lama') }}" class="nav-link hstack gap-2 {{ Request::is('pasien/*') ? 'fw-bold text-success' : ''}}">
           <i class="bi bi-person-fill-check"></i>
-          {{ $userTerapis ? "Pasien" : "Pasien Lama" }}
+          Pasien {{ $userAdmin || $userTerapis->id_terapis == 'KTR001' ? "Lama" : "" }}
         </a>
       </div>
 
@@ -36,14 +36,14 @@
         </a>
       </div>
 
-      @unless ($userTerapis)
+      @if($userAdmin || $userTerapis->id_terapis == 'KTR001') 
       <div class="my-4">
         <a href="{{ route('terapis') }}" class="nav-link hstack gap-2 {{ Request::is('terapis*') ? 'fw-bold text-success' : ''}}">
           <i class="fa-solid fa-user-nurse"></i>
           Terapis
         </a>
       </div>
-      @endunless
+      @endif
 
       @if($userTerapis) 
       <div class="my-4">

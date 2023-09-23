@@ -36,7 +36,7 @@
               </a>
             </div>
             
-            @if($userAdmin||$userTerapis||$userKepala)
+            @if($userAdmin||$userTerapis)
             <div class="container-fluid my-2 mt-4">
               <a class="nav-link {{ Route::is('beranda') ? 'fw-bold text-success' : ''}}" aria-current="page" href="{{ route('beranda') }}">
                 <i class="bi bi-layout-text-sidebar-reverse pe-2"></i>

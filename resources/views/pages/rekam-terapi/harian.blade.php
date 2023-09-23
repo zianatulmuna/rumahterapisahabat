@@ -176,13 +176,6 @@
             Edit
          </a>
       </div>
-    @elseif($userKepala)
-      <div class="d-flex justify-content-end mb-3 mx-0 mx-sm-2">
-         <a href="{{ route('terapi.edit', [$pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn c-btn-warning px-3 px-sm-4">
-            <i class="bi bi-pencil-square"></i>
-            Edit
-         </a>
-      </div>
    @else
       @if($terapi->id_terapis === $userTerapis->id_terapis)
       <div class="d-flex justify-content-between mt-3 mt-lg-0 mb-3 mx-0 mx-sm-2">

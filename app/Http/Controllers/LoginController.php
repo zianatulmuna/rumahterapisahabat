@@ -24,7 +24,7 @@ class LoginController extends Controller
 
         $credentials = $request->validate([
             'username' => 'required',
-            'password' => 'required|min:3'
+            'password' => 'required|min:3|max:30'
         ], $message);
 
         if (Auth::guard('admin')->attempt($credentials) || Auth::guard('terapis')->attempt($credentials) || Auth::guard('kepala_terapis')->attempt($credentials)) {

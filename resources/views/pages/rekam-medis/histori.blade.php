@@ -147,7 +147,7 @@
       </div>
    @endif
 
-   @if($userAdmin || $userKepala)
+   @if($userAdmin || $userTerapis->id_terapis == 'KTR001')
       <div class="d-flex mt-3 justify-content-end">
          <a href="{{ route('rm.create', $pasien->slug) }}" class="btn c-btn-primary"><i class="bi bi-file-earmark-plus pe-2"></i>Tambah Rekam Medis</a>
       </div>

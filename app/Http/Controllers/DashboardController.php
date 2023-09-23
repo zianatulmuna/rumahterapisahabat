@@ -35,7 +35,7 @@ class DashboardController extends Controller
         $selesaiTahunIni = RekamMedis::whereYear('tanggal_ditambahkan', $tahun)
                             ->where('status_pasien', 'Selesai')->count();
 
-        if(Auth::guard('admin')->user() || Auth::guard('kepala_terapis')->user()) {
+        if(Auth::guard('admin')->user() || Auth::guard('terapis')->user()->id_terapis == 'KTR001') {
             $view = 'pages.admin.beranda';
         } elseif(Auth::guard('terapis')->user()) {
             $view = 'pages.terapis.beranda';

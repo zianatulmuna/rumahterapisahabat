@@ -3,7 +3,7 @@
 @section('container')
 <div class="content-container mx-2">
     <div class="row mb-3">
-      <h1 class="h2 px-0 pb-3 border-bottom text-secondary">Selamat Datang, {{ auth()->user()->nama }} !</h1>
+      <h1 class="h2 px-0 pb-3 border-bottom text-secondary">Selamat Datang, {{ auth()->user()->nama }}</h1>
     </div>
 
     {{-- card performa --}}

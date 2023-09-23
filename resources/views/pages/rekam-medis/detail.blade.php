@@ -170,7 +170,7 @@
       @else
          <a href="" class="btn btn-outline-danger py-1 px-2 py-sm-2 px-sm-3" data-toggle="modal" data-target="#pasienDeleteModal"><i class="bi bi-exclamation-triangle"></i> Hapus Pasien</a>
       @endif
-   @elseif($userKepala)
+   @elseif($userTerapis->id_terapis == 'KTR001')
          <div class="d-flex justify-content-end mb-3 mt-5">
             <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="btn c-btn-warning  py-1 px-2 py-sm-2 px-sm-3 ml-3"><i class="bi bi-pencil-square pe-lg-1"></i> Edit</a>
          </div>

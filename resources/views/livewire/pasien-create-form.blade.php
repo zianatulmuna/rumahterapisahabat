@@ -54,7 +54,7 @@
                   </div>
                   <div class="mb-4">
                     <label for="no_telp" class="form-label fw-bold">Nomor Telepon <span class="text-danger">*</span></label>
-                    <input type="tel" class="form-control @error('no_telp') is-invalid @enderror" id="no_telp" name="no_telp" value="{{ old('no_telp') }}" @if($id_pasien) disabled @endif required wire:model="no_telp">
+                    <input type="number" class="form-control @error('no_telp') is-invalid @enderror" id="no_telp" name="no_telp" value="{{ old('no_telp') }}" @if($id_pasien) disabled @endif required wire:model="no_telp">
                     @error('no_telp')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

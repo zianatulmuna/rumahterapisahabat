@@ -8,8 +8,8 @@
           <h3 class="fw-bold" style="font-family: Raleway">Masuk Akun</h3>
           <p class="mb-4">Selamat Datang Terapis</p>
           @if(session()->has('loginError'))
-            <div class="alert alert-danger alert-dismissible small fade show py-1 px-2 hstack" role="alert" id="myAlert">
-            <span class="me-auto">Gagal Login!</span>
+            <div class="alert alert-danger alert-dismissible small fade show py-1 px-2 mx-lg-3 hstack" role="alert" id="myAlert">
+            <span class="me-auto">Login Gagal!</span>
             <button type="button" class="btn p-0" data-dismiss="alert" aria-label="Close"><i class="bi bi-x-circle-fill text-danger-emphasis"></i></button>
             </div>
           @endif

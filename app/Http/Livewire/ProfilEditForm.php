@@ -84,18 +84,20 @@ class ProfilEditForm extends Component
             'foto.max' => 'Kolom :attribute harus diisi maksimal :max kb.',
             'max' => 'Kolom :attribute harus diisi maksimal :max karakter.',
             'min' => 'Kolom :attribute harus diisi minimal :min karakter.',
-            'min_digits' => 'Kolom :attribute harus diisi minimal :min digits angka.',
+            'min_digits' => 'Kolom :attribute harus diisi minimal :min digit angka.',            
+            'max_digits' => 'Kolom :attribute harus diisi minimal :max digit angka.',
             'numeric' => 'Kolom :attribute harus diisi angka.',
             'url' => 'Kolom :attribute harus berupa link URL valid',
             'file' => 'Kolom :attribute harus diisi file.',
             'image' => 'Kolom :attribute harus diisi file gambar.',
-            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.'
+            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
+            'username.regex' => 'Username tidak boleh mengandung spasi.'
         ];
 
         if($this->currentStep == 1) {
             $this->validate([
                 'nama' => 'required|max:50',
-                'no_telp' => 'required|min_digits:10',
+                'no_telp' => 'required|min_digits:8|max_digits:15',
                 'tanggal_lahir' => 'nullable|date',
                 'jenis_kelamin' => 'required',
                 'agama' => 'max:20',
@@ -106,6 +108,7 @@ class ProfilEditForm extends Component
                 'username' => ['required', 
                                 'min:3', 
                                 'max:30', 
+                                'regex:/^\S*$/u',
                                 Rule::unique('admin')->ignore($this->id_user, 'id_admin'),
                                 Rule::unique('terapis')->ignore($this->id_user, 'id_terapis'),
                                 Rule::unique('kepala_terapis')->ignore($this->id_user, 'id_kepala')],
@@ -130,15 +133,16 @@ class ProfilEditForm extends Component
             // 'password' => Hash::make($this->password),
         ); 
 
+        $this->username = strtolower($this->username);
+
         if ($this->foto) {
             if ($this->dbFoto) {
                 Storage::delete($this->dbFoto);
             }
             $ext = $this->foto->getClientOriginalExtension();
 
-            $folder = (Auth::guard('terapis')->user()) ? 'terapis' : (Auth::guard('admin')->user() ? 'admin' : 'kepala_terapis');
-
-
+            $folder = (Auth::guard('admin')->user()) ? 'admin' : 'terapis';
+            // $folder = (Auth::guard('terapis')->user()) ? 'terapis' : (Auth::guard('admin')->user() ? 'admin' : 'kepala_terapis');
 
             $dataDiri['foto'] = $this->foto->storeAs($folder, $this->username . '.' . $ext);
         } 
