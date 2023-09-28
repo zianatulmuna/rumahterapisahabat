@@ -6,6 +6,15 @@
     <main class="ms-md-auto">
       <div class="content-container">
         <h1 class="h2 pb-2 mb-3 mb-sm-4 pb-sm-3 border-bottom">Daftar Sebagai Pasien</h1>
+        {{-- @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif --}}
         <form method="post" action="{{ route('landing.store') }}" enctype="multipart/form-data">
           @csrf
           <div class="main-bg">
@@ -22,14 +31,14 @@
               </div>
               <div class="mb-4">
                 <label for="no_telp" class="form-label fw-bold">Nomor Telepon <span class="text-danger">*</span></label>
-                <input type="tel" class="form-control @error('no_telp') is-invalid @enderror" id="no_telp" name="no_telp" value="{{ old('no_telp') }}" required wire:model="no_telp">
+                <input type="tel" class="form-control @error('no_telp') is-invalid @enderror" id="no_telp" name="no_telp" value="{{ old('no_telp') }}" required>
                 @error('no_telp')
                   <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
               </div>
               <div class="mb-4">
                 <label class="form-label fw-bold">Jenis Kelamin <span class="text-danger">*</span></label>
-                <select class="form-select @error('jenis_kelamin') is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin" wire:model="jenis_kelamin" required aria-label=".form-select-sm example">
+                <select class="form-select @error('jenis_kelamin') is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin" required>
                   <option value="">Pilih Jenis Kelamin</option>
                   @foreach($jenisKelamin as $gender)
                     @if (old('jenis_kelamin') == $gender)
@@ -46,7 +55,7 @@
               <div class="mb-4">
                 <label for="tanggal_lahir" class="form-label fw-bold">Tanggal Lahir <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small></label>
                 <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" name="tanggal_lahir" 
-                  value="{{ old('tanggal_lahir') }}" wire:model="tanggal_lahir">
+                  value="{{ old('tanggal_lahir') }}">
                 <div class="form-text">Contoh: 9 Desember 1995 diisi 12/09/1995</div>
                 @error('tanggal_lahir')
                   <div class="invalid-feedback">
@@ -56,14 +65,14 @@
               </div>
               <div class="mb-4">
                 <label for="email" class="form-label fw-bold">Email</label>
-                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" wire:model="email">
+                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
                 @error('email')
                   <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
               </div>
               <div class="mb-4">
                   <label for="pekerjaan" class="form-label fw-bold">Pekerjaan</label>
-                  <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror" id="pekerjaan" name="pekerjaan" value="{{ old('pekerjaan') }}" oninput="capEach('pekerjaan')" wire:model="pekerjaan">
+                  <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror" id="pekerjaan" name="pekerjaan" value="{{ old('pekerjaan') }}" oninput="capEach('pekerjaan')">
                   @error('pekerjaan')
                   <div class="invalid-feedback">
                       {{ $message }}
@@ -72,7 +81,7 @@
               </div>
               <div class="mb-4">
                   <label for="agama" class="form-label fw-bold">Agama</label>
-                  <input type="text" class="form-control @error('agama') is-invalid @enderror" id="agama" name="agama" value="{{ old('agama') }}" oninput="capEach('agama')" wire:model="agama">
+                  <input type="text" class="form-control @error('agama') is-invalid @enderror" id="agama" name="agama" value="{{ old('agama') }}" oninput="capEach('agama')">
                   @error('agama')
                   <div class="invalid-feedback">
                       {{ $message }}
@@ -81,7 +90,7 @@
               </div>
               <div class="mb-4">
                   <label for="alamat" class="form-label fw-bold">Alamat</label>
-                  <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat') }}" oninput="capFirst('alamat')" wire:model="alamat">
+                  <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat') }}" oninput="capFirst('alamat')">
                   @error('alamat')
                   <div class="invalid-feedback">
                       {{ $message }}
@@ -117,7 +126,7 @@
                 @foreach($tipePembayaran as $tipe)
                   @if (old('tipe_pembayaran') == $tipe['value'])
                     <div class="form-check form-check-custom">                        
-                        <input class="form-check-input" type="radio" name="tipe_pembayaran" id="{{ $tipe['id'] }}" value="{{ $tipe['value'] }}">
+                        <input class="form-check-input" type="radio" name="tipe_pembayaran" id="{{ $tipe['id'] }}" value="{{ $tipe['value'] }}" checked>
                         <label class="form-check-label" for="{{ $tipe['value'] }}">{{ $tipe['value'] }}</label>
                     </div>
                   @else
@@ -139,7 +148,7 @@
               </div>
               <div class="mb-4">
                 <label for="keluhan" class="form-label fw-bold">Keluhan <span class="text-danger">*</span></label>
-                <textarea class="form-control @error('keluhan') is-invalid @enderror" id="keluhan" name="keluhan" rows="2" style="text-transform: full-width-kana;" oninput="capFirst('keluhan')" required></textarea>
+                <textarea class="form-control @error('keluhan') is-invalid @enderror" id="keluhan" name="keluhan" rows="2" oninput="capFirst('keluhan')" required>{{ old('keluhan') }}</textarea>
                 @error('keluhan')
                   <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -192,13 +201,36 @@
 
 @push('script')
   <script>
-    document.querySelector('#keluhan').addEventListener('input', function(event) {
-      if (event.key === "Enter") {
-        var textarea = document.querySelector('#keluhan');
-        textarea.value += '\n';
+    // document.querySelector('#keluhan').addEventListener('input', function(event) {
+    //   if (event.key === "Enter") {
+    //     var textarea = document.querySelector('#keluhan');
+    //     textarea.value += '\n';
+    //   }
+    // });
+    
+    function capEach(inputId) {
+      var input = document.getElementById(inputId);
+        let words = input.value.split(' ');
+  
+        for (let i = 0; i < words.length; i++) {
+            if (words[i].length > 0) {
+                words[i] = words[i][0].toUpperCase() + words[i].substring(1);
+            }
+        }
+  
+        input.value = words.join(' ');
+    } 
+  
+    function capFirst(inputId) {
+      var input = document.getElementById(inputId);
+      var word = input.value;
+  
+      if (word.length > 0) {
+        var capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1);
+        input.value = capitalizedWord;
       }
-    });
-
+    }
+    
     function closeModalDaftar() {
       document.getElementById('daftarSuccessModal').style.display = 'none';
     };

@@ -63,7 +63,7 @@ class TerapisController extends Controller
 
         $tanggal_lahir = $terapis->tanggal_lahir = '' ? '' : Carbon::parse($terapis->tanggal_lahir)->formatLocalized('%d %B %Y');
 
-        return view('pages.terapis.detail', compact(
+        return view('pages.terapis.detail-terapis', compact(
             'terapis', 
             'histori_terapi', 
             'tanggal_caption',
@@ -74,7 +74,7 @@ class TerapisController extends Controller
 
     public function edit(Terapis $terapis)
     {        
-        return view('pages.terapis.edit', compact('terapis'));
+        return view('pages.terapis.edit-terapis', compact('terapis'));
     }
 
     public function delete(Terapis $terapis)
@@ -135,7 +135,7 @@ class TerapisController extends Controller
 
         $tanggal_lahir = $terapis->tanggal_lahir = '' ? '' : Carbon::parse($terapis->tanggal_lahir)->formatLocalized('%d %B %Y');
 
-        return view('pages.terapis.sesi-terapi', compact(
+        return view('pages.terapis.terapi-terapis', compact(
             'terapis', 
             'histori_terapi', 
             'tanggal_caption',

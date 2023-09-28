@@ -14,8 +14,10 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'admin',
+        'passwords' => '123',
+        // 'guard' => 'web',
+        // 'passwords' => 'users',
     ],
 
     /*
@@ -36,10 +38,10 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+        // 'web' => [
+        //     'driver' => 'session',
+        //     'provider' => 'users',
+        // ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
@@ -48,10 +50,10 @@ return [
             'driver' => 'session',
             'provider' => 'therapists',
         ],
-        'kepala_terapis' => [
-            'driver' => 'session',
-            'provider' => 'head_therapist',
-        ],
+        // 'kepala_terapis' => [
+        //     'driver' => 'session',
+        //     'provider' => 'head_therapist',
+        // ],
     ],
 
     /*
@@ -72,10 +74,10 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
+        // 'users' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\User::class,
+        // ],
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
@@ -84,10 +86,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Terapis::class,
         ],
-        'head_therapist' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\KepalaTerapis::class,
-        ],
+        // 'head_therapist' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\KepalaTerapis::class,
+        // ],
 
         // 'users' => [
         //     'driver' => 'database',

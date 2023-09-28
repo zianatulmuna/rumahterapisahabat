@@ -35,10 +35,12 @@ class DashboardController extends Controller
         $selesaiTahunIni = RekamMedis::whereYear('tanggal_ditambahkan', $tahun)
                             ->where('status_pasien', 'Selesai')->count();
 
-        if(Auth::guard('admin')->user() || Auth::guard('terapis')->user()->id_terapis == 'KTR001') {
-            $view = 'pages.admin.beranda';
+        if(Auth::guard('admin')->user()) {
+            $view = 'pages.dashboard.dashboard-admin';
+        } elseif(Auth::guard('terapis')->user()->id_terapis == 'KTR001') {
+            $view = 'pages.dashboard.dashboard-kepala-terapis';
         } elseif(Auth::guard('terapis')->user()) {
-            $view = 'pages.terapis.beranda';
+            $view = 'pages.dashboard.dashboard-terapis';
         }
 
         return view($view, compact(
@@ -52,10 +54,8 @@ class DashboardController extends Controller
         ));
     }
 
-    function landingPage(Request $request) {
-        // $jadwal_terapi = Jadwal::where('tanggal', date('Y-m-d'))->orderBy('waktu')->paginate(5);
+    function landingPage() {
         $terapis_ready = Terapis::where('is_ready', 1)->get();
-        // $today = Carbon::today()->formatLocalized('%A, %d %B %Y');
 
         return view('pages.landing-page.landing-page', compact('terapis_ready'));
     }

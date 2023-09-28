@@ -27,7 +27,7 @@ class LoginController extends Controller
             'password' => 'required|min:3|max:30'
         ], $message);
 
-        if (Auth::guard('admin')->attempt($credentials) || Auth::guard('terapis')->attempt($credentials) || Auth::guard('kepala_terapis')->attempt($credentials)) {
+        if (Auth::guard('admin')->attempt($credentials) || Auth::guard('terapis')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('beranda');
         }

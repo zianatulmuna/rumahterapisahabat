@@ -18,7 +18,7 @@ class RekamMedisController extends Controller
             $rmDetected = 1;
         }
 
-        return view('pages.rekam-medis.histori', [
+        return view('pages.rekam-medis.histori-rekam-medis', [
             'rmDetected' => $rmDetected,
             'rm_terkini' => $rmTerkini,
             'rm_terdahulu' => $rmTerdahulu,
@@ -29,14 +29,14 @@ class RekamMedisController extends Controller
 
     public function add(Pasien $pasien)
     {
-        return view('pages.pasien.tambah', [
+        return view('pages.pasien.tambah-pasien', [
             'pasien' => $pasien
         ]);
     }
 
     public function detail(Pasien $pasien, RekamMedis $rekamMedis)
     {
-        return view('pages.rekam-medis.detail', [
+        return view('pages.rekam-medis.rekam-medis', [
             'rmDetected' => 1,
             'rm' => $rekamMedis,
             'pasien' => $pasien,
@@ -47,7 +47,7 @@ class RekamMedisController extends Controller
     public function edit(Pasien $pasien, RekamMedis $rekamMedis)
     {
         $rm = $rekamMedis;
-        return view('pages.pasien.edit', compact('pasien', 'rm'));
+        return view('pages.pasien.edit-pasien', compact('pasien', 'rm'));
     }
 
     public function delete(Pasien $pasien, RekamMedis $rekamMedis)
@@ -61,7 +61,7 @@ class RekamMedisController extends Controller
 
     public function print(Pasien $pasien, RekamMedis $rekamMedis)
     {
-        return view('pages.unduh.rekam-medis', [
+        return view('pages.unduh.unduh-rekam-medis', [
             'rm' => $rekamMedis,
             'pasien' => $pasien,
             'umur' => Carbon::parse($pasien->tanggal_lahir)->age

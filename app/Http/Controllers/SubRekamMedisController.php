@@ -21,7 +21,7 @@ class SubRekamMedisController extends Controller
             $rmDetected = 0;
         }
 
-        return view('pages.rekam-terapi.histori', [
+        return view('pages.rekam-terapi.histori-rekam-terapi', [
             'rmDetected' => $rmDetected,
             'rm' => $rmTerkini->first(),
             'rm_terkini' => $rmTerkini,
@@ -78,7 +78,7 @@ class SubRekamMedisController extends Controller
         $sub_penyakit = SubRekamMedis::filter($search, $sortBy)
                                 ->paginate(12);
 
-        return view('pages.rekam-terapi.tagging', compact('sub_penyakit'));
+        return view('pages.rekam-terapi.tagging-penyakit', compact('sub_penyakit'));
     }
 
     public function printRekam(Pasien $pasien, SubRekamMedis $subRM)
@@ -89,7 +89,7 @@ class SubRekamMedisController extends Controller
 
         $umur = Carbon::parse($pasien->tanggal_lahir)->age;
 
-        return view('pages.unduh.rekam-terapi', compact(
+        return view('pages.unduh.unduh-rekam-terapi', compact(
             'sub', 'pasien', 'list_terapi', 'umur'
         ));
     }
@@ -103,7 +103,7 @@ class SubRekamMedisController extends Controller
 
         $sub = $subRM;
 
-        return view('pages.unduh.rekam-terapi-harian-loop', compact(
+        return view('pages.unduh.unduh-terapi-loop', compact(
             'sub', 'pasien', 'list_terapi' 
         ));
     }

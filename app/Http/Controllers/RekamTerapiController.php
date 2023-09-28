@@ -61,7 +61,7 @@ class RekamTerapiController extends Controller
         $jadwal = '';
         $id_sub = $subRM->id_sub;
         $aksiDari = 'pasien';
-        return view('pages.rekam-terapi.tambah', compact('pasien', 'id_sub', 'jadwal', 'aksiDari'));
+        return view('pages.rekam-terapi.tambah-terapi', compact('pasien', 'id_sub', 'jadwal', 'aksiDari'));
     }
 
     public function detail(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi) 
@@ -69,7 +69,7 @@ class RekamTerapiController extends Controller
         $rekamTerapi = $subRM->rekamTerapi()->orderBy('tanggal', 'ASC')->get();
         $index = $rekamTerapi->search($terapi) + 1;
      
-        return view('pages.rekam-terapi.harian', [
+        return view('pages.rekam-terapi.detail-terapi', [
             'rmDetected' => 1,
             'terapi' => $terapi,
             'index' => $index,
@@ -81,7 +81,7 @@ class RekamTerapiController extends Controller
 
     public function edit(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi)
     {
-        return view('pages.rekam-terapi.edit', [
+        return view('pages.rekam-terapi.edit-terapi', [
             'terapi' => $terapi,
             'pasien' => $pasien,
         ]);
@@ -106,7 +106,7 @@ class RekamTerapiController extends Controller
         $tanggal = Carbon::createFromFormat('Y-m-d', $terapi->tanggal)->formatLocalized('%d %B %Y');
         $sub = $subRM;
         
-        return view('pages.unduh.rekam-terapi-harian', compact(
+        return view('pages.unduh.unduh-terapi-harian', compact(
             'sub', 'pasien', 'terapi', 'tanggal', 'index' 
         ));
     }

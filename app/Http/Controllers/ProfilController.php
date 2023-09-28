@@ -17,6 +17,6 @@ class ProfilController extends Controller
     public function edit () {
         $user = auth()->user();
 
-        return view('pages.profil.edit', compact('user'));
+        return view('pages.profil.edit-profil', compact('user'));
     }
 }
