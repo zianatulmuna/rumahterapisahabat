@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="halaman">
+<div class="halaman">
     <div class="d-flex align-items-center mb-4 mx-4">
         <div class="col-1 px-0">
           <img src="/assets/logo/logo_klinik.png" style="height: 48px; width: auto" alt="" />

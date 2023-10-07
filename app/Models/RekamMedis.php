@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\Pasien;
-use App\Models\RekamTerapi;
 use App\Models\SubRekamMedis;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,35 +21,77 @@ class RekamMedis extends Model
     {
         return $this->belongsTo(Pasien::class, 'id_pasien');
     }
+    public function terapis()
+    {
+        return $this->belongsTo(Terapis::class, 'id_terapis');
+    }
     public function subRekamMedis()
     {
         return $this->hasMany(SubRekamMedis::class, 'id_rekam_medis');
     }
 
-    
-    public function deployments()
-    {
-        return $this->hasManyThrough(
-            Deployment::class,
-            Environment::class,
-            'project_id', // Foreign key on the environments table...
-            'environment_id', // Foreign key on the deployments table...
-            'id', // Local key on the projects table...
-            'id' // Local key on the environments table...
-        );
+    public function scopeDataMingguIni($query, $penyakit)
+    {     
+        $year = Carbon::now()->year;
+        $startOfWeek = Carbon::now()->startOfWeek()->format('Y-m-d');
+        $endOfWeek = Carbon::now()->endOfWeek()->format('Y-m-d');
+
+        $query->selectRaw('tanggal_selesai as tanggal, COUNT(*) as total')
+            ->where('status_pasien', 'Selesai')
+            ->whereYear('tanggal_selesai', $year)
+            ->whereBetween('tanggal_selesai', [$startOfWeek, $endOfWeek])
+            ->groupBy('tanggal_selesai');
+
+        $query->when($penyakit ?? false, function ($query, $penyakit) {
+            return $query->where('penyakit', 'like', '%' . $penyakit . '%');
+        });
+            
+        return $query->get();
+    }
+    public function scopeDataBulanIni($query, $penyakit)
+    {     
+        $startDate = now()->startOfMonth();
+        $endDate = now()->endOfMonth();
+
+        $query->selectRaw('tanggal_selesai as tanggal, COUNT(*) as total')
+            ->where('status_pasien', 'Selesai')
+            ->whereBetween('tanggal_selesai', [$startDate, $endDate])
+            ->groupBy('tanggal_selesai')
+            ->orderBy('tanggal_selesai');
+
+        $query->when($penyakit ?? false, function ($query, $penyakit) {
+            return $query->where('penyakit', 'like', '%' . $penyakit . '%')
+                ->selectRaw('tanggal_selesai as tanggal, COUNT(*) as total');
+        });
+            
+        return $query->pluck('total', 'tanggal');
     }
 
-    
-    public function rekamTerapi()
-    {
-        return $this->hasManyThrough(
-            RekamTerapi::class,
-            SubRekamMedis::class,
-            'id_rekam_medis', // Foreign key on the environments table...
-            'id_sub', // Foreign key on the deployments table...
-            'id_terapi', // Local key on the projects table...
-            'id_sub' // Local key on the environments table...
-        );
-    }
-    
+    public function scopeDataPerTahun($query, $penyakit, $tahun)
+    {  
+        $query->selectRaw('MONTH(tanggal_selesai) as bulan, COUNT(*) as total')
+            ->where('status_pasien', 'Selesai')
+            ->whereYear('tanggal_selesai', $tahun)->groupBy('bulan');
+
+        $query->when($penyakit ?? false, function ($query, $penyakit) {
+            return $query->whereHas('rekamMedis', function ($query) use ($penyakit) {
+                $query->where('penyakit', 'like', '%' . $penyakit . '%');
+            });
+        });
+            
+        return $query->get();
+    }    
+    public function scopeDataSemuaTahun($query, $penyakit)
+    {  
+        $query->selectRaw('YEAR(tanggal_selesai) as tahun, COUNT(*) as total')
+            ->where('status_pasien', 'Selesai');
+
+        $query->when($penyakit ?? false, function ($query, $penyakit) {
+            return $query->whereHas('rekamMedis', function ($query) use ($penyakit) {
+                $query->where('penyakit', 'like', '%' . $penyakit . '%');
+            });
+        });
+            
+        return $query->get();
+    }    
 }

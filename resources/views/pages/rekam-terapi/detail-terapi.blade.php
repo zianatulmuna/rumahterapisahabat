@@ -2,8 +2,11 @@
 
 @section('container')
 <div class="content-container custom-terapi-harian">
-   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
+   <div class="d-flex justify-content-between align-items-center pb-2 mb-4 border-bottom">
       <h1 class="h2">Rekam Terapi Harian</h1>
+      <a href="{{ route('terapi.print', [$pasien->slug, $terapi->id_sub, $terapi->id_terapi]) }}" target="_blank" class="btn btn-success btn-sm rounded-3 mb-2">
+        <i class="bi bi-download pe-1"></i> Unduh
+     </a>
    </div>
 
     {{-- Data Diri Pasien --}}
@@ -70,18 +73,17 @@
                     <td>ID Pasien</td>
                     <td><span class="bg-body-secondary px-2 rounded-4 border">{{ $pasien->id_pasien }}</span></td>
                  </tr>
-                 @if(Request::is('pasien/' . $pasien->slug . '/rekam-medis' . '/*'))
-                    @if($rmDetected == 1)
-                    <tr class="table-rm-p">
-                       <td>No. RM</td>
-                       <td class="px-2">{{ $rm->id_rekam_medis }}</td>                  
-                    </tr>
-                    <tr>
-                       <td>Status</td>
-                       <td class="px-2">{{ $rm->status_pasien }}</td>                  
-                    </tr>
-                    @endif
-                 @endif
+                 <tr class="table-rm-btn">
+                  <td>No. RM</td>
+                  <td class="px-2">
+                     <span class="">{{ $rm->id_rekam_medis }}</span>
+                     <a href="{{ route('rm.detail', [$pasien->slug, $rm->id_rekam_medis]) }}"><i class="bi bi-arrow-right-circle-fill small ps-1 {{ $rm->status_pasien == 'Rawat Jalan' ? 'text-success' : 'text-secondary'}}"></i></a>
+                  </td>                  
+               </tr>
+               <tr class="table-rm-p">
+                  <td>Status</td>
+                  <td class="px-2">{{ $rm->status_pasien }}</td>                  
+               </tr>
               </tbody>
             </table>
          </div>
@@ -115,7 +117,7 @@
                   </tr>
                   <tr>
                       <td style="font-weight:bold">Terapis</td>
-                      <td class="text-capitalize hstack align-items-start gap-2"><span>:</span><span>{{ $terapi->terapis->username}}</span></td>
+                      <td class="text-capitalize hstack align-items-start gap-2"><span>:</span><span>{{ str_replace(['.', '-', '_'], ' ', $terapi->terapis->username) }}</span></td>
                   </tr>
                   
                 </tbody>            

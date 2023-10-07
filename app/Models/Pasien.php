@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\RekamMedis;
 use App\Models\SubRekamMedis;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,30 @@ class Pasien extends Model
     protected $primaryKey = 'id_pasien';
     
     public $incrementing = false;
+
+    public function rekamMedis()
+    {
+        return $this->hasMany(RekamMedis::class, 'id_pasien');
+    }
+
+    public function jadwal()
+    {
+        return $this->belongsToMany(Jadwal::class, 'id_pasien');
+    }
+    
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'nama'
+            ]
+        ];
+    }
 
     public function scopeFilter($query, $search, $sortBy, $status)
     {
@@ -54,39 +79,71 @@ class Pasien extends Model
         });
     }
     
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
+    public function scopeDataMingguIni($query, $penyakit)
+    {       
+        $year = Carbon::now()->year;
+        $startOfWeek = Carbon::now()->startOfWeek()->format('Y-m-d');
+        $endOfWeek = Carbon::now()->endOfWeek()->format('Y-m-d');
+
+        $query->selectRaw('tanggal_pendaftaran as tanggal, COUNT(*) as total')
+            ->whereYear('tanggal_pendaftaran', $year)
+            ->whereBetween('tanggal_pendaftaran', [$startOfWeek, $endOfWeek])
+            ->groupBy('tanggal_pendaftaran');
+
+        $query->when($penyakit ?? false, function ($query, $penyakit) {
+            return $query->whereHas('rekamMedis', function ($query) use ($penyakit) {
+                $query->where('penyakit', 'like', '%' . $penyakit . '%');
+            });
+        });
+            
+        return $query->get();
     }
 
-    public function sluggable(): array
-    {
-        return [
-            'slug' => [
-                'source' => 'nama'
-            ]
-        ];
+    public function scopeDataBulanIni($query, $penyakit)
+    {       
+        $startDate = now()->startOfMonth();
+        $endDate = now()->endOfMonth();
+
+        $query->selectRaw('tanggal_pendaftaran as tanggal, COUNT(*) as total')
+            ->whereBetween('tanggal_pendaftaran', [$startDate, $endDate])
+            ->groupBy('tanggal_pendaftaran')
+            ->orderBy('tanggal_pendaftaran');
+
+        $query->when($penyakit ?? false, function ($query, $penyakit) {
+            return $query->whereHas('rekamMedis', function ($query) use ($penyakit) {
+                $query->where('penyakit', 'like', '%' . $penyakit . '%');
+            });
+        });
+            
+        return $query->pluck('total', 'tanggal');
+    }
+    public function scopeDataPerTahun($query, $penyakit, $tahun)
+    {  
+        $query->selectRaw('MONTH(tanggal_pendaftaran) as bulan, COUNT(*) as total')
+            ->whereYear('tanggal_pendaftaran', $tahun)->groupBy('bulan');
+
+        $query->when($penyakit ?? false, function ($query, $penyakit) {
+            return $query->whereHas('rekamMedis', function ($query) use ($penyakit) {
+                $query->where('penyakit', 'like', '%' . $penyakit . '%');
+            });
+        });
+            
+        return $query->get();
     }
 
-    public function rekamMedis()
-    {
-        return $this->hasMany(RekamMedis::class, 'id_pasien');
-    }
+    public function scopeDataSemuaTahun($query, $penyakit)
+    {  
+        $query->selectRaw('YEAR(tanggal_pendaftaran) as tahun, COUNT(*) as total')
+            ->groupBy('tahun')->orderBy('tahun', 'ASC');
 
-    public function jadwal()
-    {
-        return $this->belongsToMany(Jadwal::class, 'id_pasien');
+        $query->when($penyakit ?? false, function ($query, $penyakit) {
+            return $query->whereHas('rekamMedis', function ($query) use ($penyakit) {
+                $query->where('penyakit', 'like', '%' . $penyakit . '%');
+            });
+        });
+            
+        return $query->get();
     }
-
-    public function subRekamMedis()
-    {
-        return $this->hasManyThrough(
-            SubRekamMedis::class,
-            RekamMedis::class,
-            'id_pasien', // Foreign key on the environments table...
-            'id_sub', // Foreign key on the deployments table...
-            'id_pasien', // Local key on the projects table...
-            'id_rekam_medis' // Local key on the environments table...
-        );
-    }
+    
+    
 }

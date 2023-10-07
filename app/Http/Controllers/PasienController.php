@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PasienCreateRequest;
+use Carbon\Carbon;
 use App\Models\Pasien;
 use App\Models\RekamMedis;
-use App\Services\PasienService;
-use App\Services\RekamMedisService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Services\PasienService;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PrapasienRequest;
 use Illuminate\Support\Facades\Storage;
 
 class PasienController extends Controller
@@ -17,63 +17,26 @@ class PasienController extends Controller
     {
         $search = $request->input('search');
         $status = $request->input('status');
-
         $sortBy = $request->urut === 'Terlama' ? 'ASC' : 'DESC';
 
         $query = Pasien::query();
 
-        if ($status == 'Selesai') {
-            $query->whereDoesntHave('rekamMedis', function ($query) {
-                $query->where('status_pasien', 'Rawat Jalan');
-            });
-        } elseif ($status == 'Jeda') {
-            $query->whereHas('rekamMedis', function ($query) {
-                $query->where('status_pasien', 'Jeda');
-            });
-        } else {
-            $query->whereHas('rekamMedis', function ($query) {
-                $query->where('status_pasien', 'Rawat Jalan');
-            });
-        }
-
-        $pasien_lama = $query->where('status_pendaftaran', 'Pasien')
-            ->where('nama', 'like', '%' . $search . '%')
-            ->orWhere('id_pasien', 'like', '%' . $search . '%')
-            ->orWhereHas('rekamMedis', function ($query) use ($search) {
-                $query->where('penyakit', 'like', '%' . $search . '%')
-                    ->orWhere('id_rekam_medis', 'like', '%' . $search . '%');
-            })
-            ->orderBy('tanggal_pendaftaran', $sortBy)
+        $pasien_lama = $query->filter($search, $sortBy, $status)
+            ->where('status_pendaftaran', 'Pasien')
             ->paginate(12);
 
         return view('pages.pasien.pasien-lama', compact('pasien_lama'));
     }
-    // public function allPasien(Request $request)
-    // {
-    //     $search = $request->input('search');
-    //     $status = $request->input('status');
-
-    //     $sortBy = $request->urut === 'Terlama' ? 'ASC' : 'DESC';
-
-    //     $pasien_lama = Pasien::filter($search, $sortBy, $status)
-    //                             ->where('status_pendaftaran', 'Pasien')
-    //                             ->paginate(12);
-
-    //     return view('pages.pasien.pasien-lama', compact('pasien_lama'));
-    // }
 
     public function allPrapasien(Request $request)
     {
         $search = $request->input('search');
         $status = '';
+        $sortBy = $request->urut === 'Terlama' ? 'ASC' : 'DESC';
 
-        if (request('urut') === 'Terlama') {
-            $sortBy = 'ASC';
-        } else {
-            $sortBy = 'DESC';
-        }
+        $query = Pasien::query();
 
-        $pasien_baru = Pasien::filter($search, $sortBy, $status)
+        $pasien_baru = $query->filter($search, $sortBy, $status)
             ->where('status_pendaftaran', 'Prapasien')
             ->paginate(12);
 
@@ -100,43 +63,37 @@ class PasienController extends Controller
         return view('pages.pasien.tambah-pasien', compact('pasien'));
     }
 
-    public function store(PasienCreateRequest $request)
+    public function storePrapasien(PrapasienRequest $request, PasienService $pasienService)
     {
-        $pasienService = new PasienService;
-        $rmService = new RekamMedisService;
-
         $idPasien = $pasienService->createPasien($request);
+        $pasienService->createRekamMedisPrapasien($request, $idPasien);
 
-        $rmService->createRekamMedisPrapasien($request, $idPasien);
-
-        return redirect()->back()->with('success', $idPasien);
+        return redirect()->back()->with('success', true);
     }
 
     public function detail(Pasien $pasien)
     {
-        $rekamMedis = $pasien->rekamMedis()->where('status_pasien', 'Rawat Jalan')->get();
-        $rm = $rekamMedis->first();
+        $rm = $pasien->rekamMedis()->where('status_pasien', 'Rawat Jalan')->first();
         $umur = Carbon::parse($pasien->tanggal_lahir)->age;
+        
+        $userTerapis = Auth::guard('terapis')->user();
+        $isAllowed = 1;
 
-        if ($rekamMedis->count() < 1) {
-            $rmDetected = 0;
-        } elseif ($rekamMedis->count() == 1) {
-            $rmDetected = 1;
-        } else {
-            $rmDetected = 2;
+        if(($rm && $rm->is_private) && $userTerapis && !$userTerapis->is_kepala ) {
+            $isAllowed = $rm->id_terapis == $userTerapis->id_terapis ? 1 : 0;
         }
 
         return view('pages.rekam-medis.rekam-medis', compact(
             'pasien',
-            'rmDetected',
             'rm',
-            'umur'
+            'umur',
+            'isAllowed'
         ));
     }
 
     public function edit(Pasien $pasien)
     {
-        $rm = RekamMedis::where('id_pasien', $pasien->id_pasien)->where('tanggal_ditambahkan', null)->first();
+        $rm = RekamMedis::where('id_pasien', $pasien->id_pasien)->first();
 
         return view('pages.pasien.edit-pasien', compact('pasien', 'rm'));
     }

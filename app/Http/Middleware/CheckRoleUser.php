@@ -16,16 +16,10 @@ class CheckRoleUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::guard('admin')->user() || Auth::guard('terapis')->user()->id_terapis == 'KTR001') {
+        if(Auth::guard('admin')->check() || Auth::guard('terapis')->user()->is_kepala) {
             return $next($request);
-
         }
 
-        // if(in_array($request->user()->role, $roles)) {
-        //     return $next($request);
-
-        // }
-
-        return redirect('/login');
+        return redirect('/landing');
     }
 }

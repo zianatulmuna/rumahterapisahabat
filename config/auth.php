@@ -38,10 +38,10 @@ return [
     */
 
     'guards' => [
-        // 'web' => [
-        //     'driver' => 'session',
-        //     'provider' => 'users',
-        // ],
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
@@ -49,11 +49,7 @@ return [
         'terapis' => [
             'driver' => 'session',
             'provider' => 'therapists',
-        ],
-        // 'kepala_terapis' => [
-        //     'driver' => 'session',
-        //     'provider' => 'head_therapist',
-        // ],
+        ]
     ],
 
     /*
@@ -74,10 +70,10 @@ return [
     */
 
     'providers' => [
-        // 'users' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\User::class,
-        // ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
@@ -85,16 +81,7 @@ return [
         'therapists' => [
             'driver' => 'eloquent',
             'model' => App\Models\Terapis::class,
-        ],
-        // 'head_therapist' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\KepalaTerapis::class,
-        // ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        ]
     ],
 
     /*

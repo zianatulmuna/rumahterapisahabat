@@ -16,8 +16,13 @@ class Authenticate extends Middleware
         if ($request->expectsJson()) {
             return null;
         }
-    
-        session()->flash('errorAuth', 'Halaman yang anda tuju tidak tersedia. Silahkan Login dengan akun yang sesuai!');
-        return route('beranda');
+        
+        if(auth()->check()) {
+            session()->flash('errorAuth', 'Halaman yang anda tuju tidak tersedia. Silahkan Login dengan akun yang sesuai!');
+            return route('beranda');
+        } else {
+            session()->flash('errorAuth', 'Silahkan Login terlebih dahulu.');
+            return route('login');
+        }
     }
 }

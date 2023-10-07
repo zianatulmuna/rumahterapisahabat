@@ -179,7 +179,7 @@
           </div>
           <div class="modal-body text-center pt-0 pb-4">
             <h5 class="fw-bold pb-2">Success!</h5>
-            Selamat! Anda berhasil terdaftar sebagai pasien baru dengan ID <strong>{{ session('success') }}</strong>. Silahkan hubungi kami di nomor <strong>085960664604</strong> atau klik <a href="https://wa.me/6285960664604" target="_blank" class="btn btn-sm c-btn-success"> <i class="bi bi-whatsapp pe-1"></i> disini</a>
+            Selamat! Anda berhasil terdaftar sebagai pasien baru. Silahkan hubungi kami di nomor <strong>085960664604</strong> atau klik <a href="https://wa.me/6285960664604" target="_blank" class="btn btn-sm c-btn-success"> <i class="bi bi-whatsapp pe-1"></i> disini</a>
           </div>
           <div class="modal-footer justify-content-between mx-3">
             <button class="btn btn-secondary btn-sm" type="button" id="closeModal" data-bs-dismiss="modal" onclick="closeModalDaftar()">Tutup</button>

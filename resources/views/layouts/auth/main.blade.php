@@ -11,7 +11,7 @@
 
     @if($userAdmin)
       <title>Admin - Rumah Terapi Sahabat</title>
-    @elseif($userTerapis->id_terapis == 'KTR001')
+    @elseif($userKepala)
         <title>Kepala Terapis - Rumah Terapi Sahabat</title>
     @elseif($userTerapis)
       <title>Terapis - Rumah Terapi Sahabat</title>
@@ -84,8 +84,6 @@
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    {{-- <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script> --}}
-    {{-- <script src="https://code.jquery.com/jquery-3.7.0.js"></script> --}}
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script> <!--dropdown -->

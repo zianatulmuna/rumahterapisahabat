@@ -58,7 +58,12 @@
                            <span class="input-group-text pe-1 bg-white border-end-0"><i class="bi bi-search"></i></span>
                            <input type="text" class="form-control border-start-0 search-input" placeholder="Cari nama terapis">
                         </div>
-                        <ul class="select-options bg-white rounded"></ul>
+                        <ul class="select-options bg-white rounded mb-2"></ul>
+                        <div class="text-center text-secondary small">
+                           <a class="text-reset text-decoration-none" style="cursor: pointer;" data-nama="" onclick="setAllTerapis()">
+                               <i class="bi bi-eye"></i> Tampilkan Semua Terapis
+                           </a>
+                       </div>
                      </div>
                   </div>
                   @error('id_terapis')
@@ -105,21 +110,37 @@
 @push('script')
    <script>
       let dataPasien = @json($pasien->toArray());
-      let dataTerapis = @json($terapis->toArray());
+      const allTerapis = @json($listTerapis->toArray());
+      let dataTerapis;
+
+      setDataTerapis(allTerapis);
+
+      function setDataTerapis(data) {
+         dataTerapis = data;
+      }
+
+      function setAllTerapis() {
+         setDataTerapis(allTerapis);
+         addTerapis();
+      }
    </script>
-   <script src="/js/select-pasien.js"></script>
-   <script src="/js/select-terapis.js"></script>
    <script>
       const subSelect = document.querySelector("#id_sub");
       
       function pasienChange() {
-         // const id_pasien = document.querySelector("#id_pasien");
          fetch('/jadwal/tambah/getSubRekamMedis?id=' + id_pasien.value)
             .then(response => response.json())
             .then(data => {
+               // console.log(data);
+               subSelect.innerHTML = "";
+               if(data.length > 1) {
+                  subSelect.innerHTML = `;
+                  <option value="">Pilih Penyakit</option>
+                  `;
+               }
                data.forEach(sub => {
                   subSelect.innerHTML += `
-                  <option value="${sub.id_sub}">${sub.penyakit}  (ID.RM: ${sub.id_rm})</option>
+                  <option value="${sub.id_sub}">${sub.penyakit} (ID.RM: ${sub.id_rm})</option>
                   `;               
                });
             })
@@ -127,7 +148,26 @@
                   console.error('Error fetching JSON data:', error);
                });
       };
+
+      function terapisCheck() {
+         fetch('/jadwal/tambah/terapisCheck?id=' + id_pasien.value)
+            .then(response => response.json())
+            .then(data => {
+               if(data.length > 0) {
+                  setDataTerapis(data);
+               } else {
+                  setDataTerapis(allTerapis)
+               }
+               addTerapis();
+            })
+            .catch(error => {
+                  console.error('Error fetching JSON data:', error);
+               });
+      };
    </script>
+   
+   <script src="/js/select-pasien.js"></script>
+   <script src="/js/select-terapis.js"></script>
 @endpush
 
 @if ($errors->any()) 
@@ -135,6 +175,7 @@
       <script>
          setTimeout(function() {
             pasienChange();
+            terapisCheck();
          }, 1000);
       </script>
    @endpush

@@ -57,7 +57,7 @@
                         <tr>
                             <th scope="row" style="max-width: 50px">{{ $i++ }}</th>
                             <td style="width: 200px">{{ date('d/m/Y', strtotime($terapi->tanggal)) }}</td>
-                            <td class="text-capitalize">{{ $terapi->terapis->username }}</td>
+                            <td class="text-capitalize">{{ str_replace(['.', '-', '_'], ' ', $terapi->terapis->username )}}</td>
                             <td>{!! $terapi->pra_terapi !!}</td>
                             <td style="width: 130px">
                                 <a href="{{ route('terapi.print', [$pasien->slug, $sub->id_sub, $terapi->id_terapi]) }}" target="_blank" class="c-badge c-badge-info">

@@ -11,11 +11,11 @@
    
    @if($rmDetected == 1)
       <h4 class="mt-5 mb-3">Rekam Terapi Terkini</h4>
-      @if(count($rm_terkini) > 0) 
+      @if($rm)
          <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 row-cols-xxl-4">
-            @foreach($rm_terkini as $rm)
-               @if(count($rm->subRekamMedis) > 0)
-                  @foreach($rm->subRekamMedis as $sub)
+            @if(count($rm->subRekamMedis) > 0)
+               @foreach($rm->subRekamMedis as $sub)
+                  @if($userAdmin || $userKepala || !$rm->is_private || ($userTerapis && !$userKepala && $rm->is_private && $rm->id_terapis == $userTerapis->id_terapis))
                      <div class="col mb-4">
                         <div class="card shadow-sm">
                            <h6 class="card-header bg-success text-white fw-bold text-center">{{ $sub->penyakit }}</h6>
@@ -67,24 +67,30 @@
                            </ul>
                            <div class="card-body d-flex justify-content-between mx-2">
                               <a href="{{ route('terapi.rekam', [$pasien->slug, $sub->id_sub]) }}" class="link-success">Rekam Terapi</a>
-                              <a href="{{ route('rm.detail', [$pasien->slug, $rm->id_rekam_medis]) }}" class="link-success">Rekam Medis</a>
+                              <a href="{{ route('pasien.rm', $pasien->slug) }}" class="link-success">Rekam Medis</a>
                            </div>
                         </div>
                      </div>
-                  @endforeach
-               @else
-               <div class="w-100">
-                  <div class="alert alert-warning hstack gap-1 p-2 px-3 d-inline-flex">
-                     <i class="bi bi-exclamation-circle pe-1 fw-semibold"></i>
-                     <p class="m-0">Data rekam terapi telah dihapus. 
-                        @if($userAdmin)
-                           Tambahkan penyakit pada Rekam Medis <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.
-                        @endif
-                     </p>
-                  </div>
+                  @else
+                     <div class="col mb-4">
+                        <div class="card shadow-sm bg-body-tertiary" style="min-height: 200px;">
+                           <div class="bi bi-lock pe-2 fs-3 m-auto text-secondary"></div>
+                        </div>
+                     </div>                 
+                  @endif
+               @endforeach
+            @else
+            <div class="w-100">
+               <div class="alert alert-warning hstack gap-1 p-2 px-3 d-inline-flex">
+                  <i class="bi bi-exclamation-circle pe-1 fw-semibold"></i>
+                  <p class="m-0">Data rekam terapi telah dihapus. 
+                     @if($userAdmin)
+                        Tambahkan penyakit pada Rekam Medis <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.
+                     @endif
+                  </p>
                </div>
-               @endif
-            @endforeach
+            </div>
+            @endif
          </div>
       @else
          <div class="alert alert-warning d-inline-flex p-0 p-2 px-3 mb-4">
@@ -95,8 +101,9 @@
       @if(count($rm_terdahulu) > 0)
          <h4 class="mt-4 mb-3">Rekam Terapi Terdahulu</h4>
          <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 row-cols-xxl-4">
-            @foreach($rm_terdahulu as $rm)
-                  @foreach($rm->subRekamMedis as $sub)
+         @foreach($rm_terdahulu as $rm)
+            @foreach($rm->subRekamMedis as $sub)
+               @if($userAdmin || $userKepala || !$rm->is_private || ($userTerapis && !$userKepala && $rm->is_private && $rm->id_terapis == $userTerapis->id_terapis))
                   <div class="col mb-4">
                      <div class="card shadow-sm">
                         <h6 class="card-header bg-nonaktif fw-bold text-center">{{ $sub->penyakit }}</h6>
@@ -152,13 +159,19 @@
                         </div>
                      </div>
                   </div>
-                  @endforeach
+               @else
+               <div class="col mb-4">
+                  <div class="card shadow-sm">
+                  </div>
+               </div>
+               @endif
             @endforeach
+         @endforeach
          </div>
       @endif
    @else
       <div class="alert alert-danger d-inline-flex mt-5 p-0 p-2 px-3">
-         <i class="bi bi-exclamation-circle pe-1 fw-semibold"></i>
+         <i class="bi bi-exclamation-circle pe-2 fw-semibold"></i>
          Pasien ini tidak memiliki histori rekam terapi.
          @if($userAdmin)
             <a href="{{ route('rm.create', $pasien->slug) }}" class="alert-link ps-2">Tambah Rekam Medis</a>

@@ -19,7 +19,8 @@ class JadwalDashboard extends Component
 
     public function mount()
     {
-        $this->tanggal =  Carbon::today()->format('Y-m-d');
+        $this->tanggal =  date('Y-m-d');
+
         if (session()->has('livewire_page')) {
             $this->page = session('livewire_page');
         }
@@ -29,9 +30,9 @@ class JadwalDashboard extends Component
     {
         $query = Jadwal::query();
         
-        // if ($this->tanggal !== $this->prevTanggal || $this->tglAwal !== $this->prevTglAwal || $this->tglAkhir !== $this->prevTglAkhir || $this->periode !== $this->prevPeriode) {
-        //     $this->resetPage();
-        // }
+        if ($this->tanggal !== $this->prevTanggal || $this->tglAwal !== $this->prevTglAwal || $this->tglAkhir !== $this->prevTglAkhir || $this->periode !== $this->prevPeriode) {
+            $this->resetPage();
+        }
     
         $this->prevTanggal = $this->tanggal;
         $this->prevTglAwal = $this->tglAwal;
@@ -58,7 +59,6 @@ class JadwalDashboard extends Component
         }
 
         $jadwal_terapi = $query->orderBy('tanggal')->orderBy('waktu')->paginate(10);
-
 
         return view('livewire.jadwal-dashboard', compact(
             'jadwal_terapi', 

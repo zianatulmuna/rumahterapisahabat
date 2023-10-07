@@ -13,10 +13,10 @@
          <div class="row row-cols-1 row-cols-md-2 p-3 py-sm-2 g-0 g-md-4 g-lg-5">
             <div class="col"> 
                <div class="mb-4">
-                  <label for="id_pasien" class="form-label fw-bold @error('id_pasien') is-invalid @enderror">Pasien</label>
+                  <label for="id_pasien" class="form-label fw-bold">Pasien</label>
                   <div class="dropdown search-dinamis dropdown-pasien">
                      <input type="hidden" name="id_pasien" value="{{ old('id_pasien', $pasien->id_pasien) }}" id="id_pasien" class="form-control">
-                     <button class="form-control d-flex justify-content-between align-items-center @error('id_pasien') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                     <button class="form-control d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>
                        <span>Pilih Pasien</span>
                        <i class="bi bi-chevron-down"></i>
                      </button>
@@ -28,28 +28,25 @@
                         <ul class="select-options bg-white rounded"></ul>
                      </div>
                   </div>
-                  @error('id_pasien')
-                  <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
                </div>
-                <div class="mb-4">
-                  <label for="no_telp" class="form-label fw-bold @error('no_telp') is-invalid @enderror">Nomor Telepon</label>
-                  <input type="text" class="form-control" value="{{ old('no_telp', $pasien->no_telp) }}" id="no_telp" name="no_telp" disabled>
-                </div>
-                <div class="mb-4">
-                  <label for="jenis_kelamin" class="form-label fw-bold @error('jenis_kelamin') is-invalid @enderror">Jenis Kelamin</label>
-                  <input type="text" class="form-control" value="{{ old('jenis_kelamin', $pasien->jenis_kelamin) }}" id="jenis_kelamin" name="jenis_kelamin" disabled>
-                </div>
-                <div class="mb-4">
-                  <label for="tanggal_lahir" class="form-label fw-bold">Tanggal Lahir</label>
-                  <input type="text" class="form-control" value="{{ old('tanggal_lahir', $pasien->tanggal_lahir) }}" id="tanggal_lahir" name="tanggal_lahir" disabled>
-                </div>
+               <div class="mb-4">
+               <label for="no_telp" class="form-label fw-bold">Nomor Telepon</label>
+               <input type="text" class="form-control" value="{{ old('no_telp', $pasien->no_telp) }}" id="no_telp" name="no_telp" disabled>
+               </div>
+               <div class="mb-4">
+               <label for="jenis_kelamin" class="form-label fw-bold">Jenis Kelamin</label>
+               <input type="text" class="form-control" value="{{ old('jenis_kelamin', $pasien->jenis_kelamin) }}" id="jenis_kelamin" name="jenis_kelamin" disabled>
+               </div>
+               <div class="mb-4">
+               <label for="tanggal_lahir" class="form-label fw-bold">Tanggal Lahir</label>
+               <input type="text" class="form-control" value="{{ old('tanggal_lahir', $pasien->tanggal_lahir) }}" id="tanggal_lahir" name="tanggal_lahir" disabled>
+               </div>
             </div>            
             <div class="col">
                <div class="mb-4">
                   <label for="id_terapis" class="form-label fw-bold @error('id_terapis') is-invalid @enderror">Terapis</label>
                   <div class="dropdown search-dinamis dropdown-terapis">
-                     <input type="hidden" name="id_terapis" value="{{ old('id_terapis', $id_terapis) }}" id="id_terapis" class="form-control">
+                     <input type="hidden" name="id_terapis" value="{{ old('id_terapis', $jadwal->id_terapis) }}" id="id_terapis" class="form-control">
                      <button class="form-control d-flex justify-content-between align-items-center @error('id_terapis') is-invalid @enderror" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                        <span>Pilih Terapis</span>
                        <i class="bi bi-chevron-down"></i>
@@ -67,9 +64,13 @@
                   @enderror
                </div>
                <div class="mb-4"> 
-                  <label for="tanggal" class="form-label fw-bold">Tanggal Terapi</label>
+                  <label for="penyakit" class="form-label fw-bold">Penyakit</label>
+                  <input type="hidden" id="id_sub" name="id_sub" value="{{ old('id_sub', $jadwal->id_sub) }}">
+                  <div class="form-control bg-body-secondary">{{ $jadwal->subRekamMedis->penyakit }} (NO.RM: {{ $jadwal->subRekamMedis->id_rekam_medis }})</div>
+               </div>
+               <div class="mb-4"> 
+                  <label for="tanggal" class="form-label fw-bold">Tanggal Terapi <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
                   <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ old('tanggal', $jadwal->tanggal) }}">
-                  <div class="form-text">Contoh: 9 Desember 2022 diisi 12/09/2022</div>
                   @error('tanggal')
                   <div class="invalid-feedback">{{ $message }}</div>
                   @enderror

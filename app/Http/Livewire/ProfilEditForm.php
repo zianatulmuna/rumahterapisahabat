@@ -2,18 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use Carbon\Carbon;
+use App\Http\Requests\ProfilRequest;
 use App\Models\Admin;
 use App\Models\Terapis;
 use Livewire\Component;
 use Illuminate\Http\Request;
-use App\Models\SubRekamMedis;
 use Livewire\WithFileUploads;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class ProfilEditForm extends Component
 {
@@ -40,12 +36,10 @@ class ProfilEditForm extends Component
         $this->dbFoto = $user->foto;
         $this->pathFoto = $user->foto;
 
-        if(Auth::guard('admin')->user()) {
+        if(Auth::guard('admin')->check()) {
             $this->id_user = $user->id_admin;
-        }elseif(Auth::guard('terapis')->user()) {
+        }elseif(Auth::guard('terapis')->check()) {
             $this->id_user = $user->id_terapis;
-        }elseif(Auth::guard('kepala_terapis')->user()) {
-            $this->id_user = $user->id_kepala;
         }
         
     }
@@ -78,49 +72,25 @@ class ProfilEditForm extends Component
     }
 
     public function validateData(){
-        $message = [
-            'username.unique' => 'Username sudah dipakai.',
-            'required' => 'Kolom :attribute harus diisi.',
-            'foto.max' => 'Kolom :attribute harus diisi maksimal :max kb.',
-            'max' => 'Kolom :attribute harus diisi maksimal :max karakter.',
-            'min' => 'Kolom :attribute harus diisi minimal :min karakter.',
-            'min_digits' => 'Kolom :attribute harus diisi minimal :min digit angka.',            
-            'max_digits' => 'Kolom :attribute harus diisi minimal :max digit angka.',
-            'numeric' => 'Kolom :attribute harus diisi angka.',
-            'url' => 'Kolom :attribute harus berupa link URL valid',
-            'file' => 'Kolom :attribute harus diisi file.',
-            'image' => 'Kolom :attribute harus diisi file gambar.',
-            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
-            'username.regex' => 'Username tidak boleh mengandung spasi.'
-        ];
-
-        if($this->currentStep == 1) {
-            $this->validate([
-                'nama' => 'required|max:50',
-                'no_telp' => 'required|min_digits:8|max_digits:15',
-                'tanggal_lahir' => 'nullable|date',
-                'jenis_kelamin' => 'required',
-                'agama' => 'max:20',
-                'foto' => 'nullable|file|image|max:1024',
-            ], $message);            
-        } else {
-            $this->validate([
-                'username' => ['required', 
-                                'min:3', 
-                                'max:30', 
-                                'regex:/^\S*$/u',
-                                Rule::unique('admin')->ignore($this->id_user, 'id_admin'),
-                                Rule::unique('terapis')->ignore($this->id_user, 'id_terapis'),
-                                Rule::unique('kepala_terapis')->ignore($this->id_user, 'id_kepala')],
-                'password' => 'nullable|min:3|max:60'
-            ], $message);
-
-        }
+        $dataRequest = new ProfilRequest();
+        
+        match ($this->currentStep) {
+            1 => $this->validate(
+                $dataRequest->rules1(), 
+                $dataRequest->messages()
+            ),
+            2 => $this->validate(
+                $dataRequest->rules2($this->id_user), 
+                $dataRequest->messages()
+            )
+        };
     }
 
-    public function update(Request $request) {
+    public function update() {
 
         $this->validateData();
+
+        $this->username = strtolower($this->username);
 
         $dataDiri = array(
             'nama' => $this->nama,
@@ -130,20 +100,15 @@ class ProfilEditForm extends Component
             'jenis_kelamin' => $this->jenis_kelamin,
             'agama' => $this->agama,
             'username' => $this->username,
-            // 'password' => Hash::make($this->password),
-        ); 
-
-        $this->username = strtolower($this->username);
+            'password' => $this->password ? bcrypt($this->password) : $this->dbPassword
+        );
 
         if ($this->foto) {
             if ($this->dbFoto) {
                 Storage::delete($this->dbFoto);
             }
             $ext = $this->foto->getClientOriginalExtension();
-
             $folder = (Auth::guard('admin')->user()) ? 'admin' : 'terapis';
-            // $folder = (Auth::guard('terapis')->user()) ? 'terapis' : (Auth::guard('admin')->user() ? 'admin' : 'kepala_terapis');
-
             $dataDiri['foto'] = $this->foto->storeAs($folder, $this->username . '.' . $ext);
         } 
         
@@ -152,15 +117,12 @@ class ProfilEditForm extends Component
             Storage::delete($this->pathFoto);
         }
 
-        $dataDiri['password'] = $this->password ? bcrypt($this->password) : $this->dbPassword;
-
-        if(Auth::guard('admin')->user()) {
+        if(Auth::guard('admin')->check()) {
             Admin::where('id_admin', $this->id_user)->update($dataDiri);
-        } elseif (Auth::guard('terapis')->user()) {
+        } elseif (Auth::guard('terapis')->check()) {
             Terapis::where('id_terapis', $this->id_user)->update($dataDiri);
         }
-
-
+        
         $this->currentStep = 1;
         Storage::deleteDirectory('livewire-tmp');
 

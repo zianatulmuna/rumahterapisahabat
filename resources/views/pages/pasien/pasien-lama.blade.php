@@ -89,29 +89,41 @@
                       <img src="/img/avatar-p.png" class="card-img-top" alt="...">
                   @endif
                 @endif
-              <div class="card-body py-1 px-2 align-middle">
-                <p>
-                  @foreach($pasien->rekamMedis as $rm)
-                    {{-- @if($rm->penyakit != null) --}}
-                      @php
-                          $arrayPenyakit = explode(",", $rm->penyakit);
-                      @endphp
-                      @foreach($arrayPenyakit as $p)
-                        <a href="/rekam-terapi/tag?search={{ $p }}" target="_blank" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@elseif(!$loop->parent->last),@endif
+
+                <div class="card-body py-1 px-2 align-middle">
+                  <p>
+                    @php
+                      $arrayPenyakitAllowed = [];
+                      $emptyRM = 1;
+                      $isHidden = 0;
+                      foreach ($pasien->rekamMedis as $rm) {
+                        if ($userAdmin || $userKepala || !$rm->is_private || ($userTerapis && !$userKepala && $rm->is_private && $rm->id_terapis == $userTerapis->id_terapis)) {
+                          $arrayPenyakitAllowed = array_merge($arrayPenyakitAllowed, explode(",", $rm->penyakit));
+                        }
+                        $isHidden = $rm->is_private ? 1 : 0;
+                        $emptyRM = 0;
+                      }                  
+                    @endphp
+                    @if($emptyRM)
+                      <div></div>
+                    @elseif(count($arrayPenyakitAllowed) > 0)
+                      @foreach($arrayPenyakitAllowed as $p)
+                        <a href="/rekam-terapi/tag?search={{ $p }}" target="_blank" class="link-dark link-underline-light d-inline">{{ $p }}</a>@if(!$loop->last || ($loop->last && $isHidden)),@endif
                       @endforeach
-                    {{-- @endif --}}
-                  @endforeach
-                </p>
-              </div>
-              <div class="card-footer bg-white d-flex align-item-center justify-content-between">
-                @if($pasien->rekamMedis->count() < 1)
-                    <a href="{{ route('sub.histori', $pasien->slug) }}" class="link-secondary link-underline-secondary disabled">Rekam Terapi</a>
-                @else
-                    <a href="{{ route('sub.histori', $pasien->slug) }}" class="lh-sm">Histori Terapi</a>
-                @endif
-                <div class="vr"></div>
-                <a href="{{ route('pasien.rm', $pasien->slug) }}" class="lh-sm">Rekam Medis</a>
-              </div>
+                      @if($isHidden)
+                      <i class="bi bi-lock-fill text-secondary"></i>
+                      @endif
+                    @endif
+                    @if(!$emptyRM && count($arrayPenyakitAllowed) == 0)
+                      <div class="d-inline-flex justify-content-center align-items-center text-secondary"><i class="bi bi-lock-fill"></i></div>
+                    @endif
+                  </p>
+                </div>
+                <div class="card-footer bg-white d-flex align-item-center justify-content-between">
+                  <a href="{{ route('sub.histori', $pasien->slug) }}" class="lh-sm">Histori Terapi</a>
+                  <div class="vr"></div>
+                  <a href="{{ route('pasien.rm', $pasien->slug) }}" class="lh-sm">Rekam Medis</a>
+                </div>
             </div>
           </div>
         @endforeach

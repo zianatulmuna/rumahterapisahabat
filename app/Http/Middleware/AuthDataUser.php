@@ -19,13 +19,13 @@ class AuthDataUser
     public function handle(Request $request, Closure $next): Response
     {
         $userAdmin = Auth::guard('admin')->user();
+
         $userTerapis = Auth::guard('terapis')->user();
-        // $userKepala = $userTerapis->id_terapis === 'KTR001';
-        // $userKepala = Auth::guard('kepala_terapis')->user();
+        $userKepala = $userTerapis && $userTerapis->is_kepala ? $userTerapis : null;
 
         View::share('userAdmin', $userAdmin);
         View::share('userTerapis', $userTerapis);
-        // View::share('userKepala', $userTerapis->id_terapis === 'KTR001');
+        View::share('userKepala', $userKepala);
 
         return $next($request);
     }

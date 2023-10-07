@@ -62,8 +62,8 @@
                     <th scope="col">Tanggal</th>
                     @endif
                     <th scope="col" style="">Nama Pasien</th>
+                    <th scope="col" style="width: 150px;">Rekam Terapi</th>
                     <th scope="col" style="">Waktu</th>
-                    <th scope="col" style="width: 150px;">Rekam Medis</th>
                     <th scope="col" style="">Terapis</th>
                     
                 </tr>
@@ -79,15 +79,21 @@
                             <td class="text-center">{{ date('d/m/Y', strtotime($jadwal->tanggal)) }}</td>
                             @endif
                             <td class="text-center">{{ $jadwal->pasien->nama }}</td>
-                            @php
-                                $waktu = substr($jadwal->waktu, 0, 5);;
-                            @endphp
-                            <td class="text-center">{{ $waktu }}</td>
                             <td class="text-center">
-                                <a href="{{ route('pasien.rm', $jadwal->pasien->slug) }}" class="btn btn-sm c-btn-success rounded-3">
-                                    <i class="bi bi-eye"></i>
-                                </a>  
+                                @php
+                                    $rm = $jadwal->subRekamMedis->rekamMedis;
+                                @endphp
+                                @if ($rm->is_private && $rm->id_terapis != $jadwal->id_terapis)
+                                    <button href="" class="btn btn-sm c-btn-secondary rounded-3 disabled" disabled>
+                                        <i class="bi bi-lock-fill"></i>
+                                    </button> 
+                                @else
+                                    <a href="{{ route('terapi.rekam', [$jadwal->pasien->slug, $jadwal->id_sub]) }}" class="btn btn-sm c-btn-success rounded-3">
+                                        <i class="bi bi-eye"></i>
+                                    </a>  
+                                @endif
                             </td>
+                            <td class="text-center">{{ $jadwal->waktu ? date('H:i', strtotime($jadwal->waktu)) : ''}}</td>
                             <td class="text-capitalize text-center">
                             @if($userTerapis)
                                 @if($jadwal->id_terapis === $userTerapis->id_terapis)
@@ -95,10 +101,10 @@
                                 @elseif($jadwal->id_terapis === null)
                                     <button type="button" class="btn btn-sm c-btn-warning px-2 rounded-3" wire:click="ambilJadwal('{{ $jadwal->id_jadwal }}','{{ $userTerapis->id_terapis }}')">Ambil</button>
                                 @else
-                                    {{ $jadwal->terapis->username }}
+                                    {{ str_replace(['.', '-', '_'], ' ', $jadwal->terapis->username) }}
                                 @endif
                             @else
-                                {{ $jadwal->id_terapis ? $jadwal->terapis->username : '' }}
+                                {{ $jadwal->id_terapis ? str_replace(['.', '-', '_'], ' ', $jadwal->terapis->username) : '' }}
                             @endif
                             </td>
                         </tr>

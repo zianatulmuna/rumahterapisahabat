@@ -10,7 +10,7 @@
     </div>
     @endunless
 
-    @can('terapis')
+    @if($userTerapis)
     <!-- Button trigger modal -->
     <div class="mobile-toggler">
       <div class="row d-flex align-content-between align-items-center">
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    @endcan
+    @endif
   
     <div class="navbar-nav">
       <div class="nav-item text-nowrap">

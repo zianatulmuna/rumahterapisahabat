@@ -21,15 +21,8 @@
           @endif
          </div>
        </div>
-      <div class="col-md-7 bg-white px-3 py-2 border border-body-tertiary text-black">
+      <div class="col-md-9 col-lg-7 bg-white px-3 py-2 border border-body-tertiary text-black">
          <table class="table table-borderless table-sm bg-white table-data-diri">
-            <thead>
-               <tr>
-                 <th></th>
-                 <th></th>
-               </tr>
-            </thead>
-            <tbody>
                <tr>
                   <td>Nama</td>
                   <td>{{ $terapis->nama }}</td>
@@ -61,114 +54,179 @@
                <tr>
                   <td>Total Terapi</td>
                   <td class="d-flex align-items-center">
-                     <i class="bi bi-heart-pulse-fill text-success pe-1"></i>
+                     <i class="fa-solid fa-heart-pulse text-success pe-1"></i>
+                     {{-- <i class="bi bi-heart-pulse-fill text-success pe-1"></i> --}}
                      <span>{{ $terapis->total_terapi }}</span>
                   </td>
-               </tr>
-            </tbody>            
+               </tr>         
          </table>
       </div>
-      <div class="col-md-3 text-center ">
+      <div class="col-md-3 text-center">
          <h5>Tingkatan Terapis</h5>
+         @php
+             if($terapis->tingkatan == 'Utama'){$warnaTingkatan = 'c-text-danger';}
+             if($terapis->tingkatan == 'Madya'){$warnaTingkatan = 'c-text-primary';}
+             if($terapis->tingkatan == 'Muda'){$warnaTingkatan = 'c-text-success';}
+             if($terapis->tingkatan == 'Pratama'){$warnaTingkatan = 'c-text-warning';}
+             if($terapis->tingkatan == 'Latihan'){$warnaTingkatan = 'c-text-secondary';}
+         @endphp
          <div class="d-flex justify-content-center align-center">
-            <h5 class="alert alert-light rounded-0 border border-dark-subtle shadow-sm p-3 py-4">
-               <i class="bi bi-award-fill text-primary"></i> Terapis {{ $terapis->tingkatan }}   
+            <h5 class="d-flex d-md-block rounded-0 border border-secondary-subtle bg-white shadow-sm px-4 py-3">
+               <i class="fa-solid fa-medal pe-2 pb-md-2 {{ $warnaTingkatan }}"></i> 
+               <p class="m-0">Terapis {{ $terapis->tingkatan }}</p>
             </h5>
          </div>
       </div>
    </div>
 
-   <h4 class="mt-5 mb-3" id="historiTerapi">Histori Terapi</h4>
-   <div class="d-flex justify-content-between align-items-sm-end flex-column-reverse flex-sm-row my-sm-3">
-      <div class="mb-2 mt-4 my-sm-0">
-          {{ $tanggal_caption }}
+   <h3 class="mt-3 mt-sm-5 mb-3" id="historiTerapi">Sesi Terapi</h3>
+   <div class="d-flex justify-content-between align-items-md-end flex-column-reverse flex-md-row my-md-3">
+      <div class="mb-2 mt-4 my-md-0">
+          {{ $jumlah_terapi }}
+          <span class="small">({{ $caption }})</span>
       </div>
       <div class="col-12 col-sm-7 col-md-6 col-lg-5 col-xl-4">
-          <div class="btn-group w-100">
-              <button type="button" class="form-control d-flex justify-content-between align-items-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+         <div class="btn-group w-100">
+            <button type="button" class="form-control d-flex justify-content-between align-items-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                   <span>Pilih Filter</span>
                   <i class="bi bi-calendar2-week"></i>
-              </button>
-              <ul class="dropdown-menu w-100 shadow-lg">
+            </button>
+            <ul class="dropdown-menu w-100 shadow-lg">
                   <li><h6 class="dropdown-header">Berdasarkan Periode</h6></li>
-                  <li><a href="?filter=bulan-ini" class="dropdown-item {{ request('filter') == 'bulan-ini' ? 'active' : '' }}">Bulan Ini</a></li>
-                  <li><a href="?filter=tahun-ini" class="dropdown-item {{ request('filter') == 'tahun-ini' ? 'active' : '' }}">Tahun Ini</a></li>
+                  <li><a href="?{{ request('tab') ? 'tab=rekap&' : '' }}filter=bulan-ini" class="dropdown-item {{ request('filter') == 'bulan-ini' ? 'active' : '' }}">Bulan Ini</a></li>
+                  <li><a href="?{{ request('tab') ? 'tab=rekap&' : '' }}filter=tahun-ini" class="dropdown-item {{ request('filter') == 'tahun-ini' ? 'active' : '' }}">Tahun Ini</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><h6 class="dropdown-header">Berdasarkan Tanggal</h6></li>
                   <li class="px-3 pb-2 hstack stack-input-icon">
-                      <div class="d-block d-sm-none form-control input-icon pe-1" style="width: auto;">
-                          <i class="bi bi-calendar2-event text-body-tertiary"></i>
-                      </div>
-                      <input type="date" value="{{ request('tanggal') }}" id="date" class="form-control">
+                     <div class="d-block d-sm-none form-control input-icon pe-1" style="width: auto;">
+                        <i class="bi bi-calendar2-event text-body-tertiary"></i>
+                     </div>
+                     <input type="date" value="{{ request('tanggal') }}" id="date" class="form-control">
                   </li>
                   <li><hr class="dropdown-divider"></li>
                   <li><h6 class="dropdown-header">Berdasarkan Range Tanggal</h6></li>
                   <li class="px-3 pb-2">
-                      <div class="d-flex gap-2 w-100">
-                          <label class="form-label flex-fill small m-0">Pilih Tgl Mulai:</label>
-                          <label class="form-label flex-fill small m-0">Pilih Tgl Akhir:</label>
-                      </div>                        
-                      <div class="d-flex gap-2">
-                          <div class="hstack stack-input-icon w-100 overflow-hidden">
+                     <div class="d-flex gap-2 w-100">
+                        <label class="form-label flex-fill small m-0">Pilih Tgl Mulai:</label>
+                        <label class="form-label flex-fill small m-0">Pilih Tgl Akhir:</label>
+                     </div>                        
+                     <div class="d-flex gap-2">
+                        <div class="hstack stack-input-icon w-100 overflow-hidden">
                               <div class="d-block d-sm-none form-control input-icon pe-1" style="width: auto;">
-                                  <i class="bi bi-calendar2-plus text-body-tertiary"></i>
+                                 <i class="bi bi-calendar2-plus text-body-tertiary"></i>
                               </div>
                               <input type="date" value="{{ request('awal') }}" id="startDate" class="form-control">
-                          </div>
-                          <div class="hstack stack-input-icon w-100 overflow-hidden">
+                        </div>
+                        <div class="hstack stack-input-icon w-100 overflow-hidden">
                               <div class="d-block d-sm-none form-control pe-1 input-icon" style="width: auto;">
-                                  <i class="bi bi-calendar2-check text-body-tertiary"></i>
+                                 <i class="bi bi-calendar2-check text-body-tertiary"></i>
                               </div>
                               <input type="date" value="{{ request('akhir') }}" id="endDate" class="form-control">
-                          </div>
-                      </div>
-                      <div class="text-center">
-                          <button type="button" id="dateBtn" class="btn btn-success btn-sm mt-3 align-content-end">Tampilkan</button>
-                      </div>
+                        </div>
+                     </div>
+                     <div class="text-center">
+                        <button type="button" id="dateBtn" class="btn btn-success btn-sm mt-3 align-content-end">Tampilkan</button>
+                     </div>
                   </li>
-              </ul>
-          </div>
+            </ul>
+         </div>
       </div>
-  </div>
-   @if(count($histori_terapi) > 0)
-   <div class="overflow-auto">
-      <table class="table table-bordered" style="min-width: 420px;">
-         <thead>
-         <tr class="text-center">
-            <th scope="col">No</th>
-            <th scope="col">Tanggal</th>
-            <th scope="col">Nama Pasien</th>
-            <th scope="col">Penyakit</th>
-            <th scope="col">Aksi</th>          
-         </tr>
-         </thead>
-         <tbody>
-            @php
-               $startIndex = ($histori_terapi->currentPage() - 1) * $histori_terapi->perPage() + 1;
-            @endphp
-            @foreach ($histori_terapi as $terapi)
-               <tr>
-                     <th scope="row" class="text-center small-col-number">{{ $startIndex++ }}</th>
-                     <td class="text-center">{{ date('d/m/Y', strtotime($terapi->tanggal)) }}</td>
-                     <td class="px-sm-3">{{ $terapi->subRekamMedis->rekamMedis->pasien->nama }}</td>
-                     <td class="px-sm-3">{{ $terapi->subRekamMedis->penyakit}}</td>
-                     <td class="text-center small-col-aksi">
-                        <a href="{{ route('terapi.detail', [$terapi->subRekamMedis->rekamMedis->pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn btn-sm rounded-2 c-btn-success">
-                           <i class="bi bi-eye"></i>               
-                        </a>      
-                     </td>
-               </tr>
-            @endforeach
-         </tbody>
-      </table>
+  </div>  
+
+  {{-- nav-tab terapi --}}
+   <ul class="nav nav-tabs mt-4">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link link-success {{ request('tab') ? '' : 'active' }}" id="historiBtn" type="button" onclick="toHistori()">Histori Terapi</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button type="button" class="nav-link link-success {{ request('tab') == 'rekap' ? 'active' : '' }}" id="recapBtn" onclick="toRekap()">Rekap Terapi</button>
+      </li>
+   </ul>
+
+   {{-- data terapi --}}
+   <div class="tab-content">
+      <div class="px-3 py-4 bg-white border border-top-0">
+         @if (request('tab'))
+            @if(count($rekap_terapi) > 0)
+               <div class="overflow-auto">
+                  <table class="table table-bordered table-sm text-center mb-0" style="min-width: 420px;">
+                     <thead>
+                     <tr class="text-center">
+                        <th scope="col">No</th>
+                        <th scope="col">Nama Pasien</th>
+                        <th scope="col">Penyakit</th>
+                        <th scope="col">Rekam Terapi</th>
+                        <th scope="col">Total Terapi</th>          
+                     </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($rekap_terapi as $terapi)
+                           <tr>
+                                 <th scope="row" class="text-center small-col-number">{{ $loop->index + 1 }}</th>
+                                 <td class="px-sm-3">{{ $terapi->subRekamMedis->rekamMedis->pasien->nama }}</td>
+                                 <td class="px-sm-3">{{ $terapi->subRekamMedis->penyakit}}</td>
+                                 <td class="px-sm-3">
+                                    <a href="{{ route('terapi.rekam', [$terapi->subRekamMedis->rekamMedis->pasien->slug, $terapi->id_sub ]) }}" class="btn btn-sm c-btn-success rounded-3">
+                                       <i class="bi bi-eye"></i>
+                                   </a>
+                                 </td>
+                                 <td class="text-center small-col-aksi">{{ $terapi->total }}</td>
+                           </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
+               </div>
+               <div class="{{ $rekap_terapi->hasPages() ? 'mt-3 ' : ''}}d-flex justify-content-center">
+                  {{ $rekap_terapi->appends(request()->query())->links() }}
+               </div>
+            @else
+               <div class="fst-italic">Belum ada data.</div>
+            @endif
+         @else
+            @if(count($histori_terapi) > 0)
+               <div class="overflow-auto">
+                  <table class="table table-bordered text-center mb-0" style="min-width: 420px;">
+                     <thead>
+                     <tr class="text-center">
+                        <th scope="col">No</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Nama Pasien</th>
+                        <th scope="col">Penyakit</th>
+                        <th scope="col">Aksi</th>          
+                     </tr>
+                     </thead>
+                     <tbody>
+                        @php
+                           $startIndex = ($histori_terapi->currentPage() - 1) * $histori_terapi->perPage() + 1;
+                        @endphp
+                        @foreach ($histori_terapi as $terapi)
+                           <tr>
+                                 <th scope="row" class="text-center small-col-number">{{ $startIndex++ }}</th>
+                                 <td class="text-center">{{ date('d/m/Y', strtotime($terapi->tanggal)) }}</td>
+                                 <td class="px-sm-3">{{ $terapi->subRekamMedis->rekamMedis->pasien->nama }}</td>
+                                 <td class="px-sm-3">{{ $terapi->subRekamMedis->penyakit}}</td>
+                                 <td class="text-center small-col-aksi">
+                                    <a href="{{ route('terapi.detail', [$terapi->subRekamMedis->rekamMedis->pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn btn-sm rounded-2 c-btn-success">
+                                       <i class="bi bi-eye"></i>               
+                                    </a>      
+                                 </td>
+                           </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
+               </div>
+               <div class="{{ $histori_terapi->hasPages() ? 'mt-3 ' : ''}}d-flex justify-content-center">
+                  {{ $histori_terapi->appends(request()->query())->links() }}
+               </div>
+            @else
+               <div class="fst-italic">Belum ada data.</div>
+            @endif
+         @endif
+      </div>
    </div>
-   <div class="mt-3">
-      {{ $histori_terapi->appends(request()->query())->links() }}
-   </div>
-   @endif
-   
+
    @if($userAdmin)
-   <div class="d-flex justify-content-end mb-4 mt-5 gap-3">
+   <div class="d-flex justify-content-end mb-3 mt-5 gap-3">
       <a type="button" class="btn c-btn-danger" data-toggle="modal" data-target="#terapisDeleteModal">
          <i class="bi bi-trash"></i>
          Hapus
@@ -207,10 +265,14 @@
         const end = document.querySelector('#endDate');
         const dateBtn = document.querySelector('#dateBtn');
 
+        let searchParams = new URLSearchParams(window.location.search);
+
         const id = @json($terapis->username);
 
         tunggal.addEventListener('change', function(){
-            window.location.href = '?tanggal=' + tunggal.value;
+         param = searchParams.has('tab') ? "?tab=rekap&tanggal=" + tunggal.value : "?tanggal=" + tunggal.value;
+         
+         window.location.href = param;
         })
 
         dateBtn.addEventListener('click', function(){
@@ -221,9 +283,21 @@
                 end.classList.add('is-invalid');
             } else {
                 end.classList.remove('is-invalid');
-                window.location.href = '?awal=' + start.value + '&akhir=' + end.value;
+                param = searchParams.has('tab') ? "tab=rekap&" : "";
+                window.location.href = '?' + param + 'awal=' + start.value + '&akhir=' + end.value;
             }
         })
+
+        function toHistori() {
+            var currentUrl = window.location.href;
+            currentUrl = currentUrl.replace(/([?&])tab=[^&]*&?/, '$1');
+
+            window.location.href = currentUrl ;
+         }
+
+         function toRekap() {
+            window.location.href = "?tab=rekap&" + searchParams.toString();
+         }
     </script>
     @if($request)
     <script>

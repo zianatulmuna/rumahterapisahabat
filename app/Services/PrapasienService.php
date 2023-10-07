@@ -2,8 +2,8 @@
 
 namespace App\Services;
  
-use Carbon\Carbon;
 use App\Models\Pasien;
+use App\Models\RekamMedis;
 use Illuminate\Http\Request;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -23,7 +23,7 @@ class PasienService
             'pekerjaan' => $request->pekerjaan
         ];
 
-        $idPasien = IdGenerator::generate(['table' => 'pasien', 'field' => 'id_pasien', 'length' => 8, 'prefix' => 'P'.date('ym'), 'reset_on_prefix_change' => true]);
+        $idPasien = IdGenerator::generate(['table' => 'pasien', 'field' => 'id_pasien', 'length' => 10, 'prefix' => 'PRA'.date('ym'), 'reset_on_prefix_change' => true]);
         
         $slug = SlugService::createSlug(Pasien::class, 'slug', $request->nama);
 
@@ -35,10 +35,32 @@ class PasienService
         $dataDiri['id_pasien'] = $idPasien;
         $dataDiri['status_pendaftaran'] = 'Prapasien';
         $dataDiri['slug'] = $slug;
-        $dataDiri['tanggal_pendaftaran'] = Carbon::now()->format('Y-m-d H:i:s');
+        $dataDiri['tanggal_pendaftaran'] = date('Y-m-d');
 
         Pasien::create($dataDiri);
  
         return $idPasien;
+    }
+
+    public function createRekamMedisPrapasien(Request $request, $idPasien)
+    {
+        $idRM = IdGenerator::generate([
+            'table' => 'rekam_medis', 
+            'field' => 'id_rekam_medis', 
+            'length' => 12, 
+            'prefix' => 'RMPRA', 
+            'reset_on_prefix_change' => true
+        ]);
+
+        $dataRM = [
+            'id_rekam_medis' => $idRM,
+            'id_pasien' => $idPasien,
+            'penanggungjawab' => $request->penanggungjawab,
+            'tipe_pembayaran' => $request->tipe_pembayaran,
+            'keluhan' => nl2br($request->keluhan),
+            'tanggal_registrasi' => date('Y-m-d')
+        ];
+        
+        RekamMedis::create($dataRM);
     }
 }

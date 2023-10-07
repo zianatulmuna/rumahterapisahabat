@@ -83,8 +83,10 @@
                     <th scope="col">Tanggal</th>
                     @endif
                     <th scope="col">Nama Pasien</th>
-                    <th scope="col" class="table-col-rm">Rekam Medis</th>
-                    <th scope="col" class="table-col-terapis">Terapis</th>
+                    <th scope="col" class="">Rekam Terapi</th>
+                    <th scope="col" class="">Penyakit</th>
+                    <th scope="col" class="">Waktu</th>
+                    <th scope="col" >Terapis</th>
                     @if($userAdmin)
                     <th scope="col" class="table-col-aksi">Aksi</th>
                     @endif
@@ -102,11 +104,14 @@
                             @endif
                             <td>{{ $jadwal->pasien->nama }}</td>
                             <td class="text-center">
-                                <a href="{{ route('pasien.rm', $jadwal->pasien->slug) }}" class="btn btn-sm c-btn-success rounded-3">
+                                <a href="{{ route('terapi.rekam', [$jadwal->pasien->slug, $jadwal->id_sub]) }}" class="btn btn-sm c-btn-success rounded-3">
                                     <i class="bi bi-eye"></i>
                                 </a>  
                             </td>
-                            <td class="text-capitalize text-center">{{ $jadwal->id_terapis ? $jadwal->terapis->username : '' }}</td>
+                            <td class="text-center">{{ $jadwal->subRekamMedis->penyakit }}</td>
+                            <td class="text-center">{{ $jadwal->status }}</td>
+                            {{-- <td class="text-center">{{ $jadwal->waktu ? date('H:i', strtotime($jadwal->waktu)) : ''}}</td> --}}
+                            <td class="text-capitalize text-center">{{ $jadwal->id_terapis ? str_replace(['.', '-', '_'], ' ', $jadwal->terapis->username) : '' }}</td>
                             @if($userAdmin)
                             <td class="text-center">
                                 <a href="{{ route('jadwal.delete', $jadwal->id_jadwal) }}" class="c-badge c-badge-danger me-2" data-bs-toggle="modal" data-bs-target="#jadwalDeleteModal" onclick="setDeleteJadwal('{{ $jadwal->id_jadwal }}')">

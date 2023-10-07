@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Requests\TerapiRequest;
 use Carbon\Carbon;
 use App\Models\Jadwal;
 use App\Models\Terapis;
@@ -9,7 +10,6 @@ use Livewire\Component;
 use App\Models\RekamTerapi;
 use Illuminate\Http\Request;
 use App\Models\SubRekamMedis;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
@@ -21,7 +21,6 @@ class TerapiCreateForm extends Component
     public $selectedTerapis, $id_jadwal;
 
     public $totalStep = 2, $currentStep = 1;
-
     protected $listeners = ['setTerapis'];
 
     public function mount($pasien, $id_sub, $jadwal, $aksiDari) {
@@ -75,45 +74,33 @@ class TerapiCreateForm extends Component
     }
 
     public function validateData(){
-        $message = [
-            'required' => 'Kolom :attribute harus diisi.',
-            'id_terapis.required' => 'Kolom terapis harus diisi.',
-            'max' => 'Kolom :attribute harus diisi maksimal :max karakter.',
-            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
-            'tanggal.unique' => 'Tanggal sudah ada.'
-        ];
-
-        if($this->currentStep == 1){
-            $id_sub = $this->id_sub;
-            $id_terapis = $this->id_terapis;
-            $this->validate([
-                'id_terapis' => [
-                    Rule::requiredIf(empty($this->id_terapis)),
-                ],
-                'pra_terapi' => 'max:100',
-                'post_terapi' => 'max:100',
-                'tanggal' => [
-                    'required',
-                    'date',
-                    Rule::unique('rekam_terapi', 'tanggal')->where(function ($query) use ($id_sub, $id_terapis) {
-                        return $query->where('id_sub', $id_sub)->where('id_terapis', $id_terapis);
-                    }),
-                ]
-            ], $message);
-        } else {
-            $this->validate([
-                'keluhan' => 'required|max:100',
-                'deteksi' => 'required|max:100',
-                'tindakan' => 'required|max:100',
-                'saran' => 'max:100',
-            ], $message);
-        }
+        $dataRequest = new TerapiRequest();
+        
+        match ($this->currentStep) {
+            1 => $this->validate(
+                $dataRequest->rules1($this->id_sub, $this->id_terapis, $this->tanggal), 
+                $dataRequest->messages()
+            ),
+            2 => $this->validate(
+                $dataRequest->rules2(), 
+                $dataRequest->messages()
+            )
+        };
     }
 
-    public function create(Request $request) {
-        $this->validateData();
+    public function storeTerapi() {
+        $dateM = Carbon::parse($this->tanggal)->format('ym');
+
+        $id = IdGenerator::generate([
+            'table' => 'rekam_terapi', 
+            'field' => 'id_terapi', 
+            'length' => 8, 
+            'prefix' => 'T'.$dateM,
+            'reset_on_prefix_change' => true
+        ]);
 
         $dataTerapi = array(
+            'id_terapi' => $id,
             'id_terapis' => $this->id_terapis,
             'id_sub' => $this->id_sub,
             'tanggal' => $this->tanggal,
@@ -126,40 +113,44 @@ class TerapiCreateForm extends Component
             'post_terapi' => nl2br($this->post_terapi)
         ); 
 
-        $dateY = substr(Carbon::parse($request->tanggal)->format('Y'), 2);
-        $dateM = Carbon::parse($request->tanggal)->format('m');
-
-        $id = IdGenerator::generate([
-            'table' => 'rekam_terapi', 
-            'field' => 'id_terapi', 
-            'length' => 8, 
-            'prefix' => 'T'.$dateY.$dateM,
-            'reset_on_prefix_change' => true
-        ]);
-
-        $dataTerapi['id_terapi'] = $id;
-
         $isTerapiSuccess = RekamTerapi::create($dataTerapi);
 
-        if($isTerapiSuccess) {
-            $totalTerapiSub = RekamTerapi::totalTerapiSub($this->id_sub);
-            SubRekamMedis::where('id_sub', $this->id_sub)->update(['total_terapi' => $totalTerapiSub]);
-            Jadwal::where('id_sub', $this->id_sub)
-                    ->where('id_terapis', $this->id_terapis)
-                    ->update(['status' => 'Terlaksana']);
-            if($this->aksiDari === 'pasien') {
-                return redirect(route('terapi.rekam', [$this->pasien, $this->id_sub]))
-                                ->with('success', 'Terapi Harian berhasil ditambahkan.')
-                                ->with('create', true);
-            } elseif ($this->aksiDari === 'jadwal') {
-                Jadwal::where('id_jadwal', $this->id_jadwal)->update(['status' => 'Terlaksana']);
-                return redirect(route('jadwal'))
-                                ->with('success', 'Data terapi berhasil ditambahkan.')
-                                ->with('create', true);
-                
-            }
-        }    
+        return $isTerapiSuccess;
+    }
 
+    public function updateJadwalSub() {
+        $totalTerapiSub = RekamTerapi::totalTerapiSub($this->id_sub);
+
+        SubRekamMedis::where('id_sub', $this->id_sub)->update(['total_terapi' => $totalTerapiSub]);
+
+        $terapis = Terapis::find($this->id_terapis);
+        $terapis->increment('total_terapi', 1);
         
+        Jadwal::where('id_sub', $this->id_sub)
+                ->where('id_terapis', $this->id_terapis)
+                ->where('tanggal', $this->tanggal)
+                ->update(['status' => 'Terlaksana']);
+    }
+
+    public function create() {
+        $this->validateData();
+
+        $isTerapiSuccess = $this->storeTerapi();
+
+        if($isTerapiSuccess) {
+            $this->updateJadwalSub();
+        }  
+
+        if($this->aksiDari === 'pasien') {
+            return redirect(route('terapi.rekam', [$this->pasien, $this->id_sub]))
+                            ->with('success', 'Terapi Harian berhasil ditambahkan.')
+                            ->with('create', true);
+        } elseif ($this->aksiDari === 'jadwal') {
+            Jadwal::where('id_jadwal', $this->id_jadwal)->update(['status' => 'Terlaksana']);
+            return redirect(route('jadwal'))
+                            ->with('success', 'Data terapi berhasil ditambahkan.')
+                            ->with('create', true);
+            
+        }
     }
 }

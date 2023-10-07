@@ -7,7 +7,7 @@
           Beranda
         </a>
       </li>
-      @if($userAdmin || $userTerapis->id_terapis == 'KTR001') 
+      @if($userAdmin || $userKepala) 
         <hr class="sidebar-divider my-0" />
         <li class="nav-item">
           <a href="{{ route('pasien.baru') }}" class="hstack {{ Request::is('pasien-baru*') ? 'active shadow-sm' : ''}}">
@@ -20,7 +20,7 @@
       <li class="nav-item">
         <a href="{{ route('pasien.lama') }}" class="hstack {{ Request::is('pasien/*') ? 'active' : ''}}">
           <i class="bi bi-person-fill-check me-2"></i>
-          Pasien {{ $userAdmin || $userTerapis->id_terapis == 'KTR001' ? "Lama" : "" }}
+          Pasien {{ $userAdmin || $userKepala ? "Lama" : "" }}
         </a>
       </li>
       <hr class="sidebar-divider my-0" />
@@ -30,7 +30,7 @@
           Jadwal
         </a>
       </li>
-      @if($userAdmin || $userTerapis->id_terapis == 'KTR001') 
+      @if($userAdmin || $userKepala) 
       <hr class="sidebar-divider my-0" />
       <li class="nav-item">
         <a href="{{ route('terapis') }}" class="hstack {{ Request::is('terapis*') ? 'active' : ''}}">

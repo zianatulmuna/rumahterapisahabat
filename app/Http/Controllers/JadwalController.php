@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\JadwalRequest;
 use App\Models\SubRekamMedis;
+use App\Services\JadwalService;
 use Carbon\Carbon;
 use App\Models\Jadwal;
 use App\Models\Pasien;
 use App\Models\Terapis;
 use App\Models\RekamMedis;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
@@ -19,10 +20,9 @@ class JadwalController extends Controller
     {    
         $query = Jadwal::query();
 
-        if(Auth::guard('terapis')->user()) {
-            $idTerapis = Auth::guard('terapis')->user()->id_terapis;
-            $query->where('id_terapis', $idTerapis);
-            $view = 'pages.terapis.jadwal-terapi';
+        if(Auth::guard('terapis')->check()) {
+            $query->where('id_terapis', Auth::guard('terapis')->user()->id_terapis);
+            $view = 'pages.terapis.jadwal-terapis';
         } else {
             $view = 'pages.jadwal.jadwal';
         }
@@ -35,16 +35,16 @@ class JadwalController extends Controller
         } elseif($request['tanggal']) {
             $tanggal = $request['tanggal'];
             $caption = Carbon::createFromFormat('Y-m-d', $tanggal)->formatLocalized('%A, %d %B %Y');
-            $query->where('tanggal', $tanggal)->paginate(10);
+            $query->where('tanggal', $tanggal);
         } elseif ($request['awal']) {
             $awal = Carbon::createFromFormat('Y-m-d', $request['awal'])->formatLocalized('%d %B %Y');
             $akhir = Carbon::createFromFormat('Y-m-d', request('akhir'))->formatLocalized('%d %B %Y');
 
             $caption = $awal . ' - ' . $akhir;
-            $query->whereBetween('tanggal', [$request['awal'], request('akhir')])->paginate(10);
+            $query->whereBetween('tanggal', [$request['awal'], request('akhir')]);
         } else {
             $caption = Carbon::today()->formatLocalized('%A, %d %B %Y');
-            $query->where('tanggal', Carbon::today()->format('Y-m-d'))->paginate(10);
+            $query->where('tanggal', Carbon::today()->format('Y-m-d'));
         }
 
         $jadwal_terapi = $query->paginate(10);  
@@ -54,7 +54,6 @@ class JadwalController extends Controller
 
     public function add()
     {
-        // $this->jadwalDummy();
         $pasien = Pasien::whereHas('rekamMedis', function ($query) {
             $query->where('status_pasien', 'Rawat Jalan')
                   ->where('penyakit', '!=', '');
@@ -62,9 +61,9 @@ class JadwalController extends Controller
         ->orderBy('nama', 'ASC')
         ->get();
         
-        $terapis = Terapis::where('status', 'Aktif')->orderBy('nama', 'ASC')->get(['id_terapis', 'nama', 'tingkatan']);
+        $listTerapis = Terapis::where('status', 'Aktif')->orderBy('nama', 'ASC')->get(['id_terapis', 'nama', 'tingkatan']);
 
-        return view('pages.jadwal.tambah-jadwal', compact('pasien', 'terapis'));
+        return view('pages.jadwal.tambah-jadwal', compact('pasien', 'listTerapis',));
     }
 
     public function jadwalDummy() {
@@ -106,48 +105,14 @@ class JadwalController extends Controller
         $id_sub = $jadwal->id_sub;
         $aksiDari = "jadwal";
 
-        return view('pages.rekam-terapi.tambah-terapi', compact('pasien', 'id_sub', 'jadwal', 'aksiDari'));
+        return view('pages.rekam-terapi.tambah-terapi', compact(
+            'pasien', 'id_sub', 'jadwal', 'aksiDari'
+        ));
     }
 
-    public function store(Request $request)
+    public function store(JadwalRequest $request, JadwalService $jadwalService)
     {
-        $message = [
-            'required' => 'Kolom :attribute harus diisi.',
-            'id_terapis.required' => 'Terapis harus diisi.',
-            'id_pasien.required' => 'Pasien harus diisi.',
-            'id_sub.required' => 'Penyakit harus dipilih.',
-            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
-            'tanggal.unique' => 'Tanggal untuk pasien dan terapis ini sudah ada'
-        ];
-
-        $dataJadwal = $request->validate([
-            'id_terapis' => 'nullable',
-            'id_pasien' => 'required',
-            'id_sub' => 'required',
-            'tanggal' => [
-                'required',
-                'date',
-                Rule::unique('jadwal', 'tanggal')->where(function ($query) use ($request) {
-                    return $query->where('id_pasien', $request->id_pasien)
-                                 ->where('id_terapis', $request->id_terapis);
-                }),
-            ]
-        ], $message);
-
-        $dateY = substr(Carbon::parse($request->tanggal)->format('Y'), 2);
-        $dateM = Carbon::parse($request->tanggal)->format('m');
-
-        $id = IdGenerator::generate([
-            'table' => 'jadwal', 
-            'field' => 'id_jadwal', 
-            'length' => 10, 
-            'prefix' => 'JDW'.$dateY.$dateM,
-            'reset_on_prefix_change' => true
-        ]);
-
-        $dataJadwal['id_jadwal'] = $id;
-
-        Jadwal::create($dataJadwal);
+        $jadwalService->storeJadwal($request);
 
         return redirect(route('jadwal'))
                             ->with('success', 'Jadwal Terapi berhasil ditambahkan')
@@ -158,38 +123,15 @@ class JadwalController extends Controller
     {
         $list_pasien = Pasien::orderBy('nama', 'ASC')->get();
         $list_terapis = Terapis::orderBy('nama', 'ASC')->get();
-        $id_terapis = $jadwal->id_terapis;
         
         return view('pages.jadwal.edit-jadwal', compact(
-            'list_pasien', 'list_terapis', 'pasien', 'id_terapis', 'jadwal'
+            'list_pasien', 'list_terapis', 'pasien', 'jadwal'
         ));
     }
 
-    public function update(Request $request, Pasien $pasien, Terapis $terapis, Jadwal $jadwal)
-    {
-        $message = [
-            'required' => 'Kolom :attribute harus diisi.',
-            'id_terapis.required' => 'Terapis harus diisi.',
-            'id_pasien.required' => 'Pasien harus diisi.',
-            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
-            'tanggal.unique' => 'Tanggal untuk pasien dan terapis ini sudah ada'
-        ];
-
-        $dataJadwal = $request->validate([
-            'id_terapis' => 'required',
-            'id_pasien' => 'required',
-            'tanggal' => [
-                'required',
-                'date',
-                Rule::unique('jadwal', 'tanggal')->where(function ($query) use ($request) {
-                    return $query->where('id_pasien', $request->id_pasien)
-                                 ->where('id_terapis', $request->id_terapis);
-                }),
-            ]
-        ], $message);
-
-        Jadwal::where('id_jadwal', $jadwal->id_jadwal)
-                ->update($dataJadwal);
+    public function update(JadwalRequest $request, JadwalService $jadwalService, Jadwal $jadwal)
+    {        
+        $jadwalService->updateJadwal($request, $jadwal->id_jadwal);
 
         return redirect(route('jadwal'))
                             ->with('success', 'Jadwal Terapi berhasil diedit.')
@@ -206,17 +148,27 @@ class JadwalController extends Controller
     }
 
     public function getSubRekamMedis(Request $request) {
-        $rm = RekamMedis::where('id_pasien', $request->id)->where('status_pasien', 'Rawat Jalan')->get();
+        $rm = RekamMedis::where('id_pasien', $request->id)->where('status_pasien', 'Rawat Jalan')->first();
 
         $dataSub = [];
-
-        foreach ($rm as $r) {
-            foreach ($r->subRekamMedis as $sub) {
-                $dataSub[] = ['id_rm' => $r->id_rekam_medis,'id_sub' => $sub->id_sub, 'penyakit' => $sub->penyakit];
-            }
+        
+        foreach ($rm->subRekamMedis as $sub) {
+            $dataSub[] = ['id_rm' => $rm->id_rekam_medis,'id_sub' => $sub->id_sub, 'penyakit' => $sub->penyakit];
         }
 
         return response()->json($dataSub);
+    }
+
+    public function terapisDefaultCheck(Request $request) {
+        $rm = RekamMedis::where('id_pasien', $request->id)->where('status_pasien', 'Rawat Jalan')->first();
+
+        $dataTerapisDefault = [];
+
+        if($rm->is_private) {
+            $dataTerapisDefault[] = ['id_terapis' => $rm->terapis->id_terapis,'nama' => $rm->terapis->nama, 'tingkatan' => $rm->terapis->tingkatan];
+        }
+
+        return response()->json($dataTerapisDefault);
     }
 
     public function cancelJadwal(Pasien $pasien, Jadwal $jadwal)
@@ -228,21 +180,29 @@ class JadwalController extends Controller
 
     public function print(Request $request)
     {
+        $query = Jadwal::query();
+
         if($request['filter']) {
             $m = $request['filter'] == "tahun-ini" ? date('Y') : date('Y-m');
-            $list_jadwal = Jadwal::where('tanggal', 'like', $m . '%')->get();
+            $query->where('tanggal', 'like', $m . '%');
             $caption = $request['filter'] == "tahun-ini" ? date('Y') : Carbon::today()->formatLocalized('%B %Y');
         } elseif($request['awal'] == 'null') {
             $today = Carbon::today();
-            $list_jadwal = Jadwal::where('tanggal', $today->format('Y-m-d'))->get();
+            $query->where('tanggal', $today->format('Y-m-d'));
             $caption = $today->format('d-m-Y');
         } elseif (request('akhir') == 'null') {
-            $list_jadwal = Jadwal::where('tanggal', $request['awal'])->get();   
+            $query->where('tanggal', $request['awal']);   
             $caption = Carbon::parse($request['awal'])->format('d-m-Y');         
         } else {
-            $list_jadwal = Jadwal::whereBetween('tanggal', [$request['awal'], request('akhir')])->orderBy('tanggal', 'ASC')->get();  
+            $query->whereBetween('tanggal', [$request['awal'], request('akhir')])->orderBy('tanggal', 'ASC');  
             $caption = Carbon::parse($request['awal'])->format('d-m-Y') . ' sd ' . Carbon::parse(request('akhir'))->format('d-m-Y');          
         }
+
+        if(Auth::guard('terapis')->check()) {
+            $query->where('id_terapis', Auth::guard('terapis')->user()->id_terapis);
+        }
+
+        $list_jadwal = $query->get();
         
         return view('pages.unduh.unduh-jadwal', compact(
             'list_jadwal', 'caption'

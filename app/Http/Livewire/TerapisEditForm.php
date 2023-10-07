@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\SubRekamMedis;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use App\Http\Requests\TerapisRequest;
 use Illuminate\Support\Facades\Storage;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
@@ -77,51 +78,22 @@ class TerapisEditForm extends Component
 
 
     public function validateData(){
-        $message = [
-            'username.unique' => 'Username sudah dipakai.',
-            'required' => 'Kolom :attribute harus diisi.',
-            'foto.max' => 'Kolom :attribute harus diisi maksimal :max kb.',
-            'max' => 'Kolom :attribute harus diisi maksimal :max karakter.',
-            'min' => 'Kolom :attribute harus diisi minimal :min karakter.',
-            'min_digits' => 'Kolom :attribute harus diisi minimal :min digit angka.',
-            'max_digits' => 'Kolom :attribute harus diisi minimal :max digit angka.',
-            'numeric' => 'Kolom :attribute harus diisi angka.',
-            'url' => 'Kolom :attribute harus berupa link URL valid',
-            'file' => 'Kolom :attribute harus diisi file.',
-            'image' => 'Kolom :attribute harus diisi file gambar.',
-            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
-            'username.regex' => 'Username tidak boleh mengandung spasi.'
-        ];
-
-        if($this->currentStep == 1) {
-            $this->validate([
-                'nama' => 'required|max:50',
-                'no_telp' => 'required|min_digits:8|max_digits:15',
-                'tanggal_lahir' => 'nullable|date',
-                'jenis_kelamin' => 'required',
-                'agama' => 'max:20',
-                'foto' => 'nullable|file|image|max:1024',
-            ], $message);            
-        } else {
-            $this->validate([
-                'username' => ['required', 
-                                'min:3', 
-                                'max:30', 
-                                'regex:/^\S*$/u',
-                                Rule::unique('terapis')->ignore($this->id_terapis, 'id_terapis'),
-                                Rule::unique('admin')->ignore($this->id_terapis, 'id_admin'),
-                                Rule::unique('kepala_terapis')->ignore($this->id_terapis, 'id_kepala')],
-                'password' => 'nullable|min:3|max:10',
-                'tingkatan' => 'required',             
-                'total_terapi' => 'nullable|numeric|max_digits:10',
-            ], $message);
-
-        }
+        $dataRequest = new TerapisRequest();
+        
+        match ($this->currentStep) {
+            1 => $this->validate(
+                $dataRequest->rules1(), 
+                $dataRequest->messages()
+            ),
+            2 => $this->validate(
+                $dataRequest->rules2($this->id_terapis), 
+                $dataRequest->messages()
+            )
+        };
     }
-
-    public function update(Request $request) {
-
-        $this->validateData();
+    
+    public function updateTerapis() {
+        $this->username = strtolower($this->username);
 
         $dataDiri = array(
             'nama' => $this->nama,
@@ -134,9 +106,8 @@ class TerapisEditForm extends Component
             'status' => $this->status,
             'total_terapi' => $this->total_terapi,
             'username' => $this->username,
+            'password' => $this->password ? bcrypt($this->password) : $this->dbPassword
         ); 
-
-        $this->username = strtolower($this->username);
 
         if ($this->foto) {
             if ($this->dbFoto) {
@@ -151,9 +122,13 @@ class TerapisEditForm extends Component
             Storage::delete($this->pathFoto);
         }
 
-        $dataDiri['password'] = $this->password ? bcrypt($this->password) : $this->dbPassword;
-
         Terapis::where('id_terapis', $this->id_terapis)->update($dataDiri);
+    }
+
+    public function update() {
+
+        $this->validateData();
+        $this->updateTerapis();        
 
         $this->currentStep = 1;
         Storage::deleteDirectory('livewire-tmp');

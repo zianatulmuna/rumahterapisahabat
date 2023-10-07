@@ -17,7 +17,7 @@
       @endif
       <div class="input-group rounded shadow-sm custom-search-input">
         <span class="input-group-text border-success-subtle bg-white border-end-0 pe-1" id="addon-wrapping"><i class="bi bi-search"></i></span>
-        <input type="search" name="search" value="{{ request('search') }}" class="form-control py-2 border-success-subtle border-start-0 rounded-end" placeholder="Cari Nama Pasien atau Penyakit" aria-label="Search" aria-describedby="search-addon" />
+        <input type="search" name="search" value="{{ request('search') }}" class="form-control py-2 border-success-subtle border-start-0 rounded-end" placeholder="Cari Nama Pasien/Penyakit/No.Registrasi" aria-label="Search" aria-describedby="search-addon" />
         <button type="submit" class="btn btn-outline-success px-4 btn-cari">Cari</button>
       </div>        
     </form>
@@ -46,15 +46,9 @@
         @foreach ($pasien_baru as $pasien)                  
           <div class="col">
             <div class="card card-baru border-0 shadow-sm">
-              @if($userAdmin || $userTerapis->id_terapis == 'KTR001')
               <a href="{{ route('pasien.edit', $pasien->slug) }}" class="card-header py-2">
                 <h6 class="card-header-text">{{ $pasien->nama }}</h6>
               </a>
-              @else
-                <div class="card-header py-2 text-white">
-                  <h6 class="card-header-text">{{ $pasien->nama }}</h6>
-                </div>
-              @endif
                @if($pasien->jenis_kelamin === 'Laki-Laki')
                   <img src="/img/avatar-l.png" class="card-img-top" alt="...">
                @else
@@ -65,7 +59,7 @@
                   <p>Ditambahkan:</p>
                   <div class="d-flex align-item-center justify-content-between py-1">
                     <p class="card-title">{{ date('d/m/Y', strtotime($pasien->tanggal_pendaftaran)) }}</p>
-                    <p class="card-title">{{ date('H:i', strtotime($pasien->tanggal_pendaftaran)) }}</p>
+                    <p class="card-title">{{ date('H:i', strtotime($pasien->created_at)) }}</p>
                   </div>
                 </div>                 
               </div>

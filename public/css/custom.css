@@ -23,14 +23,21 @@
     background-color: #239962;
 }
 
-.toggle-success {
+.toggle-stack {
     display: flex;
     justify-content: center;
     margin: 0;
+    width: 28px;
 }
 
+.toggle-md {
+    display: flex;
+    justify-items: center;
+    height: 30px;
+}
+
+
 .toggle-success .form-check-input {
-    width: 28px;
     
     text-align: center;
 }

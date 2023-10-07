@@ -5,26 +5,37 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Pasien;
 use App\Models\RekamMedis;
+use Illuminate\Support\Facades\Auth;
 
 class RekamMedisController extends Controller
 {
     public function histori(Pasien $pasien) 
     {
-        $rmTerkini = $pasien->rekamMedis()->where('status_pasien', 'Rawat Jalan')->get();
-        $rmTerdahulu = $pasien->rekamMedis()->where('status_pasien', '!=', 'Rawat Jalan')->get();
+        $rm = $pasien->rekamMedis()->where('status_pasien', 'Rawat Jalan')->first();
+        $rm_terdahulu = $pasien->rekamMedis()->where('status_pasien', '!=', 'Rawat Jalan')->get();
+        $umur = Carbon::parse($pasien->tanggal_lahir)->age;
         $rmDetected = 0;
-        
-        if(count($rmTerkini) > 0 || count($rmTerdahulu) > 0) {
+
+        if($rm || count($rm_terdahulu) > 0) {
             $rmDetected = 1;
         }
 
-        return view('pages.rekam-medis.histori-rekam-medis', [
-            'rmDetected' => $rmDetected,
-            'rm_terkini' => $rmTerkini,
-            'rm_terdahulu' => $rmTerdahulu,
-            'pasien' => $pasien,
-            'umur' => Carbon::parse($pasien->tanggal_lahir)->age
-        ]);
+        $userTerapis = Auth::guard('terapis')->user();
+        $isTerkiniAllowed = $isTerdahuluAllowed = 1;
+
+        if(($rm && $rm->is_private) && $userTerapis && !$userTerapis->is_kepala) {
+            $isTerkiniAllowed = $rm->id_terapis == $userTerapis->id_terapis ? 1 : 0;
+        }
+
+        return view('pages.rekam-medis.histori-rekam-medis', compact(
+            'rmDetected',
+            'isTerkiniAllowed',
+            'isTerdahuluAllowed',
+            'rm',
+            'rm_terdahulu',
+            'pasien',
+            'umur'
+        ));
     }
 
     public function add(Pasien $pasien)
@@ -36,12 +47,22 @@ class RekamMedisController extends Controller
 
     public function detail(Pasien $pasien, RekamMedis $rekamMedis)
     {
-        return view('pages.rekam-medis.rekam-medis', [
-            'rmDetected' => 1,
-            'rm' => $rekamMedis,
-            'pasien' => $pasien,
-            'umur' => Carbon::parse($pasien->tanggal_lahir)->age
-        ]);
+        $rm = $rekamMedis;
+        $umur = Carbon::parse($pasien->tanggal_lahir)->age;
+
+        $userTerapis = Auth::guard('terapis')->user();
+        $isAllowed = 1;
+
+        if($userTerapis && !$userTerapis->is_kepala && $rm->is_private) {
+            $isAllowed = $rm->id_terapis == $userTerapis->id_terapis ? 1 : 0;
+        }
+
+        return view('pages.rekam-medis.rekam-medis', compact(
+            'pasien',
+            'rm',
+            'umur',
+            'isAllowed'
+        ));
     }
     
     public function edit(Pasien $pasien, RekamMedis $rekamMedis)

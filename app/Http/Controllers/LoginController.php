@@ -9,10 +9,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('pages.landing-page.login', [
-            'title' => 'Login',
-            'active' => 'login'
-        ]);
+        return view('pages.landing-page.login');
     }
 
     public function login(Request $request)

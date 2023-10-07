@@ -3,12 +3,37 @@
 @section('container')
 <div class="content-container">
    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
-      <h1 class="h2">Histori Terapi</h1>
+      <h1 class="h2">Sesi Terapi</h1>
+   </div>
+
+   <div class="d-flex gap-3 pb-2">
+        <div class="bg-white rounded-3 shadow-sm px-3 py-2">
+            <small>Total Terapi</small>
+            <p class="m-0 pt-1 hstack gap-1">
+                <i class="fa-solid fa-heart-pulse text-success pe-1"></i>
+                <span>{{ $userTerapis->total_terapi }}</span>
+                <span class="d-none d-sm-block">Terapi</span></p>
+        </div>
+        @php
+             if($terapis->tingkatan == 'Utama'){$warnaTingkatan = 'c-text-danger';}
+             if($terapis->tingkatan == 'Madya'){$warnaTingkatan = 'c-text-primary';}
+             if($terapis->tingkatan == 'Muda'){$warnaTingkatan = 'c-text-success';}
+             if($terapis->tingkatan == 'Pratama'){$warnaTingkatan = 'c-text-warning';}
+             if($terapis->tingkatan == 'Latihan'){$warnaTingkatan = 'c-text-secondary';}
+         @endphp
+        <div class="bg-white rounded-3 shadow-sm px-3 py-2">
+            <small>Tingkatan</small>
+            <p class="m-0 pt-1 hstack gap-1">
+                <i class="fa-solid fa-medal pe-1 {{ $warnaTingkatan }}"></i>
+                <span class="d-none d-sm-block">Terapis</span>
+                <span>{{ $userTerapis->tingkatan }}</span>
+            </span>
+        </div>
    </div>
 
    {{-- Data Diri terapis --}}
-   <div class="d-flex justify-content-between align-items-sm-end flex-column-reverse flex-sm-row my-sm-3">
-      <div class="mb-2 mt-4 my-sm-0">
+   <div class="d-flex justify-content-between align-items-sm-end flex-column-reverse flex-sm-row mt-4 mb-3">
+      <div class="mt-4">
           {{ $tanggal_caption }}
       </div>
       <div class="col-12 col-sm-7 col-md-6 col-lg-5 col-xl-4">
@@ -94,20 +119,6 @@
       {{ $histori_terapi->appends(request()->query())->links() }}
    </div>
    @endif
-   
-   @if($userAdmin)
-   <div class="d-flex justify-content-end mb-4 mt-5 gap-3">
-      <a type="button" class="btn c-btn-danger" data-toggle="modal" data-target="#terapisDeleteModal">
-         <i class="bi bi-trash"></i>
-         Hapus
-      </a>
-      <a href="{{ route('terapis.edit', $terapis->username) }}" class="btn c-btn-warning px-3">
-         <i class="bi bi-pencil-square pe-1"></i>
-         Edit
-     </a>
-   </div>
-   @endif
-
 </div>
 @endsection
 

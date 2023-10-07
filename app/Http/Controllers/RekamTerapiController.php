@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Jadwal;
 use App\Models\Pasien;
 use App\Models\Terapis;;
 use App\Models\RekamTerapi;
@@ -55,36 +56,39 @@ class RekamTerapiController extends Controller
     }
 
     public function add(Pasien $pasien, SubRekamMedis $subRM)
-    {        
-        // $this->terapiDummy($subRM->id_sub);
-
+    {     
         $jadwal = '';
         $id_sub = $subRM->id_sub;
         $aksiDari = 'pasien';
-        return view('pages.rekam-terapi.tambah-terapi', compact('pasien', 'id_sub', 'jadwal', 'aksiDari'));
+
+        return view('pages.rekam-terapi.tambah-terapi', compact(
+            'pasien', 'id_sub', 'jadwal', 'aksiDari'
+        ));
     }
 
     public function detail(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi) 
     {
+        $rm = $subRM->rekamMedis;
+        $umur = Carbon::parse($pasien->tanggal_lahir)->age;
         $rekamTerapi = $subRM->rekamTerapi()->orderBy('tanggal', 'ASC')->get();
         $index = $rekamTerapi->search($terapi) + 1;
      
-        return view('pages.rekam-terapi.detail-terapi', [
-            'rmDetected' => 1,
-            'terapi' => $terapi,
-            'index' => $index,
-            'pasien' => $pasien,
-            'umur' => Carbon::parse($pasien->tanggal_lahir)->age
-        ]);
+        return view('pages.rekam-terapi.detail-terapi', compact(
+            'rm',
+            'terapi',
+            'index',
+            'pasien',
+            'umur'
+        ));
 
     }
 
     public function edit(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi)
     {
-        return view('pages.rekam-terapi.edit-terapi', [
-            'terapi' => $terapi,
-            'pasien' => $pasien,
-        ]);
+        return view('pages.rekam-terapi.edit-terapi', compact(
+            'terapi',
+            'pasien',
+        ));
     }
 
     public function delete(Pasien $pasien, SubRekamMedis $subRM, RekamTerapi $terapi)
@@ -93,6 +97,13 @@ class RekamTerapiController extends Controller
 
         $totalTerapiSub = RekamTerapi::totalTerapiSub($subRM->id_sub);
         SubRekamMedis::where('id_sub', $subRM->id_sub)->update(['total_terapi' => $totalTerapiSub]);
+
+        Terapis::where('id_terapis', $terapi->id_terapis)->decrement('total_terapi', 1);
+        
+        Jadwal::where('id_sub', $terapi->id_sub)
+                ->where('id_terapis', $terapi->id_terapis)
+                ->where('tanggal', $terapi->tanggal)
+                ->update(['status' => 'Tertunda']);
 
         return redirect(route('terapi.rekam', [$pasien->slug, $subRM->id_sub, $terapi->id_terapi]))
                             ->with('success', 'Terapi Harian berhasil dihapus.')

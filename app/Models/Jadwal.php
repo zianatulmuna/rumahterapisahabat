@@ -13,11 +13,6 @@ class Jadwal extends Model
 
     protected $guarded = [];
 
-    public function getRouteKeyName(): string
-    {
-        return 'id_jadwal';
-    }
-
     public function pasien()
     {
         return $this->belongsTo(Pasien::class, 'id_pasien');
@@ -30,12 +25,9 @@ class Jadwal extends Model
     {
         return $this->belongsTo(SubRekamMedis::class, 'id_sub');
     }
-    public function allPasien()
+    
+    public function getRouteKeyName(): string
     {
-        return $this->belongsToMany(Pasien::class, 'jadwal', 'id_pasien');
-    }
-    public function allTerapis()
-    {
-        return $this->belongsToMany(Terapis::class, 'jadwal', 'id_terapis');
+        return 'id_jadwal';
     }
 }

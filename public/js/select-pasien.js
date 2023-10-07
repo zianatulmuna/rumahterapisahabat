@@ -28,7 +28,7 @@ function addPasien(selectedPasien) {
                             data-birth="${pasien.tanggal_lahir}" 
                             data-gender="${pasien.jenis_kelamin}"
                             onclick="updateNamePasien(this)">
-                            ${pasien.nama}
+                            ${pasien.nama} <span style="font-size: 10px; padding-left: 5px;">${pasien.id_pasien}</span>
                     </li>`;
             optionsPasien.insertAdjacentHTML("beforeend", li);
     });
@@ -46,6 +46,7 @@ function updateNamePasien(selectedLi) {
 
     setTimeout(function() {
         pasienChange();
+        terapisCheck();
     }, 1000);
 }
 
@@ -64,7 +65,7 @@ searchInpPasien.addEventListener("keyup", () => {
                     data-birth="${pasien.tanggal_lahir}" 
                     data-gender="${pasien.jenis_kelamin}"
                     onclick="updateNamePasien(this)">
-                    ${pasien.nama}
+                    ${pasien.nama} <span style="font-size: 12px;">${pasien.id_pasien}</span>
                 </li>`;
     }).join("");
     optionsPasien.innerHTML = arr ? arr : `<p class="p-2 m-0">Oops! Data tidak ditemukan</p>`;

@@ -32,9 +32,15 @@
         margin: 0;
     }
     @media print {
-        .pagebreak { page-break-before: always; }
+        .pagebreak { 
+          margin-top: 2cm;
+          page-break-before: always; 
+        }
+
         .halaman {
-        margin: 0;
+        /* margin: 0; */
+        padding: 1cm;
+        margin: 1cm auto;
         border: initial;
         border-radius: initial;
         width: initial;

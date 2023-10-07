@@ -2,13 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use Carbon\Carbon;
+use App\Http\Requests\TerapisRequest;
 use App\Models\Terapis;
 use Livewire\Component;
-use Illuminate\Http\Request;
-use App\Models\SubRekamMedis;
 use Livewire\WithFileUploads;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
@@ -24,6 +21,7 @@ class TerapisCreateForm extends Component
     public function mount(){
         $this->currentStep = 1;
     }
+
     public function render()
     {
         return view('livewire.terapis-create-form', [
@@ -54,50 +52,27 @@ class TerapisCreateForm extends Component
     }
 
     public function validateData(){
-        $message = [
-            'username.unique' => 'Username sudah dipakai.',
-            'required' => 'Kolom :attribute harus diisi.',
-            'foto.max' => 'Kolom :attribute harus diisi maksimal :max kb.',
-            'max' => 'Kolom :attribute harus diisi maksimal :max karakter.',
-            'min' => 'Kolom :attribute harus diisi minimal :min karakter.',
-            'min_digits' => 'Kolom :attribute harus diisi minimal :min digit angka.',
-            'max_digits' => 'Kolom :attribute harus diisi minimal :max digit angka.',
-            'numeric' => 'Kolom :attribute harus diisi angka.',
-            'url' => 'Kolom :attribute harus berupa link URL valid',
-            'file' => 'Kolom :attribute harus diisi file.',
-            'image' => 'Kolom :attribute harus diisi file gambar.',
-            'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
-            'username.regex' => 'Username tidak boleh mengandung spasi.',
-        ];
-
-        if($this->currentStep == 1) {
-            if(empty($this->id_pasien)) {
-                $this->validate([
-                    'nama' => 'required|max:50',
-                    'no_telp' => 'required|min_digits:8',
-                    'tanggal_lahir' => 'nullable|date',
-                    'jenis_kelamin' => 'required',
-                    'agama' => 'max:20',
-                    'foto' => 'nullable|file|image|max:1024',
-                    
-                ], $message);
-            }
-        } else {
-            $this->validate([
-                'username' => ['required', 'min:3', 'max:30', 'unique:terapis', 'unique:admin', 'unique:kepala_terapis','regex:/^\S*$/u'],
-                'password' => 'required|min:3|max:60',
-                'tingkatan' => 'required',
-                'total_terapi' => 'nullable|numeric|max_digits:10',
-            ], $message);
-
-        }
+        $dataRequest = new TerapisRequest();
+        
+        match ($this->currentStep) {
+            1 => $this->validate(
+                $dataRequest->rules1(), 
+                $dataRequest->messages()
+            ),
+            2 => $this->validate(
+                $dataRequest->rules2($this->id_terapis), 
+                $dataRequest->messages()
+            )
+        };
     }
 
-    public function create(Request $request) {
+    public function storeTerapis() {
+        $this->username = strtolower($this->username);
 
-        $this->validateData();
+        $idTerapis = IdGenerator::generate(['table' => 'terapis', 'field' => 'id_terapis', 'length' => 6, 'prefix' => 'TRP', 'reset_on_prefix_change' => true]);
 
         $dataDiri = array(
+            'id_terapis' => $idTerapis,
             'nama' => $this->nama,
             'alamat' => $this->alamat,
             'no_telp' => $this->no_telp,
@@ -106,28 +81,23 @@ class TerapisCreateForm extends Component
             'agama' => $this->agama,
             'tingkatan' => $this->tingkatan,
             'total_terapi' => $this->total_terapi,
-            // 'status' => $this->status,
+            'status' => $this->status == '' ? 'Aktif' : $this->status,
             'username' => $this->username,
             'password' => bcrypt($this->password),
         ); 
 
-        $this->username = strtolower($this->username);
-
-        $idTerapis = IdGenerator::generate(['table' => 'terapis', 'field' => 'id_terapis', 'length' => 6, 'prefix' => 'TRP', 'reset_on_prefix_change' => true]);
-
         if ($this->foto) {
-            // $imageName = $this->username . '.' . $this->foto->getClientOriginalExtension();
-
-            // $resizedImage = Image::make($request->file('photo'))->resize(115, null);
-
             $ext = $this->foto->getClientOriginalExtension();
             $dataDiri['foto'] = $this->foto->storeAs('terapis', $this->username . '.' . $ext);
         }
-        
-        $dataDiri['id_terapis'] = $idTerapis;
-        $dataDiri['status'] = $this->status == '' ? 'Aktif' : $this->status;
 
         Terapis::create($dataDiri);
+    }
+
+    public function create() {
+
+        $this->validateData();
+        $this->storeTerapis();        
 
         $this->currentStep = 1;
         Storage::deleteDirectory('livewire-tmp');

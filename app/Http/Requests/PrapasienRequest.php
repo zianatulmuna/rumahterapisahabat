@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PasienCreateRequest extends FormRequest
+class PrapasienRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,9 +14,9 @@ class PasienCreateRequest extends FormRequest
     {
         return [
             'nama' => 'required|max:50',
-            'email' => 'nullable|max:35',
-            'alamat' => 'max:100',
-            'no_telp' => 'required|min_digits:8',
+            'email' => 'nullable|max:50',
+            'alamat' => 'max:150',
+            'no_telp' => 'required|min_digits:8|max_digits:14',
             'tanggal_lahir' => 'nullable|date',
             'jenis_kelamin' => 'required',
             'agama' => 'max:20',
@@ -24,7 +24,7 @@ class PasienCreateRequest extends FormRequest
             'foto' => 'nullable|file|image|max:1024',
             'penanggungjawab' => 'max:50',
             'tipe_pembayaran' => 'nullable',
-            'keluhan' => 'required|max:100'
+            'keluhan' => 'required|max:200'
         ];
     }
 

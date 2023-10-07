@@ -16,7 +16,7 @@
         </script>
     @elseif(session()->has('createPasien'))
         <script>
-            document.querySelector('.body-alert').innerHTML += `<a href="/pasien/{{ session('createPasien') }}">Lihat Data</a>`;            
+            document.querySelector('.body-alert').innerHTML += `<a href="/pasien/{{ session('createPasien') }}" class="ps-2">Lihat Data</a>`;            
         </script>
     @elseif(session()->has('update'))
         <script>

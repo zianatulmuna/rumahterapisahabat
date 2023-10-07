@@ -4,6 +4,12 @@
 <div class="content-container">
    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 border-bottom">
       <h1 class="h2">Jadwal Terapi</h1>
+      @if(count($jadwal_terapi) > 0)
+      <a href="" class="btn btn-sm btn-success rounded-3" onclick="printJadwal()">
+        <i class="bi bi-download pe-1"></i>
+        Unduh
+      </a>
+      @endif
    </div>
 
     <div class="d-flex justify-content-between align-items-sm-end flex-column-reverse flex-sm-row mb-sm-3">
@@ -149,7 +155,34 @@
         })
 
           document.addEventListener('change', function(e){
-        e.preventDefault();
-    })
+            e.preventDefault();
+        })
+
+        function printJadwal() {
+            let currentPath = window.location.search;
+            let url = "";
+
+            if(currentPath == '') {
+                url = "/jadwal/print?awal=null&akhir=null";
+            } else if(currentPath == "?filter=bulan-ini") {
+                url = "/jadwal/print" + currentPath;
+            } else if(currentPath == "?filter=tahun-ini") {
+                url = "/jadwal/print" + currentPath;
+            }else {
+                var urlParams = new URLSearchParams(currentPath);
+
+                if(urlParams.get('tanggal') != null) {
+                    url = "/jadwal/print?awal=" + urlParams.get('tanggal') + "&akhir=null";
+                } else {
+                    url = "/jadwal/print" + currentPath;
+                }
+            }
+            
+            // window.open(url, "_blank");
+            let a = document.createElement('a');
+            a.target= '_blank';
+            a.href= url;
+            a.click();
+        }
     </script>
 @endpush

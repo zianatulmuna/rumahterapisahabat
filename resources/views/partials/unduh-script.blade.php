@@ -17,5 +17,5 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
 
 <!-- Unduh -->
 <script>
-window.print();
+    window.print();
 </script>

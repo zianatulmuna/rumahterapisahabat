@@ -19,8 +19,8 @@
         <tr>
         <th scope="row">{{ $index++ }}</th>
         <td style="text-align: center">{{ $jadwal->id_pasien }}</td>
-        <td style="text-align: center">{{ date('H:i', strtotime($jadwal->waktu)) }}</td>
-        <td class="text-center text-capitalize">{{ $jadwal->id_terapis == '' ? '' : $jadwal->terapis->username }}</td>
+        <td style="text-align: center">{{ $jadwal->waktu ? date('H:i', strtotime($jadwal->waktu)) : ''}}</td>
+        <td class="text-center text-capitalize">{{ $jadwal->id_terapis == '' ? '' : str_replace(['.', '-', '_'], ' ', $jadwal->terapis->username) }}</td>
         </tr>
         @endforeach
     </tbody>

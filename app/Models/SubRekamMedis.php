@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Pasien;
 use App\Models\RekamMedis;
 use App\Models\RekamTerapi;
 use Illuminate\Database\Eloquent\Model;
@@ -10,8 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SubRekamMedis extends Model
 {
-    use HasFactory;
-
     use HasFactory;
 
     protected $table = 'sub_rekam_medis';
@@ -28,6 +25,12 @@ class SubRekamMedis extends Model
         $query->when($sortBy ?? false, function ($query, $sortBy) {
             return $query->orderBy('id_sub', $sortBy);
         });
+    }
+    public function scopePenyakitByTerapis($query, $idTerapis)
+    {        
+        return $query->whereHas('rekamTerapi', function ($query) use ($idTerapis) {
+            $query->where('id_terapis', $idTerapis);
+        })->distinct('penyakit')->orderBy('penyakit', 'ASC')->pluck('penyakit');        
     }
 
     public function rekamMedis()

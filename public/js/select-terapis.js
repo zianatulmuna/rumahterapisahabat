@@ -5,14 +5,16 @@ let optionsTerapis = dropTerapis.querySelector(".select-options");
 
 let idTerapis = dropTerapis.querySelector("#id_terapis");
 
-let oldIdTerapis = idTerapis.value;     
+let oldIdTerapis = idTerapis.value; 
+
+// let dataTerapis = getDataTerapis();
 
 if(oldIdTerapis != '') {
     let namaOld = dataTerapis.find(terapis => terapis.id_terapis === oldIdTerapis);
     selectBtnTerapis.firstElementChild.innerText = namaOld.nama;
 }
 
-addTerapis();
+addTerapis(selectBtnTerapis.innerText);
 
 function addTerapis(selectedTerapis) {
     optionsTerapis.innerHTML = "";
