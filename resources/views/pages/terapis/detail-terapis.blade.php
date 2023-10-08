@@ -53,9 +53,8 @@
                </tr>
                <tr>
                   <td>Total Terapi</td>
-                  <td class="d-flex align-items-center">
-                     <i class="fa-solid fa-heart-pulse text-success pe-1"></i>
-                     {{-- <i class="bi bi-heart-pulse-fill text-success pe-1"></i> --}}
+                  <td class="hstack gap-2">
+                     <i class="fa-solid fa-heart-pulse text-success"></i>
                      <span>{{ $terapis->total_terapi }}</span>
                   </td>
                </tr>         
@@ -148,7 +147,7 @@
       <div class="px-3 py-4 bg-white border border-top-0">
          @if (request('tab'))
             @if(count($rekap_terapi) > 0)
-               <div class="overflow-auto">
+               <div class="overflow-auto pb-4 pb-sm-0">
                   <table class="table table-bordered table-sm text-center mb-0" style="min-width: 420px;">
                      <thead>
                      <tr class="text-center">
@@ -184,7 +183,7 @@
             @endif
          @else
             @if(count($histori_terapi) > 0)
-               <div class="overflow-auto">
+               <div class="overflow-auto pb-4 pb-sm-0">
                   <table class="table table-bordered text-center mb-0" style="min-width: 420px;">
                      <thead>
                      <tr class="text-center">

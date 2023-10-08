@@ -21,7 +21,7 @@ class TerapisController extends Controller
 
     public function add()
     {
-        return view('pages.terapis.tambah');
+        return view('pages.terapis.tambah-terapis');
     }
 
     public function detail(Terapis $terapis, Request $request)

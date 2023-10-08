@@ -60,8 +60,7 @@ class RekamMedis extends Model
             ->orderBy('tanggal_selesai');
 
         $query->when($penyakit ?? false, function ($query, $penyakit) {
-            return $query->where('penyakit', 'like', '%' . $penyakit . '%')
-                ->selectRaw('tanggal_selesai as tanggal, COUNT(*) as total');
+            return $query->where('penyakit', 'like', '%' . $penyakit . '%');
         });
             
         return $query->pluck('total', 'tanggal');
@@ -74,9 +73,7 @@ class RekamMedis extends Model
             ->whereYear('tanggal_selesai', $tahun)->groupBy('bulan');
 
         $query->when($penyakit ?? false, function ($query, $penyakit) {
-            return $query->whereHas('rekamMedis', function ($query) use ($penyakit) {
-                $query->where('penyakit', 'like', '%' . $penyakit . '%');
-            });
+            return $query->where('penyakit', 'like', '%' . $penyakit . '%');
         });
             
         return $query->get();
@@ -87,9 +84,7 @@ class RekamMedis extends Model
             ->where('status_pasien', 'Selesai');
 
         $query->when($penyakit ?? false, function ($query, $penyakit) {
-            return $query->whereHas('rekamMedis', function ($query) use ($penyakit) {
-                $query->where('penyakit', 'like', '%' . $penyakit . '%');
-            });
+            return $query->where('penyakit', 'like', '%' . $penyakit . '%');
         });
             
         return $query->get();

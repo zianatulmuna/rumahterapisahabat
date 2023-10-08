@@ -68,9 +68,9 @@
                   <img src="{{ asset('storage/' . $terapis->foto) }}" class="avatar-img me-2" alt="{{ $terapis->nama }}">
               @else
                   @if($terapis->jenis_kelamin === 'Laki-Laki')
-                  <img src="/img/avatar-l.png" class="avatar-img me-2" alt="No Profile">
+                  <img src="/img/profile-l.png" class="avatar-img me-2" alt="No Profile">
                   @else
-                  <img src="/img/avatar-p.png" class="avatar-img me-2" alt="No Profile">
+                  <img src="/img/profile-p.png" class="avatar-img me-2" alt="No Profile">
                   @endif
               @endif
               <span class="me-auto text-truncate text-black text-capitalize">{{ $terapis->nama }}</span>

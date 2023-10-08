@@ -8,9 +8,7 @@
           <div class="row my-3 justify-content-sm-start fotoPreview">
             <p class="col-sm-auto m-0">Preview :</p>
             <img src="{{ $foto ? $foto->temporaryUrl() : asset('storage/' . $dbFoto) }}" class="img-fluid pt-2 col-sm-3 img-preview" style="max-height: 100px; width: auto">
-            @if($foto)
             <button type="button" class="btn-close small" aria-label="Close" wire:click="deleteFoto"></button>
-            @endif
           </div>
         @endif
         @error('foto')
@@ -20,7 +18,7 @@
         @enderror
       </div>    
       <div class="mb-4">
-        <label for="tanggal_pendaftaran" class="form-label fw-bold">Tanggal Registrasi Pasien <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
+        <label for="tanggal_pendaftaran" class="form-label fw-bold">Tanggal Registrasi Pasien <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small><span class="text-danger"> *</span></label>
           <input type="date" class="form-control @error('tanggal_pendaftaran') is-invalid @enderror" id="tanggal_pendaftaran" name="tanggal_pendaftaran" 
             value="{{ old('tanggal_pendaftaran') }}" wire:model="tanggal_pendaftaran" @if($addRMPage || $editPage) disabled @endif>
           <div class="form-text">Contoh: 9 Desember 2023 diisi 12/09/2023</div>

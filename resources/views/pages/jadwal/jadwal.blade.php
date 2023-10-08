@@ -23,7 +23,7 @@
     @endif
 
     <div class="d-flex justify-content-between align-items-sm-end flex-column-reverse flex-sm-row my-sm-3">
-        <div class="mb-2 my-sm-0">
+        <div class="my-3 my-sm-0">
             {{ $caption }}
         </div>
         <div class="col-12 col-sm-7 col-md-6 col-lg-5 col-xl-4">

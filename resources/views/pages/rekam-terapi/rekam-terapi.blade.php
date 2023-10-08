@@ -77,7 +77,7 @@
       <span class="fst-italic">Belum ada histori terapi.</span>
     @endif
 
-    @if($userAdmin)
+    @if($userAdmin || $userKepala)
         <div class="d-flex justify-content-between mb-3 mt-4 gap-3">
             <a type="button" class="btn c-btn-danger" data-toggle="modal" data-target="#terapiDeleteModal">
                 <i class="bi bi-trash"></i>

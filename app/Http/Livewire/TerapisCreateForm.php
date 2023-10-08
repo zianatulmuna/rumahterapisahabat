@@ -60,7 +60,7 @@ class TerapisCreateForm extends Component
                 $dataRequest->messages()
             ),
             2 => $this->validate(
-                $dataRequest->rules2($this->id_terapis), 
+                $dataRequest->rules2(''), 
                 $dataRequest->messages()
             )
         };
@@ -80,7 +80,7 @@ class TerapisCreateForm extends Component
             'jenis_kelamin' => $this->jenis_kelamin,
             'agama' => $this->agama,
             'tingkatan' => $this->tingkatan,
-            'total_terapi' => $this->total_terapi,
+            'total_terapi' => $this->total_terapi ? $this->total_terapi : 0,
             'status' => $this->status == '' ? 'Aktif' : $this->status,
             'username' => $this->username,
             'password' => bcrypt($this->password),

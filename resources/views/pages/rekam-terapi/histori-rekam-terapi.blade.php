@@ -84,7 +84,7 @@
                <div class="alert alert-warning hstack gap-1 p-2 px-3 d-inline-flex">
                   <i class="bi bi-exclamation-circle pe-1 fw-semibold"></i>
                   <p class="m-0">Data rekam terapi telah dihapus. 
-                     @if($userAdmin)
+                     @if($userAdmin || $userKepala)
                         Tambahkan penyakit pada Rekam Medis <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.
                      @endif
                   </p>
@@ -101,6 +101,9 @@
       @if(count($rm_terdahulu) > 0)
          <h4 class="mt-4 mb-3">Rekam Terapi Terdahulu</h4>
          <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 row-cols-xxl-4">
+            @php
+                $countSub = 0;
+            @endphp
          @foreach($rm_terdahulu as $rm)
             @foreach($rm->subRekamMedis as $sub)
                @if($userAdmin || $userKepala || !$rm->is_private || ($userTerapis && !$userKepala && $rm->is_private && $rm->id_terapis == $userTerapis->id_terapis))
@@ -160,20 +163,36 @@
                      </div>
                   </div>
                @else
-               <div class="col mb-4">
-                  <div class="card shadow-sm">
+                  <div class="col mb-4">
+                     <div class="card shadow-sm bg-body-tertiary" style="min-height: 200px;">
+                        <div class="bi bi-lock pe-2 fs-3 m-auto text-secondary"></div>
+                     </div>
                   </div>
-               </div>
                @endif
+               @php
+                  $countSub++;
+               @endphp
             @endforeach
          @endforeach
          </div>
+         @if($countSub == 0)
+         <div class="w-100">
+            <div class="alert alert-secondary hstack gap-1 p-2 px-3 d-inline-flex">
+               <i class="bi bi-exclamation-circle pe-1 fw-semibold"></i>
+               <p class="m-0">Data rekam terapi telah dihapus. 
+                  @if($userAdmin || $userKepala)
+                     Tambahkan penyakit pada Rekam Medis <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.
+                  @endif
+               </p>
+            </div>
+         </div>
+         @endif
       @endif
    @else
       <div class="alert alert-danger d-inline-flex mt-5 p-0 p-2 px-3">
          <i class="bi bi-exclamation-circle pe-2 fw-semibold"></i>
          Pasien ini tidak memiliki histori rekam terapi.
-         @if($userAdmin)
+         @if($userAdmin || $userKepala)
             <a href="{{ route('rm.create', $pasien->slug) }}" class="alert-link ps-2">Tambah Rekam Medis</a>
          @endif
       </div>

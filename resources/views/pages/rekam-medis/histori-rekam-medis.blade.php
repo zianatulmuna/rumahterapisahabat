@@ -47,7 +47,7 @@
                   <div class="card-body row">
                      @if(count($rm->subRekamMedis) == 0)
                         <div class="fst-italic">Data rekam terapi telah dihapus. 
-                           @if($userAdmin)
+                           @if($userAdmin || $userKepala)
                               Tambahkan penyakit pada Rekam Medis <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.
                            @endif
                         </div>
@@ -125,7 +125,13 @@
                            </li>
                            </ul>
                            <div class="card-body row">
-                              @if(count($rm->subRekamMedis) == 1)
+                              @if(count($rm->subRekamMedis) == 0)
+                                 <div class="fst-italic">Data rekam terapi telah dihapus. 
+                                    @if($userAdmin || $userKepala)
+                                       Tambahkan penyakit pada Rekam Medis <a href="{{ route('rm.edit', [$pasien->slug, $rm->id_rekam_medis]) }}" class="alert-link">disini</a>.
+                                    @endif
+                                 </div>
+                              @elseif(count($rm->subRekamMedis) == 1)
                                  <a href="{{ route('terapi.rekam', [$pasien->slug, $rm->subRekamMedis[0]->id_sub]) }}" class="link-success text-decoration-none">
                                     Rekam Terapi 
                                     <i class="bi bi-arrow-right"></i>

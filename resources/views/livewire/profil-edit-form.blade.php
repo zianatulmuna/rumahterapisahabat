@@ -114,7 +114,7 @@
                 <div class="col">
                   <div class="mb-4">
                     <label for="username" class="form-label fw-bold">Username</label>
-                    <input type="text" name="username" id="username" class="form-control @error('username') is-invalid @enderror" id="username" value="{{ old('username') }}" wire:model="username">
+                    <input type="text" name="username" id="username" class="form-control text-lowercase @error('username') is-invalid @enderror" id="username" value="{{ old('username') }}" wire:model="username">
                     @error('username')
                     <div class="invalid-feedback">
                       {{ $message }}

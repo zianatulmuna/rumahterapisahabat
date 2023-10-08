@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div class="pt-3 pb-2 mb-3">
+  <div class="pt-3 pb-2">
     @if(count($pasien_baru) > 0)
       <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5 g-3 g-lg-4">          
         @foreach ($pasien_baru as $pasien)                  
@@ -71,7 +71,7 @@
      <span class="fst-italic py-4">Data tidak ditemukan.</span>
     @endif
    </div>
-</div>
+  </div>
 
 <div class="d-flex justify-content-center mt-5">
    {{ $pasien_baru->appends(request()->query())->links() }}

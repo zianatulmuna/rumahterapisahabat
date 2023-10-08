@@ -71,7 +71,7 @@
     </div>
   </div>
 
-  <div class="pt-3 pb-2 mb-3">
+  <div class="pt-3 pb-2">
     @if(count($pasien_lama) > 0)
       <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-3 g-xl-4 g-xxl-3">
         @foreach ($pasien_lama as $pasien)
@@ -108,13 +108,13 @@
                       <div></div>
                     @elseif(count($arrayPenyakitAllowed) > 0)
                       @foreach($arrayPenyakitAllowed as $p)
-                        <a href="/rekam-terapi/tag?search={{ $p }}" target="_blank" class="link-dark link-underline-light d-inline">{{ $p }}</a>@if(!$loop->last || ($loop->last && $isHidden)),@endif
+                        <a href="/rekam-terapi/tag?search={{ $p }}" target="_blank" class="link-dark link-underline-light d-inline">{{ $p }}</a>@if(!$loop->last || ($loop->last && $userTerapis && !$userKepala && $isHidden)),@endif
                       @endforeach
-                      @if($isHidden)
+                      @if($userTerapis && !$userKepala && $isHidden)
                       <i class="bi bi-lock-fill text-secondary"></i>
                       @endif
                     @endif
-                    @if(!$emptyRM && count($arrayPenyakitAllowed) == 0)
+                    @if($userTerapis && !$userKepala && !$emptyRM && count($arrayPenyakitAllowed) == 0)
                       <div class="d-inline-flex justify-content-center align-items-center text-secondary"><i class="bi bi-lock-fill"></i></div>
                     @endif
                   </p>
