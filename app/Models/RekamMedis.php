@@ -78,10 +78,12 @@ class RekamMedis extends Model
             
         return $query->get();
     }    
+    
     public function scopeDataSemuaTahun($query, $penyakit)
     {  
         $query->selectRaw('YEAR(tanggal_selesai) as tahun, COUNT(*) as total')
-            ->where('status_pasien', 'Selesai');
+            ->where('status_pasien', 'Selesai')
+            ->groupBy('tahun')->orderBy('tahun', 'ASC');
 
         $query->when($penyakit ?? false, function ($query, $penyakit) {
             return $query->where('penyakit', 'like', '%' . $penyakit . '%');

@@ -96,7 +96,7 @@
          <a href="{{ route('sub.histori', $pasien->slug) }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0 w-100">Histori Rekam Terapi</a>
          @if(Request::is('pasien/'. $pasien->slug))
             @if($rm != null)
-            <a href="{{ $rm->link_perkembangan }}" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0 w-100 {{ $rm->link_perkembangan ? '' : 'disabled' }}">Link Hasil Lab</a>
+            <a href="{{ $rm->link_perkembangan }}" target="_blank" class="btn btn-outline-success btn-sm mb-3 mx-sm-3 mx-lg-0 w-100 {{ $rm->link_perkembangan ? '' : 'disabled' }}">Link Hasil Lab</a>
             @endif
          @endif
        </div>

@@ -7,7 +7,6 @@ use App\Models\Terapis;
 use App\Models\Pasien;
 use Livewire\Component;
 use App\Models\RekamMedis;
-use Illuminate\Http\Request;
 use App\Models\SubRekamMedis;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
@@ -303,7 +302,9 @@ class PasienCreateForm extends Component
 
         $this->k_bsni = $this->tempatOption == 'klinik' ? 'MTR' : $this->k_bsni;
 
-        $this->storePasien();
+        if(!$this->pasien) {
+            $this->storePasien();
+        }
         $this->storeRekamMedis();
         $this->storeSubRekamMedis();
         

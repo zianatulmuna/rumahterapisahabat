@@ -72,7 +72,7 @@ class SubRekamMedisController extends Controller
         RekamMedis::where('id_rekam_medis', $subRM->rekamMedis->id_rekam_medis)->update($dataRM);        
 
         return redirect(route('sub.histori', [$pasien->slug, $subRM->id_sub]))
-                            ->with('success', 'Terapi Harian berhasil dihapus.')
+                            ->with('success', 'Rekam Terapi berhasil dihapus.')
                             ->with('delete', true);
     }
 

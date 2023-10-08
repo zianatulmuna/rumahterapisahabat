@@ -393,7 +393,7 @@ class PasienEditForm extends Component
             'link_perkembangan' => $this->link_perkembangan,      
             'tempat_layanan' => $this->tempatOption == 'klinik' ? $klinik : $this->tempat_layanan,
             'sistem_layanan' => $this->sistem_layanan == '' ? $this->sistemOption : $this->sistem_layanan. ' ' . $this->sistemOption,
-            'jumlah_layanan' => $this->jumlah_layanan,
+            'jumlah_layanan' => $this->jumlah_layanan == null ? 0 : $this->jumlah_layanan,
             'id_terapis' => $this->id_terapis,
             'is_private' => $this->is_private
         );

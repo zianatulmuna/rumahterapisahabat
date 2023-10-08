@@ -83,41 +83,30 @@
                 @if ($pasien->foto)
                   <img src="{{ asset('storage/' . $pasien->foto) }}" class="card-img-top" alt="...">
                 @else
-                  @if($pasien->jenis_kelamin === 'Laki-Laki')
-                      <img src="/img/avatar-l.png" class="card-img-top" alt="...">
-                  @else
-                      <img src="/img/avatar-p.png" class="card-img-top" alt="...">
-                  @endif
+                  <img src="/img/avatar-{{ $pasien->jenis_kelamin === 'Laki-Laki' ? 'l' : 'p' }}.png" class="card-img-top" alt="{{ $pasien->nama }}">
                 @endif
 
                 <div class="card-body py-1 px-2 align-middle">
-                  <p>
-                    @php
-                      $arrayPenyakitAllowed = [];
-                      $emptyRM = 1;
-                      $isHidden = 0;
-                      foreach ($pasien->rekamMedis as $rm) {
-                        if ($userAdmin || $userKepala || !$rm->is_private || ($userTerapis && !$userKepala && $rm->is_private && $rm->id_terapis == $userTerapis->id_terapis)) {
-                          $arrayPenyakitAllowed = array_merge($arrayPenyakitAllowed, explode(",", $rm->penyakit));
-                        }
-                        $isHidden = $rm->is_private ? 1 : 0;
-                        $emptyRM = 0;
-                      }                  
-                    @endphp
-                    @if($emptyRM)
-                      <div></div>
-                    @elseif(count($arrayPenyakitAllowed) > 0)
-                      @foreach($arrayPenyakitAllowed as $p)
-                        <a href="/rekam-terapi/tag?search={{ $p }}" target="_blank" class="link-dark link-underline-light d-inline">{{ $p }}</a>@if(!$loop->last || ($loop->last && $userTerapis && !$userKepala && $isHidden)),@endif
-                      @endforeach
-                      @if($userTerapis && !$userKepala && $isHidden)
-                      <i class="bi bi-lock-fill text-secondary"></i>
+                  @php
+                    $arrayPenyakitAllowed = [];
+                    $isHidden = 0;
+                    foreach ($pasien->subRekamMedis as $sub) {
+                      if ($userAdmin || $userKepala || !$sub->rekamMedis->is_private || ($userTerapis && !$userKepala && $sub->rekamMedis->id_terapis == $userTerapis->id_terapis)) {
+                        $arrayPenyakitAllowed[] = $sub->penyakit;
+                      }
+                      $isHidden = $sub->rekamMedis->is_private && ($sub->rekamMedis->id_terapis != $userTerapis->id_terapis) ? 1 : 0;
+                    }                  
+                  @endphp
+                  @if(count($arrayPenyakitAllowed) > 0)
+                    @foreach ($arrayPenyakitAllowed as $penyakit)
+                      <a href="/rekam-terapi/tag?search={{ $penyakit }}" class="link-dark link-underline-light d-inline">{{ $penyakit }}</a>@if(!$loop->last || ($loop->last && $userTerapis && !$userKepala && $isHidden)),@endif
+                      @if($userTerapis && !$userKepala && $loop->last && $isHidden)
+                        <i class="bi bi-lock-fill text-secondary"></i>
                       @endif
-                    @endif
-                    @if($userTerapis && !$userKepala && !$emptyRM && count($arrayPenyakitAllowed) == 0)
-                      <div class="d-inline-flex justify-content-center align-items-center text-secondary"><i class="bi bi-lock-fill"></i></div>
-                    @endif
-                  </p>
+                    @endforeach
+                  @elseif($userTerapis && !$userKepala && count($arrayPenyakitAllowed) == 0 && $isHidden)
+                    <i class="bi bi-lock-fill text-secondary"></i>
+                  @endif
                 </div>
                 <div class="card-footer bg-white d-flex align-item-center justify-content-between">
                   <a href="{{ route('sub.histori', $pasien->slug) }}" class="lh-sm">Histori Terapi</a>
@@ -135,10 +124,5 @@
      <span class="fst-italic py-4">Data tidak ditemukan.</span>
     @endif
   </div>
-
-   
-
 </div>
-
-
 @endsection

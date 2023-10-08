@@ -25,7 +25,7 @@
                               $arrayPenyakit = explode(",", $rm->penyakit);
                            @endphp
                            @foreach($arrayPenyakit as $p)
-                              <a href="/rekam-terapi/tag?search={{ $p }}" target="_blank" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@endif
+                              <a href="/rekam-terapi/tag?search={{ $p }}" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@endif
                            @endforeach
                         </p>
                      </li>
@@ -70,7 +70,7 @@
             @else
             <div class="col mb-4">
                <div class="card shadow-sm bg-body-tertiary" style="min-height: 200px;">
-                  <div class="bi bi-lock pe-2 fs-3 m-auto text-secondary"></div>
+                  <div class="bi bi-lock pe-2 fs-1 m-auto text-secondary"></div>
                </div>
             </div>
             @endif
@@ -150,7 +150,7 @@
                @else
                   <div class="col mb-4">
                      <div class="card shadow-sm bg-body-tertiary" style="min-height: 200px;">
-                        <div class="bi bi-lock pe-2 fs-3 m-auto text-secondary"></div>
+                        <div class="bi bi-lock pe-2 fs-1 m-auto text-secondary"></div>
                      </div>
                   </div>
                @endif

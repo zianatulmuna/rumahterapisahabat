@@ -20,7 +20,7 @@
           @if($currentStep == 1)
             <div class="row row-cols-1 row-cols-lg-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
                 <div class="col">
-                  @unless($userTerapis)
+                  @if($userAdmin || $userKepala)
                   <div class="mb-4">
                     <label for="id_terapis" class="form-label fw-bold @error('id_terapis') is-invalid @enderror">Terapis <span class="text-danger">*</span></label>
                     <div class="dropdown search-dinamis dropdown-terapis">
@@ -40,8 +40,7 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </div>
-                  @endunless
-                  @if($userTerapis) 
+                  @else 
                     <div class="mb-4">
                       <label for="terapis" class="form-label fw-bold">Terapis</label>
                       <input type="text" class="form-control" value="{{ $userTerapis->nama }}" readonly>

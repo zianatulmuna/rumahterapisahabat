@@ -167,7 +167,7 @@
       </div>
       </div>
    </div>
-    @if($userAdmin)
+    @if($userAdmin || $userKepala)
       <div class="d-flex justify-content-between mt-3 mt-lg-0 mb-3 mx-0 mx-sm-2">
          <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#terapiDeleteModal">
                <i class="bi bi-trash"></i>
@@ -191,11 +191,7 @@
          </a>
       </div>
       @endif
-   @endif
-      
-        
-    
-    
+   @endif    
 </div>
 @endsection
 

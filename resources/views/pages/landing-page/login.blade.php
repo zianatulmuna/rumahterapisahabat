@@ -19,7 +19,7 @@
               <span class="input-group-text bg-success text-white border-0" id="basic-addon1">
                 <i class="bi bi-person-fill"></i>
               </span>
-              <input type="text" name="username" id="username" class="form-control @error('username') is-invalid @enderror" placeholder="Username" value="{{ old('username') }}" required>
+              <input type="text" name="username" id="username" class="form-control text-lowercase @error('username') is-invalid @enderror" placeholder="Username" value="{{ old('username') }}" required>
             </div>
             @error('username')
                 <div class="invalid-feedback">

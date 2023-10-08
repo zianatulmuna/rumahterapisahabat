@@ -10,6 +10,10 @@
                     <i class="bi bi-calendar2-week"></i>
                 </button>
                 <ul class="dropdown-menu w-100 shadow-lg">
+                    <li><h6 class="dropdown-header">Berdasarkan Periode</h6></li>
+                    <li><button type="button" class="dropdown-item {{ $periode == 'bulan-ini' ? 'active' : '' }}" wire:click="setFilterPeriode('bulan-ini')">Bulan Ini</button></li>
+                    <li><button type="button" class="dropdown-item {{ $periode == 'tahun-ini' ? 'active' : '' }}" wire:click="setFilterPeriode('tahun-ini')">Tahun Ini</button></li>
+                    <li><hr class="dropdown-divider"></li>
                     <li><h6 class="dropdown-header">Berdasarkan Tanggal</h6></li>
                     <li class="px-3 pb-2 hstack stack-input-icon">
                         <div class="d-block d-sm-none form-control input-icon pe-1" style="width: auto;">
@@ -17,10 +21,6 @@
                         </div>
                         <input type="date" value="{{ $tanggal }}" id="date" class="form-control">
                     </li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><h6 class="dropdown-header">Berdasarkan Periode</h6></li>
-                    <li><button type="button" class="dropdown-item {{ $periode == 'bulan-ini' ? 'active' : '' }}" wire:click="setFilterPeriode('bulan-ini')">Bulan Ini</button></li>
-                    <li><button type="button" class="dropdown-item {{ $periode == 'tahun-ini' ? 'active' : '' }}" wire:click="setFilterPeriode('tahun-ini')">Tahun Ini</button></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><h6 class="dropdown-header">Berdasarkan Range Tanggal</h6></li>
                     <li class="px-3 pb-2">
@@ -33,13 +33,13 @@
                                 <div class="d-block d-sm-none form-control input-icon pe-1" style="width: auto;">
                                     <i class="bi bi-calendar2-plus text-body-tertiary"></i>
                                 </div>
-                                <input type="date" id="startDate" class="form-control">
+                                <input type="date" id="startDate" class="form-control" value="{{ $this->filter != 'Range' ? '' : $this->tglAwal }}">
                             </div>
                             <div class="hstack stack-input-icon w-100 overflow-hidden">
                                 <div class="d-block d-sm-none form-control pe-1 input-icon" style="width: auto;">
                                     <i class="bi bi-calendar2-check text-body-tertiary"></i>
                                 </div>
-                                <input type="date" id="endDate" class="form-control">
+                                <input type="date" id="endDate" class="form-control" value="{{ $this->filter != 'Range' ? '' : $this->tglAkhir }}">
                             </div>
                         </div>
                         <div class="text-center">
@@ -83,7 +83,7 @@
                                 @php
                                     $rm = $jadwal->subRekamMedis->rekamMedis;
                                 @endphp
-                                @if ($rm->is_private && $rm->id_terapis != $jadwal->id_terapis)
+                                @if ($userTerapis && !$userKepala && $rm->is_private && $rm->id_terapis != $jadwal->id_terapis)
                                     <button href="" class="btn btn-sm c-btn-secondary rounded-3 disabled" disabled>
                                         <i class="bi bi-lock-fill"></i>
                                     </button> 
@@ -131,8 +131,6 @@
     const start = document.querySelector('#startDate');
     const end = document.querySelector('#endDate');
     const dateBtn = document.querySelector('#dateBtn');
-
-
 
     tunggal.addEventListener('change', function(){
         Livewire.emit('setFilterTanggal', tunggal.value);

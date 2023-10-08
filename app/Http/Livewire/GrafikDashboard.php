@@ -110,6 +110,7 @@ class GrafikDashboard extends Component
     }
     public function setFilter($current) {
         $this->filter = $current;
+        $this->tahun = null;
         $this->setFilterAction($this->filter);
     }
     public function setTahun($tahun) {

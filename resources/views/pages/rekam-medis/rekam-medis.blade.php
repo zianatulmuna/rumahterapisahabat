@@ -90,7 +90,7 @@
                   $arrayPenyakit = explode(",", $rm->penyakit);
                @endphp
                @foreach($arrayPenyakit as $p)
-                  <a href="/rekam-terapi/tag?search={{ $p }}" target="_blank" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@endif
+                  <a href="/rekam-terapi/tag?search={{ $p }}" class="link-dark link-underline-light">{{ $p }}</a>@if(!$loop->last),@endif
                @endforeach
             </div>
          </div>

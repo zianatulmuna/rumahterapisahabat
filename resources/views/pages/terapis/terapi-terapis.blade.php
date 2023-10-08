@@ -85,9 +85,9 @@
   </div>
    @if(count($histori_terapi) > 0)
    <div class="overflow-auto mt-4">
-      <table class="table table-bordered" style="min-width: 420px;">
+      <table class="table table-bordered text-center" style="min-width: 420px;">
          <thead>
-         <tr class="text-center">
+         <tr>
             <th scope="col">No</th>
             <th scope="col">Tanggal</th>
             <th scope="col">Nama Pasien</th>
@@ -101,11 +101,11 @@
             @endphp
             @foreach ($histori_terapi as $terapi)
                <tr>
-                     <th scope="row" class="text-center small-col-number">{{ $startIndex++ }}</th>
-                     <td class="text-center">{{ date('d/m/Y', strtotime($terapi->tanggal)) }}</td>
+                     <th scope="row" class="small-col-number">{{ $startIndex++ }}</th>
+                     <td>{{ date('d/m/Y', strtotime($terapi->tanggal)) }}</td>
                      <td class="px-sm-3">{{ $terapi->subRekamMedis->rekamMedis->pasien->nama }}</td>
                      <td class="px-sm-3">{{ $terapi->subRekamMedis->penyakit}}</td>
-                     <td class="text-center small-col-aksi">
+                     <td class="small-col-aksi">
                         <a href="{{ route('terapi.detail', [$terapi->subRekamMedis->rekamMedis->pasien->slug, $terapi->subRekamMedis->id_sub, $terapi->id_terapi]) }}" class="btn btn-sm rounded-2 c-btn-success">
                            <i class="bi bi-eye"></i>               
                         </a>      

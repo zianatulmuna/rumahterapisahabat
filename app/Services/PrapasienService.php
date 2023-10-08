@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Cviebrock\EloquentSluggable\Services\SlugService;
  
-class PasienService
+class PrapasienService
 {
     public function createPasien(Request $request)
     {

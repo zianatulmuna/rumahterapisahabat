@@ -8,7 +8,7 @@
         <button type="button" class="dropdown-item {{ $filter == 'tahun ini' ? 'active' : '' }}" wire:click="setFilter('tahun ini')">Tahun Ini</button>
         <button type="button" class="dropdown-item {{ $filter == 'semua tahun' ? 'active' : '' }}" wire:click="setFilter('semua tahun')">Semua Tahun</button>
         <div class="input-group p-2">
-            <input type="search" class="form-control py-0" name="tahunForm" id="tahunInput" min="2014" max="2023" placeholder="Tahun">
+            <input type="search" class="form-control py-0" name="tahunForm" id="tahunInput" min="2014" max="2023" value="{{ $filter != 'tahun' ? '' : $tahun }}" placeholder="Tahun">
             <button type="button" id="tahunBtn" class="btn btn-outline-success">
                 <i class="bi bi-search"></i>
             </button>
@@ -20,13 +20,19 @@
     <script>
         document.addEventListener('livewire:load', function () {
 
-            // script tahun
-            const inputTahun = document.querySelector('#tahunInput');
             const btnTahun = document.querySelector('#tahunBtn');
+            let tahunIni = new Date().getFullYear();
 
             btnTahun.addEventListener('click', function(e) {
-                Livewire.emit('setTahun', inputTahun.value);
+                let inputTahun = document.querySelector('#tahunInput').value;
+
+                if(!isNaN(inputTahun) && inputTahun >= 2014 && inputTahun <= tahunIni) {
+                    Livewire.emit('setTahun', inputTahun);
+                } else {
+                    alert('Masukkan tahun dalam rentang 2014 sampai tahun ini.');
+                }
             });
+
         });
     </script>
 @endpush

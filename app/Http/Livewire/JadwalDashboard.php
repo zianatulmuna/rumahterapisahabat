@@ -19,6 +19,7 @@ class JadwalDashboard extends Component
 
     public function mount()
     {
+        $this->filter;
         $this->tanggal =  date('Y-m-d');
 
         if (session()->has('livewire_page')) {
@@ -65,29 +66,32 @@ class JadwalDashboard extends Component
         ));
     }
 
+    public function resetFilter() {
+        $this->filter = $this->periode = $this->tanggal = $this->tglAwal = $this->tglAkhir = '';
+    }
     public function setFilterPeriode($value) {
+        $this->resetFilter();
         $this->filter = "Periode";
         $this->periode = $value;
     }
     public function setFilterTanggal($value) {
+        $this->resetFilter();
         $this->filter = "Tunggal";
-        $this->tanggal = $value;        
-        $this->tglAwal = "";
-        $this->tglAkhir = "";
+        $this->tanggal = $value;
     }
 
     public function setFilterRange($value) {
+        $this->resetFilter();
         $this->filter = "Range";
         $this->tglAwal = $value['awal'];
         $this->tglAkhir = $value['akhir'];
-        $this->tanggal = "";  
     }
 
-    
     public function ambilJadwal($id_jadwal, $id_terapis)
     {        
         Jadwal::where('id_jadwal', $id_jadwal)->update(['id_terapis' => $id_terapis]);
     }
+    
     public function lepasJadwal($id_jadwal)
     {        
         Jadwal::where('id_jadwal', $id_jadwal)->update(['id_terapis' => null]);

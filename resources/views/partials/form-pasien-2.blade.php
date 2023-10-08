@@ -21,7 +21,6 @@
         <label for="tanggal_pendaftaran" class="form-label fw-bold">Tanggal Registrasi Pasien <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small><span class="text-danger"> *</span></label>
           <input type="date" class="form-control @error('tanggal_pendaftaran') is-invalid @enderror" id="tanggal_pendaftaran" name="tanggal_pendaftaran" 
             value="{{ old('tanggal_pendaftaran') }}" wire:model="tanggal_pendaftaran" @if($addRMPage || $editPage) disabled @endif>
-          <div class="form-text">Contoh: 9 Desember 2023 diisi 12/09/2023</div>
             @error('tanggal_pendaftaran')
               <div class="invalid-feedback">
                 {{ $message }}
@@ -30,9 +29,9 @@
       </div>  
       @if($addRMPage || $editPage)
       <div class="mb-4">
-        <label for="tanggal_rm" class="form-label fw-bold">Tanggal Registrasi Rekam Medis <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small> <span class="text-danger">*</span></label>
+        <label for="tanggal_rm" class="form-label fw-bold">Tanggal Registrasi Rekam Medis <small class="fw-semibold">[Bulan/Tanggal/Tahun]</small><span class="text-danger"> *</span></label>
         <input type="date" class="form-control @error('tanggal_registrasi') is-invalid @enderror" id="tanggal_registrasi" name="tanggal_registrasi" 
-          value="{{ old('tanggal_registrasi') }}" wire:model="tanggal_registrasi" @if($isPasienLama) disabled @endif>
+          value="{{ old('tanggal_registrasi') }}" wire:model="tanggal_registrasi" @if($isPasienLama && $editPage) disabled @endif>
         @error('tanggal_registrasi')
           <div class="invalid-feedback">
             {{ $message }}

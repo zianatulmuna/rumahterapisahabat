@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\RekamMedis;
-use App\Models\SubRekamMedis;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,10 +14,8 @@ class Pasien extends Model
 
     protected $table = 'pasien';
     protected $guarded = [];
-
     protected $with = ['rekamMedis'];
-    protected $primaryKey = 'id_pasien';
-    
+    protected $primaryKey = 'id_pasien';    
     public $incrementing = false;
 
     public function rekamMedis()
@@ -29,6 +26,16 @@ class Pasien extends Model
     public function jadwal()
     {
         return $this->belongsToMany(Jadwal::class, 'id_pasien');
+    }
+
+    public function subRekamMedis()
+    {
+        return $this->throughRekamMedis()->hasSubRekamMedis();
+    }
+
+    public function rekamMedisAktif()
+    {
+        return $this->where('status_pasien', 'Rawat Jalan');
     }
     
     public function getRouteKeyName(): string
@@ -143,7 +150,5 @@ class Pasien extends Model
         });
             
         return $query->get();
-    }
-    
-    
+    }    
 }

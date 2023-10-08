@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\Pasien;
 use App\Models\RekamMedis;
 use Illuminate\Http\Request;
-use App\Services\PasienService;
+use App\Services\PrapasienService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PrapasienRequest;
 use Illuminate\Support\Facades\Storage;
@@ -63,7 +63,7 @@ class PasienController extends Controller
         return view('pages.pasien.tambah-pasien', compact('pasien'));
     }
 
-    public function storePrapasien(PrapasienRequest $request, PasienService $pasienService)
+    public function storePrapasien(PrapasienRequest $request, PrapasienService $pasienService)
     {
         $idPasien = $pasienService->createPasien($request);
         $pasienService->createRekamMedisPrapasien($request, $idPasien);

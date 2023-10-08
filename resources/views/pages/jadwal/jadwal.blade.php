@@ -33,6 +33,10 @@
                     <i class="bi bi-calendar2-week"></i>
                 </button>
                 <ul class="dropdown-menu w-100 shadow-lg">
+                    <li><h6 class="dropdown-header">Berdasarkan Periode</h6></li>
+                    <li><a href="?filter=bulan-ini" class="dropdown-item {{ request('filter') == 'bulan-ini' ? 'active' : '' }}">Bulan Ini</a></li>
+                    <li><a href="?filter=tahun-ini" class="dropdown-item {{ request('filter') == 'tahun-ini' ? 'active' : '' }}">Tahun Ini</a></li>
+                    <li><hr class="dropdown-divider"></li>
                     <li><h6 class="dropdown-header">Berdasarkan Tanggal</h6></li>
                     <li class="px-3 pb-2 hstack stack-input-icon">
                         <div class="d-block d-sm-none form-control input-icon pe-1" style="width: auto;">
@@ -40,10 +44,6 @@
                         </div>
                         <input type="date" value="{{ request('tanggal') }}" id="date" class="form-control">
                     </li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><h6 class="dropdown-header">Berdasarkan Periode</h6></li>
-                    <li><a href="?filter=bulan-ini" class="dropdown-item {{ request('filter') == 'bulan-ini' ? 'active' : '' }}">Bulan Ini</a></li>
-                    <li><a href="?filter=tahun-ini" class="dropdown-item {{ request('filter') == 'tahun-ini' ? 'active' : '' }}">Tahun Ini</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><h6 class="dropdown-header">Berdasarkan Range Tanggal</h6></li>
                     <li class="px-3 pb-2">
@@ -75,17 +75,17 @@
     </div>
     <div class="overflow-auto">
         @if(count($jadwal_terapi) > 0)
-            <table class="table table-bordered align-middle overflow-auto" style="min-width: 450px;">
+            <table class="table table-bordered text-center align-middle overflow-auto" style="min-width: 450px;">
                 <thead>
-                <tr class="text-center">
+                <tr>
                     <th scope="col">No</th>
                     @if(request('filter') || request('awal'))
                     <th scope="col">Tanggal</th>
                     @endif
                     <th scope="col">Nama Pasien</th>
-                    <th scope="col" class="">Rekam Terapi</th>
-                    <th scope="col" class="">Penyakit</th>
-                    <th scope="col" class="">Waktu</th>
+                    <th scope="col">Rekam Terapi</th>
+                    <th scope="col">Penyakit</th>
+                    <th scope="col">Waktu</th>
                     <th scope="col" >Terapis</th>
                     @if($userAdmin)
                     <th scope="col" class="table-col-aksi">Aksi</th>
@@ -98,22 +98,21 @@
                     @endphp
                     @foreach ($jadwal_terapi as $jadwal)
                         <tr>
-                            <th scope="row" class="text-center">{{ $startIndex++ }}</th>
+                            <th scope="row">{{ $startIndex++ }}</th>
                             @if(request('filter') || request('awal'))
-                            <td class="text-center">{{ date('d/m/Y', strtotime($jadwal->tanggal)) }}</td>
+                            <td>{{ date('d/m/Y', strtotime($jadwal->tanggal)) }}</td>
                             @endif
                             <td>{{ $jadwal->pasien->nama }}</td>
-                            <td class="text-center">
+                            <td>
                                 <a href="{{ route('terapi.rekam', [$jadwal->pasien->slug, $jadwal->id_sub]) }}" class="btn btn-sm c-btn-success rounded-3">
                                     <i class="bi bi-eye"></i>
                                 </a>  
                             </td>
-                            <td class="text-center">{{ $jadwal->subRekamMedis->penyakit }}</td>
-                            <td class="text-center">{{ $jadwal->status }}</td>
-                            {{-- <td class="text-center">{{ $jadwal->waktu ? date('H:i', strtotime($jadwal->waktu)) : ''}}</td> --}}
+                            <td>{{ $jadwal->subRekamMedis->penyakit }}</td>
+                            <td>{{ $jadwal->waktu ? date('H:i', strtotime($jadwal->waktu)) : ''}}</td>
                             <td class="text-capitalize text-center">{{ $jadwal->id_terapis ? str_replace(['.', '-', '_'], ' ', $jadwal->terapis->username) : '' }}</td>
                             @if($userAdmin)
-                            <td class="text-center">
+                            <td>
                                 <a href="{{ route('jadwal.delete', $jadwal->id_jadwal) }}" class="c-badge c-badge-danger me-2" data-bs-toggle="modal" data-bs-target="#jadwalDeleteModal" onclick="setDeleteJadwal('{{ $jadwal->id_jadwal }}')">
                                     <i class="bi bi-trash"></i>                      
                                 </a>
