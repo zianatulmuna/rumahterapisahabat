@@ -23,7 +23,7 @@ class PasienController extends Controller
 
         $pasien_lama = $query->filter($search, $sortBy, $status)
             ->where('status_pendaftaran', 'Pasien')
-            ->paginate(12);
+            ->paginate(20);
 
         return view('pages.pasien.pasien-lama', compact('pasien_lama'));
     }
@@ -38,7 +38,7 @@ class PasienController extends Controller
 
         $pasien_baru = $query->filter($search, $sortBy, $status)
             ->where('status_pendaftaran', 'Prapasien')
-            ->paginate(12);
+            ->paginate(20);
 
         return view('pages.pasien.pasien-baru', compact('pasien_baru'));
     }

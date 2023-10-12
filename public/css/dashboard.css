@@ -29,7 +29,6 @@ h1, h2, h3, h4,
 .content-container {
   padding: 30px 28px;
   min-height: 100vh;
-  /* margin-bottom: 50px; */
 }
 
 .main-bg {
@@ -101,10 +100,6 @@ h1, h2, h3, h4,
   padding: 0;
   right: 0;
 }
-
-/* .dropdown-profil i {
-  color: #9eabb6;
-} */
 
 .dropdown-profil a {
   font-size: 14px;
@@ -206,7 +201,6 @@ h1, h2, h3, h4,
 
 .modal-navbar .modal-content{
   border-radius: 0;
-  /* overflow-y: scroll; */
   height: 100vmax;
 }
 
@@ -236,7 +230,6 @@ h1, h2, h3, h4,
   align-items: center;
   justify-content: flex-start;
   padding: 10px 5px 10px 5px;
-  /* margin-bottom: 20px; */
   cursor: pointer;
   transition: all .5s ease;
 }

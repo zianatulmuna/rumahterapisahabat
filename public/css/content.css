@@ -101,7 +101,6 @@
 
 .content-ready-landing {
   max-height: 300px;
-  /* min-height: 250px; */
   overflow-y: auto;
 }
 /* Grafik */
@@ -134,7 +133,7 @@
   font-size: 15px;
   font-weight: 600;
   display: -webkit-box;
-    -webkit-line-clamp: 2; /* Jumlah baris yang ingin ditampilkan */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   margin: 0px;
@@ -148,7 +147,6 @@
 .card-custom .card-header {
   background-color: #0E8357;
   text-align: center;
-  /* border: none; */
 }
 
 .card-custom .card-header .card-header-text {
@@ -163,7 +161,6 @@
   font-family: 'Nunito', sans-serif;
   text-decoration: none;
   font-size: 15px;
-  /* font-weight: 400; */
 }
 
 .card-custom a:hover{
@@ -173,7 +170,6 @@
 
 .card-custom img{
   height: 55%;
-  /* background-color: #212529; */
   width: auto;
   object-fit: cover;
   object-position: 0px 20%;
@@ -236,7 +232,6 @@
 .card-baru .card-header {
   background-color: #0E8357;
   text-align: center;
-  /* border: none; */
 }
 
 .card-baru .card-header .card-header-text {
@@ -330,7 +325,6 @@
 .card-dulu a:hover {
   background-color: #fff;
   color: #0e8357;
-  /* border-radius: 10px; */
   cursor: pointer;
 }
 
@@ -376,6 +370,7 @@ table th, table td,
 
 .table-data-diri thead tr th:first-child {
   width: 40%;
+  min-width: 117px;
 }
 
 .table-data-diri td, .table-data-diri th {
@@ -393,13 +388,14 @@ table th, table td,
 
 .table-info-rm thead tr th:first-child {
   width: 37%;
+  min-width: 108px;
 }
 
 .table-rm-p td {
   padding-top: 4px;
 }
 .table-rm-btn td {
-  padding-top: 9px;
+  padding-top: 7px;
 }
 
 /* 

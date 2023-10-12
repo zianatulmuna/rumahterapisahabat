@@ -80,8 +80,13 @@ class SubRekamMedisController extends Controller
     {
         $search = $request->input('search');
         $sortBy = $request->urut === 'Terlama' ? 'ASC' : 'DESC';
+        $idTerapis = null;
 
-        $sub_penyakit = SubRekamMedis::filter($search, $sortBy)->paginate(12);
+        if(!Auth::guard('admin')->check() || Auth::guard('terapis')->check() && !Auth::guard('terapis')->user()->is_kepala) {
+            $idTerapis = Auth::guard('terapis')->user()->id_terapis;
+        }
+
+        $sub_penyakit = SubRekamMedis::filter($search, $sortBy, $idTerapis)->paginate(12);
 
         return view('pages.rekam-terapi.tagging-penyakit', compact('sub_penyakit'));
     }

@@ -89,6 +89,8 @@ class PasienEditForm extends Component
             $this->kesimpulan = str_replace('<br />', '', $rm->kesimpulan);
             $this->link_perkembangan = $rm->link_perkembangan;
             $this->tanggal_selesai = $rm->tanggal_selesai;
+            $this->is_private = $rm->is_private;
+            $this->id_terapis = $rm->id_terapis;
 
             // variabel pembantu
             $this->dbTanggal_ditambahkan = $rm->tanggal_registrasi;            

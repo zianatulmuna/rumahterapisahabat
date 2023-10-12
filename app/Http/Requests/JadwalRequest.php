@@ -13,12 +13,13 @@ class JadwalRequest extends FormRequest
     } 
     public function rules(): array
     {
-        $id_jadwal = $this->route('id_jadwal');
+        $id_jadwal = $this->route('jadwal');
 
         return [
             'id_terapis' => 'nullable',
             'id_pasien' => 'required',
             'id_sub' => 'required',
+            'waktu' => 'nullable|date_format:H:i',
             'tanggal' => [
                 'required',
                 'date',
@@ -41,7 +42,8 @@ class JadwalRequest extends FormRequest
             'id_pasien.required' => 'Pasien harus diisi.',
             'id_sub.required' => 'Penyakit harus dipilih.',
             'date' => 'Data yang dimasukkan harus berupa tanggal dengan format Bulan/Tanggal/Tahun.',
-            'tanggal.unique' => 'Tanggal untuk pasien dan terapis ini sudah ada'
+            'tanggal.unique' => 'Tanggal untuk pasien dan terapis ini sudah ada',
+            'date_format' => 'Format waktu mengikuti [Jam:Menit]'
         ];
     }
 }

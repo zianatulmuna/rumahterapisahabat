@@ -94,7 +94,7 @@
                       if ($userAdmin || $userKepala || !$sub->rekamMedis->is_private || ($userTerapis && !$userKepala && $sub->rekamMedis->id_terapis == $userTerapis->id_terapis)) {
                         $arrayPenyakitAllowed[] = $sub->penyakit;
                       }
-                      $isHidden = $sub->rekamMedis->is_private && ($sub->rekamMedis->id_terapis != $userTerapis->id_terapis) ? 1 : 0;
+                      $isHidden = $userTerapis && !$userKepala && $sub->rekamMedis->is_private && ($sub->rekamMedis->id_terapis != $userTerapis->id_terapis) ? 1 : 0;
                     }                  
                   @endphp
                   @if(count($arrayPenyakitAllowed) > 0)

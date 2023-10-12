@@ -17,19 +17,11 @@
     }
   }
 
-  /* xl */
-  @media (max-width: 1200px) {    
-    
-
-    
-  }
-
   /* lg */
   @media (max-width: 992px) {    
     .table-admin{
       width: 95%;
-    }
-    
+    }    
   }
   
  
@@ -49,25 +41,19 @@
     }
     .filter-icon {
       display: inline;
-    }
-    
+    }    
     .custom-bio .btn{
       margin-top: 10px;
     }
-    /* .table-admin{
-      width: 95%;
-    } */
     .content-container{
       padding: 20px 5px;
     }
-
     .custom-step i{
       font-size: 32px;
     }
     .custom-step h5{
       font-size: 16px;
     }
-
     .navbar-text {
       display: none;
     }
@@ -79,129 +65,109 @@
       margin: 10px 5px 0px 5px;
     }
     .navbar-nav .logo {
-        position: relative;
-        height: 32px;
-        width: 32px;
-        margin-left: 5px;
-      }
-      .navbar-nav .avatar-img {
-        height: 32px;
-        width: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-      .mobile-toggler .logo {
-        position: relative;
-        height: 32px;
-        width: 32px;
-      }
-      .col-xl-10 {
-        width: 100%;
-      }
-      /* .table-admin{
-        width: 95%;
-      } */
+      position: relative;
+      height: 32px;
+      width: 32px;
+      margin-left: 5px;
+    }
+    .navbar-nav .avatar-img {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .mobile-toggler .logo {
+      position: relative;
+      height: 32px;
+      width: 32px;
+    }
+    .col-xl-10 {
+      width: 100%;
+    }
+    .btn-cari {
+      display: none;
+    }
+    .card-terapis {
+      height: 220px;
+    }
+    .card-baru {
+      height: 220px;
+    }
+    .card-baru img {
+      height: 55%;
+    }
+    .card-custom img {
+      height: 45%;
+    }
+    .card-custom {
+      height: 260px;
+    }
+    .card-terapis img{
+      height: 64%;
+    }
+    .custom-step i{
+      font-size: 24px;
+    }
+    .custom-step h5{
+      font-size: 14px;
+    }
+    .img-preview {
+      max-height: 160px;
+      width: auto;
+    }
 
-      .btn-cari {
-        display: none;
-      }
-
-      .card-terapis {
-        height: 220px;
-      }
-      .card-baru {
-        height: 220px;
-      }
-
-      .card-baru img {
-        height: 55%;
-      }
-      .card-custom img {
-        height: 45%;
-      }
-      .card-custom {
-        height: 260px;
-      }
-
-      .card-terapis img{
-        height: 64%;
-      }
-
-      .custom-step i{
-        font-size: 24px;
-      }
-      .custom-step h5{
-        font-size: 14px;
-      }
-
-      .img-preview {
-        max-height: 160px;
-        width: auto;
-      }
-
-      .grafik-perkembangan .nav-tabs .nav-link {
-        font-size: 14px;
-      }
-      .stack-input-icon input {
-        border-left: 0px!important;
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
-        padding-left: 0.4rem;
-        padding-right: 0.4rem;
-      }
-      .stack-input-icon .input-icon {
-        border-right: 0px!important;
-        border-top-right-radius: 0px;
-        border-bottom-right-radius: 0px;
-      }
-      .small-col-aksi {
-        width: 70px;
-      }
-      .small-col-number {
-        width: 50px;
-      }
+    .grafik-perkembangan .nav-tabs .nav-link {
+      font-size: 14px;
+    }
+    .stack-input-icon input {
+      border-left: 0px!important;
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+      padding-left: 0.4rem;
+      padding-right: 0.4rem;
+    }
+    .stack-input-icon .input-icon {
+      border-right: 0px!important;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+    .small-col-aksi {
+      width: 70px;
+    }
+    .small-col-number {
+      width: 50px;
+    }
       
   }
 
   @media (max-width: 450px) {   
     .card-performa .flex-wrap {
       flex-direction: column;
-      /* align-items: start; */
     }
     .card-performa .col {
       padding: 30px;
     }
-
     .card-terapis {
       height: 200px;
     }
-
     .custom-step {
-      padding: 0px;
-     
+      padding: 0px;     
     }
-
     .custom-step-pasien {
        padding: 1rem 50px 0px 50px;
     }
-
     .custom-step .col {
       padding: 0px;
     }
-
     .custom-step-pasien h5 {
       display: none;
     }
-
     .step-title {
       display: block;
-      /* padding-bottom: 10px; */
     }
-
     .step-title h5 {
       font-weight: bold;
     }
-
     .table-col-rm {
       width: 80px;
     }
@@ -212,23 +178,19 @@
       flex-direction: row;
       align-items: center;
     }
-
     .step-title {
       display: none;
     }
     .step-title h5 {
       font-size: 1.1rem;
     }
-
     .custom-step {
       padding-top: 1.5rem;
       padding-bottom: 1.5rem;
     }
-
     .dropdown-dinamis {
       min-width: 340px;
     }
-
   }
 
   @media (min-width: 576px) {   
@@ -239,42 +201,28 @@
     .card-custom .card-footer {
       padding-top: 12px;
       padding-bottom: 12px;
-    }
-
-    
+    }    
     .table-data-diri thead tr th {
       width: 80%;
-    }
-    
+    }    
     .table-data-diri thead tr th:first-child {
       width: 20%;
-    }
-    
+    }    
     .table-info-rm tbody tr td, .table-info-rm thead tr th {
       width: 81%;
-    }
-    
+    }    
     .table-info-rm tbody tr td:first-child, .table-info-rm thead tr th:first-child {
       width: 19%;
     }
     .search-dinamis .select-options {
       max-height: 150px;
     }
-
     .dropdown-filter-tahun .dropdown-toggle {
-      /* width: 100%;  */
       max-width: 300px;
-      /* text-align: right; */
     }
-
     .table-col-terapis {
       min-width: 120px;
     }
-    
-
-    /* .small-col-aksi {
-      width: 150px;
-    } */
     .small-col-number {
       width: 70px;
     }
@@ -286,6 +234,7 @@
       width: 205px;
     }
   }
+  
   /* min lg */
   @media (min-width: 992px) { 
     .content-ready-landing {

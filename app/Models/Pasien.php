@@ -23,21 +23,16 @@ class Pasien extends Model
         return $this->hasMany(RekamMedis::class, 'id_pasien');
     }
 
-    public function jadwal()
-    {
-        return $this->belongsToMany(Jadwal::class, 'id_pasien');
-    }
-
     public function subRekamMedis()
     {
         return $this->throughRekamMedis()->hasSubRekamMedis();
     }
 
-    public function rekamMedisAktif()
+    public function jadwal()
     {
-        return $this->where('status_pasien', 'Rawat Jalan');
+        return $this->belongsToMany(Jadwal::class, 'id_pasien');
     }
-    
+
     public function getRouteKeyName(): string
     {
         return 'slug';

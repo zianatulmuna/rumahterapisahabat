@@ -29,19 +29,19 @@ class TerapisController extends Controller
         $query = $queryRecap = RekamTerapi::query()->where('id_terapis', $terapis->id_terapis);
 
         $request = false;
-        
-        if(request('filter') === "tahun-ini") {
+
+        if (request('filter') === "tahun-ini") {
             $m = date('Y');
             $query->where('tanggal', 'like', $m . '%');
             $queryRecap->where('tanggal', 'like', $m . '%');
             $caption = $captionFilter = $m;
             $request = true;
-        } elseif(request('tanggal')) {
+        } elseif (request('tanggal')) {
             $query->where('tanggal', request('tanggal'));
             $queryRecap->where('tanggal', request('tanggal'));
-            $caption = $captionFilter  = Carbon::parse(request('tanggal'))->formatLocalized('%d %B %Y');
+            $caption = $captionFilter = Carbon::parse(request('tanggal'))->formatLocalized('%d %B %Y');
             $request = true;
-        } elseif(request('awal')) {
+        } elseif (request('awal')) {
             $query->whereBetween('tanggal', [request('awal'), request('akhir')]);
             $queryRecap->whereBetween('tanggal', [request('awal'), request('akhir')]);
             $awal = Carbon::parse(request('awal'))->formatLocalized('%d %B %Y');
@@ -52,37 +52,38 @@ class TerapisController extends Controller
         } else {
             $m = date('Y-m');
             $query->where('tanggal', 'like', $m . '%');
-            $caption = $captionFilter = Carbon::today()->formatLocalized('%B %Y'); 
+            $caption = $captionFilter = Carbon::today()->formatLocalized('%B %Y');
         }
 
-        $jumlah_terapi = $query->count() . ' Terapi';  
+        $jumlah_terapi = $query->count() . ' Terapi';
 
-        if(request('tab')) {
+        if (request('tab')) {
             $rekap_terapi = $query->selectRaw('id_sub, COUNT(*) as total')
-            ->groupBy('id_sub')
-            ->paginate(10);
+                ->groupBy('id_sub')
+                ->paginate(10);
             $histori_terapi = [];
         } else {
-            $histori_terapi = $query->orderBy('tanggal', 'DESC')->paginate(10);  
-            $rekap_terapi = [];          
+            $histori_terapi = $query->orderBy('tanggal', 'DESC')->paginate(10);
+            $rekap_terapi = [];
         }
 
         $tanggal_lahir = $terapis->tanggal_lahir = '' ? '' : Carbon::parse($terapis->tanggal_lahir)->formatLocalized('%d %B %Y');
 
         return view('pages.terapis.detail-terapis', compact(
-            'terapis', 
-            'histori_terapi', 
+            'terapis',
+            'histori_terapi',
             'caption',
             'captionFilter',
             'jumlah_terapi',
-            'tanggal_lahir', 
+            'tanggal_lahir',
             'request',
             'rekap_terapi'
-        ));
+        )
+        );
     }
 
     public function edit(Terapis $terapis)
-    {        
+    {
         return view('pages.terapis.edit-terapis', compact('terapis'));
     }
 
@@ -95,8 +96,8 @@ class TerapisController extends Controller
         Terapis::destroy($terapis->id_terapis);
 
         return redirect(route('terapis'))
-                            ->with('success', 'Data Terapis berhasil dihapus')   
-                            ->with('delete', true); 
+            ->with('success', 'Data Terapis berhasil dihapus')
+            ->with('delete', true);
     }
 
     public function setReady(Request $request)
@@ -109,49 +110,48 @@ class TerapisController extends Controller
     public function sesiTerapi()
     {
         $terapis = Auth::guard('terapis')->user();
+        $tanggal_lahir = $terapis->tanggal_lahir = '' ? '' : Carbon::parse($terapis->tanggal_lahir)->formatLocalized('%d %B %Y');
+
         $query = RekamTerapi::query();
 
         $request = false;
-        
-        if(request('filter') === "tahun-ini") {
-            $m = date('Y');
-            $query->where('tanggal', 'like', $m . '%');
-            $caption = $m;
+
+        if (request('filter') === "tahun-ini") {
+            $query->where('tanggal', 'like', date('Y') . '%');
+            $caption = date('Y');
             $request = true;
-        } elseif(request('tanggal')) {
+        } elseif (request('tanggal')) {
             $query->where('tanggal', request('tanggal'));
             $caption = Carbon::parse(request('tanggal'))->formatLocalized('%d %B %Y');
             $request = true;
-        } elseif(request('awal')) {
+        } elseif (request('awal')) {
             $query->whereBetween('tanggal', [request('awal'), request('akhir')]);
             $awal = Carbon::parse(request('awal'))->formatLocalized('%d %B %Y');
             $akhir = Carbon::parse(request('akhir'))->formatLocalized('%d %B %Y');
             $caption = $awal . " - " . $akhir;
             $request = true;
         } else {
-            $m = date('Y-m');
-            $query->where('tanggal', 'like', $m . '%');
-            $caption = Carbon::today()->formatLocalized('%B %Y'); 
+            $query->where('tanggal', 'like', date('Y-m') . '%');
+            $caption = Carbon::today()->formatLocalized('%B %Y');
         }
-        
+
         $jumlah_terapi = $query->where('id_terapis', $terapis->id_terapis)->count();
-        
+
         $tanggal_caption = $jumlah_terapi . " Terapi (" . $caption . ")";
 
         $histori_terapi = $query->where('id_terapis', $terapis->id_terapis)
-                            ->orderBy('tanggal', 'DESC')
-                            ->paginate(10);
-
-        $tanggal_lahir = $terapis->tanggal_lahir = '' ? '' : Carbon::parse($terapis->tanggal_lahir)->formatLocalized('%d %B %Y');
+            ->orderBy('tanggal', 'DESC')
+            ->paginate(10);
 
         return view('pages.terapis.terapi-terapis', compact(
-            'terapis', 
-            'histori_terapi', 
+            'terapis',
+            'histori_terapi',
             'tanggal_caption',
-            'tanggal_lahir', 
+            'tanggal_lahir',
             'request'
-        ));
+        )
+        );
     }
 
-    
+
 }

@@ -44,12 +44,11 @@
           </tr>
           <tr style="font-size: 15px">
             <td>Umur</td>
-            <td class="hstack align-items-start gap-3"><span>:</span><span>{{ $umur }} tahun</td>
+            <td class="hstack align-items-start gap-3"><span>:</span><span>{{ $umur }} tahun</span></td>
           </tr>
           <tr style="font-size: 15px">
             <td>Alamat Rumah</td>
-            <td class="hstack align-items-start gap-3"><span>:</span><span>{{ $pasien->alamat }}
-                {{ $pasien->alamat }}</span></td>
+            <td class="hstack align-items-start gap-3"><span>:</span><span>{{ $pasien->alamat }}</span></td>
           </tr>
           <tr style="font-size: 15px">
             <td>Alamat email</td>

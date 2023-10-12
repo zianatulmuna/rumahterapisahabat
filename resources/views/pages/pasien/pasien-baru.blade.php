@@ -68,7 +68,7 @@
         @endforeach
       </div>
     @else
-     <span class="fst-italic py-4">Data tidak ditemukan.</span>
+     <span class="fst-italic py-4">Data belum ada/tidak ditemukan.</span>
     @endif
    </div>
   </div>

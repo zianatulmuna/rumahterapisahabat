@@ -38,12 +38,26 @@
 
   <div class="pt-3 pb-2 mb-3">
     @if(count($sub_penyakit) > 0)
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 row-cols-xxl-4">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3">
         @foreach($sub_penyakit as $sub)
           <div class="col mb-4">
             <div class="card shadow-sm">
               <h6 class="card-header fw-bold text-center{{ $sub->rekamMedis->status_pasien == "Rawat Jalan" ? ' bg-success text-white' : ' bg-nonaktif' }}">{{ $sub->penyakit }}</h6>
-              <ul class="list-group list-group-flush text-left list-group-histori">
+              <ul class="list-group list-group-flush text-left list-group-histori">                
+                <li class="list-group-item">
+                  <div class="d-flex justify-content-between right-0">
+                      <div class="col" style="max-width: 50%;">
+                        <p class="small">Pasien:</p>
+                        <p class="text-truncate"><i class="bi bi-person-fill pe-1 text-light-emphasis"></i>{{ $sub->rekamMedis->pasien->nama }}</p>
+                      </div>
+                      <div class="d-flex justify-content-end"> 
+                        <div class="" style="min-width: 114px">  
+                          <p class="small">Total Terapi:</p>
+                          <p class="align-center"><i class="bi bi-heart-pulse-fill text-success pe-2"></i>{{ $sub->total_terapi }}/{{ $sub->rekamMedis->jumlah_layanan }}</p>
+                        </div>
+                      </div> 
+                  </div>                      
+                </li>
                 <li class="list-group-item">
                   <div class="d-flex justify-content-between right-0">
                     <div class="col">
@@ -52,40 +66,16 @@
                     </div>
                     <div class="d-flex justify-content-end">   
                       <div class="" style="min-width: 114px">
-                        <p class="small">Total Terapi:</p>
-                        <p class="align-center"><i class="bi bi-heart-pulse-fill text-success pe-2"></i>{{ $sub->total_terapi }}/{{ $sub->rekamMedis->jumlah_layanan }}</p>
+                        <p class="small">Status Pasien:</p>
+                        @if($sub->rekamMedis->status_pasien == 'Rawat Jalan')
+                          <p><i class="bi bi-clock-fill pe-1 c-text-primary"></i> Rawat Jalan</p>
+                        @elseif($sub->rekamMedis->status_pasien == 'Jeda')
+                          <p><i class="bi bi-pause-circle-fill pe-1 text-warning"></i> Jeda</p>
+                        @else
+                          <p><i class="bi bi-check-circle-fill pe-1 text-success"></i> Selesai</p>
+                        @endif                         
                       </div>
                     </div> 
-                  </div>                      
-                </li>
-                <li class="list-group-item">
-                  <div class="d-flex justify-content-between right-0">
-                      <div class="col">
-                        @php
-                          if(count($sub->rekamTerapi) > 0) {
-                            $m = $sub->rekamTerapi()->orderBy('tanggal', 'ASC')->first();
-                            $mulai = date('d-m-Y', strtotime($m->tanggal));
-                          } else {
-                            $mulai = '-';
-                          }
-                        @endphp
-                        <p class="small">Tanggal Mulai:</p>
-                        <p><i class="bi bi-calendar-plus pe-1 text-light-emphasis"></i> {{ $mulai }}</p>
-                      </div>
-                      <div class="d-flex justify-content-end">   
-                        <div class="" style="min-width: 114px">
-                            @php
-                              if(count($sub->rekamTerapi) > 0) {
-                                  $m = $sub->rekamTerapi()->orderBy('tanggal', 'DESC')->first();
-                                  $akhir = date('d-m-Y', strtotime($m->tanggal));
-                              } else {
-                                  $akhir = '-';
-                              }
-                            @endphp
-                            <p class="small">{{ $sub->rekamMedis->status_pasien == "Rawat Jalan" ? 'Tanggal Terkini:' : 'Tanggal Selesai:' }}</p>                  
-                            <p><i class="bi bi-calendar-check pe-1 text-light-emphasis"></i> {{ $akhir }}</p>
-                        </div>
-                      </div> 
                   </div>                      
                 </li>
               </ul>

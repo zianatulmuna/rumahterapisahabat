@@ -1,7 +1,7 @@
 @if($currentStep == 4)
   <div class="row row-cols-1 row-cols-md-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
     <div class="col">
-      <div class="mb-3 dropdown-penyakit">
+      <div class="mb-4 dropdown-penyakit">
         <label for="penyakit" class="form-label fw-bold">Nama Penyakit <span class="text-danger">*</span></label>
         @if($editPage)
           @if(session()->has('duplicate'))
@@ -27,14 +27,6 @@
                 <button class="btn btn-sm c-btn-primary rounded-0 ms-2 d-none" id="save-{{ $thisId }}" type="button" onclick="savePenyakit('{{ $i['db'] }}')">Simpan</button>
                 <button class="btn btn-sm c-btn-secondary rounded-0 ms-2 d-none" id="undo-{{ $thisId }}" type="button" onclick="batalEdit('{{ $i['db'] }}')">Batal</button>
               </div>
-              {{-- <x-modal-alert 
-                id="{{ $thisId }}EditModal"
-                title="Yakin ingin edit?" 
-                :body="'<span>Mengubah nama penyakit ini akan mempengaruhi nama penyakit di <strong>rekam terapi</strong>.</span>'"
-                icon="bi bi-exclamation-circle text-warning"
-                >
-                  <button class="btn btn-success px-4" type="button" onclick="editPenyakit('{{ $i['db'] }}')" data-dismiss="modal">Edit</button>
-              </x-modal-alert> --}}
               <!-- Terapi Delete Modal-->
               <x-modal-alert 
                 id="{{ $thisId }}DeleteModal"

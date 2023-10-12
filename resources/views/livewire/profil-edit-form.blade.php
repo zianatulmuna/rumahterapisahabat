@@ -22,21 +22,21 @@
               <div class="row row-cols-1 row-cols-lg-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">
                 <div class="col">                
                   <div class="mb-4">
-                    <label for="nama" class="form-label fw-bold">Nama Lengkap</label>
+                    <label for="nama" class="form-label fw-bold">Nama Lengkap <span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama') }}" oninput="capEach('nama')" wire:model="nama">
                     @error('nama')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </div>
                   <div class="mb-4">
-                    <label for="no_telp" class="form-label fw-bold">Nomor Telepon</label>
+                    <label for="no_telp" class="form-label fw-bold">Nomor Telepon <span class="text-danger">*</span></label>
                     <input type="tel" class="form-control @error('no_telp') is-invalid @enderror" id="no_telp" name="no_telp" value="{{ old('no_telp') }}" wire:model="no_telp">
                     @error('no_telp')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </div>
                   <div class="mb-4">
-                    <label class="form-label fw-bold">Jenis Kelamin</label>
+                    <label class="form-label fw-bold">Jenis Kelamin <span class="text-danger">*</span></label>
                     <select class="form-select @error('jenis_kelamin') is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin" wire:model="jenis_kelamin" required aria-label=".form-select-sm example">
                       <option value="">Pilih Jenis Kelamin</option>
                       @foreach($jenisKelamin as $gender)
@@ -113,7 +113,7 @@
               <div class="row row-cols-1 row-cols-lg-2 px-3 px-md-5 g-0 g-md-4 g-lg-5">                
                 <div class="col">
                   <div class="mb-4">
-                    <label for="username" class="form-label fw-bold">Username</label>
+                    <label for="username" class="form-label fw-bold">Username <span class="text-danger">*</span></label>
                     <input type="text" name="username" id="username" class="form-control text-lowercase @error('username') is-invalid @enderror" id="username" value="{{ old('username') }}" wire:model="username">
                     @error('username')
                     <div class="invalid-feedback">
@@ -124,7 +124,7 @@
                 </div>
                 <div class="col">
                   <div class="mb-4">
-                    <label for="password" class="form-label fw-bold">Password</label>
+                    <label for="password" class="form-label fw-bold">Password <span class="text-danger">*</span></label>
                     <div class="input-group">
                       <input type="password" class="form-control border-end-0 @error('password') is-invalid @enderror" id="password" name="password" rows="4" placeholder="Masukkan password baru" wire:model="password">
                       <button type="button" class="input-group-text border-start-0 bg-white @error('password') is-invalid @enderror" id="pswButton"><i class="bi bi-eye-fill text-secondary"></i></button>

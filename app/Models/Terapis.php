@@ -14,7 +14,6 @@ class Terapis extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     protected $guard = 'web';
     protected $table = 'terapis';    
-    // protected $with = ['jadwal', 'rekam_medis', 'rekam_terapi'];
     protected $guarded = [];
     protected $primaryKey = 'id_terapis';
     public $incrementing = false;
@@ -47,7 +46,8 @@ class Terapis extends Authenticatable
     public function scopeFilter($query, array $filters)
     {        
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            return $query->where('nama', 'like', '%' . $search . '%');
+            return $query->where('nama', 'like', '%' . $search . '%')
+                ->orWhere('username', 'like', '%' . $search . '%');
         });
 
         $query->when($filters['tingkatan'] ?? false, function ($query, $tingkatan) {
